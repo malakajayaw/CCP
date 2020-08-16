@@ -1,7 +1,7 @@
 import React from 'react';
 
-function MemberTable() {
-  return ( <section className="content">
+function MemberTable(props) {
+  return ( <section className="content" style={{display : props.display}}>
       <div className="container-fluid">
         <div className="card">
           <div className="card-header">
@@ -10,7 +10,7 @@ function MemberTable() {
           </div>
           {/* <!-- /.card-header --> */}
           <div className="card-body">
-            <table id="example1" className="table table-bordered table-striped">
+            <table id="memberTable" className="table table-bordered table-striped dataTable">
               <thead>
               <tr>
                 <th>Rendering engine</th>
@@ -149,6 +149,7 @@ function MemberTable() {
       </div>
       {/* <!-- /.container-fluid --> */}
       </div>
+      {console.log("bye")}
     </section>);
 }
 

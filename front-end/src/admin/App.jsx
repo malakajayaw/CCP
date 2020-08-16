@@ -9,9 +9,16 @@ import MemberTable from './components/Member-management/MemberTable';
 function App() {
 
     const [page, setPage] = useState("Event");
+    const [display, setDisplay] = useState({event : "none", member : "none"});
 
     function showContent(pageName){
         setPage(pageName);
+        switch(pageName){
+            case "Event" : setDisplay({event : "", member : "none"});
+            break;
+            case "Member" : setDisplay({member : "", event:"none"});
+            break;
+        }
     }
       
    return (
@@ -20,9 +27,11 @@ function App() {
       <SideBar onClick={showContent} />
       <div className="content-wrapper">
         <ContentHeader pageName={page}/>
-        {/* {renderContent("eventNav")} */}
-        {page === "Event" && <EventTable />}
-        {page === "Member" && <MemberTable />}
+        <EventTable  display={display.event} />
+        <MemberTable display={display.member}/>
+        
+        {/* {page === "Event" && <EventTable />} */}
+        {/* {page === "Member" && <MemberTable />} */}
       </div>
       <Footer />
     </div>

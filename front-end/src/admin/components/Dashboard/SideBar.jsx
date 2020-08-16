@@ -39,7 +39,7 @@ function SideBar(props) {
          </li> */}
 
         <li className="nav-item pointer_cursor">
-           <a onClick={() => {props.onClick("Event"); }}  className="nav-link">
+            <a onClick={() => {props.onClick("Event"); }}  className="nav-link">
              <i className="nav-icon far fa-calendar-alt"></i>
              <p>
              Event Management
@@ -65,6 +65,7 @@ function SideBar(props) {
    {/* <!-- /.sidebar --> */}
  </aside>);
 }
+
 
 export default SideBar;
 

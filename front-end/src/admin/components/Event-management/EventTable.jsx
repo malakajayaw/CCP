@@ -1,7 +1,7 @@
 import React from 'react';
 
-function EventTable() {
-  return ( <section className="content">
+function EventTable(props) {
+  return ( <section className="content" style={{display : props.display}}>
       <div className="container-fluid">
         <div className="card">
           <div className="card-header">
@@ -10,7 +10,7 @@ function EventTable() {
           </div>
           {/* <!-- /.card-header --> */}
           <div className="card-body">
-            <table id="eventTable" className="table table-bordered table-striped">
+            <table id="eventTable" className="table table-bordered table-striped dataTable">
               <thead>
               <tr>
                 <th>Rendering engine</th>
@@ -148,9 +148,11 @@ function EventTable() {
           </div>
       </div>
       {/* <!-- /.container-fluid --> */}
-      </div>
+      </div> 
+  
     </section>
     );
 }
+
 
 export default EventTable;

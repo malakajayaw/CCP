@@ -32,19 +32,17 @@
     <!-- DataTables -->
     <link  rel="stylesheet" href="AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link  rel="stylesheet" href="AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css
-    https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css
-    https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"> -->
-
+    
     <!-- custom stylesheet -->
     <link rel="stylesheet" href="styles.css">
 
   </head>
   <body class="hold-transition sidebar-mini layout-fixed">
    
-    <div id="root"></div>
+    <div id="root">
+
+      <div id="eventTable"></div>
+    </div>
 
     
     <!-- jQuery -->
@@ -82,11 +80,6 @@
     <!-- AdminLTE for demo purposes -->
     <script src="AdminLTE-3.0.5/dist/js/demo.js"></script>
 
-    <!-- Data Tables -->
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script> -->
-
     <!-- DataTables -->
     <script src="AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -95,23 +88,16 @@
 
     <!-- page script -->
     <script>
-      $(function () {
-      
-       $("#eventTable").DataTable({
-          "responsive": true,
-          "autoWidth": false,
-       });
 
-        $("#example").DataTable({
-          "paging": true,
-          "lengthChange": false,
-          "searching": false,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false,
-          "responsive": true,
+      $(function (){
+      
+        $("table.dataTable").DataTable({
+           "responsive": true,
+           "autoWidth": false,
         });
-      });
+ 
+       });
+    
     </script>
 
 </script>
