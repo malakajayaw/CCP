@@ -1,49 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function SideBar() {
-   return ( <aside class="main-sidebar sidebar-dark-primary elevation-4">
+function SideBar(props) {
+
+   return ( <aside className="main-sidebar sidebar-dark-primary elevation-4">
    {/* <!-- Brand Logo --> */}
-   <a href="index3.html" class="brand-link">
-     <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-          style="opacity: .8"/>
-     <span class="brand-text font-weight-light">AdminLTE 3</span>
+   <a href="index3.html" className="brand-link">
+     <img src="AdminLTE-3.0.5/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3"
+          style={{opacity: ".8"}}/>
+     <span className="brand-text font-weight-light">AdminLTE 3</span>
    </a>
 
    {/* <!-- Sidebar --> */}
-   <div class="sidebar">
+   <div className="sidebar">
      {/* <!-- Sidebar user panel (optional) --> */}
-     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-       <div class="image">
-         <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"/>
+     <div className="user-panel mt-3 pb-3 mb-3 d-flex">
+       <div className="image">
+         <img src="AdminLTE-3.0.5/dist/img/user2-160x160.jpg" className="img-circle elevation-2" alt="User Image"/>
        </div>
-       <div class="info">
-         <a href="#" class="d-block">Alexander Pierce</a>
+       <div className="info">
+         <a href="#" className="d-block">Alexander Pierce</a>
        </div>
      </div>
 
      {/* <!-- Sidebar Menu --> */}
-     <nav class="mt-2">
-       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-         {/* <!-- Add icons to the links using the .nav-icon class
+     <nav className="mt-2">
+       <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+         {/* <!-- Add icons to the links using the .nav-icon className
               with font-awesome or any other icon font library --> */}
 
-       
-         <li class="nav-item">
-           <a href="pages/calendar.html" class="nav-link">
-             <i class="nav-icon far fa-calendar-alt"></i>
-             <p>
+         {/* <li className="nav-item">
+            <a onClick={props.onClick}  className="nav-link">
+             <i className="nav-icon far fa-calendar-alt"></i>
+             <p id="eventNav">
                Event Management
-               <span class="badge badge-info right">2</span>
+               <span className="badge badge-info right">2</span>
+             </p>
+           </a>
+         </li> */}
+
+        <li className="nav-item pointer_cursor">
+           <a onClick={() => {props.onClick("Event"); }}  className="nav-link">
+             <i className="nav-icon far fa-calendar-alt"></i>
+             <p>
+             Event Management
+               <span className="badge badge-info right">2</span>
              </p>
            </a>
          </li>
 
-         <li class="nav-item">
-           <a href="pages/calendar.html" class="nav-link">
-             <i class="nav-icon far fa-calendar-alt"></i>
+          <li className="nav-item pointer_cursor">
+           <a onClick={() => {props.onClick("Member"); }}  className="nav-link">
+             <i className="nav-icon fas fa-users"></i>
              <p>
                Member Management
-               <span class="badge badge-info right">2</span>
+               <span className="badge badge-info right">2</span>
              </p>
            </a>
          </li>
@@ -57,3 +67,4 @@ function SideBar() {
 }
 
 export default SideBar;
+

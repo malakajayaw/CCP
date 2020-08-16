@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './admin/App';
 import './index.css';
-import EventApp from './admin/components/Event-management/EventApp';
-import Header from './admin/components/Dashboard/Header';
 
 ReactDOM.render(
   <React.StrictMode>
-    Hello
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

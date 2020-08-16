@@ -3,3 +3,7 @@
 .add_btn{
     width: 150px;
 }
+
+.pointer_cursor{
+    cursor: pointer;
+}

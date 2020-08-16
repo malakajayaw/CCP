@@ -1,16 +1,16 @@
 import React from 'react';
 
-function EventTable() {
+function MemberTable() {
   return ( <section className="content">
       <div className="container-fluid">
         <div className="card">
           <div className="card-header">
             {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-            <button type="button" className="btn btn-success float-right add_btn">Add Event</button>
+            <button type="button" className="btn btn-success float-right add_btn">Add Member</button>
           </div>
           {/* <!-- /.card-header --> */}
           <div className="card-body">
-            <table id="eventTable" className="table table-bordered table-striped">
+            <table id="example1" className="table table-bordered table-striped">
               <thead>
               <tr>
                 <th>Rendering engine</th>
@@ -149,8 +149,7 @@ function EventTable() {
       </div>
       {/* <!-- /.container-fluid --> */}
       </div>
-    </section>
-    );
+    </section>);
 }
 
-export default EventTable;
+export default MemberTable;
