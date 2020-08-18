@@ -5,18 +5,21 @@ import ContentHeader from './components/Dashboard/ContentHeader';
 import Footer from './components/Dashboard/Footer';
 import EventTable from './components/Event-management/EventTable';
 import MemberTable from './components/Member-management/MemberTable';
+import EventView from './components/Event-management/EventView';
 
 function App() {
 
     const [page, setPage] = useState("Event");
-    const [display, setDisplay] = useState({event : "none", member : "none"});
+    const [display, setDisplay] = useState({event : "none", member : "none", eventView : "none"});
 
     function showContent(pageName){
         setPage(pageName);
         switch(pageName){
-            case "Event" : setDisplay({event : "", member : "none"});
+           case "Event" : setDisplay({event : "", member : "none",eventView : "none"});
             break;
-            case "Member" : setDisplay({member : "", event:"none"});
+            case "Member" : setDisplay({member : "", event:"none",eventView : "none"});
+            break;
+            case "EventView" : setDisplay({eventView : "", event:"none", member : "none"});
             break;
         }
     }
@@ -27,9 +30,10 @@ function App() {
       <SideBar onClick={showContent} />
       <div className="content-wrapper">
         <ContentHeader pageName={page}/>
-        <EventTable  display={display.event} />
+        <EventTable  display={display.event} onClick={showContent}/>
         <MemberTable display={display.member}/>
         
+        <EventView display={display.eventView}/>
         {/* {page === "Event" && <EventTable />} */}
         {/* {page === "Member" && <MemberTable />} */}
       </div>
