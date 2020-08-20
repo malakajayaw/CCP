@@ -49,14 +49,16 @@ function SideBar(props) {
          </li>
 
           <li className="nav-item pointer_cursor">
-           <a onClick={() => {props.onClick("Member"); }}  className="nav-link">
+           <a onClick={() => {props.onClick("Member Request"); }}  className="nav-link">
              <i className="nav-icon fas fa-users"></i>
              <p>
                Member Management
-               <span className="badge badge-info right">2</span>
+               <span className="badge badge-info right"></span>
              </p>
            </a>
          </li>
+
+         
 
        </ul>
      </nav>
