@@ -1,7 +1,7 @@
 import React from 'react';
 
 function EventView(props) {
-  return ( <section className="content">
+  return ( <section className="content" style={{display : props.display}}>
   <div className="card">
     <div className="card-header">
       <h3 className="card-title">Event Details</h3>
@@ -13,7 +13,7 @@ function EventView(props) {
     </div>
     <div className="card-body">
       <div className="row">
-        <div className="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+        <div className="col-12 col-md-12 col-lg-8 order-1 order-md-1">
         <img className="mb-4 shadow-lg bg-white rounded" src="images/Events/event1.jpg" style={{float:"left", maxWidth:"100%", maxHeight:"300px" }}/>
      
           <div className="row">
@@ -49,7 +49,7 @@ function EventView(props) {
          
           <h3 className="text-primary mt-3 mb-3">IEEE LETs Talk - How to Invest in Share Market </h3>
           <div className="text-muted">
-            <p className="text-md"><i class="fas fa-bullhorn"></i> <b>IEEE Young Professionals Sri Lanka</b>
+            <p className="text-md"><i className="fas fa-bullhorn"></i> <b>IEEE Young Professionals Sri Lanka</b>
             </p>
           </div>
           <p className="text-muted">
@@ -74,41 +74,8 @@ Registration fee of 500 LKR will be charged for Non-IEEE members and free entry 
           </div>
         </div>
 
-        <div className="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-          <h3 className="text-primary"><i className="fas fa-paint-brush"></i> AdminLTE v3</h3>
-          <p className="text-muted">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terr.</p>
-          <br/>
-          <div className="text-muted">
-            <p className="text-sm">Client Company
-              <b className="d-block">Deveint Inc</b>
-            </p>
-            <p className="text-sm">Project Leader
-              <b className="d-block">Tony Chicken</b>
-            </p>
-          </div>
-
-          <h5 className="mt-5 text-muted">Project files</h5>
-          <ul className="list-unstyled">
-            <li>
-              <a href="" className="btn-link text-secondary"><i className="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>
-            </li>
-            <li>
-              <a href="" className="btn-link text-secondary"><i className="far fa-fw fa-file-pdf"></i> UAT.pdf</a>
-            </li>
-            <li>
-              <a href="" className="btn-link text-secondary"><i className="far fa-fw fa-envelope"></i> Email-from-flatbal.mln</a>
-            </li>
-            <li>
-              <a href="" className="btn-link text-secondary"><i className="far fa-fw fa-image "></i> Logo.png</a>
-            </li>
-            <li>
-              <a href="" className="btn-link text-secondary"><i className="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>
-            </li>
-          </ul>
-          <div className="text-center mt-5 mb-3">
-            <a href="#" className="btn btn-sm btn-primary">Add files</a>
-            <a href="#" className="btn btn-sm btn-warning">Report contact</a>
-          </div>
+        <div className="col-12 col-md-12 col-lg-4 order-2 order-md-2">
+         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScnAo1ZYa9_9U17CtsOtf6XG2A8ONW9eIvdQdjIPhc7IGWIFw/viewform?embedded=true" width="100%"  height="100%" frameBorder="0" marginHeight="0" marginWidth="0">Loading…</iframe>
         </div>
       </div>
     </div>

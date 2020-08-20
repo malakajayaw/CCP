@@ -149,7 +149,6 @@ function MemberTable(props) {
       </div>
       {/* <!-- /.container-fluid --> */}
       </div>
-      {console.log("bye")}
     </section>);
 }
 
