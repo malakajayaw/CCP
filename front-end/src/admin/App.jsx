@@ -6,20 +6,23 @@ import Footer from './components/Dashboard/Footer';
 import EventTable from './components/Event-management/EventTable';
 import MemberTable from './components/Member-management/MemberTable';
 import DesignationTable from './components/Designation-management/DesignationTable';
+import ActivityTable from './components/Activity-log/ActivityTable';
 
 function App() {
 
     const [page, setPage] = useState("Event");
-    const [display, setDisplay] = useState({ event: "none", member: "none", designation: "none" });
+    const [display, setDisplay] = useState({ event: "none", member: "none", designation: "none", activity: "none" });
 
     function showContent(pageName) {
         setPage(pageName);
         switch (pageName) {
-            case "Event": setDisplay({ event: "", member: "none" });
+            case "Event": setDisplay({ event: "", member: "none", designation: "none", activity: "none" });
                 break;
-            case "Member": setDisplay({ member: "", event: "none" });
+            case "Member": setDisplay({ member: "", event: "none", designation: "none", activity: "none" });
                 break;
-            case "Designation": setDisplay({ designation: "", event: "none", member: "none" });
+            case "Designation": setDisplay({ designation: "", event: "none", member: "none", activity: "none" });
+                break;
+            case "Activity": setDisplay({ activity: "", event: "none", member: "none", designation: "none" });
                 break;
         }
     }
@@ -33,6 +36,7 @@ function App() {
                 <EventTable display={display.event} />
                 <MemberTable display={display.member} />
                 <DesignationTable display={display.designation} />
+                <ActivityTable display={display.activity} />
 
                 {/* {page === "Event" && <EventTable />} */}
                 {/* {page === "Member" && <MemberTable />} */}
