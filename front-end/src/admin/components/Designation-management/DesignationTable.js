@@ -7,7 +7,7 @@ function DesignationTable(props) {
             <div className="card">
                 <div className="card-header">
                     {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-                    <button type="button" className="btn btn-success float-right add_btn">Add Designation</button>
+                    <button type="button" onClick={() => { props.onClick("CreateDesignationForm"); }} className="btn btn-success float-right add_btn">Add Designation</button>
                 </div>
                 {/* <!-- /.card-header --> */}
                 <div className="card-body">
