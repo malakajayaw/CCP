@@ -12,25 +12,22 @@ import MemberAdd from './components/Member-management/MemberAdd';
 function App() {
 
     const [page, setPage] = useState("Event");
-    const [display, setDisplay] = useState({event : "none", member : "none", eventView : "none",eventForm : "none"});
-    const [display, setDisplay] = useState({event : "none", memberreq : "none", memberadd : "none"});
+    const [display, setDisplay] = useState({event : "none", memberreq : "none", eventView : "none",eventForm : "none", memberreq : "none", memberadd : "none"});
 
     function showContent(pageName){
         setPage(pageName);
         switch(pageName){
-            case "Event" : setDisplay({event : "", member : "none",eventView : "none",eventForm : "none"});
+            case "Event" : setDisplay({event : "", memberreq : "none",eventView : "none",eventForm : "none", memberadd : "none"});
             break;
-            case "Member Request" : setDisplay({memberreq : "", event:"none" , memberadd : "none"});
+            case "Member Request" : setDisplay({memberreq : "", event:"none" , memberadd : "none",eventView : "none",eventForm : "none"});
             break;
-            case "EventView" : setDisplay({eventView : "", event:"none", member : "none",eventForm : "none"});
+            case "EventView" : setDisplay({eventView : "", event:"none", memberreq : "none",eventForm : "none", memberadd : "none"});
             break;
-            case "EventForm" : setDisplay({eventForm : "", eventView : "none", event:"none", member : "none"});
+            case "EventForm" : setDisplay({eventForm : "", eventView : "none", event:"none", memberreq : "none", memberadd : "none"});
             break;
-            default :  setDisplay({event : "none", member : "none",eventView : "none",eventForm : "none"});
+            default :  setDisplay({event : "none", memberreq : "none",eventView : "none",eventForm : "none", memberadd : "none"});
             break;
-            case "Add Member" : setDisplay({memberreq : "none", event:"none" , memberadd : ""});
-            break;
-            case "AdminLogin" : setDisplay({memberreq : "none", event:"none" , memberadd : ""});
+            case "Add Member" : setDisplay({memberreq : "none", event:"none" , memberadd : "",eventView : "none",eventForm : "none"});
             break;
         }
     }
