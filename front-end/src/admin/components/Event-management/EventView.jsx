@@ -4,11 +4,14 @@ function EventView(props) {
   return ( <section className="content" style={{display : props.display}}>
   <div className="card">
     <div className="card-header">
+    <div className="row">
+    <div className="col-6">
       <h3 className="card-title">Event Details</h3>
-
-      <div className="card-tools">
-        <button type="button" className="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-          <i className="fas fa-minus"></i></button>
+      </div>
+      <div className="col-6">
+      <button type="button"  onClick={() => {props.onClick("EventForm"); }}  className="btn btn-info float-right add_btn ml-2">Event Report</button>
+      <button type="button"  onClick={() => {props.onClick("EventForm"); }}  className="btn btn-success float-right add_btn">Event Attendance</button> 
+      </div>
       </div>
     </div>
     <div className="card-body">
