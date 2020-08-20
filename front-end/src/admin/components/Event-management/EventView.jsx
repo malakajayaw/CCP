@@ -14,7 +14,7 @@ function EventView(props) {
     <div className="card-body">
       <div className="row">
         <div className="col-12 col-md-12 col-lg-8 order-1 order-md-1">
-        <img className="mb-4 shadow-lg bg-white rounded" src="images/Events/event1.jpg" style={{float:"left", maxWidth:"100%", maxHeight:"300px" }}/>
+        <img className="mb-4 shadow-lg bg-white rounded" alt="Event Banner" src="images/Events/event1.jpg" style={{float:"left", maxWidth:"100%", maxHeight:"300px" }}/>
      
           <div className="row">
             <div className="col-12 col-sm-6">
@@ -75,7 +75,7 @@ Registration fee of 500 LKR will be charged for Non-IEEE members and free entry 
         </div>
 
         <div className="col-12 col-md-12 col-lg-4 order-2 order-md-2">
-         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScnAo1ZYa9_9U17CtsOtf6XG2A8ONW9eIvdQdjIPhc7IGWIFw/viewform?embedded=true" width="100%"  height="100%" frameBorder="0" marginHeight="0" marginWidth="0">Loading…</iframe>
+         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScnAo1ZYa9_9U17CtsOtf6XG2A8ONW9eIvdQdjIPhc7IGWIFw/viewform?embedded=true" title="registrationForm" width="100%"  height="100%" frameBorder="0" marginHeight="0" marginWidth="0">Loading…</iframe>
         </div>
       </div>
     </div>

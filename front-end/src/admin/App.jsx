@@ -24,6 +24,8 @@ function App() {
             break;
             case "EventForm" : setDisplay({eventForm : "", eventView : "none", event:"none", member : "none"});
             break;
+            default :  setDisplay({event : "none", member : "none",eventView : "none",eventForm : "none"});
+            break;
         }
     }
       
