@@ -4,19 +4,22 @@ import SideBar from './components/Dashboard/SideBar';
 import ContentHeader from './components/Dashboard/ContentHeader';
 import Footer from './components/Dashboard/Footer';
 import EventTable from './components/Event-management/EventTable';
-import MemberTable from './components/Member-management/MemberTable';
+import MemberRequest from './components/Member-management/MemberRequest';
+import MemberAdd from './components/Member-management/MemberAdd';
 
 function App() {
 
     const [page, setPage] = useState("Event");
-    const [display, setDisplay] = useState({event : "none", member : "none"});
+    const [display, setDisplay] = useState({event : "none", memberreq : "none", memberadd : "none"});
 
     function showContent(pageName){
         setPage(pageName);
         switch(pageName){
-            case "Event" : setDisplay({event : "", member : "none"});
+            case "Event" : setDisplay({event : "", memberreq : "none", memberadd : "none"});
             break;
-            case "Member" : setDisplay({member : "", event:"none"});
+            case "Member Request" : setDisplay({memberreq : "", event:"none" , memberadd : "none"});
+            break;
+            case "Add Member" : setDisplay({memberreq : "none", event:"none" , memberadd : ""});
             break;
         }
     }
@@ -28,7 +31,8 @@ function App() {
       <div className="content-wrapper">
         <ContentHeader pageName={page}/>
         <EventTable  display={display.event} />
-        <MemberTable display={display.member}/>
+        <MemberRequest display={display.memberreq}/>
+        <MemberAdd display={display.memberadd}/>
         
         {/* {page === "Event" && <EventTable />} */}
         {/* {page === "Member" && <MemberTable />} */}
