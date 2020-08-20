@@ -56,17 +56,6 @@ function SideBar(props) {
                <span className="badge badge-info right"></span>
              </p>
            </a>
-
-           <li className="nav-item pointer_cursor">
-           <a onClick={() => {props.onClick("Add Member"); }}  className="nav-link">
-             <i className="nav-icon fas fa-users"></i>
-             <p>
-               Add Member
-               <span className="badge badge-info right"></span>
-             </p>
-           </a>
-         </li>
-
          </li>
 
          

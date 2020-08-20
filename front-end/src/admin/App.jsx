@@ -21,6 +21,8 @@ function App() {
             break;
             case "Add Member" : setDisplay({memberreq : "none", event:"none" , memberadd : ""});
             break;
+            case "AdminLogin" : setDisplay({memberreq : "none", event:"none" , memberadd : ""});
+            break;
         }
     }
       
@@ -31,8 +33,8 @@ function App() {
       <div className="content-wrapper">
         <ContentHeader pageName={page}/>
         <EventTable  display={display.event} />
-        <MemberRequest display={display.memberreq}/>
-        <MemberAdd display={display.memberadd}/>
+        <MemberRequest display={display.memberreq} onClick={showContent}/>
+        <MemberAdd display={display.memberadd} onClick={showContent}/>
         
         {/* {page === "Event" && <EventTable />} */}
         {/* {page === "Member" && <MemberTable />} */}
