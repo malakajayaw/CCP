@@ -9,12 +9,12 @@ function NavBar() {
         <li className="nav-item d-none d-sm-inline-block">
           <a href="index3.html" className="nav-link">Home</a>
         </li>
-        <li className="nav-item d-none d-sm-inline-block">
+        {/* <li className="nav-item d-none d-sm-inline-block">
           <a href="#" className="nav-link">Contact</a>
-        </li>
+        </li> */}
       </ul>
 
-      <form className="form-inline ml-3">
+      {/* <form className="form-inline ml-3">
         <div className="input-group input-group-sm">
           <input className="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search"/>
           <div className="input-group-append">
@@ -24,18 +24,18 @@ function NavBar() {
           </div>
         </div>
       </form>
-  
+   */}
       {/* <!-- Right navbar links --> */}
       <ul className="navbar-nav ml-auto">
         {/* <!-- Messages Dropdown Menu --> */}
-        <li className="nav-item dropdown">
+        {/* <li className="nav-item dropdown">
           <a className="nav-link" data-toggle="dropdown" href="#">
             <i className="far fa-comments"></i>
             <span className="badge badge-danger navbar-badge">3</span>
           </a>
           <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <a href="#" className="dropdown-item">
-              {/* <!-- Message Start --> */}
+              <!-- Message Start -->
               <div className="media">
                 <img src="dist/img/user1-128x128.jpg" alt="User Avatar" className="img-size-50 mr-3 img-circle"/>
                 <div className="media-body">
@@ -47,11 +47,11 @@ function NavBar() {
                   <p className="text-sm text-muted"><i className="far fa-clock mr-1"></i> 4 Hours Ago</p>
                 </div>
               </div>
-              {/* <!-- Message End --> */}
+              <!-- Message End -->
             </a>
             <div className="dropdown-divider"></div>
             <a href="#" className="dropdown-item">
-              {/* <!-- Message Start --> */}
+              <!-- Message Start -->
               <div className="media">
                 <img src="dist/img/user8-128x128.jpg" alt="User Avatar" className="img-size-50 img-circle mr-3"/>
                 <div className="media-body">
@@ -63,11 +63,11 @@ function NavBar() {
                   <p className="text-sm text-muted"><i className="far fa-clock mr-1"></i> 4 Hours Ago</p>
                 </div>
               </div>
-              {/* <!-- Message End --> */}
+              <!-- Message End -->
             </a>
             <div className="dropdown-divider"></div>
             <a href="#" className="dropdown-item">
-              {/* <!-- Message Start --> */}
+              <!-- Message Start -->
               <div className="media">
                 <img src="dist/img/user3-128x128.jpg" alt="User Avatar" className="img-size-50 img-circle mr-3"/>
                 <div className="media-body">
@@ -79,12 +79,12 @@ function NavBar() {
                   <p className="text-sm text-muted"><i className="far fa-clock mr-1"></i> 4 Hours Ago</p>
                 </div>
               </div>
-              {/* <!-- Message End --> */}
+              <!-- Message End -->
             </a>
             <div className="dropdown-divider"></div>
             <a href="#" className="dropdown-item dropdown-footer">See All Messages</a>
           </div>
-        </li>
+        </li> */}
         {/* <!-- Notifications Dropdown Menu --> */}
         <li className="nav-item dropdown">
           <a className="nav-link" data-toggle="dropdown" href="#">
@@ -112,11 +112,11 @@ function NavBar() {
             <a href="#" className="dropdown-item dropdown-footer">See All Notifications</a>
           </div>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <a className="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
             <i className="fas fa-th-large"></i>
           </a>
-        </li>
+        </li> */}
       </ul>
     </nav>);
 }
