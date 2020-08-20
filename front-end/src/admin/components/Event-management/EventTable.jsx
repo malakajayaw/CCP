@@ -6,7 +6,7 @@ function EventTable(props) {
         <div className="card">
           <div className="card-header">
             {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-            <button type="button" className="btn btn-success float-right add_btn">Add Event</button>
+            <button type="button" onClick={() => {props.onClick("VReport"); }} className="btn btn-success float-right add_btn" >View Event Reports</button>
           </div>
           {/* <!-- /.card-header --> */}
           <div className="card-body">
