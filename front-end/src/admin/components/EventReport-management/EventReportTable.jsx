@@ -6,7 +6,7 @@ function EventReportTable(props) {
         <div className="card">
           <div className="card-header">
             {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-            <button type="button" onClick={() => {props.onClick("AReport"); }} className="btn btn-success float-right add_btn">Add Event Report</button>
+            <button type="button" onClick={() => {props.onClick("EReport"); }} className="btn btn-success float-right add_btn" >Repport Management</button>
             
           </div>
           {/* <!-- /.card-header --> */}
