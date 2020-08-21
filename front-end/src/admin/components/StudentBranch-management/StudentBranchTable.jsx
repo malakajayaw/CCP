@@ -6,11 +6,11 @@ function StudentBranchTable(props) {
         <div className="card">
           <div className="card-header">
             {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-            <button type="button"  onClick={() => {props.onClick("#"); }}  className="btn btn-success float-right add_btn">Add Student Branch</button>
+            <button type="button"  onClick={() => {props.onClick("StudentBranchForm"); }}  className="btn btn-success float-right add_btn">Add Student Branch</button>
           </div>
           {/* <!-- /.card-header --> */}
           <div className="card-body">
-            <table id="eventTable" className="table table-bordered table-striped dataTable">
+            <table id="StudentBranchTable" className="table table-bordered table-striped dataTable">
               <thead>
               <tr>
                 <th>Student Branch ID</th>
@@ -31,7 +31,9 @@ function StudentBranchTable(props) {
                 <td><span className="badge badge-success">Available</span></td>
                 <td className="project-actions text-center">    
                     
-                    <a className="btn btn-info btn-sm mr-1" href="#">  <i className="fas fa-pencil-alt mr-1"/>Manage </a>
+                <a className="btn btn-info btn-sm mr-1" href="#" onClick={() => {props.onClick("ManageStudentBranch"); }} > <i className="fas fa-pencil-alt mr-1"/>Manage </a>
+                <a className="btn btn-danger btn-sm mr-1" href="#"> <i className="fas fa-trash mr-1"/>Delete </a>
+
                     
                   </td>
               </tr>

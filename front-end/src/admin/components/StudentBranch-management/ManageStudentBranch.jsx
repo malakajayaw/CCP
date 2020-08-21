@@ -1,21 +1,30 @@
 import React from 'react';
 
-function StudentBranchForm(props) {
+function ManageStudentBranch(props) {
   return (    <section className="content w-100" style={{display : props.display}}>
   <div className="container-fluid d-flex justify-content-center">
   <div className="card card-warning w-50">
   <div className="card-header">
-    <h3 className="card-title">Student Branch Form</h3>
+    <h3 className="card-title">Manage Student Branch</h3>
   </div>
-  {/* type,name, number date */}
+  {/*  type,name,affiliation number, date  */}
   {/* <!-- /.card-header --> */}
   {/* <!-- form start --> */}
-  <form id="StudentBranchForm">
+  <form id="ManageStudentBranch">
     <div className="card-body">
 
+    
+    
     <div className="form-group">
-          <label>Student Branch Type</label>
-          <select className="select2" multiple="multiple" data-placeholder="Select branch type" style={{width: "100%"}}>
+        <label htmlFor="managestudentID">Edit Student Branch ID</label>
+        <input type="text" className="form-control" id="managestudentID" placeholder="Enter student Branch ID" />
+      </div>
+    
+    
+    
+    <div className="form-group">
+          <label>Edit Student Branch Type</label>
+          <select className="select2" multiple="multiple" data-placeholder="Select student type" style={{width: "100%"}}>
             <option>Type 1</option>
             <option>Type 2 </option>
             <option>Type 3 </option>
@@ -28,25 +37,31 @@ function StudentBranchForm(props) {
 
 
       <div className="form-group">
-        <label htmlFor="sbranchname">Student Branch Name</label>
-        <input type="text" className="form-control" id="sbranchname" placeholder="Enter student branch name" />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="affiliationno">IEEE Affiliation Number</label>
-        <input type="text" className="form-control" id="affiliationno" placeholder="Enter IEEE affiliation number" />
+        <label htmlFor="EditSBname">Edit Student Branch Name</label>
+        <input type="text" className="form-control" id="EditSBname" placeholder="Enter Student Branch name" />
       </div>
 
 
+      <div className="form-group">
+          <label>Update status</label>
+          <select className="select4 " multiple="multiple" data-placeholder="Select status" style={{width: "100%"}}>
+            <option>Available</option>
+            <option>Not Available </option>
+            
+          </select>
+      </div>
+      
+
+
 
 
       <div className="form-group">
-      <label htmlFor="sbranchdate">Date of formation</label>
+      <label htmlFor="manageDate">Edit Date of formation</label>
       <div className="input-group">
         <div className="input-group-prepend">
           <span className="input-group-text"><i className="far fa-clock"></i></span>
         </div>
-        <input type="text" className="form-control float-right" id="sbranchdate" />
+        <input type="text" className="form-control float-right" id="manageTime" />
       </div>
       </div>
      
@@ -67,7 +82,7 @@ function StudentBranchForm(props) {
 }
 
 
-export default StudentBranchForm;
+export default ManageStudentBranch;
 
 
 //https://tempusdominus.github.io/bootstrap-4/Usage/ - date and time picker

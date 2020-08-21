@@ -7,22 +7,27 @@ import EventTable from './components/Event-management/EventTable';
 import MemberTable from './components/Member-management/MemberTable';
 import StudentBranchTable from './components/StudentBranch-management/StudentBranchTable';
 import StudentBranchForm from './components/StudentBranch-management/StudentBranchForm';
+import ManageStudentBranch from './components/StudentBranch-management/ManageStudentBranch';
 
 function App() {
 
   const [page, setPage] = useState("Event");
-  const [display, setDisplay] = useState({event : "none", member : "none" , studentbranch : "none" , studentbranchForm : "none"});
+  const [display, setDisplay] = useState({event : "none", member : "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
 
     function showContent(pageName){
         setPage(pageName);
         switch(pageName){
-            case "Event" : setDisplay({event : "", member : "none" , studentbranch : "none" , studentbranchForm : "none"});
+            case "Event" : setDisplay({event : "", member : "none" , studentbranch : "none" , studentbranchForm : "none" , managestudentbranch : "none"});
             break;
-            case "Member" : setDisplay({member : "", event:"none" , studentbranch : "none" , studentbranchForm : "none"});
+            case "Member" : setDisplay({member : "", event:"none" , studentbranch : "none" , studentbranchForm : "none" , managestudentbranch : "none"});
             break;
-            case "StudentBranch" : setDisplay({studentbranch : "", event:"none" , member : "none" , studentbranchForm : "none"});
+            case "StudentBranch" : setDisplay({studentbranch : "", event:"none" , member : "none" , studentbranchForm : "none" , managestudentbranch : "none"});
             break;
-            case "StudentBranchForm" : setDisplay({studentbranchForm : "", event:"none" , member : "none" , studentbranch : "none"});
+            case "StudentBranchForm" : setDisplay({studentbranchForm : "", event:"none" , member : "none" , studentbranch : "none" , managestudentbranch : "none"});
+            break;
+            case "ManageStudentBranch" : setDisplay({managestudentbranch : "", event:"none" , member : "none" , studentbranch : "none" , studentbranchForm : "none"});
+            break;
+            default :  setDisplay({studentbranch : "none", member : "none",event : "none",studentbranchForm : "none" , managestudentbranch : "none"});
             break;
         }
     }
@@ -35,8 +40,9 @@ function App() {
         <ContentHeader pageName={page}/>
         <EventTable  display={display.event} />
         <MemberTable display={display.member}/>
-        <StudentBranchTable display={display.studentbranch}/>
+        <StudentBranchTable display={display.studentbranch} onClick={showContent}/>
         <StudentBranchForm display={display.studentbranchForm}/>
+        <ManageStudentBranch display={display.managestudentbranch}/>
         
         {/* {page === "Event" && <EventTable />} */}
         {/* {page === "Member" && <MemberTable />} */}
