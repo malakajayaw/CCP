@@ -22,43 +22,44 @@ import ActivityTable from './components/Activity-log/ActivityTable';
 function App() {
 
     const [page, setPage] = useState("Event");
-    const [display, setDisplay] = useState({event : "none", memberreq : "none", eventView : "none",eventForm : "none", memberreq : "none", memberadd : "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
+    const [display, setDisplay] = useState({event : "none", eventView : "none",eventForm : "none", memberreq : "none", memberadd : "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
 
     function showContent(pageName) {
         setPage(pageName);
         switch (pageName) {
-            case "Event": setDisplay({ event: "", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
+            case "Event": setDisplay({ event: "", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
                 break;
-            case "Member Request": setDisplay({ event: "none", memberreq: "", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
+            case "Member Request": setDisplay({ event: "none", memberreq: "", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
                 break;
-            case "EventView": setDisplay({ event: "none", memberreq: "none", eventView: "", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
+            case "EventView": setDisplay({ event: "none", memberreq: "none", eventView: "", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
                 break;
-            case "EventForm": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
+            case "EventForm": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
                 break;
-            case "Add Member": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
+            case "Add Member": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
                 break;
-            case "Designation": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
+            case "Designation": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
                 break;
-            case "Activity": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
+            case "Activity": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
                 break;
-            case "CreateDesignationForm": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "", designationChair: "none", editAssigned: "none", editDesignation: "none"});
+            case "CreateDesignationForm": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "", designationChair: "none", editAssigned: "none", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
                 break;
-            case "DesignationChair": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "", editAssigned: "none", editDesignation: "none"});
+            case "DesignationChair": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "", editAssigned: "none", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
                 break;
-            case "EditAssignedMemberForm": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "", editDesignation: "none"});
+            case "EditAssignedMemberForm": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
                 break;
-            case "EditDesignation": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: ""});
+            case "EditDesignation": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
                 break;
-            default: setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" });
+            case "ManageStudentBranch" : setDisplay({managestudentbranch : "", event:"none" , member : "none" , studentbranch : "none" , studentbranchForm : "none" , eventView : "none",eventForm : "none", memberreq : "none", memberadd : "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
                 break;
-        }
-            case "ManageStudentBranch" : setDisplay({managestudentbranch : "", event:"none" , member : "none" , studentbranch : "none" , studentbranchForm : "none"});
-            case "StudentBranchForm" : setDisplay({studentbranchForm : "", event:"none" , member : "none" , studentbranch : "none" , managestudentbranch : "none"});
-            break;
-            break;
-            break;
-            case "StudentBranch" : setDisplay({studentbranch : "", event:"none" , member : "none" , studentbranchForm : "none" , managestudentbranch : "none"});
-            case "Event" : setDisplay({event : "", member : "none" , studentbranch : "none" , studentbranchForm : "none" , managestudentbranch : "none"});
+            case "StudentBranchForm" : setDisplay({studentbranchForm : "", event:"none" , member : "none" , studentbranch : "none" , managestudentbranch : "none" ,eventView : "none",eventForm : "none", memberreq : "none", memberadd : "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
+                break;
+            case "StudentBranch" : setDisplay({studentbranch : "", event:"none" , member : "none" , studentbranchForm : "none" , managestudentbranch : "none" , eventView : "none",eventForm : "none", memberreq : "none", memberadd : "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
+                break;
+            default: setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none" });
+                break;
+        }
+
+            
     }
       
    return (
