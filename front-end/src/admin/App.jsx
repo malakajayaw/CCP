@@ -4,6 +4,10 @@ import SideBar from './components/Dashboard/SideBar';
 import ContentHeader from './components/Dashboard/ContentHeader';
 import Footer from './components/Dashboard/Footer';
 import EventTable from './components/Event-management/EventTable';
+import MemberTable from './components/Member-management/MemberTable';
+import StudentBranchTable from './components/StudentBranch-management/StudentBranchTable';
+import StudentBranchForm from './components/StudentBranch-management/StudentBranchForm';
+import ManageStudentBranch from './components/StudentBranch-management/ManageStudentBranch';
 import EventView from './components/Event-management/EventView';
 import EventForm from './components/Event-management/EventForm';
 import MemberRequest from './components/Member-management/MemberRequest';
@@ -18,7 +22,7 @@ import ActivityTable from './components/Activity-log/ActivityTable';
 function App() {
 
     const [page, setPage] = useState("Event");
-    const [display, setDisplay] = useState({event : "none", memberreq : "none", eventView : "none",eventForm : "none", memberreq : "none", memberadd : "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
+    const [display, setDisplay] = useState({event : "none", memberreq : "none", eventView : "none",eventForm : "none", memberreq : "none", memberadd : "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
 
     function showContent(pageName) {
         setPage(pageName);
@@ -47,7 +51,14 @@ function App() {
                 break;
             default: setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" });
                 break;
-        }
+        }
+            case "ManageStudentBranch" : setDisplay({managestudentbranch : "", event:"none" , member : "none" , studentbranch : "none" , studentbranchForm : "none"});
+            case "StudentBranchForm" : setDisplay({studentbranchForm : "", event:"none" , member : "none" , studentbranch : "none" , managestudentbranch : "none"});
+            break;
+            break;
+            break;
+            case "StudentBranch" : setDisplay({studentbranch : "", event:"none" , member : "none" , studentbranchForm : "none" , managestudentbranch : "none"});
+            case "Event" : setDisplay({event : "", member : "none" , studentbranch : "none" , studentbranchForm : "none" , managestudentbranch : "none"});
     }
       
    return (
@@ -65,6 +76,9 @@ function App() {
                 <AssignedDesignationsTable display={display.designationChair} onClick={showContent} />
                 <EditAssignedMemberForm display={display.editAssigned} />
                 <EditDesignation display={display.editDesignation} />
+        <ManageStudentBranch display={display.managestudentbranch}/>
+        <StudentBranchForm display={display.studentbranchForm}/>
+        <StudentBranchTable display={display.studentbranch} onClick={showContent}/>
         
         <EventView display={display.eventView}/>
         <EventForm display={display.eventForm}/>
