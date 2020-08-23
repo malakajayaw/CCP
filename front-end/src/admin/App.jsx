@@ -22,31 +22,32 @@ function App() {
 
     function showContent(pageName) {
         setPage(pageName);
-        switch(pageName){
-            case "Event" : setDisplay({event : "", memberreq : "none",eventView : "none",eventForm : "none", memberadd : "none"});
-            break;
-            case "Member Request" : setDisplay({memberreq : "", event:"none" , memberadd : "none",eventView : "none",eventForm : "none"});
-            break;
-            case "EventView" : setDisplay({eventView : "", event:"none", memberreq : "none",eventForm : "none", memberadd : "none"});
-            break;
-            case "EventForm" : setDisplay({eventForm : "", eventView : "none", event:"none", memberreq : "none", memberadd : "none"});
-            break;
-            default :  setDisplay({event : "none", memberreq : "none",eventView : "none",eventForm : "none", memberadd : "none"});
-            break;
-            case "Add Member" : setDisplay({memberreq : "none", event:"none" , memberadd : "",eventView : "none",eventForm : "none"});
-            break;
-            case "Designation": setDisplay({ designation: "", event: "none", member: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" });
+        switch (pageName) {
+            case "Event": setDisplay({ event: "", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
                 break;
-            case "Activity": setDisplay({ activity: "", event: "none", member: "none", designation: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" });
+            case "Member Request": setDisplay({ event: "none", memberreq: "", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
                 break;
-            case "CreateDesignationForm": setDisplay({ createDesignationForm: "", event: "none", member: "none", designation: "none", activity: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" });
+            case "EventView": setDisplay({ event: "none", memberreq: "none", eventView: "", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
                 break;
-            case "DesignationChair": setDisplay({ designationChair: "", event: "none", member: "none", designation: "none", activity: "none", createDesignationForm: "none", editAssigned: "none", editDesignation: "none" });
+            case "EventForm": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
                 break;
-            case "EditAssignedMemberForm": setDisplay({ editAssigned: "", event: "none", member: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editDesignation: "none" });
+            case "Add Member": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
                 break;
-            case "EditDesignation": setDisplay({ editDesignation: "", event: "none", member: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none" });
+            case "Designation": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
                 break;
+            case "Activity": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
+                break;
+            case "CreateDesignationForm": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "", designationChair: "none", editAssigned: "none", editDesignation: "none"});
+                break;
+            case "DesignationChair": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "", editAssigned: "none", editDesignation: "none"});
+                break;
+            case "EditAssignedMemberForm": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "", editDesignation: "none"});
+                break;
+            case "EditDesignation": setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: ""});
+                break;
+            default: setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberreq: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" });
+                break;
+        }
     }
       
    return (
@@ -76,4 +77,3 @@ function App() {
 }
 
 export default App;
-
