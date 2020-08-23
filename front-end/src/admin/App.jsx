@@ -4,7 +4,6 @@ import SideBar from './components/Dashboard/SideBar';
 import ContentHeader from './components/Dashboard/ContentHeader';
 import Footer from './components/Dashboard/Footer';
 import EventTable from './components/Event-management/EventTable';
-import MemberTable from './components/Member-management/MemberTable';
 import StudentBranchTable from './components/StudentBranch-management/StudentBranchTable';
 import StudentBranchForm from './components/StudentBranch-management/StudentBranchForm';
 import ManageStudentBranch from './components/StudentBranch-management/ManageStudentBranch';

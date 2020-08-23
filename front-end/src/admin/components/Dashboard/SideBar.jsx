@@ -68,12 +68,7 @@ function SideBar(props) {
            </a>
          </li>
 
-       </ul>
-     </nav>
-     {/* <!-- /.sidebar-menu --> */}
-   </div>
-   {/* <!-- /.sidebar --> */}
- </aside>);
+ 
                     <li className="nav-item pointer_cursor">
                         <a onClick={() => { props.onClick("Designation"); }} className="nav-link">
                             <i className="nav-icon fas fa-users"></i>
