@@ -17,11 +17,15 @@ import AssignedDesignationsTable from './components/Designation-management/Assig
 import EditAssignedMemberForm from './components/Designation-management/EditAssignedMemberForm';
 import EditDesignation from './components/Designation-management/EditDesignation';
 import ActivityTable from './components/Activity-log/ActivityTable';
+import EventReportTable from './components/EventReport-management/EventReportTable';
+import EventReportForm from './components/EventReport-management/EventReportForm';
+import EventReportApp from './components/EventReport-management/EventReportApp';
+import EventAttendance from './components/EventAttendance-management/EventAttendance';
 
 function App() {
 
     const [page, setPage] = useState("Event");
-    const [display, setDisplay] = useState({event : "none", eventView : "none",eventForm : "none", memberreq : "none", memberadd : "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none"});
+    const [display, setDisplay] = useState({event : "none", member : "none"});
 
     function showContent(pageName) {
         setPage(pageName);
@@ -54,6 +58,14 @@ function App() {
                 break;
             case "StudentBranch" : setDisplay({studentbranch : "", event:"none", studentbranchForm : "none" , managestudentbranch : "none" , eventView : "none",eventForm : "none", memberreq : "none", memberadd : "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none"});
                 break;
+            case "VReport" : setDisplay({eventR : "", event:"none", eventRAdd : "none", eventRApp : "none", eventAtt : "none"});
+            break;
+            case "AReport" : setDisplay({eventRAdd : "", eventR : "none", event:"none", eventRApp : "none", eventAtt : "none"});
+            break;
+            case "EReport" : setDisplay({eventRApp : "", eventR : "none", event:"none", eventRAdd : "none", eventAtt : "none"});
+            break;
+            case "EAttendance" : setDisplay({eventAtt : "", eventR : "none", event:"none", eventRAdd : "none", eventRApp : "none"});
+            break;
             default: setDisplay({ event: "none", memberreq: "none", eventView: "none", eventForm: "none", memberadd: "none", designation: "none", activity: "none", createDesignationForm: "none", designationChair: "none", editAssigned: "none", editDesignation: "none" , studentbranch : "none" , studentbranchForm : "none", managestudentbranch : "none" });
                 break;
         }
@@ -79,6 +91,10 @@ function App() {
         <ManageStudentBranch display={display.managestudentbranch}/>
         <StudentBranchForm display={display.studentbranchForm}/>
         <StudentBranchTable display={display.studentbranch} onClick={showContent}/>
+        <EventAttendance display={display.eventAtt}/>
+        <EventReportApp display={display.eventRApp} onClick={showContent}/>
+        <EventReportForm display={display.eventRAdd}/>
+        <EventReportTable display={display.eventR} onClick={showContent}/>
         
         <EventView display={display.eventView}/>
         <EventForm display={display.eventForm}/>
