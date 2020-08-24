@@ -22,13 +22,13 @@ function SideBar(props) {
        </div>
      </div>
 
-     {/* <!-- Sidebar Menu --> */}
-     <nav className="mt-2">
-       <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-         {/* <!-- Add icons to the links using the .nav-icon className
+            {/* <!-- Sidebar Menu --> */}
+            <nav className="mt-2">
+                <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    {/* <!-- Add icons to the links using the .nav-icon className
               with font-awesome or any other icon font library --> */}
 
-         {/* <li className="nav-item">
+                    {/* <li className="nav-item">
             <a onClick={props.onClick}  className="nav-link">
              <i className="nav-icon far fa-calendar-alt"></i>
              <p id="eventNav">
@@ -38,15 +38,15 @@ function SideBar(props) {
            </a>
          </li> */}
 
-        <li className="nav-item pointer_cursor">
-            <a onClick={() => {props.onClick("Event"); }}  className="nav-link">
-             <i className="nav-icon far fa-calendar-alt"></i>
-             <p>
-             Event Management
+                    <li className="nav-item pointer_cursor">
+                        <a onClick={() => { props.onClick("Event"); }} className="nav-link">
+                            <i className="nav-icon far fa-calendar-alt"></i>
+                            <p>
+                                Event Management
                <span className="badge badge-info right">2</span>
-             </p>
-           </a>
-         </li>
+                            </p>
+                        </a>
+                    </li>
 
           <li className="nav-item pointer_cursor">
            <a onClick={() => {props.onClick("Member Request"); }}  className="nav-link">
@@ -58,14 +58,53 @@ function SideBar(props) {
            </a>
          </li>
 
-         
+         <li className="nav-item pointer_cursor">
+           <a onClick={() => {props.onClick("StudentBranch"); }}  className="nav-link">
+             <i className="nav-icon fas fa-users"></i>
+             <p>
+               Student Branch Management
+               <span className="badge badge-info right">2</span>
+             </p>
+           </a>
+         </li>
 
-       </ul>
-     </nav>
-     {/* <!-- /.sidebar-menu --> */}
-   </div>
-   {/* <!-- /.sidebar --> */}
- </aside>);
+ 
+                    <li className="nav-item pointer_cursor">
+                        <a onClick={() => { props.onClick("Designation"); }} className="nav-link">
+                            <i className="nav-icon fas fa-users"></i>
+                            <p>
+                                Designation Management
+               <span className="badge badge-info right">2</span>
+                            </p>
+                        </a>
+                    </li>
+
+                    <li className="nav-item pointer_cursor">
+                        <a onClick={() => { props.onClick("Activity"); }} className="nav-link">
+                            <i className="nav-icon fas fa-users"></i>
+                            <p>
+                                Activity log
+               <span className="badge badge-info right">2</span>
+                            </p>
+                        </a>
+                    </li>
+
+                    <li className="nav-item pointer_cursor">
+                        <a onClick={() => { props.onClick("DesignationChair"); }} className="nav-link">
+                            <i className="nav-icon fas fa-users"></i>
+                            <p>
+                                Designation Management(Chair)
+               <span className="badge badge-info right">2</span>
+                            </p>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+            {/* <!-- /.sidebar-menu --> */}
+        </div>
+        {/* <!-- /.sidebar --> */}
+    </aside>);
 }
 
 
