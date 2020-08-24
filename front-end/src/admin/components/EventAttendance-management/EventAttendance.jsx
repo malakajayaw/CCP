@@ -35,9 +35,23 @@ function EventAttendance(props) {
                 <th>Manage</th>
               </tr>
               </thead>
+              <tbody>
+          
+          <tr>
+            <td>001</td>
+            <td>Current time</td>
+            <td> </td>
+            <td> </td>
+            <td className="project-actions text-center">    
+                <a className="btn btn-info btn-sm mr-1" href="#"  onClick={() => {props.onClick("EventForm"); }}>  <i className="fas fa-pencil-alt mr-1"/>Edit  </a>
+                <a className="btn btn-danger btn-sm mr-1" href="#"> <i className="fas fa-trash mr-1"/>Delete </a>
+              </td>
+          </tr>
+     
+          </tbody>
             </table>
           </div>
-          <button type="button" onClick={() => {props.onClick(""); }} className="btn btn-success float-right add_btn" >Save Changes</button>
+          <button type="button" onClick={() => {props.onClick("EventView"); }} className="btn btn-success float-right add_btn" >Save Changes</button>
       </div>
       {/* <!-- /.container-fluid --> */}
       </div>   

@@ -9,8 +9,8 @@ function EventView(props) {
       <h3 className="card-title">Event Details</h3>
       </div>
       <div className="col-6">
-      <button type="button"  onClick={() => {props.onClick("EReport"); }}  className="btn btn-info float-right add_btn ml-2">Event Report</button>
-      <button type="button"  onClick={() => {props.onClick("EAttendance"); }}  className="btn btn-success float-right add_btn">Event Attendance</button> 
+      <button type="button"  onClick={() => {props.onClick("EReport"); }}  className="btn btn-info float-right add_btn ml-2">Add Report</button>
+      <button type="button"  onClick={() => {props.onClick("EAttendance"); }}  className="btn btn-success float-right add_btn">Add Attendance</button> 
       </div>
       </div>
     </div>
