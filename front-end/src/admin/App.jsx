@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import NavBar from './components/Dashboard/NavBar';
+import OldSideBar from './components/Dashboard/OldSideBar';
 import SideBar from './components/Dashboard/SideBar';
 import ContentHeader from './components/Dashboard/ContentHeader';
 import Footer from './components/Dashboard/Footer';
@@ -20,6 +21,7 @@ import ActivityTable from './components/Activity-log/ActivityTable';
 import EventReportTable from './components/EventReport-management/EventReportTable';
 import EventReportForm from './components/EventReport-management/EventReportForm';
 import EventAttendance from './components/EventAttendance-management/EventAttendance';
+import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 function App() {
 
@@ -75,10 +77,19 @@ function App() {
    return (
     <div className="wrapper">
       <NavBar />
-      <SideBar onClick={showContent} />
       <div className="content-wrapper">
-        <ContentHeader pageName={page}/>
-        <EventTable  display={display.event} onClick={showContent}/>
+      <ContentHeader pageName={page}/>
+
+        <Router>
+        <SideBar/> 
+            <Switch>
+                    <Route path="/EventTable"> <EventTable /> </Route>
+                    <Route path="/MemberRequest"> <MemberRequest /> </Route>
+                    <Route path="/EventView/:id"> <EventView /> </Route>
+                    <Route path="/EventForm"> <EventForm /> </Route>
+            </Switch>
+        </Router>
+
         <MemberRequest display={display.memberreq} onClick={showContent}/>
         <MemberAdd display={display.memberadd} onClick={showContent}/>
         <DesignationTable display={display.designation} onClick={showContent} />
@@ -94,12 +105,13 @@ function App() {
         <EventReportForm display={display.eventRAdd} onClick={showContent}/>
         <EventReportTable display={display.eventR} onClick={showContent}/>
         
-        <EventView display={display.eventView} onClick={showContent}/>
+        {/* <EventView display={display.eventView} onClick={showContent}/>
         <EventForm display={display.eventForm} onClick={showContent}/>
-        {/* {page === "Event" && <EventTable />} */}
-        {/* {page === "Member" && <MemberTable />} */}
+        <EventTable  display={display.event} onClick={showContent}/> */}
       </div>
+  
       <Footer />
+      
     </div>
 );
 }

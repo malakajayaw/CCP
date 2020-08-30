@@ -153,7 +153,7 @@ function MemberAdd(props) {
       </div>
       {/* <!-- /.container-fluid --> */}
     </div>
-    {console.log("bye")}
+  
   </section>);
 
 }
