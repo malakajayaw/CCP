@@ -45,11 +45,25 @@ class EditAssignedMemberForm extends Component {
         formData.forEach((value, key) => { object[key] = value });
         var json = JSON.stringify(object);
         this.setState({ xvalue: json });
-        console.log(myForm);
-        console.log(formData);
-        console.log(object);
         console.log(json);
+
+        fetch('http://localhost:5000/malaka', {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: json
+        }).then(response => {
+            console.log(response)
+        })
+            .catch(error => {
+                console.log(error)
+            })
+
     }
+    
 
 }
 export default EditAssignedMemberForm;
