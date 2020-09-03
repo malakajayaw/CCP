@@ -88,26 +88,14 @@ function App() {
                         <Route path="/EventView/:id"> <EventView /> </Route>
                         <Route path="/EventForm"> <EventForm /> </Route>
                         <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
-                        <Route path="/DesignationChair"> <EditAssignedMemberForm /> </Route>
-                        <Route path="/ActivityLog"> <EditDesignation /> </Route>
+                        <Route path="/DesignationChair"> <AssignedDesignationsTable /> </Route>
+                        <Route path="/ActivityLog"> <ActivityTable /> </Route>
                         <Route path="/AddDesignation"> <CreateDesignationForm /> </Route>
+                        <Route path="/EditDesignation"> <EditDesignation /> </Route>
+                        <Route path="/AssignMember"> <EditAssignedMemberForm /> </Route>
                     </Switch>
                 </Router>
                 
-                <MemberRequest display={display.memberreq} onClick={showContent} />
-                <MemberAdd display={display.memberadd} onClick={showContent} />
-                <DesignationTable display={display.designation} onClick={showContent} />
-                <ActivityTable display={display.activity} />
-                <CreateDesignationForm display={display.createDesignationForm} />
-                <AssignedDesignationsTable display={display.designationChair} onClick={showContent} />
-                <EditAssignedMemberForm display={display.editAssigned} />
-                <EditDesignation display={display.editDesignation} />
-                <ManageStudentBranch display={display.managestudentbranch} />
-                <StudentBranchForm display={display.studentbranchForm} />
-                <StudentBranchTable display={display.studentbranch} onClick={showContent} />
-                <EventAttendance display={display.eventAtt} onClick={showContent} />
-                <EventReportForm display={display.eventRAdd} onClick={showContent} />
-                <EventReportTable display={display.eventR} onClick={showContent} />
 
                 {/* <EventView display={display.eventView} onClick={showContent}/>
         <EventForm display={display.eventForm} onClick={showContent}/>

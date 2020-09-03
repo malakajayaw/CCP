@@ -1,8 +1,10 @@
 const express = require("express");
+const cors = require('cors')
 const app = express();
 const port = process.env.PORT || 5000;
 
 //app.use(express.static('public'));
+app.use(cors());
 app.use(express.json());
 //app.use(express.bodyParser.urlencoded({ extended: true }));
 //app.use(express.bodyParser.json());
@@ -18,13 +20,29 @@ app.get("/events",(req,res) => {
 });
 
 
-app.post("/malaka", (req, res) => {
+app.post("/editAssignedMem",cors(), (req, res) => {
     res.setHeader('Content-Type', 'application/json')
     //res.send("Hi");
+    console.log("Edit Assign Mem");
     console.log(req.body);
     res.json({stat: 'good'});
 });
 
+app.post("/editDesignation", cors(), (req, res) => {
+    res.setHeader('Content-Type', 'application/json')
+    //res.send("Hi");
+    console.log("Edit Designation");
+    console.log(req.body);
+    res.json({ stat: 'good' });
+});
+
+app.post("/createDesignation", cors(), (req, res) => {
+    res.setHeader('Content-Type', 'application/json')
+    //res.send("Hi");
+    console.log("Create Designation");
+    console.log(req.body);
+    res.json({ stat: 'good' });
+});
 
 app.get("/EventView/:id", (req, res) => {
     res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type");

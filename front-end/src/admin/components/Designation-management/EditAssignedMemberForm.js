@@ -47,14 +47,14 @@ class EditAssignedMemberForm extends Component {
         this.setState({ xvalue: json });
         console.log(json);
 
-        fetch('http://localhost:5000/malaka', {
+        fetch('http://localhost:5000/editAssignedMem', {
             method: 'POST',
-            mode: 'no-cors',
+            mode: 'cors',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: json
+            body: JSON.stringify(object)
         }).then(response => {
             console.log(response)
         })

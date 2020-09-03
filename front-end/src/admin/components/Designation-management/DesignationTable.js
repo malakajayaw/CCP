@@ -1,5 +1,6 @@
 // JavaScript source code
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function DesignationTable(props) {
     return (<section className="content" style={{ display: props.display }}>
@@ -7,7 +8,7 @@ function DesignationTable(props) {
             <div className="card">
                 <div className="card-header">
                     {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-                    <button type="button" onClick={() => { props.onClick("CreateDesignationForm"); }} className="btn btn-success float-right add_btn">Add Designation</button>
+                    <Link to="/AddDesignation" type="button" className="btn btn-info float-right add_btn">Add Designation</Link>
                 </div>
                 {/* <!-- /.card-header --> */}
                 <div className="card-body">
@@ -26,7 +27,7 @@ function DesignationTable(props) {
                                 <td>SB 1</td>
                                 <td>Secretary</td>
                                 <td className="project-actions text-center">
-                                    <a className="btn btn-info btn-sm mr-1" onClick={() => { props.onClick("EditDesignation"); }}  href="#">  <i className="fas fa-pencil-alt mr-1" />Edit  </a>
+                                    <Link to="/EditDesignation" type="button" className="btn btn-info btn-sm mr-1"><i className="fas fa-pencil-alt mr-1" />Edit</Link>
                                     <a className="btn btn-danger btn-sm mr-1" href="#"> <i className="fas fa-trash mr-1" />Delete </a>
                                 </td>
                             </tr>
@@ -35,7 +36,7 @@ function DesignationTable(props) {
                                 <td>SB 1</td>
                                 <td>Cordinator</td>
                                 <td className="project-actions text-center">
-                                    <a className="btn btn-info btn-sm mr-1" onClick={() => { props.onClick("EditDesignation"); }}  href="#">  <i className="fas fa-pencil-alt mr-1" />Edit  </a>
+                                    <Link to="/EditDesignation" type="button" className="btn btn-info btn-sm mr-1"><i className="fas fa-pencil-alt mr-1" />Edit</Link>
                                     <a className="btn btn-danger btn-sm mr-1" href="#"> <i className="fas fa-trash mr-1" />Delete </a>
                                 </td>
                             </tr>
@@ -44,7 +45,7 @@ function DesignationTable(props) {
                                 <td>SB 2</td>
                                 <td>Treasurer</td>
                                 <td className="project-actions text-center">
-                                    <a className="btn btn-info btn-sm mr-1" onClick={() => { props.onClick("EditDesignation"); }}  href="#">  <i className="fas fa-pencil-alt mr-1" />Edit  </a>
+                                    <Link to="/EditDesignation" type="button" className="btn btn-info btn-sm mr-1"><i className="fas fa-pencil-alt mr-1" />Edit</Link>
                                     <a className="btn btn-danger btn-sm mr-1" href="#"> <i className="fas fa-trash mr-1" />Delete </a>
                                 </td>
                             </tr>

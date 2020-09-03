@@ -1,5 +1,6 @@
 // JavaScript source code
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function AssignedDesignationsTable(props) {
     return (<section className="content" style={{ display: props.display }}>
@@ -23,7 +24,7 @@ function AssignedDesignationsTable(props) {
                                 <td>Secretary</td>
                                 <td>Nimal Perera</td>
                                 <td className="project-actions text-center">
-                                    <a className="btn btn-info btn-sm mr-1" onClick={() => { props.onClick("EditAssignedMemberForm"); }} href="#">  <i className="fas fa-pencil-alt mr-1" />Edit  </a>
+                                    <Link to="/AssignMember" type="button" className="btn btn-info btn-sm mr-1"><i className="fas fa-pencil-alt mr-1" />Edit</Link>
                                     <a className="btn btn-danger btn-sm mr-1" href="#"> <i className="fas fa-trash mr-1" />Remove </a>
                                 </td>
                             </tr>

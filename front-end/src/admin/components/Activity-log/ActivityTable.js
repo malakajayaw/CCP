@@ -2,7 +2,7 @@
 import React from 'react';
 
 function ActivityTable(props) {
-    return (<section className="content" style={{ display: props.display }}>
+    return (<section className="content">
         <div className="container-fluid">
             <div className="card">
                 <div className="card-header">
