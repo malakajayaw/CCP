@@ -45,10 +45,23 @@ class EditDesignation extends Component {
         formData.forEach((value, key) => { object[key] = value });
         var json = JSON.stringify(object);
         this.setState({ xvalue: json });
-        console.log(myForm);
-        console.log(formData);
-        console.log(object);
         console.log(json);
+
+        fetch('http://localhost:5000/editDesignation', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(object)
+        }).then(response => {
+            console.log(response)
+        })
+            .catch(error => {
+                console.log(error)
+            })
+
     }
 
 }
