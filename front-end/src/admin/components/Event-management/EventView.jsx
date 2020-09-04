@@ -1,7 +1,20 @@
-import React from 'react';
+import React,{Component} from 'react';
 
-function EventView(props) {
-  return ( <section className="content" style={{display : props.display}}>
+class EventView extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {event : ['']}
+}
+
+ componentDidMount(){
+     fetch('/EventView/5')
+     .then(res => res.json())
+     .then(event => this.setState({event}, () => console.log('Event fetched..',event)));
+ };
+
+  render() {
+  return ( <section className="content" >
   <div className="card">
     <div className="card-header">
     <div className="row">
@@ -9,15 +22,15 @@ function EventView(props) {
       <h3 className="card-title">Event Details</h3>
       </div>
       <div className="col-6">
-      <button type="button"  onClick={() => {props.onClick("EReport"); }}  className="btn btn-info float-right add_btn ml-2">Add Report</button>
-      <button type="button"  onClick={() => {props.onClick("EAttendance"); }}  className="btn btn-success float-right add_btn">Add Attendance</button> 
+      <button type="button"  onClick={() => {this.props.onClick("EReport"); }}  className="btn btn-info float-right add_btn ml-2">Add Report</button>
+      <button type="button"  onClick={() => {this.props.onClick("EAttendance"); }}  className="btn btn-success float-right add_btn">Add Attendance</button> 
       </div>
       </div>
     </div>
     <div className="card-body">
       <div className="row">
         <div className="col-12 col-md-12 col-lg-8 order-1 order-md-1">
-        <img className="mb-4 shadow-lg bg-white rounded" alt="Event Banner" src="images/Events/event1.jpg" style={{float:"left", maxWidth:"100%", maxHeight:"300px" }}/>
+        <img className="mb-4 shadow-lg bg-white rounded" alt="Event Banner" src={__dirname+"images/Events/event1.jpg"} style={{float:"left", maxWidth:"100%", maxHeight:"300px" }}/>
      
           <div className="row">
             <div className="col-12 col-sm-6">
@@ -86,8 +99,8 @@ Registration fee of 500 LKR will be charged for Non-IEEE members and free entry 
   </div>
   {/* <!-- /.card --> */}
 
-</section>);
+</section>);}
 }
 
-
 export default EventView;
+
