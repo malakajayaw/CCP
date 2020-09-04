@@ -1,17 +1,27 @@
-import React from 'react';
+import React , {useState }from 'react';
+import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 
 
 function MemberRequest(props) {
+
+ 
+
+
+
+
   return (<section className="content" style={{ display: props.display }}>
     <div className="container-fluid">
     <h6>Member Requests</h6>
+
+
       <div className="card">
         
         <div className="card-header">
           {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
          
-          <button type="button" onClick={() => { props.onClick("Add Member"); }} className="btn btn-success btn-sm float-right add_btn">Manage Members</button>
+          <Link to="/MemberAdd" type="button" className="btn btn-success btn-sm float-right add_btn">Manage Members</Link>
+    
 
         </div>
         {/* <!-- /.card-header --> */}

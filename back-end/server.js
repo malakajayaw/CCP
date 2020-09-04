@@ -4,13 +4,11 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
-const cors = require("cors");
 
 
 const MongoClient = require("mongodb").MongoClient;
 const port = process.env.PORT || 5000;
 
-<<<<<<< HEAD
 
 //======================================================================================================
 //===================================import routes    =================================================
@@ -49,13 +47,6 @@ app.use("/member", memberRoutes);
 //======================================================================================================
 
 
-=======
-//app.use(express.static('public'));
-app.use(cors());
-app.use(express.json());
-//app.use(express.bodyParser.urlencoded({ extended: true }));
-//app.use(express.bodyParser.json());
->>>>>>> DesignationManagement_2_Malaka
 
 app.get("/events",(req,res) => {
     const events = [
