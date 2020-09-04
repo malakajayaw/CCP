@@ -4,7 +4,7 @@ const port = process.env.PORT || 5000;
 
 app.get("/events",(req,res) => {
     const events = [ 
-         {eventId : "001", eventName : "How to Invest in Share Market", hostingAffiliation : "IEEE Young Professionals Sri Lanka", date : "March 27, 2018" ,time : "5:30 pm to 8:30 pm", status : "Open",
+        {eventId : "001", eventName : "How to Invest in Share Market", hostingAffiliation : "IEEE Young Professionals Sri Lanka", date : "March 27, 2018" ,time : "5:30 pm to 8:30 pm", status : "Open",
          venue:"Colombo Stock Exchange Auditorium, World trade Centre, Colombo 1",
          description: "YP LETs Talks is one of the key events of the IEEE Young Professionals Sri Lanka Section which brings together young professionals representing each and every domain of engineering",banner:"event1",
          eventForm : "https://docs.google.com/forms/d/e/1FAIpQLScnAo1ZYa9_9U17CtsOtf6XG2A8ONW9eIvdQdjIPhc7IGWIFw/viewform?embedded=true"},
@@ -18,7 +18,7 @@ app.get("/events",(req,res) => {
          venue:"Dialog Auditorium, Dr Colvin R de Silva Mw, Colombo",
          description:"Want to get started on the Google Cloud, but don't know where to begin?",banner:"event3",
          eventForm : "https://docs.google.com/forms/d/e/1FAIpQLScnAo1ZYa9_9U17CtsOtf6XG2A8ONW9eIvdQdjIPhc7IGWIFw/viewform?embedded=true"}
-    ];
+       ];
     res.json(events);
 });
 

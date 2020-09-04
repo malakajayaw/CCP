@@ -38,31 +38,8 @@ function App() {
             </Switch>
             <SideBar/> 
         </Router>
-
-        {/* <MemberRequest display={display.memberreq} onClick={showContent}/>
-        <MemberAdd display={display.memberadd} onClick={showContent}/>
-        <DesignationTable display={display.designation} onClick={showContent} />
-        <ActivityTable display={display.activity}/>
-        <CreateDesignationForm display={display.createDesignationForm} />
-        <AssignedDesignationsTable display={display.designationChair} onClick={showContent} />
-        <EditAssignedMemberForm display={display.editAssigned} />
-        <EditDesignation display={display.editDesignation} />
-        <ManageStudentBranch display={display.managestudentbranch}/>
-        <StudentBranchForm display={display.studentbranchForm}/>
-        <StudentBranchTable display={display.studentbranch} onClick={showContent}/>
-        <EventAttendance display={display.eventAtt} onClick={showContent}/>
-        <EventReportForm display={display.eventRAdd} onClick={showContent}/>
-        <EventReportTable display={display.eventR} onClick={showContent}/> */}
-        
-        {/* <EventView display={display.eventView} onClick={showContent}/>
-        <EventForm display={display.eventForm} onClick={showContent}/>
-        <EventTable  display={display.event} onClick={showContent}/> */}
-
-   
       </div>
-  
       <Footer />
-      
     </div>
 );
 }

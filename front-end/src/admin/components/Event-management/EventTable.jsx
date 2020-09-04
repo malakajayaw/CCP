@@ -5,44 +5,22 @@ import ContentHeader from '../Dashboard/ContentHeader'
 
 function EventTable(props){
 
+  const initialValue = {events : ['']}; 
+  const [size,setSize] = useState('10');   
+
+    for(var i = 0; i < size; i++) {
+      initialValue.events.push('');
+  }
   const [events,setEvents] = useState({events : ['']});
-
-  useEffect(() => {
-    fetch('/events')
-    .then(res => res.json())
-    .then(events => setEvents({events}));
-  } ,[] )
-
- const Tablerows = events.events.map((events,index) => <tr key={index} >
-                <td>{events.eventName} </td>
-                <td >{events.hostingAffiliation}</td>
-                <td>{events.date}</td>
-               <td ><span className ={events.status ==='Open' ? "badge badge-success" : "badge badge-danger"  }>{events.status}</span> </td>      
-               <td className="project-actions text-center">   
-                    <Link to={"/EventView/"+events.eventId}  className="btn btn-primary btn-sm mr-1"><i className="fas fa-folder mr-1"/> View</Link> 
-                    <Link to="/EventForm"  className="btn btn-info btn-sm mr-1 editEventBtn"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
-                    <Link to="/EventView" className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1"/> Delete</Link> 
-                </td>
-            </tr>) 
-
-            function tableRows(eventt){
-              return (
-              <tr key={eventt.index} >
-                <td>{eventt.eventName} </td>
-                <td >{eventt.hostingAffiliation}</td>
-                <td>{eventt.date}</td>
-               <td ><span className ={eventt.status ==='Open' ? "badge badge-success" : "badge badge-danger"  }>{eventt.status}</span> </td>      
-               <td className="project-actions text-center">   
-                    <Link to={"/EventView/"+eventt.eventId}  className="btn btn-primary btn-sm mr-1"><i className="fas fa-folder mr-1"/> View</Link> 
-                    <Link to="/EventForm"  className="btn btn-info btn-sm mr-1 editEventBtn"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
-                    <Link to="/EventView" className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1"/> Delete</Link> 
-                </td>
-            </tr>);
-            }
-        
+ 
+    useEffect(() => {
+      fetch('/events')
+      .then(res => res.json())
+      .then(events => {setSize(events.length); setEvents({events})});
+    } ,[] )
 
    return ( <div>
-      <ContentHeader pageName={props.page}/>
+    <ContentHeader pageName={props.page}/>
    <section className="content"  >
    <div className="container-fluid">
      <div className="card">
@@ -64,9 +42,19 @@ function EventTable(props){
            </tr>
            </thead>
            <tbody>
-       
-                {Tablerows}
-
+    
+         { events.events.map((events,index) => <tr key={index} >
+                <td>{events.eventName}</td>
+          <td >{events.hostingAffiliation}</td>
+          <td>{events.date}</td>
+          <td ><span className ={events.status ==='Open' ? "badge badge-success" : "badge badge-danger"  }>{events.status}</span> </td>      
+          <td className="project-actions text-center">   
+              <Link to={"/EventView/"+events.eventId}  className="btn btn-primary btn-sm mr-1"><i className="fas fa-folder mr-1"/> View</Link> 
+              <Link to="/EventForm"  className="btn btn-info btn-sm mr-1 editEventBtn"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
+              <Link to="/EventView" className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1"/> Delete</Link> 
+          </td>
+      </tr>) }
+  
            </tbody>
            <tfoot>
            <tr>
