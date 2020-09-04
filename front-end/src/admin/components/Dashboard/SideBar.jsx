@@ -26,19 +26,19 @@ export default function Sidebar() {
             <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                    
             <li className="nav-item pointer_cursor">
-            <a  className="nav-link">
+            <Link id="eventNav"  className="nav-link" to="/EventTable">
                     <i className="nav-icon far fa-calendar-alt"></i>
-                    <Link to="/EventTable">Event Management</Link>
+                   Event Management
                     <span className="badge badge-info right"></span>
-              </a>
+                    </Link>
             </li>
 
             <li className="nav-item pointer_cursor">
-            <a  className="nav-link">
+            <Link id="memberNav" className="nav-link" to="/MemberRequest">
                     <i className="nav-icon fas fa-users"></i>
-                    <Link to="/MemberRequest">Member Management</Link>
+                  Member Management
                     <span className="badge badge-info right"></span>
-                </a>
+                    </Link>
             </li>
  
           <li className="nav-item pointer_cursor">
@@ -88,7 +88,7 @@ export default function Sidebar() {
              {/* <!-- /.sidebar-menu --> */}
          </div>
          {/* <!-- /.sidebar --> */}
-       
+     
      </aside>  );
  }
  
