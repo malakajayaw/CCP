@@ -1,7 +1,10 @@
 import React from 'react';
+import ContentHeader from '../Dashboard/ContentHeader'
 
 function EventForm(props) {
-  return (    <section className="content w-100" style={{display : props.display}}>
+  return (    <div>
+    <ContentHeader pageName={props.page}/>
+     <section className="content w-100" style={{display : props.display}}>
   <div className="container-fluid d-flex justify-content-center">
   <div className="card card-warning w-50">
   <div className="card-header">
@@ -74,7 +77,8 @@ function EventForm(props) {
 </div>
 </div>
 </div>
-</section>);
+</section>
+</div>);
 }
 
 

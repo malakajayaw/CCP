@@ -24,19 +24,17 @@ import EventAttendance from './components/EventAttendance-management/EventAttend
 import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 function App() {
-
+  
    return (
     <div className="wrapper">
       <NavBar />
       <div className="content-wrapper">
-      <ContentHeader pageName={page}/>
-
         <Router>
             <Switch>
-                    <Route path="/EventTable"> <EventTable /> </Route>
+                    <Route path="/EventTable"> <EventTable page="Event Management"/> </Route>
                     <Route path="/MemberRequest"> <MemberRequest /> </Route>
-                    <Route path="/EventView/:eventId"> <EventView /> </Route>
-                    <Route path="/EventForm"> <EventForm /> </Route>
+                    <Route path="/EventView/:eventId"> <EventView page="Event Management"/> </Route>
+                    <Route path="/EventForm"> <EventForm page="Event Management"/> </Route>
             </Switch>
             <SideBar/> 
         </Router>
@@ -55,8 +53,14 @@ function App() {
         <EventAttendance display={display.eventAtt} onClick={showContent}/>
         <EventReportForm display={display.eventRAdd} onClick={showContent}/>
         <EventReportTable display={display.eventR} onClick={showContent}/> */}
-    
+        
+        {/* <EventView display={display.eventView} onClick={showContent}/>
+        <EventForm display={display.eventForm} onClick={showContent}/>
+        <EventTable  display={display.event} onClick={showContent}/> */}
+
+   
       </div>
+  
       <Footer />
       
     </div>

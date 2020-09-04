@@ -1,8 +1,9 @@
 import React from 'react';
 import {useParams } from "react-router-dom";
 import { useState,useEffect } from 'react';
+import ContentHeader from '../Dashboard/ContentHeader'
 
-function EventView() {
+function EventView(props) {
 
     const [event, setEvent] = useState({event : ['','']});
     let { eventId } = useParams();
@@ -21,7 +22,9 @@ function EventView() {
       }
     }
 
-  return ( <section className="content" >
+  return (  <div>
+    <ContentHeader pageName={props.page}/>
+    <section className="content" >
   <div className="card">
     <div className="card-header">
     <div className="row">
@@ -98,7 +101,8 @@ function EventView() {
   </div>
   {/* <!-- /.card --> */}
 
-</section>);
+</section>
+</div>);
 }
 
 export default EventView;

@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { useState ,useEffect} from 'react';
+import ContentHeader from '../Dashboard/ContentHeader'
 
-function EventTable(){
+function EventTable(props){
 
   const [events,setEvents] = useState({events : ['']});
 
@@ -40,7 +41,9 @@ function EventTable(){
             }
         
 
-   return ( <section className="content"  >
+   return ( <div>
+      <ContentHeader pageName={props.page}/>
+   <section className="content"  >
    <div className="container-fluid">
      <div className="card">
        <div className="card-header">
@@ -80,6 +83,7 @@ function EventTable(){
    {/* <!-- /.container-fluid --> */}
    </div> 
  </section>
+ </div>
  );
 
 }
