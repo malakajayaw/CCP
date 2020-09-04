@@ -34,15 +34,15 @@
     <link  rel="stylesheet" href="AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link  rel="stylesheet" href="AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+ 
     <!-- custom stylesheet -->
     <link rel="stylesheet" href="styles.css">
-
   </head>
   <body class="hold-transition sidebar-mini layout-fixed">
-   
+  
     <div id="root"></div>
+  
 
-    
     <!-- jQuery -->
     <script src="AdminLTE-3.0.5/plugins/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -75,10 +75,9 @@
     <!-- AdminLTE App -->
     <script src="AdminLTE-3.0.5/dist/js/adminlte.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="AdminLTE-3.0.5/dist/js/pages/dashboard.js"></script>
+    <!-- <script src="AdminLTE-3.0.5/dist/js/pages/dashboard.js"></script> -->
     <!-- AdminLTE for demo purposes -->
     <script src="AdminLTE-3.0.5/dist/js/demo.js"></script>
-
     <!-- DataTables -->
     <script src="AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -87,16 +86,29 @@
 
     <!-- page script -->
     <script>
-
       $(function (){
-      
-        $("table.dataTable").DataTable({
-           "responsive": true,
-           "autoWidth": false,
-        });
-      
+        
+      document.getElementById("eventNav").addEventListener("click",delayLoad );
+      //document.getElementById("memberNav").addEventListener("click",delayLoad );
   
-          $('#eventTime').daterangepicker({
+     function delayLoad () { setTimeout(loadDataTable,100) };
+     function delayLoadJs () { setTimeout(loadJs,10) };
+     var editEventBtns = [];
+     function loadDataTable(){
+      document.getElementById("addEventBtn").addEventListener("click",delayLoadJs );
+      editEventBtns =  $("a.editEventBtn");
+      $("#eventTable").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+          });
+          
+          console.log(editEventBtns);
+          for (var i = 0; i < editEventBtns.length; i++) {
+            editEventBtns[i].addEventListener('click', delayLoadJs);}
+        }
+
+       function loadJs(){
+       $('#eventTime').daterangepicker({
             timePicker: true,
             timePickerIncrement: 15,
             locale: {
@@ -105,11 +117,11 @@
         });
 
          $('.select2').select2();
+
+         $('.textarea').summernote()
   
-        bsCustomFileInput.init();
-
-
-        
+        bsCustomFileInput.init();  
+      }
        });
     </script>
 
