@@ -74,7 +74,7 @@ function MemberAdd(props) {
                     </div>
                     <div class="row">
                       <div class="col-12">
-                        <a href="#" class="btn btn-secondary">Cancel</a>
+                        <button  class="btn btn-secondary">Cancel</button>
                         <input type="submit" value="Create Member Profile" class="btn btn-success float-right" />
                       </div>
                     </div>
