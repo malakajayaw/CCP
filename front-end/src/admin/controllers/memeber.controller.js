@@ -24,3 +24,18 @@ export const add_member_requset = (data) => {
             })
     })
 }
+
+// 
+export const get_all_requsests = () => {
+
+    return new Promise( (resolve,reject) => {
+        return axios.get(`${Config.host}${Config.port}/member/all/request`)
+            .then( result => {
+                console.log(result.data);
+                    resolve({code : 200 , data : result.data })
+            })
+            .catch( err => {
+                reject({ code : 0 , error : err})
+            })
+    })
+}

@@ -63,7 +63,7 @@ let Member = new Schema({
     },
     newrequest : {
         type: Boolean,
-        default: false
+        default: true
     },
     type: {
         type: String,

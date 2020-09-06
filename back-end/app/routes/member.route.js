@@ -6,4 +6,7 @@ const MemberController = require('../controllers/member.controller')
 router.post('/requset',  MemberController.requsetMemberShip);
 
 
+router.get('/all/request',  MemberController.get_all_requsts);
+
+
 module.exports = router;
