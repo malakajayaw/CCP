@@ -7,10 +7,10 @@ function Carousel() {
         <li data-target="#carousel-example-2" data-slide-to="1"></li>
         <li data-target="#carousel-example-2" data-slide-to="2"></li>
       </ol>
-      <div className="carousel-inner" role="listbox">
+      <div className="carousel-inner" role="listbox" style={{maxHeight:"400px"}}>
       <div className="carousel-item active">
           <div className="view">
-            <img className="d-block w-100" style={{maxWidth:"100%", maxHeight:"500px" ,minHeight:"500px"}}src="images/Events/event6.jpg"
+            <img className="d-block w-100" src="images/Events/event6.jpg"
               alt="Third slide" />
             <div className="mask rgba-black-slight"></div>
           </div>
@@ -19,7 +19,7 @@ function Carousel() {
         </div>
         <div className="carousel-item">
           <div className="view">
-            <img className="d-block w-100" style={{maxWidth:"100%", maxHeight:"500px" , minHeight:"500px"}} src="images/Events/event5.jpg"
+            <img className="d-block w-100"  src="images/Events/event5.jpg"
               alt="Second slide" />
             <div className="mask rgba-black-slight"></div>
           </div>
@@ -28,7 +28,7 @@ function Carousel() {
         </div>
         <div className="carousel-item ">
           <div className="view">
-            <img className="d-block w-100" style={{maxWidth:"100%", maxHeight:"500px" , minHeight:"500px"}} src="images/Events/event4.jpg"
+            <img className="d-block w-100"  src="images/Events/event4.jpg"
               alt="First slide"/>
             <div className="mask rgba-black-slight"></div>
           </div>

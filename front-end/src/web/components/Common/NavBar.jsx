@@ -1,19 +1,20 @@
 import React from 'react';
+import {  Link } from "react-router-dom";
 
 function NavBar() {
    return (
-    <nav className="navbar navbar-expand-lg navbar-light scrolling-navbar" >
-     
-       <a className="navbar-brand ml-5" style={{color:"white"}} href="#">
+    <nav className="mb-1 navbar navbar-expand-lg navbar-light scrolling-navbar" >
+    
+        <Link to="/" className="navbar-brand ml-5" style={{color:"white"}} >
        <img src="images/ieee-icon.png" height="40" alt="IEEE logo" />
-         </a> 
+       </Link>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
         aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent-333">
 
-      <ul className="navbar-nav ml-auto nav-flex-icons">
+      <ul className="navbar-nav ml-auto">
 
       <li className="nav-item active">
         <a className="nav-link" href="#">Home
