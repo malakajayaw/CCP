@@ -66,7 +66,6 @@ class CreateDesignationForm extends Component {
             body: JSON.stringify(object)
         }).then(response => {
             console.log(response)
-            
         })
             .catch(error => {
                 console.log(error)
