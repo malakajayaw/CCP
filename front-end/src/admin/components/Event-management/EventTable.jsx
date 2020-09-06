@@ -25,7 +25,7 @@ function EventTable(props){
    <div className="container-fluid">
      <div className="card">
        <div className="card-header">
-         <Link to="/EventForm" type="button" id="addEventBtn" className="btn btn-success float-right add_btn ml-2"> Add Event</Link>
+         <Link to="/admin/EventForm" type="button" id="addEventBtn" className="btn btn-success float-right add_btn ml-2"> Add Event</Link>
          <Link to="/VReport" type="button" className="btn btn-info float-right add_btn"> Event Reports</Link>
          {/* <button type="button"  onClick={() => {this.props.onClick("VReport"); }}  className="btn btn-info float-right add_btn">Event Reports</button> */}
        </div>
@@ -49,9 +49,9 @@ function EventTable(props){
           <td>{events.date}</td>
           <td ><span className ={events.status ==='Open' ? "badge badge-success" : "badge badge-danger"  }>{events.status}</span> </td>      
           <td className="project-actions text-center">   
-              <Link to={"/EventView/"+events.eventId}  className="btn btn-primary btn-sm mr-1"><i className="fas fa-folder mr-1"/> View</Link> 
-              <Link to="/EventForm"  className="btn btn-info btn-sm mr-1 editEventBtn"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
-              <Link to="/EventView" className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1"/> Delete</Link> 
+              <Link to={"/admin/EventView/"+events.eventId}  className="btn btn-primary btn-sm mr-1"><i className="fas fa-folder mr-1"/> View</Link> 
+              <Link to="/admin/EventForm"  className="btn btn-info btn-sm mr-1 editEventBtn"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
+              <Link to="/admin/EventView" className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1"/> Delete</Link> 
           </td>
       </tr>) }
   

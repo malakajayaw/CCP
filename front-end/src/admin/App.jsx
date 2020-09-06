@@ -31,10 +31,10 @@ function App() {
       <div className="content-wrapper">
         <Router>
             <Switch>
-                    <Route path="/EventTable"> <EventTable page="Event Management"/> </Route>
+                    <Route path="/admin/EventTable"> <EventTable page="Event Management"/> </Route>
                     <Route path="/MemberRequest"> <MemberRequest /> </Route>
-                    <Route path="/EventView/:eventId"> <EventView page="Event Management"/> </Route>
-                    <Route path="/EventForm"> <EventForm page="Event Management"/> </Route>
+                    <Route path="/admin/EventView/:eventId"> <EventView page="Event Management"/> </Route>
+                    <Route path="/admin/EventForm"> <EventForm page="Event Management"/> </Route>
             </Switch>
             <SideBar/> 
         </Router>

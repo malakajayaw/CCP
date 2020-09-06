@@ -26,7 +26,7 @@ export default function Sidebar() {
             <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                    
             <li className="nav-item pointer_cursor">
-            <Link id="eventNav"  className="nav-link" to="/EventTable">
+            <Link id="eventNav"  className="nav-link" to="/admin/EventTable">
                     <i className="nav-icon far fa-calendar-alt"></i>
                    Event Management
                     <span className="badge badge-info right"></span>
@@ -89,6 +89,7 @@ export default function Sidebar() {
          </div>
          {/* <!-- /.sidebar --> */}
      
+ <script src="custom.js"></script>
      </aside>  );
  }
  

@@ -9,8 +9,8 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
             <Switch>
-                    <Route path="/index">  <WebApp /> </Route>
                     <Route path="/admin">  <App /> </Route>
+                    <Route path="/">  <WebApp /> </Route>
             </Switch>
         </Router>
   </React.StrictMode>,
