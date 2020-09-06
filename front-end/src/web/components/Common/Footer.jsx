@@ -17,18 +17,8 @@ function Footer() {
             </a>
           </li>
           <li className="list-inline-item">
-            <a className="btn-floating btn-gplus mx-1">
-              <i className="fab fa-google-plus-g"> </i>
-            </a>
-          </li>
-          <li className="list-inline-item">
             <a className="btn-floating btn-li mx-1">
               <i className="fab fa-linkedin-in"> </i>
-            </a>
-          </li>
-          <li className="list-inline-item">
-            <a className="btn-floating btn-dribbble mx-1">
-              <i className="fab fa-dribbble"> </i>
             </a>
           </li>
         </ul>

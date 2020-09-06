@@ -2,7 +2,7 @@ import React from 'react';
 
 function NavBar() {
    return (
-    <nav className="navbar navbar-expand-lg fixed-top navbar-light scrolling-navbar" >
+    <nav className="navbar navbar-expand-lg navbar-light scrolling-navbar" >
      
        <a className="navbar-brand ml-5" style={{color:"white"}} href="#">
        <img src="images/ieee-icon.png" height="40" alt="IEEE logo" />
