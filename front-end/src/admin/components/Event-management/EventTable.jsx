@@ -26,7 +26,7 @@ function EventTable(props){
      <div className="card">
        <div className="card-header">
          <Link to="/EventForm" type="button" id="addEventBtn" className="btn btn-success float-right add_btn ml-2"> Add Event</Link>
-         <Link to="/VReport" type="button" className="btn btn-info float-right add_btn"> Event Reports</Link>
+         <Link to="/Admin/EventReportTable" type="button" className="btn btn-info float-right add_btn"> Event Reports</Link>
          {/* <button type="button"  onClick={() => {this.props.onClick("VReport"); }}  className="btn btn-info float-right add_btn">Event Reports</button> */}
        </div>
        {/* <!-- /.card-header --> */}

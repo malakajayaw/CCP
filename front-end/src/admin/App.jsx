@@ -35,6 +35,9 @@ function App() {
                     <Route path="/MemberRequest"> <MemberRequest /> </Route>
                     <Route path="/EventView/:eventId"> <EventView page="Event Management"/> </Route>
                     <Route path="/EventForm"> <EventForm page="Event Management"/> </Route>
+                    <Route path="/Admin/EventReportTable"> <EventReportTable/> </Route>
+                    <Route path="/Admin/EventReportForm"> <EventReportForm/> </Route>
+                    <Route path="/Admin/EventAttendance"> <EventAttendance/> </Route>
             </Switch>
             <SideBar/> 
         </Router>
