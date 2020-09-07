@@ -24,6 +24,24 @@ export const add_member_requset = (data) => {
             })
     })
 }
+export const accept_or_reject = (data) => {
+
+   var  datanew = {
+        memberShipNo :data.memberShipNo,
+        state : data.state
+    }
+    console.log(datanew);
+    return new Promise( (resolve,reject) => {
+        return axios.post(`${Config.host}${Config.port}/member/req/action` , { ...datanew })
+            .then( result => {
+                console.log(result.data);
+                    resolve({code : 200 , message : result.data.message })
+            })
+            .catch( err => {
+                reject({ code : 0 , error : err})
+            })
+    })
+}
 
 // 
 export const get_all_requsests = () => {

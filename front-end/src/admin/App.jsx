@@ -8,6 +8,7 @@ import EventView from './components/Event-management/EventView';
 import EventForm from './components/Event-management/EventForm';
 import MemberRequest from './components/Member-management/MemberRequest';
 import MemberAdd from './components/Member-management/MemberAdd';
+import MemberList from './components/Member-management/MemberList';
 import DesignationTable from './components/Designation-management/DesignationTable';
 import CreateDesignationForm from './components/Designation-management/CreateDesignationForm';
 import EditAssignedMemberForm from './components/Designation-management/EditAssignedMemberForm';

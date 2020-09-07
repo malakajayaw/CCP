@@ -7,6 +7,7 @@ router.post('/requset',  MemberController.requsetMemberShip);
 
 
 router.get('/all/request',  MemberController.get_all_requsts);
+router.post('/req/action',  MemberController.acceptOrReject);
 
 
 module.exports = router;

@@ -66,12 +66,12 @@ const MemberAdd = (props) => {
 
   return (<section className="content" style={{ display: props.display }}>
     <div className="container-fluid">
-    <h6>Add New Member</h6>
+    <h6>Update Member Details</h6>
       <div className="card">
         <div className="card-header">
 
        
-          <Link to="/Admin/MemberRequest" type="button" className="btn btn-success btn-sm float-right add_btn">Requests</Link>
+          <Link to="/Admin/MemberList" type="button" className="btn btn-info btn-sm float-right add_btn">Active Members</Link>
         
 
         </div>
@@ -82,7 +82,7 @@ const MemberAdd = (props) => {
               <div class="col-md-6">
                 <div class="card card-success">
                   <div class="card-header">
-                    <h3 class="card-title">Add New Member</h3>
+                    <h3 class="card-title">Edit Details</h3>
                   </div>
                 <form onSubmit={onSubmit}>
 
@@ -105,13 +105,6 @@ const MemberAdd = (props) => {
                     </div>
 
                     <div class="form-group">
-                      <label for="inputMName">Name as per the Membership Card</label>
-                      <input type="text" id="inputMName" class="form-control"  required name="addmname"
-                      onChange={handleChange}
-                      value={member.addmname}/>
-                    </div>
-
-                    <div class="form-group">
                       <label for="inputMNumber">Membership Number</label>
                       <input type="text" id="inputMNumber" class="form-control" required name="addmnumber"
                       onChange={handleChange}
@@ -126,34 +119,12 @@ const MemberAdd = (props) => {
                     </div>
 
                     <div class="form-group">
-                      <label for="inputOEmail">IEEE Email</label>
-                      <input type="text" id="inputOEmail" class="form-control"  required name="addoemail"
-                      onChange={handleChange}
-                      value={member.addoemail}/>
-                    </div>
-
-                    <div class="form-group">
                       <label for="inputPhone">Contact No.</label>
                       <input type="text" id="inputPhone" class="form-control" required name="addphone" 
                       onChange={handleChange}
                       value={member.addphone}/>
                     </div>
 
-                    <div class="form-group">
-                      <label for="inputPassword">Password</label>
-                      <input type="password" id="inputPassword" class="form-control" required name="addpassword"
-                      onChange={handleChange}
-                      value={member.addpassword}/>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="inputCPassword">Confirm Password</label>
-                      <input type="password" id="inputCPassword" class="form-control" name="addcpassword"
-                      onChange={handleChange}
-                      
-                      value={member.addcpassword}
-                      />
-                    </div>
                     <div class="row">
                       <div class="col-12">
                         <button type="button" class="btn btn-secondary" onClick={clear}>Cancel</button>
