@@ -6,7 +6,7 @@ const Member = require('../model/member.model');
 //======================================================================================================
 //================================== Request sent Memeber      =============================================
 //====================================================================================================== 
-exports.requsetMemberShip = function (req, res, next) {
+exports.add_report_add = function (req, res, next) {
     let new_member = Member({
         memberShipNo: req.body.memberShipNo,
         fname: req.body.fname,
@@ -38,35 +38,4 @@ exports.requsetMemberShip = function (req, res, next) {
         }
     })
 }
-//======================================================================================================
-//================================== Get all requsest       =============================================
-//====================================================================================================== 
-exports.get_all_requsts = function (req, res, next) {
-console.log("Called");
-    // check userdata
-    Member.find({
-        newrequest : true , 
-    }, function (err, docs) {
-        if (docs.length != 0) {
-            
-            
-                res.status(200).send({
-                    data: docs
-                });
-            
-        } else {
-            res.status(403).send('No data found')
-        }
-    })
-}
 
-
-//======================================================================================================
-//================================== accept or reject      =============================================
-//====================================================================================================== 
-
-exports.acceptOrReject = function ( req, res, next) {
- const log =    Member.findOneAndUpdate({
-        memberShipNo: memberShipNo
-    })
-}

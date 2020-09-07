@@ -13,6 +13,12 @@ import CreateDesignationForm from './components/Designation-management/CreateDes
 import EditAssignedMemberForm from './components/Designation-management/EditAssignedMemberForm';
 import EditDesignation from './components/Designation-management/EditDesignation';
 import AdminLogin from './components/Login/AdminLogin';
+
+
+import EventReportTable from './components/EventReport-management/EventReportTable'
+import EventReportForm from './components/EventReport-management/EventReportForm'
+import EventAttendance from './components/EventAttendance-management/EventAttendance'
+
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function App() {
