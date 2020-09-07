@@ -4,9 +4,10 @@ import { get_all_requsests} from '../../controllers/memeber.controller'
 import Config from '../../controllers/config.controller'
 
 
-function MemberRequest(props) {
+
+  const MemberRequest = (props) => {
  
-  let [selectMember, setSelectMember] = useState({ 
+  const [selectMember, setSelectMember] = useState({ 
     addfname : '' , 
     addlname : '' ,
     addmname : '' ,
@@ -25,44 +26,56 @@ function MemberRequest(props) {
     
   });
  
-  let [members, Setmembers] = useState({ 
-   members : []
-  });
+  const [members, Setmembers] = useState([]);
 
- 
-  useEffect ( async () => {
-    const result = await get_all_requsests()
-    console.log(result);
-    if(result.code == 200)
-    {
-      members =  await result.data.data
-     console.log(members);
-    
+  useEffect(() => {
+    getData();
+}, []); 
+
+
+
+async function getData() {
+      var res = await get_all_requsests()
+      Setmembers(res.data.data);
   
-    }
+}
 
 
-  });
+const readydata = () => {
+  return   members.map((member, i) => {
+    return(  
+      <tr key={i}>
+      <td>{i + 1}</td>
+      <td>20204646</td>
+    <td>{member.nameAsMemberShip}</td>
+    <td>{member.email}</td>
+      <td className="project-actions text-center">
+        <a className="btn btn-success btn-sm mr-1 my-2" onClick={() => { props.onClick("EditDesignation"); }} href="#">  <i className="fas fa-pencil-alt mr-1" />Accept  </a>
+        <a className="btn btn-danger btn-sm mr-1 my-2" href="#"> <i className="fas fa-trash mr-1" />Decline </a>
+      </td>
+    </tr>
+    )
+  })
+}
+
+
+  // useEffect ( async () => {
+  //   const result = await get_all_requsests()
+  //   console.log(result);
+  //   if(result.code == 200)
+  //   {
+  //  var memberslist =  await result.data.data
+  //    console.log(memberslist);
+     
+  
+  //   }
+
+
+  // });
 
 
   
-  const get_requset_list = () => {
-    return members.map(item =>{
-        return (
-          <tr key={item}>
-        <td> 1</td>
-        <td>{item.memberShipNo}</td>
-        <td>Prabhasha Amarathunga</td>
-        <td>SLIIT Student Branch</td>
-        <td className="project-actions text-center">
-          <a className="btn btn-success btn-sm mr-1 my-2" onClick={() => { props.onClick("EditDesignation"); }} href="#">  <i className="fas fa-pencil-alt mr-1" />Accept  </a>
-          <a className="btn btn-danger btn-sm mr-1 my-2" href="#"> <i className="fas fa-trash mr-1" />Decline </a>
-        </td>
-      </tr>
-        );
-    })
-      
-  }
+
 
 
 
@@ -93,25 +106,8 @@ function MemberRequest(props) {
               </tr>
             </thead>
             <tbody>
-           {
-              
-           }
-              {/* <tr>
-                <td>1</td>
-                <td>20204646</td>
-                <td>Prabhasha Amarathunga</td>
-                <td>SLIIT Student Branch</td>
-                <td className="project-actions text-center">
-                  <a className="btn btn-success btn-sm mr-1 my-2" onClick={() => { props.onClick("EditDesignation"); }} href="#">  <i className="fas fa-pencil-alt mr-1" />Accept  </a>
-                  <a className="btn btn-danger btn-sm mr-1 my-2" href="#"> <i className="fas fa-trash mr-1" />Decline </a>
-                </td>
-              </tr> */}
-         
-        
-      
+            { readydata() }
             </tbody>
-
-
           </table>
         </div>
       </div>

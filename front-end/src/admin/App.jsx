@@ -7,7 +7,7 @@ import EventTable from './components/Event-management/EventTable';
 import EventView from './components/Event-management/EventView';
 import EventForm from './components/Event-management/EventForm';
 import MemberRequest from './components/Member-management/MemberRequest';
-import MemberAdd from './components/Member-management/MemberAdd';
+import MemberManage from './components/Member-management/MemberManage';
 import DesignationTable from './components/Designation-management/DesignationTable';
 import CreateDesignationForm from './components/Designation-management/CreateDesignationForm';
 import EditAssignedMemberForm from './components/Designation-management/EditAssignedMemberForm';
@@ -45,7 +45,7 @@ function App() {
                         <Route path="/DesignationChair"> <EditAssignedMemberForm /> </Route>
                         <Route path="/ActivityLog"> <EditDesignation /> </Route>
                         <Route path="/AddDesignation"> <CreateDesignationForm /> </Route>
-                        <Route path="/MemberAdd"> <MemberAdd /> </Route>
+                        <Route path="/MemberManage"> <MemberManage /> </Route>
                     </Switch>
                 </Router>
                 

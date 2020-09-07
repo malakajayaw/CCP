@@ -69,4 +69,4 @@ exports.acceptOrReject = function ( req, res, next) {
  const log =    Member.findOneAndUpdate({
         memberShipNo: memberShipNo
     }, 
-}
+ )}
