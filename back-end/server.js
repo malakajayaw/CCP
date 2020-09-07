@@ -35,6 +35,15 @@ app.get("/assigndesignations", (req, res) => {
     res.json(assd);
 });
 
+app.get("/activitylog", (req, res) => {
+    const actl = [
+        { actId: 1, editId: '0124', activity: 'Insert', table: 'Member', date:'02/10/2020 18:10:04',param:'Nimal' },
+        { actId: 2, editId: '0136', activity: 'Delete', table: 'Event', date: '02/10/2020 18:10:04', param: 'SLIIT IEEE Con' },
+        { actId: 3, editId: '0175', activity: 'Update', table: 'Affiliation', date: '02/10/2020 18:10:04', param: 'SLIIT SB' }
+    ];
+    res.json(actl);
+});
+
 app.post("/editAssignedMem",cors(), (req, res) => {
     res.setHeader('Content-Type', 'application/json')
     //res.send("Hi");

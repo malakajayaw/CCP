@@ -1,94 +1,70 @@
-// JavaScript source code
-import React from 'react';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-function ActivityTable(props) {
-    return (<section className="content">
-        <div className="container-fluid">
-            <div className="card">
-                <div className="card-header">
-                    {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
+class ActivityTable extends Component {
+
+
+    constructor(props) {
+        super(props);
+        this.state = { act: [''] }
+    }
+
+    componentDidMount() {
+
+        fetch('http://localhost:5000/activitylog')
+            .then(res => res.json())
+            .then(act => this.setState({ act }, () => console.log('Activity log fetched..', act)));
+    };
+
+    render() {
+        console.log(this.props);
+
+        return (<section className="content">
+            <div className="container-fluid">
+                <div className="card">
+                    <div className="card-header">
+                        <Link to="/AddDesignation" type="button" className="btn btn-info float-right add_btn">Add Designation</Link>
+                    </div>
+                    {/* <!-- /.card-header --> */}
+                    <div className="card-body">
+                        <table id="desTable" className="table table-bordered table-striped dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Member ID</th>
+                                    <th>Action</th>
+                                    <th>Table Title</th>
+                                    <th>Date & Time</th>
+                                    <th>Parameters</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {this.state.act.map(act => <tr key={act.actId} >
+                                    <td>{act.editId}</td>
+                                    <td>{act.activity}</td>
+                                    <td>{act.table}</td>
+                                    <td>{act.date}</td>
+                                    <td>{act.param}</td>
+                                </tr>)}
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Designation ID</th>
+                                    <th>Branch</th>
+                                    <th>Designation Title</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
-                {/* <!-- /.card-header --> */}
-                <div className="card-body">
-                    <table id="activityTable" className="table table-bordered table-striped dataTable">
-                        <thead>
-                            <tr>
-                                <th>Edited By</th>
-                                <th>Action</th>
-                                <th>Table</th>
-                                <th>Date/Time</th>
-                                <th>Parameters</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>0124</td>
-                                <td>Insert</td>
-                                <td>Member</td>
-                                <td>02/10/2020 18:10:04</td>
-                                <td>00076,"Nimal Perera"</td>
-                            </tr>
-                            <tr>
-                                <td>0124</td>
-                                <td>Insert</td>
-                                <td>Member</td>
-                                <td>02/10/2020 18:10:04</td>
-                                <td>00076,"Nimal Perera"</td>
-                            </tr>
-                            <tr>
-                                <td>0124</td>
-                                <td>Insert</td>
-                                <td>Member</td>
-                                <td>02/10/2020 18:10:04</td>
-                                <td>00076,"Nimal Perera"</td>
-                            </tr>
-                            <tr>
-                                <td>0124</td>
-                                <td>Insert</td>
-                                <td>Member</td>
-                                <td>02/10/2020 18:10:04</td>
-                                <td>00076,"Nimal Perera"</td>
-                            </tr>
-                            <tr>
-                                <td>0124</td>
-                                <td>Insert</td>
-                                <td>Member</td>
-                                <td>02/10/2020 18:10:04</td>
-                                <td>00076,"Nimal Perera"</td>
-                            </tr>
-                            <tr>
-                                <td>0124</td>
-                                <td>Insert</td>
-                                <td>Member</td>
-                                <td>02/10/2020 18:10:04</td>
-                                <td>00076,"Nimal Perera"</td>
-                            </tr>
-                            <tr>
-                                <td>0124</td>
-                                <td>Insert</td>
-                                <td>Member</td>
-                                <td>02/10/2020 18:10:04</td>
-                                <td>00076,"Nimal Perera"</td>
-                            </tr>
-                            
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Edited By</th>
-                                <th>Action</th>
-                                <th>Table</th>
-                                <th>Date/Time</th>
-                                <th>Parameters</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
+                {/* <!-- /.container-fluid --> */}
             </div>
-            {/* <!-- /.container-fluid --> */}
-        </div>
 
-    </section>
-    );
+        </section>
+        );
+    }
 }
 
 
