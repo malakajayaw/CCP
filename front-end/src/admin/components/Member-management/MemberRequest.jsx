@@ -1,6 +1,6 @@
 import React , {useState, useEffect  }from 'react';
 import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import { get_all_requsests} from '../../controllers/memeber.controller'
+import { get_all_requsests, accept_or_reject} from '../../controllers/memeber.controller'
 import Config from '../../controllers/config.controller'
 
 
@@ -36,10 +36,23 @@ import Config from '../../controllers/config.controller'
 
 async function getData() {
       var res = await get_all_requsests()
-      Setmembers(res.data.data);
+   await   Setmembers(res.data.data);
   
 }
 
+const ace_or_rej = async (mem, state) => {
+var  data = {
+    memberShipNo : mem,
+    state : state,
+  }
+
+  const result = await accept_or_reject(data)
+  if(result.code == 200){
+
+    Config.setToast(result.message)
+     getData()
+  }
+}
 
 const readydata = () => {
   return   members.map((member, i) => {
@@ -50,34 +63,13 @@ const readydata = () => {
     <td>{member.nameAsMemberShip}</td>
     <td>{member.email}</td>
       <td className="project-actions text-center">
-        <a className="btn btn-success btn-sm mr-1 my-2" onClick={() => { props.onClick("EditDesignation"); }} href="#">  <i className="fas fa-pencil-alt mr-1" />Accept  </a>
-        <a className="btn btn-danger btn-sm mr-1 my-2" href="#"> <i className="fas fa-trash mr-1" />Decline </a>
+        <a className="btn btn-success btn-sm mr-1 my-2" onClick={()=> ace_or_rej(member.memberShipNo, true)}>  <i className="fas fa-pencil-alt mr-1" />Accept  </a>
+        <a className="btn btn-danger btn-sm mr-1 my-2" onClick={()=> ace_or_rej(member.memberShipNo, false)}> <i className="fas fa-trash mr-1" />Decline </a>
       </td>
     </tr>
     )
   })
 }
-
-
-  // useEffect ( async () => {
-  //   const result = await get_all_requsests()
-  //   console.log(result);
-  //   if(result.code == 200)
-  //   {
-  //  var memberslist =  await result.data.data
-  //    console.log(memberslist);
-     
-  
-  //   }
-
-
-  // });
-
-
-  
-
-
-
 
   return (<section className="content" style={{ display: props.display }}>
     <div className="container-fluid">
@@ -89,7 +81,9 @@ const readydata = () => {
         <div className="card-header">
           {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
          
-          <Link to="/MemberAdd" type="button" className="btn btn-success btn-sm float-right add_btn">Manage Members</Link>
+      
+          <Link to="/Admin/MemberAdd" type="button" className="btn btn-success btn-sm float-right add_btn mr-2 my-2">Add New Member</Link>
+          <Link to="/Admin/MemberList" type="button" className="btn btn-info btn-sm float-right add_btn mr-2 my-2">Active members</Link>
     
 
         </div>
