@@ -3,11 +3,8 @@ const cors = require('cors')
 const app = express();
 const port = process.env.PORT || 5000;
 
-//app.use(express.static('public'));
 app.use(cors());
 app.use(express.json());
-//app.use(express.bodyParser.urlencoded({ extended: true }));
-//app.use(express.bodyParser.json());
 
 app.get("/events",(req,res) => {
     const events = [
@@ -19,6 +16,24 @@ app.get("/events",(req,res) => {
     //console.log(req.body);
 });
 
+app.get("/designations", (req, res) => {
+    console.log("designations got request");
+    const des = [
+        { desId: 1, branchName: 'SB 1', branchid: 1, desTitle: 'Secretary'},
+        { desId: 2, branchName: 'SB 2', branchid: 2, desTitle: '	Cordinator'},
+        { desId: 3, branchName: 'SB 3', branchid: 3, desTitle: 'Treasurer'}
+    ];
+    res.json(des);
+});
+
+app.get("/assigndesignations", (req, res) => {
+    const assd = [
+        { assdId: 1, dTitle: 'Secretary', dMem: 'Malaka Jayawardhana'},
+        { assdId: 2, dTitle: 'Treassurer', dMem: 'Anuka Jayasundara'},
+        { assdId: 3, dTitle: 'Cordinator', dMem: 'Maneesha Rajapakshe'}
+    ];
+    res.json(assd);
+});
 
 app.post("/editAssignedMem",cors(), (req, res) => {
     res.setHeader('Content-Type', 'application/json')
