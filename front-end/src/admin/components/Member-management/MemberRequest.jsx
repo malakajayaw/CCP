@@ -107,7 +107,6 @@ const readydata = () => {
       </div>
       {/* <!-- /.container-fluid --> */}
     </div>
-    {console.log("bye")}
   </section>);
 }
 
