@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export default function Sidebar() {
 
@@ -26,7 +26,7 @@ export default function Sidebar() {
             <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                    
             <li className="nav-item pointer_cursor">
-            <Link id="eventNav"  className="nav-link" to="/EventTable">
+            <Link id="eventNav"  className="nav-link" to="/admin/EventTable">
                     <i className="nav-icon far fa-calendar-alt"></i>
                    Event Management
                     <span className="badge badge-info right"></span>
@@ -34,7 +34,7 @@ export default function Sidebar() {
             </li>
 
             <li className="nav-item pointer_cursor">
-            <Link id="memberNav" className="nav-link" to="/MemberRequest">
+            <Link id="memberNav" className="nav-link" to="/Admin/MemberRequest">
                     <i className="nav-icon fas fa-users"></i>
                   Member Management
                     <span className="badge badge-info right"></span>
@@ -47,36 +47,36 @@ export default function Sidebar() {
               <p>
                 Student Branch Management
                 <span className="badge badge-info right">2</span>
-              </p>
-            </a>
-          </li>
- 
-  
-                     <li className="nav-item pointer_cursor">
-                         <a  className="nav-link">
-                             <i className="nav-icon fas fa-users"></i>
-                             <p>
-                                 Designation Management
+                            </p>
+                        </a>
+                    </li>
+
+
+                    <li className="nav-item pointer_cursor">
+                        <a className="nav-link">
+                            <i className="nav-icon fas fa-users"></i>
+                            <p>
+                                <Link to="/DesignationAdmin">Designation Management</Link>
                 <span className="badge badge-info right">2</span>
-                             </p>
-                         </a>
-                     </li>
- 
-                     <li className="nav-item pointer_cursor">
-                         <a  className="nav-link">
-                             <i className="nav-icon fas fa-users"></i>
-                             <p>
-                                 Activity log
+                            </p>
+                        </a>
+                    </li>
+
+                    <li className="nav-item pointer_cursor">
+                        <a className="nav-link">
+                            <i className="nav-icon fas fa-users"></i>
+                            <p>
+                                <Link to="/ActivityLog">Activity log</Link>
                 <span className="badge badge-info right">2</span>
-                             </p>
-                         </a>
-                     </li>
- 
-                     <li className="nav-item pointer_cursor">
-                         <a  className="nav-link">
-                             <i className="nav-icon fas fa-users"></i>
-                             <p>
-                                 Designation Management(Chair)
+                            </p>
+                        </a>
+                    </li>
+
+                    <li className="nav-item pointer_cursor">
+                        <a className="nav-link">
+                            <i className="nav-icon fas fa-users"></i>
+                            <p>
+                                <Link to="/DesignationChair">Designation Management(Chair)</Link>
                 <span className="badge badge-info right">2</span>
                              </p>
                          </a>
@@ -89,6 +89,7 @@ export default function Sidebar() {
          </div>
          {/* <!-- /.sidebar --> */}
      
+ <script src="custom.js"></script>
      </aside>  );
  }
  

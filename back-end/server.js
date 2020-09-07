@@ -1,6 +1,48 @@
 const express = require("express");
+const cors = require('cors')
 const app = express();
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const morgan = require("morgan");
+
+
+const MongoClient = require("mongodb").MongoClient;
 const port = process.env.PORT || 5000;
+
+
+//======================================================================================================
+//===================================import routes    =================================================
+//======================================================================================================
+const memberRoutes = require("./app/routes/member.route");
+
+
+
+
+//======================================================================================================
+//===================================import config files ===============================================
+//======================================================================================================
+
+// import db
+const dbConfig = require("./app/config/db.config");
+
+//======================================================================================================
+//===================================open apps services  ===============================================
+//======================================================================================================
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(morgan("dev"));
+mongoose.set("useCreateIndex", true);
+
+//======================================================================================================
+//=================================== defines routes     ===============================================
+//======================================================================================================
+
+//user routes
+app.use("/member", memberRoutes);
+
+
+
 
 app.get("/events",(req,res) => {
     const events = [ 
@@ -20,15 +62,39 @@ app.get("/events",(req,res) => {
          eventForm : "https://docs.google.com/forms/d/e/1FAIpQLScnAo1ZYa9_9U17CtsOtf6XG2A8ONW9eIvdQdjIPhc7IGWIFw/viewform?embedded=true"}
        ];
     res.json(events);
+    //console.log(req.body);
 });
 
-app.get("/EventView/:id",(req,res) => {
-    const event1 = [
-        {eventId : "001", eventName : "How to Invest in Share Market", hostingAffiliation : "IEEE Young Professionals Sri Lanka", date : "March 27, 2018" ,time : "5:30 pm to 8:30 pm", status : "Open",
-        venue:"Colombo Stock Exchange Auditorium, World trade Centre, Colombo 1",
-        description: "YP LETs Talks is one of the key events of the IEEE Young Professionals Sri Lanka Section which brings together young professionals representing each and every domain of engineering",banner:"event1",
-        eventForm : "https://docs.google.com/forms/d/e/1FAIpQLScnAo1ZYa9_9U17CtsOtf6XG2A8ONW9eIvdQdjIPhc7IGWIFw/viewform?embedded=true"},
-        ['Anuka Jaysundara','Prabhasha Amarathunga',' Maneesha Rajapaksha',' Malaka Jayawardena', 'Thimithi Weerathunga']
+
+app.post("/editAssignedMem",cors(), (req, res) => {
+    res.setHeader('Content-Type', 'application/json')
+    //res.send("Hi");
+    console.log("Edit Assign Mem");
+    console.log(req.body);
+    res.json({stat: 'good'});
+});
+
+app.post("/editDesignation", cors(), (req, res) => {
+    res.setHeader('Content-Type', 'application/json')
+    //res.send("Hi");
+    console.log("Edit Designation");
+    console.log(req.body);
+    res.json({ stat: 'good' });
+});
+
+app.post("/createDesignation", cors(), (req, res) => {
+    res.setHeader('Content-Type', 'application/json')
+    //res.send("Hi");
+    console.log("Create Designation");
+    console.log(req.body);
+    res.json({ stat: 'good' });
+});
+
+app.get("/EventView/:id", (req, res) => {
+    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type");
+    console.log(req.params.id);
+    const event = [
+        {eventId : 3, eventName : 'Cloud Study Jam 2018', hostingAffiliation : 'GDG Cloud Sri Lanka',date : "January 13, 2018" ,time : "9:00 am to 3:30 pm", status : "Closed"}
     ];
 
     const event2 = [
@@ -57,5 +123,48 @@ app.get("/EventView/:id",(req,res) => {
 });
 
 app.get("/contact",(req,res) => {res.send("Contact me at anuka@GMAIL.COM");});
+
+
+//======================================================================================================
+//================================== Handlle Error     ===========================================
+//======================================================================================================
+
+app.use((req, res, next) => {
+    const error = new Error("Not found");
+    error.status = 404;
+    next(error);
+  });
+  app.use((error, req, res, next) => {
+    console.log(error);
+  
+    res.status(error.status || 500);
+    res.json({
+      error: {
+        message: error.message,
+      },
+    });
+  });
+  
+
+//======================================================================================================
+//=================================== critical functions     ===========================================
+//======================================================================================================
+
+// Connecting to the database
+mongoose
+  .connect(dbConfig.url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Successfully connected to the database now");
+  })
+  .catch((err) => {
+    console.log("Could not connect to the database. Exiting now...", err);
+    process.exit();
+  });
+
+
+
 
 app.listen(port, () => {console.log('Server started on port '+port);});
