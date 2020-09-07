@@ -1,4 +1,5 @@
-import React from 'react';
+import React , {useState, useEffect}from 'react';
+import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 function AdminLogin(props) {
   return ( 
@@ -41,7 +42,7 @@ function AdminLogin(props) {
           </div>
 
           <div class="col-4">
-            <button class="btn btn-primary btn-block">Sign In</button>
+          <Link to="/Event" type="button" className="btn btn-primary btn-block">Sign In</Link>
           </div>
 
         </div>
