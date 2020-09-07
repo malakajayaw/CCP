@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
 import moment from 'moment';
+import Config from '../../controllers/config.controller'
+import useForceUpdate from 'use-force-update';
+
+import { add_event_report} from '../../controllers/event.report.controller'
 
 const  EventReportAdd = (props) => {
+  const forceUpdate = useForceUpdate();
 
   const [submit, setSubmit] = useState({
     value1 : "Not Submitted"
@@ -22,8 +27,63 @@ const  EventReportAdd = (props) => {
 
 
   useEffect(() => {
+    let newDate = new Date()
+
+    const today =   moment(newDate).format("MMM Do YY");  
+    setToday(today)
     todayfucn()
   });
+
+
+
+  let [event, setEvent] = useState({ 
+    eventname : "IEEE" , 
+    submissionstate : 'Not Submitted' ,
+    date : today ,
+    submissioncomment : '' ,
+   
+
+ 
+    
+  });
+
+  const handleChange =  (e) =>  {
+    setEvent({...event, [e.target.name]: e.target.value });
+ }
+
+
+  const onSubmit =  async (e) => {
+    e.preventDefault()
+
+
+
+
+    
+    const result = await add_event_report(event)
+    console.log(result);
+    if(result.code == 200)
+    {
+      clear()
+      Config.setToast("Report Added Successfully")
+      forceUpdate();
+
+    }
+
+
+
+  }
+
+  
+  const clear = () => {
+    console.log("Clear call");
+    setEvent({
+      eventname : "IEEE" , 
+    submissionstate : 'Not Submitted' ,
+    date : today ,
+    submissioncomment : '' ,
+    })
+  }
+
 
   return ( <section className="content" style={{display : props.display}}>
       <div className="container-fluid">
@@ -45,16 +105,22 @@ const  EventReportAdd = (props) => {
             </div>
 
             <div class="card-body">
+
+              <form  onSubmit={onSubmit}>
               <div class="form-group">
                 <label for="inputFName">Report Name : </label>
                 <input type="file" id="inputReportName" class="form-control"/>
                 
 
                 <label for="inputEName">Event Name : </label>
-                <input type="text" id="inputEventName" class="form-control" readOnly value="IEEE Iwarai"/>   
+                <input type="text" id="inputEventName" 
+                  name="eventname"
+                class="form-control"  value={event.eventname} readOnly />   
 
                 <label for="inputEName">Submission Status : </label>
-                <input type="text" id="inputSubmissionStatus" class="form-control" readOnly value={submit.value1}/>  
+                <input type="text" 
+                 name="submissionstate"
+                id="inputSubmissionStatus" class="form-control" readOnly value={event.submissionstate}/>  
 
                 <label>Date :</label>
 
@@ -62,19 +128,30 @@ const  EventReportAdd = (props) => {
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                   </div>
-                    <input type="text" value={today} class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask/>
+                    <input type="text"  value={today}
+                      name="date"
+                    class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask/>
                 </div>   
 
               <div class="form-group">
                 <label for="inputSCmnt">Submission Comments : </label>
-                <input type="text" id="inputSComments" class="form-control"/>
+                <input type="text" id="inputSComments" class="form-control"
+                  onChange={handleChange}
+                  value={event.submissioncomment}
+                  name="submissioncomment"
+                />
               </div>
 
               <div class="card-footer" style={{padding:'0px '}}>
-                  <button type="button" class="btn btn-default float-right">Clear</button>
+                  {/* <button type="button" class="btn btn-default float-right">Clear</button> */}
                   <button type="submit" class="btn btn-info">Add Submission</button>
              </div>
             </div>
+
+
+            </form>
+
+
           </div>
          </div>
         </div>

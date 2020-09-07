@@ -8,19 +8,20 @@ let EventReport = new Schema({
 
   // },
 
-  reportname: {
-    type: String,
-    required: true,
-  },
+  // reportname: {
+  //   type: String,
+  //   required: true,
+  // },
 
   submssionState: {
     type: String,
-    required: true,
+  },
+  reportname: {
+    type: String,
   },
 
   submissionComment: {
     type: String,
-    required: true,
   },
 
   updated_at: {
@@ -28,8 +29,8 @@ let EventReport = new Schema({
   },
   created_at: {
     type: String,
-    default: Date.now(),
+   
   },
 });
 
-module.exports = mongoose.model("member", EventReport);
+module.exports = mongoose.model("eventreports", EventReport);

@@ -20,8 +20,12 @@ import EventReportTable from './components/EventReport-management/EventReportTab
 import EventReportForm from './components/EventReport-management/EventReportForm'
 import EventAttendance from './components/EventAttendance-management/EventAttendance'
 
+import EventReportView from './components/EventReport-management/EventReportView'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+toast.configure() 
 function App() {
   
    return (
@@ -37,6 +41,8 @@ function App() {
                     <Route path="/Admin/EventReportTable"> <EventReportTable/> </Route>
                     <Route path="/Admin/EventReportForm"> <EventReportForm/> </Route>
                     <Route path="/Admin/EventAttendance"> <EventAttendance/> </Route>
+                    <Route path="/Admin/EventReportView/:id"> <EventReportView/> </Route>
+                    {/* <Route path="/Admin/EventAttendance"> <EventAttendance/> </Route> */}
             </Switch>
             <SideBar/> 
         </Router>

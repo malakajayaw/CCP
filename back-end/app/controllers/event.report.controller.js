@@ -1,41 +1,66 @@
 //import User model
-const Member = require('../model/member.model');
+const EventReport = require("../model/eventreport.model");
 
-
+const moment = require('moment')
 
 //======================================================================================================
 //================================== Request sent Memeber      =============================================
-//====================================================================================================== 
+//======================================================================================================
 exports.add_report_add = function (req, res, next) {
-    let new_member = Member({
-        memberShipNo: req.body.memberShipNo,
-        fname: req.body.fname,
-        lname: req.body.lname,
-        nameAsMemberShip: req.body.nameAsMemberShip,
-        email: req.body.email,
-        ieeeMail: req.body.ieeeMail,
-        profilepic: req.body.profilepic,
-        lastlogin: req.body.lastlogin,
-        contactNo: req.body.contactNo,
-        password: req.body.password,
-    });
-    console.log(new_member);
-    // check userdata
-    Member.find({
-        memberShipNo: new_member.memberShipNo
-    }, function (err, docs) {
-        if (docs.length == 0) {
-            //save 
-            new_member.save(function (err) {
-                if (err) {
-                    return next(err);
-                }
-                console.log("Sent requset successfully ");
-                res.status(201).send('Sent Requset Successfully');
-            })
-        } else {
-            res.status(403).send('Already have')
-        }
-    })
-}
+  console.log(req.body);
 
+  let newDate = new Date();
+
+  const today = moment(newDate).format("MMM Do YY");
+  let new_report = EventReport({
+    reportname: req.body.reportname,
+    submssionState: req.body.submssionState,
+    submissionComment: req.body.submissionComment,
+    created_at: today,
+  });
+
+  try {
+    new_report.save();
+    return res.status(200).send("Added");
+  } catch (error) {
+    throw error;
+  }
+  return res.status(403).send("Already have");
+};
+exports.get_all_reports = async function (req, res, next) {
+  console.log("Called");
+  // check userdata
+  const result = await EventReport.find();
+
+  return res.status(200).send({
+    data: result,
+  });
+};
+
+exports.delete_report = async function (req, res, next) {
+  var id = req.body.id;
+
+  try {
+    const log = await EventReport.findOneAndDelete({
+      _id: id,
+    });
+    return res.status(200).send("Deleted");
+  } catch (error) {
+    return res.status(405).send("Something went wrong");
+  }
+};
+
+exports.get_spec_report_del = async function (req, res, next) {
+  var id = req.body.id;
+
+  try {
+    const log = await EventReport.findOne({
+      _id: id,
+    });
+    return res.status(200).send({
+      data: log,
+    });
+  } catch (error) {
+    return res.status(405).send("Something went wrong");
+  }
+};
