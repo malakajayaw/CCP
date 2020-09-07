@@ -6,8 +6,8 @@
     "\\front-end\\src",
     "\\front-end\\src\\admin",
     "\\front-end\\src\\admin\\components",
-    "\\front-end\\src\\admin\\components\\Designation-management"
+    "\\front-end\\src\\admin\\components\\Dashboard"
   ],
-  "SelectedNode": "\\front-end\\src\\admin\\components\\Designation-management\\EditAssignedMemberForm.js",
+  "SelectedNode": "\\back-end\\server.js",
   "PreviewInSolutionExplorer": false
 }
