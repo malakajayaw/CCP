@@ -1,30 +1,24 @@
 import React , {useState, useEffect}from 'react';
-import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useParams} from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 
-import { add_member_requset} from '../../controllers/memeber.controller'
+import { update_member} from '../../controllers/memeber.controller'
 import Config from '../../controllers/config.controller'
-const MemberAdd = (props) => {
+const MemberEdit = (props) => {
+
+  const id = useParams()
   const { register, handleSubmit } = useForm();
 
  
   let [member, setMember] = useState({ 
-    addfname : '' , 
-    addlname : '' ,
-    addmname : '' ,
-    addmnumber : '' ,
-    addpemail : '' ,
-    addoemail : '' ,
-    addphone : '' ,
-    addpassword : '' ,
-    addcpassword : '' ,
 
-    // editmnumber : '' ,
-    // editfname : '' ,
-    // editlname : '' ,
-    // editpemail : '' ,
-    // editphone : '' ,
+
+    editmnumber : '' ,
+    editfname : '' ,
+    editlname : '' ,
+    editpemail : '' ,
+    editphone : '' ,
     
   });
 
@@ -33,32 +27,20 @@ const MemberAdd = (props) => {
 
     // alert(JSON.stringify(member))
     e.preventDefault()
-    const result = await add_member_requset (member)
+    const result = await update_member (member, id)
     console.log(result);
     if(result.code == 200)
     {
-      clear()
-      Config.setToast("Request sent successfully")
+      Config.setToast("Update  successfully")
     }
 
 
 
   }
 
-  const clear = () => {
-    console.log("Clear call");
-    setMember({
-      addfname : '' , 
-      addlname : '' ,
-      addmname : '' ,
-      addmnumber : '' ,
-      addpemail : '' ,
-      addoemail : '' ,
-      addphone : '' ,
-      addpassword : '' ,
-      addcpassword : '' ,
-    })
-  }
+//  const getData = async  (id) =>{
+//       const result = await
+//  }
 
   const handleChange =  (e) =>  {
      setMember({...member, [e.target.name]: e.target.value });
@@ -77,58 +59,60 @@ const MemberAdd = (props) => {
         </div>
         <div className="card-body">
 
-          <section class="content">
-            <div class="row justify-content-md-center">
-              <div class="col-md-6">
-                <div class="card card-success">
-                  <div class="card-header">
-                    <h3 class="card-title">Edit Details</h3>
+          <section className="content">
+            <div className="row justify-content-md-center">
+              <div className="col-md-6">
+                <div className="card card-success">
+                  <div className="card-header">
+                    <h3 className="card-title">Edit Details</h3>
                   </div>
                 <form onSubmit={onSubmit}>
 
 
-                  <div class="card-body">
-                    <div class="form-group">
+                  <div className="card-body">
+                    <div className="form-group">
                     <label >First Name</label>
                       <input type="text" className="form-control" required name="addfname"  
-                      value={member.addfname}
+                      value={member.editfname}
                         onChange={handleChange}
                       />
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="inputLName">Last Name</label>
-                      <input type="text" id="inputLName" class="form-control" required name="addlname"
+                      <input type="text" id="inputLName" className="form-control" required name="addlname"
                        onChange={handleChange}
                        
-                       value={member.addlname}/>
+                       value={member.editlname}/>
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="inputMNumber">Membership Number</label>
-                      <input type="text" id="inputMNumber" class="form-control" required name="addmnumber"
+                      <input type="text" id="inputMNumber" className="form-control" required name="addmnumber"
                       onChange={handleChange}
-                      value={member.addmnumber}/>
+                      value={member.editmnumber}
+                      readOnly
+                      />
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="inputPEmail">Email (Used for IEEE Registration)</label>
-                      <input type="email" id="inputPEmail" class="form-control" required  name="addpemail"
+                      <input type="email" id="inputPEmail" className="form-control" required  name="addpemail"
                       onChange={handleChange}
-                      value={member.addpemail}/>
+                      value={member.editpemail}/>
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="inputPhone">Contact No.</label>
-                      <input type="text" id="inputPhone" class="form-control" required name="addphone" 
+                      <input type="text" id="inputPhone" className="form-control" required name="addphone" 
                       onChange={handleChange}
-                      value={member.addphone}/>
+                      value={member.editphone}/>
                     </div>
 
-                    <div class="row">
-                      <div class="col-12">
-                        <button type="button" class="btn btn-secondary" onClick={clear}>Cancel</button>
-                        <button type="submit"  class="btn btn-success float-right" >Create Member Profile </button>
+                    <div className="row">
+                      <div className="col-12">
+                        {/* <button type="button" className="btn btn-secondary" onClick={clear}>Cancel</button> */}
+                        <button type="submit"  className="btn btn-success float-right" >Update Member Profile </button>
                       </div>
                     </div>
 
@@ -152,4 +136,4 @@ const MemberAdd = (props) => {
 
 }
 
-export default MemberAdd;
+export default MemberEdit;

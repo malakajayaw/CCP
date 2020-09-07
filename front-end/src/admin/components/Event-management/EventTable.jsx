@@ -20,7 +20,6 @@ function EventTable(props){
     } ,[] )
 
    return ( <div>
-    <ContentHeader pageName={props.page}/>
    <section className="content"  >
    <div className="container-fluid">
      <div className="card">

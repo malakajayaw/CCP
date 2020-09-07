@@ -13,7 +13,7 @@ import DesignationTable from './components/Designation-management/DesignationTab
 import CreateDesignationForm from './components/Designation-management/CreateDesignationForm';
 import EditAssignedMemberForm from './components/Designation-management/EditAssignedMemberForm';
 import EditDesignation from './components/Designation-management/EditDesignation';
-import AdminLogin from './components/Login/AdminLogin';
+import MemberEdit from './components/Member-management/MemberEdit';
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -38,8 +38,8 @@ function App() {
                 <Router>
                     <SideBar />
                     <Switch>
-                        <Route path="/login"> <AdminLogin /> </Route>
-                        <Route path="/EventTable"> <EventTable /> </Route>
+
+                        <Route path="/Admin/EventTable"> <EventTable /> </Route>
                         <Route path="/Admin/MemberRequest"> <MemberRequest /> </Route>
                         <Route path="/EventView/:id"> <EventView /> </Route>
                         <Route path="/EventForm"> <EventForm /> </Route>
@@ -49,6 +49,7 @@ function App() {
                         <Route path="/AddDesignation"> <CreateDesignationForm /> </Route>
                         <Route path="/Admin/MemberAdd"> <MemberAdd /> </Route>
                         <Route path="/Admin/MemberList"> <MemberList /> </Route>
+                        <Route path="/Admin/MemberEdit"> <MemberEdit /> </Route>
                     </Switch>
                 </Router>
                 
