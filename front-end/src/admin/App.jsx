@@ -32,17 +32,17 @@ function App() {
       <div className="content-wrapper">
         <Router>
             <Switch>
-                    <Route path="/EventTable"> <EventTable page="Event Management"/> </Route>
-                    <Route path="/MemberRequest"> <MemberRequest /> </Route>
+                    <Route path="/Admin/EventTable"> <EventTable page="Event Management"/> </Route>
+                    <Route path="/Admin/MemberRequest"> <MemberRequest /> </Route>
                     <Route path="/EventView/:eventId"> <EventView page="Event Management"/> </Route>
                     <Route path="/EventForm"> <EventForm page="Event Management"/> </Route>
-                        <Route path="/Admin/MemberList"> <MemberList /> </Route>
+                    <Route path="/Admin/MemberList"> <MemberList /> </Route>
                     <Route path="/Admin/MemberAdd"> <MemberAdd /> </Route>
-                        <Route path="/Admin/MemberEdit"> <MemberEdit /> </Route>
-                        <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
-                        <Route path="/DesignationChair"> <EditAssignedMemberForm /> </Route>
-                        <Route path="/AddDesignation"> <CreateDesignationForm /> </Route>
-                        <Route path="/ActivityLog"> <EditDesignation /> </Route>
+                    <Route path="/Admin/MemberEdit"> <MemberEdit /> </Route>
+                    <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
+                    <Route path="/DesignationChair"> <EditAssignedMemberForm /> </Route>
+                    <Route path="/AddDesignation"> <CreateDesignationForm /> </Route>
+                    <Route path="/ActivityLog"> <EditDesignation /> </Route>
                     <Route path="/Admin/EventReportTable"> <EventReportTable/> </Route>
                     <Route path="/Admin/EventReportForm"> <EventReportForm/> </Route>
                     <Route path="/Admin/EventAttendance"> <EventAttendance/> </Route>
