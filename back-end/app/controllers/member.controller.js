@@ -119,3 +119,57 @@ exports.acceptOrReject = async  function (req, res, next) {
 
 
 }
+
+exports.active_members = async function (req, res, next) {
+
+    Member.find({
+        state: true
+    }, function (err, docs) {
+        if (docs.length != 0) {
+
+
+            res.status(200).send({
+                data: docs
+            });
+
+        } else {
+            res.status(403).send('No data found')
+        }
+    })
+
+}
+
+
+
+exports.update_member = async function (req, res, next) {
+
+    try {
+        const update = await  Member.findByIdAndUpdate({
+            _id: id
+        }, {
+            fname : req.body.fname,
+            lname : req.body.fname,
+            ieeeMail : req.body.ieeeMail,
+            contactNo : req.body.contactNo,
+        }, {new: true})
+    
+       return res.status(200).send("Update");
+    } catch (error) {
+        return res.status(403).send("Something went wrong");
+    }
+
+}
+exports.get_specific_user = async function (req, res, next) {
+
+    try {
+        const update = await  Member.findOne({
+            _id: id })
+    
+       return res.status(200).send({
+           data: update
+       });
+    } catch (error) {
+        return res.status(403).send("Something went wrong");
+    }
+
+}
