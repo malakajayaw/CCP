@@ -51,7 +51,7 @@ function EventTable(props){
           <td className="project-actions text-center">   
               <Link to={"/admin/EventView/"+events.eventId}  className="btn btn-primary btn-sm mr-1"><i className="fas fa-folder mr-1"/> View</Link> 
               <Link to="/admin/EventForm"  className="btn btn-info btn-sm mr-1 editEventBtn"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
-              <Link to="/admin/EventView" className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1"/> Delete</Link> 
+              <Link to={"/admin/deleteEvent"+events.eventId} className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1"/> Delete</Link> 
           </td>
       </tr>) }
   

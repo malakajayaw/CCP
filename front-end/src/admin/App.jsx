@@ -39,10 +39,10 @@ function App() {
                     <SideBar />
                     <Switch>
                         <Route path="/login"> <AdminLogin /> </Route>
-                        <Route path="/EventTable"> <EventTable /> </Route>
+                        <Route path="/admin/EventTable"> <EventTable /> </Route>
                         <Route path="/Admin/MemberRequest"> <MemberRequest /> </Route>
-                        <Route path="/EventView/:id"> <EventView /> </Route>
-                        <Route path="/EventForm"> <EventForm /> </Route>
+                        <Route path="/admin/EventView/:eventId"> <EventView /> </Route>
+                        <Route path="/admin/EventForm"> <EventForm /> </Route>
                         <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
                         <Route path="/DesignationChair"> <EditAssignedMemberForm /> </Route>
                         <Route path="/ActivityLog"> <EditDesignation /> </Route>
