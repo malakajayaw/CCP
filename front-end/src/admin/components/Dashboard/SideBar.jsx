@@ -70,6 +70,7 @@ export default function Sidebar() {
                     <li className="nav-item pointer_cursor">
                         <a className="nav-link">
                             <i className="nav-icon fa fa-address-card"></i>
+                            <i className="nav-icon far fa-calendar-alt"></i>
                             <Link to="/DesignationChair">Designation Management(Chair)</Link>
                             <span className="badge badge-info right"></span>
                         </a>
