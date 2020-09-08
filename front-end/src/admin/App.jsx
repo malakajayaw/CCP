@@ -34,8 +34,8 @@ function App() {
             <Switch>
                     <Route path="/Admin/EventTable"> <EventTable page="Event Management"/> </Route>
                     <Route path="/Admin/MemberRequest"> <MemberRequest /> </Route>
-                    <Route path="/EventView/:eventId"> <EventView page="Event Management"/> </Route>
-                    <Route path="/EventForm"> <EventForm page="Event Management"/> </Route>
+                    <Route path="/Admin/EventView/:eventId"> <EventView page="Event Management"/> </Route>
+                    <Route path="/Admin/EventForm"> <EventForm page="Event Management"/> </Route>
                     <Route path="/Admin/MemberList"> <MemberList /> </Route>
                     <Route path="/Admin/MemberAdd"> <MemberAdd /> </Route>
                     <Route path="/Admin/MemberEdit"> <MemberEdit /> </Route>
