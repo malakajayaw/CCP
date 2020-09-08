@@ -14,6 +14,7 @@ import CreateDesignationForm from './components/Designation-management/CreateDes
 import EditAssignedMemberForm from './components/Designation-management/EditAssignedMemberForm';
 import EditDesignation from './components/Designation-management/EditDesignation';
 import AdminLogin from './components/Login/AdminLogin';
+import MemberEdit from './components/Member-management/MemberEdit';
 
 
 import EventReportTable from './components/EventReport-management/EventReportTable'
@@ -38,6 +39,13 @@ function App() {
                     <Route path="/MemberRequest"> <MemberRequest /> </Route>
                     <Route path="/EventView/:eventId"> <EventView page="Event Management"/> </Route>
                     <Route path="/EventForm"> <EventForm page="Event Management"/> </Route>
+                    <Route path="/Admin/MemberAdd"> <MemberAdd /> </Route>
+                        <Route path="/Admin/MemberList"> <MemberList /> </Route>
+                        <Route path="/Admin/MemberEdit"> <MemberEdit /> </Route>
+                        <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
+                        <Route path="/DesignationChair"> <EditAssignedMemberForm /> </Route>
+                        <Route path="/ActivityLog"> <EditDesignation /> </Route>
+                        <Route path="/AddDesignation"> <CreateDesignationForm /> </Route>
                     <Route path="/Admin/EventReportTable"> <EventReportTable/> </Route>
                     <Route path="/Admin/EventReportForm"> <EventReportForm/> </Route>
                     <Route path="/Admin/EventAttendance"> <EventAttendance/> </Route>
