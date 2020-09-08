@@ -22,9 +22,6 @@ class ActivityTable extends Component {
         return (<section className="content">
             <div className="container-fluid">
                 <div className="card">
-                    <div className="card-header">
-                        <Link to="/AddDesignation" type="button" className="btn btn-info float-right add_btn">Add Designation</Link>
-                    </div>
                     {/* <!-- /.card-header --> */}
                     <div className="card-body">
                         <table id="desTable" className="table table-bordered table-striped dataTable">
