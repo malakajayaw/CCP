@@ -24,6 +24,33 @@ export const add_member_requset = (data) => {
             })
     })
 }
+export const update_member = (data, id) => {
+
+    data = {
+        id: id,
+        fname : data.editfname  , 
+        lname : data.editlname  ,
+        memberShipNo : data.editmnumber,
+        ieeeMail : data.editoemail ,
+        contactNo : data.editphone ,
+        
+    }
+    return new Promise( (resolve,reject) => {
+        return axios.post(`${Config.host}${Config.port}/member/mem/update` , { ...data })
+            .then( result => {
+                console.log(result.data);
+                    resolve({code : 200 , message : result.data.message })
+            })
+            .catch( err => {
+                reject({ code : 0 , error : err})
+            })
+    })
+}
+
+
+
+
+
 export const accept_or_reject = (data) => {
 
    var  datanew = {
@@ -48,6 +75,35 @@ export const get_all_requsests = () => {
 
     return new Promise( (resolve,reject) => {
         return axios.get(`${Config.host}${Config.port}/member/all/request`)
+            .then( result => {
+                console.log(result.data);
+                    resolve({code : 200 , data : result.data })
+            })
+            .catch( err => {
+                reject({ code : 0 , error : err})
+            })
+    })
+}
+export const get_all_active_members = () => {
+
+    return new Promise( (resolve,reject) => {
+        return axios.get(`${Config.host}${Config.port}/member/all/active`)
+            .then( result => {
+                console.log(result.data);
+                    resolve({code : 200 , data : result.data })
+            })
+            .catch( err => {
+                reject({ code : 0 , error : err})
+            })
+    })
+}
+export const get_specific_mem = (id) => {
+
+    var data = {
+        id:id
+    }
+    return new Promise( (resolve,reject) => {
+        return axios.post (`${Config.host}${Config.port}/member/specif/member`, {...data})
             .then( result => {
                 console.log(result.data);
                     resolve({code : 200 , data : result.data })
