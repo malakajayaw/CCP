@@ -30,7 +30,6 @@ function EventAttendance(props) {
               <tr>
                 <th>Membership No</th>
                 <th>Time</th>
-                <th>Confirmed</th>
                 <th>Attendance</th>
                 <th>Manage</th>
               </tr>
@@ -39,9 +38,8 @@ function EventAttendance(props) {
           
           <tr>
             <td>001</td>
-            <td>Current time</td>
-            <td> </td>
-            <td> </td>
+            <td></td>
+            <td> <input type="checkbox" id="attCheckBox" value=""></input> </td>
             <td className="project-actions text-center">    
                 <a className="btn btn-info btn-sm mr-1" href="#"  onClick={() => {props.onClick("EventForm"); }}>  <i className="fas fa-pencil-alt mr-1"/>Edit  </a>
                 <a className="btn btn-danger btn-sm mr-1" href="#"> <i className="fas fa-trash mr-1"/>Delete </a>
