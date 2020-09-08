@@ -62,6 +62,11 @@ app.get("/designations", (req, res) => {
     res.json(des);
 });
 
+app.get("/deleteDesignations/:id", (req, res) => {
+    console.log("designation deleted");
+    console.log(req.params.id);
+});
+
 app.get("/assigndesignations", (req, res) => {
     const assd = [
         { assdId: 1, dTitle: 'Secretary', dMem: 'Malaka Jayawardhana'},

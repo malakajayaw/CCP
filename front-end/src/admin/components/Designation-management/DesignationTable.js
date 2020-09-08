@@ -8,8 +8,14 @@ class DesignationTable extends Component {
         this.state = { des: [''] }
     }
 
+    deleteDes(id) {
+        console.log(id);
+        fetch('http://localhost:5000/deleteDesignations' + id)
+            .then(res => res.json())
+            .then(des => this.setState({ des }, () => console.log('Designations fetched..', des)));
+    }
+
     componentDidMount() {
-        
         fetch('http://localhost:5000/designations')
             .then(res => res.json())
             .then(des => this.setState({ des }, () => console.log('Designations fetched..', des)));
@@ -42,8 +48,8 @@ class DesignationTable extends Component {
                                     <td>{des.branchName}</td>
                                     <td>{des.desTitle}</td>
                                     <td className="project-actions text-center">
-                                        <Link to={"/EditDesignation/" + des.desId} className="btn btn-primary btn-sm mr-1"><i className="fas fa-pencil-alt mr-1" /> Edit</Link>
-                                        <Link to="/EventView" className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1" /> Delete</Link>
+                                        <Link to={"EditDesignation/" + des.desId} className="btn btn-primary btn-sm mr-1"><i className="fas fa-pencil-alt mr-1" /> Edit</Link>
+                                        <Link to={this.deleteDes + des.desId} className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1" /> Delete</Link>
                                     </td>
                                 </tr>)}
 
