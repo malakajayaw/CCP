@@ -14,6 +14,7 @@ const port = process.env.PORT || 5000;
 //===================================import routes    =================================================
 //======================================================================================================
 const memberRoutes = require("./app/routes/member.route");
+const eventRoutes = require("./app/routes/event.report.route");
 
 
 
@@ -40,6 +41,7 @@ mongoose.set("useCreateIndex", true);
 
 //user routes
 app.use("/member", memberRoutes);
+app.use("/event", eventRoutes);
 
 
 
