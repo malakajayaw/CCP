@@ -11,7 +11,7 @@ function ContentHeader(props) {
        <div className="col-sm-6">
          <ol className="breadcrumb float-sm-right">
            <li className="breadcrumb-item"><a href="/">Home</a></li>
-            <li className="breadcrumb-item active">{props.pageName} Management</li>
+            <li className="breadcrumb-item active">{props.pageName}</li>
          </ol>
        </div>
        {/* <!-- /.col --> */}

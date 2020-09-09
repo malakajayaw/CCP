@@ -1,52 +1,69 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import NavBar from './components/Dashboard/NavBar';
 import SideBar from './components/Dashboard/SideBar';
 import ContentHeader from './components/Dashboard/ContentHeader';
 import Footer from './components/Dashboard/Footer';
 import EventTable from './components/Event-management/EventTable';
-import MemberTable from './components/Member-management/MemberTable';
 import EventView from './components/Event-management/EventView';
 import EventForm from './components/Event-management/EventForm';
+import MemberRequest from './components/Member-management/MemberRequest';
+import MemberAdd from './components/Member-management/MemberAdd';
+import MemberList from './components/Member-management/MemberList';
+import DesignationTable from './components/Designation-management/DesignationTable';
+import CreateDesignationForm from './components/Designation-management/CreateDesignationForm';
+import EditAssignedMemberForm from './components/Designation-management/EditAssignedMemberForm';
+import EditDesignation from './components/Designation-management/EditDesignation';
+import MemberEdit from './components/Member-management/MemberEdit';
+
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure() 
+
 
 function App() {
 
     const [page, setPage] = useState("Event");
-    const [display, setDisplay] = useState({event : "none", member : "none", eventView : "none",eventForm : "none"});
-
-    function showContent(pageName){
-        setPage(pageName);
-        switch(pageName){
-            case "Event" : setDisplay({event : "", member : "none",eventView : "none",eventForm : "none"});
-            break;
-            case "Member" : setDisplay({member : "", event:"none",eventView : "none",eventForm : "none"});
-            break;
-            case "EventView" : setDisplay({eventView : "", event:"none", member : "none",eventForm : "none"});
-            break;
-            case "EventForm" : setDisplay({eventForm : "", eventView : "none", event:"none", member : "none"});
-            break;
-            default :  setDisplay({event : "none", member : "none",eventView : "none",eventForm : "none"});
-            break;
-        }
-    }
+    
+    return (
       
-   return (
-    <div className="wrapper">
-      <NavBar />
-      <SideBar onClick={showContent} />
-      <div className="content-wrapper">
-        <ContentHeader pageName={page}/>
-        <EventTable  display={display.event} onClick={showContent}/>
-        <MemberTable display={display.member}/>
+     
+        <div className="wrapper">
+            <NavBar />
+            <div className="content-wrapper">
+                <ContentHeader pageName={page} />
+
+                <Router>
+                    <SideBar />
+                    <Switch>
+
+                        <Route path="/Admin/EventTable"> <EventTable /> </Route>
+                        <Route path="/Admin/MemberRequest"> <MemberRequest /> </Route>
+                        <Route path="/EventView/:id"> <EventView /> </Route>
+                        <Route path="/EventForm"> <EventForm /> </Route>
+                        <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
+                        <Route path="/DesignationChair"> <EditAssignedMemberForm /> </Route>
+                        <Route path="/ActivityLog"> <EditDesignation /> </Route>
+                        <Route path="/AddDesignation"> <CreateDesignationForm /> </Route>
+                        <Route path="/Admin/MemberAdd"> <MemberAdd /> </Route>
+                        <Route path="/Admin/MemberList"> <MemberList /> </Route>
+                        <Route path="/Admin/MemberEdit"> <MemberEdit /> </Route>
+                    </Switch>
+                </Router>
+                
         
-        <EventView display={display.eventView}/>
-        <EventForm display={display.eventForm}/>
-        {/* {page === "Event" && <EventTable />} */}
-        {/* {page === "Member" && <MemberTable />} */}
-      </div>
-      <Footer />
-    </div>
-);
+
+                {/* <EventView display={display.eventView} onClick={showContent}/>
+        <EventForm display={display.eventForm} onClick={showContent}/>
+        <EventTable  display={display.event} onClick={showContent}/> */}
+            </div>
+
+            <Footer />
+
+        </div>
+    );
 }
 
 export default App;
-
