@@ -48,7 +48,7 @@ function App() {
                     <Route path="/DesignationChair"> <AssignedDesignationsTable /> </Route>
                     <Route path="/ActivityLog"> <ActivityTable /> </Route>
                     <Route path="/AddDesignation"> <CreateDesignationForm /> </Route>
-                    <Route path="/EditDesignation"> <EditDesignation /> </Route>
+                    <Route path="/EditDesignation/:desId"> <EditDesignation /> </Route>
                     <Route path="/AssignMember"> <EditAssignedMemberForm /> </Route>
                     <Route path="/Admin/EventReportTable"> <EventReportTable/> </Route>
                     <Route path="/Admin/EventReportForm"> <EventReportForm/> </Route>
