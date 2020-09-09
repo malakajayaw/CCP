@@ -51,45 +51,36 @@ export default function Sidebar() {
                         </a>
                     </li>
 
-
                     <li className="nav-item pointer_cursor">
                         <a className="nav-link">
-                            <i className="nav-icon fas fa-users"></i>
-                            <p>
-                                <Link to="/DesignationAdmin">Designation Management</Link>
-                <span className="badge badge-info right">2</span>
-                            </p>
+                            <i className="nav-icon fa fa-address-card"></i>
+                            <Link to="/DesignationAdmin">Designation Management</Link>
+                            <span className="badge badge-info right"></span>
                         </a>
                     </li>
 
                     <li className="nav-item pointer_cursor">
                         <a className="nav-link">
-                            <i className="nav-icon fas fa-users"></i>
-                            <p>
-                                <Link to="/ActivityLog">Activity log</Link>
-                <span className="badge badge-info right">2</span>
-                            </p>
+                            <i className="nav-icon fa fa-briefcase"></i>
+                            <Link to="/ActivityLog">Activity log</Link>
+                            <span className="badge badge-info right"></span>
                         </a>
                     </li>
 
                     <li className="nav-item pointer_cursor">
                         <a className="nav-link">
-                            <i className="nav-icon fas fa-users"></i>
-                            <p>
-                                <Link to="/DesignationChair">Designation Management(Chair)</Link>
-                <span className="badge badge-info right">2</span>
-                             </p>
-                         </a>
-                     </li>
-                  
-                 </ul>
-        
-             </nav>
-             {/* <!-- /.sidebar-menu --> */}
-         </div>
-         {/* <!-- /.sidebar --> */}
-     
- <script src="custom.js"></script>
-     </aside>  );
- }
- 
+                            <i className="nav-icon fa fa-address-card"></i>
+                            <Link to="/DesignationChair">Designation Management(Chair)</Link>
+                            <span className="badge badge-info right"></span>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </nav>
+            {/* <!-- /.sidebar-menu --> */}
+        </div>
+        {/* <!-- /.sidebar --> */}
+
+    </aside>);
+}

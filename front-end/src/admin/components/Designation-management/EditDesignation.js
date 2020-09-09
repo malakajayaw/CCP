@@ -8,6 +8,14 @@ class EditDesignation extends Component {
         //this.state = { values: { dtitle: "" }, isSubmitting: false, isError: false }
     }
 
+    componentDidMount() {
+        //fetch('http://localhost:5000/designations')
+        //    .then(res => res.json())
+        //    .then(des => this.setState({ des }, () => console.log('Designations fetched..', des)));
+        const mal = this.props.fetch;
+        console.log("edit id",mal);
+    };
+
     render() {
         return (<section className="content w-100" >
             <div className="container-fluid d-flex justify-content-center">

@@ -10,9 +10,11 @@ import MemberRequest from './components/Member-management/MemberRequest';
 import MemberAdd from './components/Member-management/MemberAdd';
 import MemberList from './components/Member-management/MemberList';
 import DesignationTable from './components/Designation-management/DesignationTable';
+import AssignedDesignationsTable from './components/Designation-management/AssignedDesignationsTable';
 import CreateDesignationForm from './components/Designation-management/CreateDesignationForm';
 import EditAssignedMemberForm from './components/Designation-management/EditAssignedMemberForm';
 import EditDesignation from './components/Designation-management/EditDesignation';
+import ActivityTable from './components/Activity-log/ActivityTable';
 import AdminLogin from './components/Login/AdminLogin';
 import MemberEdit from './components/Member-management/MemberEdit';
 
@@ -43,9 +45,11 @@ function App() {
                     <Route path="/Admin/MemberAdd"> <MemberAdd /> </Route>
                     <Route path="/Admin/MemberEdit/:id"> <MemberEdit /> </Route>
                     <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
-                    <Route path="/DesignationChair"> <EditAssignedMemberForm /> </Route>
+                    <Route path="/DesignationChair"> <AssignedDesignationsTable /> </Route>
+                    <Route path="/ActivityLog"> <ActivityTable /> </Route>
                     <Route path="/AddDesignation"> <CreateDesignationForm /> </Route>
-                    <Route path="/ActivityLog"> <EditDesignation /> </Route>
+                    <Route path="/EditDesignation/:desId"> <EditDesignation /> </Route>
+                    <Route path="/AssignMember"> <EditAssignedMemberForm /> </Route>
                     <Route path="/Admin/EventReportTable"> <EventReportTable/> </Route>
                     <Route path="/Admin/EventReportForm"> <EventReportForm/> </Route>
                     <Route path="/Admin/EventAttendance"> <EventAttendance/> </Route>
@@ -57,7 +61,6 @@ function App() {
       <Footer />
     </div>
 );
-              
 }
 
 export default App;

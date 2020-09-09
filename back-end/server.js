@@ -9,27 +9,11 @@ const morgan = require("morgan");
 const MongoClient = require("mongodb").MongoClient;
 const port = process.env.PORT || 5000;
 
-
-//======================================================================================================
-//===================================import routes    =================================================
-//======================================================================================================
 const memberRoutes = require("./app/routes/member.route");
 const eventRoutes = require("./app/routes/event.report.route");
-
-
-
-
-//======================================================================================================
-//===================================import config files ===============================================
-//======================================================================================================
-
-// import db
 const dbConfig = require("./app/config/db.config");
-
-//======================================================================================================
-//===================================open apps services  ===============================================
-//======================================================================================================
 app.use(cors());
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan("dev"));
@@ -67,6 +51,15 @@ app.get("/events",(req,res) => {
     //console.log(req.body);
 });
 
+app.get("/designations", (req, res) => {
+    console.log("designations got request");
+    const des = [
+        { desId: 1, branchName: 'SB 1', branchid: 1, desTitle: 'Secretary'},
+        { desId: 2, branchName: 'SB 2', branchid: 2, desTitle: '	Cordinator'},
+        { desId: 3, branchName: 'SB 3', branchid: 3, desTitle: 'Treasurer'}
+    ];
+    res.json(des);
+});
 
 app.get("/EventView/:id",(req, res) => {
   res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type");
@@ -111,6 +104,29 @@ app.post("/addEvent", cors(), (req, res) => {
   res.json({ stat: 'good' });
 });
 
+
+app.get("/deleteDesignations/:id", (req, res) => {
+    console.log("designation deleted");
+    console.log(req.params.id);
+});
+
+app.get("/assigndesignations", (req, res) => {
+    const assd = [
+        { assdId: 1, dTitle: 'Secretary', dMem: 'Malaka Jayawardhana'},
+        { assdId: 2, dTitle: 'Treassurer', dMem: 'Anuka Jayasundara'},
+        { assdId: 3, dTitle: 'Cordinator', dMem: 'Maneesha Rajapakshe'}
+    ];
+    res.json(assd);
+});
+
+app.get("/activitylog", (req, res) => {
+    const actl = [
+        { actId: 1, editId: '0124', activity: 'Insert', table: 'Member', date:'02/10/2020 18:10:04',param:'Nimal' },
+        { actId: 2, editId: '0136', activity: 'Delete', table: 'Event', date: '02/10/2020 18:10:04', param: 'SLIIT IEEE Con' },
+        { actId: 3, editId: '0175', activity: 'Update', table: 'Affiliation', date: '02/10/2020 18:10:04', param: 'SLIIT SB' }
+    ];
+    res.json(actl);
+});
 
 app.post("/editAssignedMem",cors(), (req, res) => {
     res.setHeader('Content-Type', 'application/json')
@@ -166,18 +182,18 @@ app.use((req, res, next) => {
 //======================================================================================================
 
 // Connecting to the database
-mongoose
-  .connect(dbConfig.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Successfully connected to the database now");
-  })
-  .catch((err) => {
-    console.log("Could not connect to the database. Exiting now...", err);
-    process.exit();
-  });
+//mongoose
+//  .connect(dbConfig.url, {
+//    useNewUrlParser: true,
+//    useUnifiedTopology: true,
+//  })
+//  .then(() => {
+//    console.log("Successfully connected to the database now");
+//  })
+//  .catch((err) => {
+//    console.log("Could not connect to the database. Exiting now...", err);
+//    process.exit();
+//  });
 
 
 
