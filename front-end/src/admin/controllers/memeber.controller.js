@@ -25,14 +25,14 @@ export const add_member_requset = (data) => {
     })
 }
 export const update_member = (data, id) => {
-
+    
     data = {
         id: id,
-        fname : data.editfname  , 
-        lname : data.editlname  ,
-        memberShipNo : data.editmnumber,
-        ieeeMail : data.editoemail ,
-        contactNo : data.editphone ,
+        fname : data.fname  , 
+        lname : data.lname  ,
+        memberShipNo : data.memberShipNo,
+        email : data.email ,
+        contactNo : data.contactNo ,
         
     }
     return new Promise( (resolve,reject) => {

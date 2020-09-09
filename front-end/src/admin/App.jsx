@@ -49,7 +49,7 @@ function App() {
                         <Route path="/AddDesignation"> <CreateDesignationForm /> </Route>
                         <Route path="/Admin/MemberAdd"> <MemberAdd /> </Route>
                         <Route path="/Admin/MemberList"> <MemberList /> </Route>
-                        <Route path="/Admin/MemberEdit"> <MemberEdit /> </Route>
+                        <Route path="/Admin/MemberEdit/:id"> <MemberEdit /> </Route>
                     </Switch>
                 </Router>
                 

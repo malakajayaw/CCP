@@ -60,7 +60,7 @@ const readydata = () => {
       <tr key={i}>
       <td>{i + 1}</td>
       <td>{member.memberShipNo}</td>
-    <td>{member.nameAsMemberShip}</td>
+    <td>{member.fname}&nbsp;{member.lname}</td>
     <td>SLIIT Student Branch</td>
     <td>{member.contactNo}</td>
     <td>{member.email}</td>
