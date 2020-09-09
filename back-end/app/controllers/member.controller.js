@@ -140,13 +140,17 @@ exports.active_members = async function (req, res, next) {
 }
 
 
+//======================================================================================================
+//================================== Update member         =============================================
+//====================================================================================================== 
+
 
 exports.update_member = async function (req, res, next) {
 
     console.log(req.body);
     try {
         const update = await  Member.findOneAndUpdate({
-            memberShipNo: eq.body.memberShipNo
+            memberShipNo: req.body.memberShipNo
         }, {
             fname : req.body.fname,
             lname : req.body.lname,

@@ -43,7 +43,7 @@ function App() {
                     <Route path="/Admin/EventForm"> <EventForm page="Event Management"/> </Route>
                     <Route path="/Admin/MemberList"> <MemberList /> </Route>
                     <Route path="/Admin/MemberAdd"> <MemberAdd /> </Route>
-                    <Route path="/Admin/MemberEdit"> <MemberEdit /> </Route>
+                    <Route path="/Admin/MemberEdit/:id"> <MemberEdit /> </Route>
                     <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
                     <Route path="/DesignationChair"> <AssignedDesignationsTable /> </Route>
                     <Route path="/ActivityLog"> <ActivityTable /> </Route>
