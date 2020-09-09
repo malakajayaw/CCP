@@ -1,26 +1,47 @@
 import React , {useState, useEffect}from 'react';
-import { BrowserRouter as Router, Switch, Route, Link, useParams} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation} from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 
-import { update_member} from '../../controllers/memeber.controller'
+import { update_member, get_specific_mem} from '../../controllers/memeber.controller'
 import Config from '../../controllers/config.controller'
+
 const MemberEdit = (props) => {
 
   const id = useParams()
   const { register, handleSubmit } = useForm();
 
  
-  let [member, setMember] = useState({ 
+  const newId = id.id
+  
+  const [member, setMember] = useState({ 
 
 
-    editmnumber : '' ,
-    editfname : '' ,
-    editlname : '' ,
-    editpemail : '' ,
-    editphone : '' ,
+    memberShipNo : "" ,
+    fname : "" ,
+    lname : "" ,
+    email : "" ,
+    contactNo : "" ,
     
   });
+
+  useEffect(() => {
+    console.log(newId);
+    onLoadMemebrer(newId);
+}, []); 
+
+
+
+  const onLoadMemebrer = async (newId) => {
+    const result = await get_specific_mem(newId)
+    console.log(result.data.data);
+    // const newD = result.data.data
+  
+   await console.log(member);
+   setMember(result.data.data)
+  }
+
+
 
 
   const onSubmit =  async (e) => {
@@ -73,7 +94,8 @@ const MemberEdit = (props) => {
                     <div className="form-group">
                     <label >First Name</label>
                       <input type="text" className="form-control" required name="addfname"  
-                      value={member.editfname}
+                      value={member.fname}
+                      name="fname"
                         onChange={handleChange}
                       />
                     </div>
@@ -82,15 +104,16 @@ const MemberEdit = (props) => {
                       <label for="inputLName">Last Name</label>
                       <input type="text" id="inputLName" className="form-control" required name="addlname"
                        onChange={handleChange}
-                       
-                       value={member.editlname}/>
+                       name="lname"
+                       value={member.lname}/>
                     </div>
 
                     <div className="form-group">
                       <label for="inputMNumber">Membership Number</label>
                       <input type="text" id="inputMNumber" className="form-control" required name="addmnumber"
                       onChange={handleChange}
-                      value={member.editmnumber}
+                   
+                      value={member.memberShipNo}
                       readOnly
                       />
                     </div>
@@ -99,14 +122,17 @@ const MemberEdit = (props) => {
                       <label for="inputPEmail">Email (Used for IEEE Registration)</label>
                       <input type="email" id="inputPEmail" className="form-control" required  name="addpemail"
                       onChange={handleChange}
-                      value={member.editpemail}/>
+                      name="email"
+                      value={member.email}/>
                     </div>
 
                     <div className="form-group">
                       <label for="inputPhone">Contact No.</label>
-                      <input type="text" id="inputPhone" className="form-control" required name="addphone" 
+                      <input type="number" id="inputPhone" className="form-control" required name="addphone" 
                       onChange={handleChange}
-                      value={member.editphone}/>
+                      name="contactNo"
+
+                      value={member.contactNo}/>
                     </div>
 
                     <div className="row">
