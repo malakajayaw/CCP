@@ -1,6 +1,6 @@
 import React , {useState, useEffect  }from 'react';
 import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import { get_all_requsests, accept_or_reject} from '../../controllers/memeber.controller'
+import { get_all_active_members, accept_or_reject} from '../../controllers/memeber.controller'
 import Config from '../../controllers/config.controller'
 
 
@@ -35,7 +35,7 @@ import Config from '../../controllers/config.controller'
 
 
 async function getData() {
-      var res = await get_all_requsests()
+      var res = await get_all_active_members()
    await   Setmembers(res.data.data);
   
 }
@@ -61,11 +61,12 @@ const readydata = () => {
       <td>{i + 1}</td>
       <td>{member.memberShipNo}</td>
     <td>{member.nameAsMemberShip}</td>
-    <td>{member.email}</td>
+    <td>SLIIT Student Branch</td>
     <td>{member.contactNo}</td>
     <td>{member.email}</td>
       <td className="project-actions text-center">
-        <a className="btn btn-success btn-sm mr-1 my-2" onClick={()=> ace_or_rej(member.memberShipNo, true)}>  <i className="fas fa-pencil-alt mr-1" />Update</a>
+       
+        <Link to = {`/Admin/MemberEdit/${member._id}`}  type="button" className="btn btn-success btn-sm mr-1 my-2"><i className="fas fa-pencil-alt mr-1" />Update</Link>
         <a className="btn btn-danger btn-sm mr-1 my-2" onClick={()=> ace_or_rej(member.memberShipNo, false)}> <i className="fas fa-trash mr-1" />Remove</a>
       </td>
     </tr>

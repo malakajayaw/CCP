@@ -45,6 +45,21 @@ const MemberAdd = (props) => {
 
   }
 
+  const add = () => {
+    console.log("Add");
+    setMember({
+      addfname : 'Prabhasha' , 
+      addlname : 'Amarathunga' ,
+      addmname : 'Prabhasha Amarathunga' ,
+      addmnumber : '20204646' ,
+      addpemail : 'prabhasha.amarathunga@gmail.com' ,
+      addoemail : 'prabhasha.amarathunga@ieee.com' ,
+      addphone : '0716401842' ,
+      addpassword : '1234' ,
+      addcpassword : '1234' ,
+    })
+  }
+
   const clear = () => {
     console.log("Clear call");
     setMember({
@@ -77,18 +92,18 @@ const MemberAdd = (props) => {
         </div>
         <div className="card-body">
 
-          <section class="content">
-            <div class="row justify-content-md-center">
-              <div class="col-md-6">
-                <div class="card card-success">
-                  <div class="card-header">
-                    <h3 class="card-title">Add New Member</h3>
+          <section className="content">
+            <div className="row justify-content-md-center">
+              <div className="col-md-6">
+                <div className="card card-success">
+                  <div className="card-header">
+                    <h3 className="card-title">Add New Member</h3>
                   </div>
                 <form onSubmit={onSubmit}>
 
 
-                  <div class="card-body">
-                    <div class="form-group">
+                  <div className="card-body">
+                    <div className="form-group">
                     <label >First Name</label>
                       <input type="text" className="form-control" required name="addfname"  
                       value={member.addfname}
@@ -96,68 +111,69 @@ const MemberAdd = (props) => {
                       />
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="inputLName">Last Name</label>
-                      <input type="text" id="inputLName" class="form-control" required name="addlname"
+                      <input type="text" id="inputLName" className="form-control" required name="addlname"
                        onChange={handleChange}
                        
                        value={member.addlname}/>
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="inputMName">Name as per the Membership Card</label>
-                      <input type="text" id="inputMName" class="form-control"  required name="addmname"
+                      <input type="text" id="inputMName" className="form-control"  required name="addmname"
                       onChange={handleChange}
                       value={member.addmname}/>
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="inputMNumber">Membership Number</label>
-                      <input type="text" id="inputMNumber" class="form-control" required name="addmnumber"
+                      <input type="text" id="inputMNumber" className="form-control" required name="addmnumber"
                       onChange={handleChange}
                       value={member.addmnumber}/>
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="inputPEmail">Email (Used for IEEE Registration)</label>
-                      <input type="email" id="inputPEmail" class="form-control" required  name="addpemail"
+                      <input type="email" id="inputPEmail" className="form-control" required  name="addpemail"
                       onChange={handleChange}
                       value={member.addpemail}/>
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="inputOEmail">IEEE Email</label>
-                      <input type="text" id="inputOEmail" class="form-control"  required name="addoemail"
+                      <input type="text" id="inputOEmail" className="form-control"  required name="addoemail"
                       onChange={handleChange}
                       value={member.addoemail}/>
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="inputPhone">Contact No.</label>
-                      <input type="text" id="inputPhone" class="form-control" required name="addphone" 
+                      <input type="text" id="inputPhone" className="form-control" required name="addphone" 
                       onChange={handleChange}
                       value={member.addphone}/>
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="inputPassword">Password</label>
-                      <input type="password" id="inputPassword" class="form-control" required name="addpassword"
+                      <input type="password" id="inputPassword" className="form-control" required name="addpassword"
                       onChange={handleChange}
                       value={member.addpassword}/>
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="inputCPassword">Confirm Password</label>
-                      <input type="password" id="inputCPassword" class="form-control" name="addcpassword"
+                      <input type="password" id="inputCPassword" className="form-control" name="addcpassword"
                       onChange={handleChange}
                       
                       value={member.addcpassword}
                       />
                     </div>
-                    <div class="row">
-                      <div class="col-12">
-                        <button type="button" class="btn btn-secondary" onClick={clear}>Cancel</button>
-                        <button type="submit"  class="btn btn-success float-right" >Create Member Profile </button>
+                    <div className="row">
+                      <div className="col-12">
+                        <button type="button" className="btn btn-secondary mr-2 my-2" onClick={clear}>Cancel</button>
+                        <button type="submit"  className="btn btn-success float-right" >Create Member Profile </button>
+                        <button type="button"  className="btn btn-secondary mr-2 my-2mr-2 my-2" onClick={add} >Demo</button>
                       </div>
                     </div>
 

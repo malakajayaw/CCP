@@ -1,39 +1,43 @@
 import React , {useState, useEffect}from 'react';
 import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
-function AdminLogin(props) {
-  return ( 
 
-<body class="hold-transition login-page">
-<div class="login-box">
-  <div class="login-logo">
+
+function AdminLogin(props) {
+  const [page, setPage] = useState("Event");
+  return ( 
+        
+
+<body className="hold-transition login-page">
+<div className="login-box">
+  <div className="login-logo">
     <a href="../../index2.html"><b>Admin</b>Login</a>
   </div>
 
-  <div class="card">
-    <div class="card-body login-card-body">
-      <p class="login-box-msg">IEEE - Sri Lanka Section</p>
+  <div className="card">
+    <div className="card-body login-card-body">
+      <p className="login-box-msg">IEEE - Sri Lanka Section</p>
 
       <form action="App.jsx">
-        <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email"/>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+        <div className="input-group mb-3">
+          <input type="email" className="form-control" placeholder="Email"/>
+          <div className="input-group-append">
+            <div className="input-group-text">
+              <span className="fas fa-envelope"></span>
             </div>
           </div>
         </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password"/>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
+        <div className="input-group mb-3">
+          <input type="password" className="form-control" placeholder="Password"/>
+          <div className="input-group-append">
+            <div className="input-group-text">
+              <span className="fas fa-lock"></span>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
+        <div className="row">
+          <div className="col-8">
+            <div className="icheck-primary">
               <input type="checkbox" id="remember"/>
               <label for="remember">
                 Remember Me
@@ -41,15 +45,17 @@ function AdminLogin(props) {
             </div>
           </div>
 
-          <div class="col-4">
-          <Link to="/Event" type="button" className="btn btn-primary btn-block">Sign In</Link>
+          <div className="col-4">
+          <Link to='/Dashboard' type="button" className="btn btn-primary btn-block">Sign In</Link>
+         
+
           </div>
 
         </div>
       </form>
 
 
-      <p class="mb-1">
+      <p className="mb-1">
         <a href="forgot-password.html">I forgot my password</a>
       </p>
       
@@ -60,7 +66,10 @@ function AdminLogin(props) {
 
 </body>
 
+
   );
 }
 
 export default AdminLogin;
+
+      

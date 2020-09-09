@@ -2,6 +2,7 @@ import React from 'react';
 import {useParams } from "react-router-dom";
 import { useState,useEffect } from 'react';
 import ContentHeader from '../Dashboard/ContentHeader'
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 function EventView(props) {
 
@@ -32,8 +33,8 @@ function EventView(props) {
       <h3 className="card-title">Event Details</h3>
       </div>
       <div className="col-6">
-      <button type="button"  onClick={() => {this.props.onClick("EReport"); }}  className="btn btn-info float-right add_btn ml-2">Add Report</button>
-      <button type="button"  onClick={() => {this.props.onClick("EAttendance"); }}  className="btn btn-success float-right add_btn">Add Attendance</button> 
+      <Link to="/Admin/EventReportForm" type="button" className="btn btn-info float-right add_btn ml-2">Add Report</Link>
+      <Link to="/Admin/EventAttendance" type="button" className="btn btn-success float-right add_btn">Add Attendance</Link>
       </div>
       </div>
     </div>
