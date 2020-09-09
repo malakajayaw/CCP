@@ -1,7 +1,38 @@
-import React from 'react';
+import React,{useState} from 'react';
 import ContentHeader from '../Dashboard/ContentHeader'
 
 function EventForm(props) {
+
+  const [eventData,setEventData] = useState({eventName:'',eventTime:'',eventVenue:'',eventDescription:'',hostingAffiliation:'',volunteers:['']});
+
+  const handleChange = event =>
+  { 
+    setEventData({...eventData, [event.target.id] :event.target.value})
+    console.log(eventData.eventName+' '+eventData.eventTime+' '+eventData.eventVenue+' '+eventData.eventDescription+' '+eventData.hostingAffiliation+' '+eventData.volunteers);
+    };
+
+
+    const handleSubmit = e =>
+  { 
+    e.preventDefault();
+    console.log(JSON.stringify(eventData));
+
+    fetch('http://localhost:5000/addEvent', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(eventData)
+    }).then(response => {
+        console.log(response)
+    })
+        .catch(error => {
+            console.log(error)
+        })
+  }
+
   return (    <div>
     <ContentHeader pageName={props.page}/>
      <section className="content w-100" style={{display : props.display}}>
@@ -13,11 +44,11 @@ function EventForm(props) {
   {/* name,date,venue,banner,description,volunteers,hosting aff, */}
   {/* <!-- /.card-header --> */}
   {/* <!-- form start --> */}
-  <form id="eventForm">
+  <form id="eventForm"  method="post" onSubmit={handleSubmit} encType='multipart/form-data'>
     <div className="card-body">
       <div className="form-group">
         <label htmlFor="eventName">Event Name</label>
-        <input type="text" className="form-control" id="eventName" placeholder="Enter event name" />
+        <input type="text" value={eventData.eventName} onChange={handleChange}  className="form-control" id="eventName" placeholder="Enter event name" />
       </div>
       <div className="form-group">
       <label htmlFor="eventTime">Date & Time</label>
@@ -25,34 +56,34 @@ function EventForm(props) {
         <div className="input-group-prepend">
           <span className="input-group-text"><i className="far fa-clock"></i></span>
         </div>
-        <input type="text" className="form-control float-right" id="eventTime" />
+        <input type="text" value={eventData.eventTime} onChange={handleChange}  className="form-control float-right" id="eventTime" />
       </div>
       </div>
       <div className="form-group">
         <label htmlFor="eventVenue">Venue</label>
-        <input type="text" className="form-control" id="eventVenue" placeholder="Enter event venue" />
+        <input type="text" value={eventData.eventVenue} onChange={handleChange} className="form-control" id="eventVenue" placeholder="Enter event venue" />
       </div>
       <div className="form-group">
-        <label htmlFor="evetDescription">Description</label>
-      <textarea id="evetDescription" className="textarea" placeholder="Place some text here"
-      style={{width: "100%", height: "200px", fontSize: "14px", lineHeight: "18px", border: "1px solid #dddddd", padding: "10px"}} ></textarea>
+        <label htmlFor="eventDescription">Description</label>
+      <textarea id="eventDescription" className="" value={eventData.eventDescription} onChange={handleChange} placeholder="Place some text here"
+      style={{width: "100%", height: "200px", fontSize: "14px", lineHeight: "18px", border: "1px solid #dddddd", padding: "10px"}} />
       </div>
 
       <div className="form-group">
         <label htmlFor="hostingAffiliation">Hosting Affiliation</label>
-        <input type="text" className="form-control" id="hostingAffiliation" placeholder="Enter hosting affiliation" />
+        <input type="text" value={eventData.hostingAffiliation} onChange={handleChange}  className="form-control" id="hostingAffiliation" placeholder="Enter hosting affiliation" />
       </div>
      
       <div className="form-group">
           <label>Volunteers</label>
-          <select className="select2" multiple="multiple" data-placeholder="Select volunteers" style={{width: "100%"}}>
-            <option> Anuka Jaysundara</option>
-            <option>Prabhasha Amarathunga</option>
-            <option>Maneesha Rajapaksha</option>
-            <option>Malaka Jayawardena</option>
-            <option>Thimithi Weerathunga</option>
-            <option>Texas</option>
-            <option>Washington</option>
+          <select className="" id="volunteers" value={eventData.volunteers} onChange={handleChange} multiple="multiple"  data-placeholder="Select volunteers" style={{width: "100%"}}>
+            <option value="Anuka Jaysundara"> Anuka Jaysundara</option>
+            <option value="Prabhasha Amarathunga">Prabhasha Amarathunga</option>
+            <option value="Maneesha Rajapaksha">Maneesha Rajapaksha</option>
+            <option value="Malaka Jayawardena">Malaka Jayawardena</option>
+            <option value="Thimithi Weerathung"> Thimithi Weerathunga</option>
+            <option value="Texas">Texas</option>
+            <option value="Washington">Washington</option>
           </select>
       </div>
   

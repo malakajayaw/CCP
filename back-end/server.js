@@ -9,7 +9,9 @@ const morgan = require("morgan");
 const MongoClient = require("mongodb").MongoClient;
 const port = process.env.PORT || 5000;
 
-//app.use(express.static('public'));
+const memberRoutes = require("./app/routes/member.route");
+const eventRoutes = require("./app/routes/event.report.route");
+const dbConfig = require("./app/config/db.config");
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
@@ -22,12 +24,9 @@ mongoose.set("useCreateIndex", true);
 //======================================================================================================
 
 //user routes
-//app.use("/member", memberRoutes);
+app.use("/member", memberRoutes);
+app.use("/event", eventRoutes);
 
-
-//======================================================================================================
-//================================== Handlle Error     ===========================================
-//======================================================================================================
 
 
 
@@ -61,6 +60,50 @@ app.get("/designations", (req, res) => {
     ];
     res.json(des);
 });
+
+app.get("/EventView/:id",(req, res) => {
+  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type");
+ console.log(req.params.id);
+ const event1 = [
+          {eventId : "001", eventName : "How to Invest in Share Market", hostingAffiliation : "IEEE Young Professionals Sri Lanka", date : "March 27, 2018" ,time : "5:30 pm to 8:30 pm", status : "Open",
+         venue:"Colombo Stock Exchange Auditorium, World trade Centre, Colombo 1",
+         description: "YP LETs Talks is one of the key events of the IEEE Young Professionals Sri Lanka Section which brings together young professionals representing each and every domain of engineering",banner:"event1",
+         eventForm : "https://docs.google.com/forms/d/e/1FAIpQLScnAo1ZYa9_9U17CtsOtf6XG2A8ONW9eIvdQdjIPhc7IGWIFw/viewform?embedded=true"} ,
+         ['Anuka Jaysundara','Prabhasha Amarathunga',' Maneesha Rajapaksha',' Malaka Jayawardena', 'Thimithi Weerathunga']
+ ];
+
+ const event2 = [
+     {eventId : "002", eventName : "IEEE Sri Lanka Section AGM 2018", hostingAffiliation : "IEEE Sri Lanka Section",date : "Feb 7, 2018" ,time : "5:30 pm to 10:00 pm", status : "Open",
+     venue:"Hilton Colombo Residences, 200 Union Place, Colombo 02",
+     description:"All IEEE members (Graduate Student and above) of IEEE Sri Lanka Section are invited for the AGM and the fellowship dinner.",banner:"event2",
+     eventForm : "https://docs.google.com/forms/d/e/1FAIpQLScnAo1ZYa9_9U17CtsOtf6XG2A8ONW9eIvdQdjIPhc7IGWIFw/viewform?embedded=true"},
+     ['Anuka Jaysundara','Prabhasha Amarathunga',' Maneesha Rajapaksha',' Malaka Jayawardena', 'Thimithi Weerathunga']
+ ];
+
+ const event3 = [
+     {eventId : "003", eventName : "Cloud Study Jam 2018" ,
+     hostingAffiliation : "GDG Cloud Sri Lanka", date : "January 13, 2018" ,time : "9:00 am to 3:30 pm", status : "Closed",
+     venue:"Dialog Auditorium, Dr Colvin R de Silva Mw, Colombo",
+     description:"Want to get started on the Google Cloud, but don't know where to begin?",banner:"event3",
+     eventForm : "https://docs.google.com/forms/d/e/1FAIpQLScnAo1ZYa9_9U17CtsOtf6XG2A8ONW9eIvdQdjIPhc7IGWIFw/viewform?embedded=true"},
+    ['Anuka Jaysundara','Prabhasha Amarathunga',' Maneesha Rajapaksha',' Malaka Jayawardena', 'Thimithi Weerathunga']
+ ];
+
+ if(req.params.id == 001)
+     res.json(event1);
+ else if(req.params.id == 002)
+     res.json(event2);
+ else if(req.params.id == 003)
+     res.json(event3);
+});
+
+app.post("/addEvent", cors(), (req, res) => {
+  res.setHeader('Content-Type', 'application/json')
+  console.log("Add Event");
+  console.log(req.body);
+  res.json({ stat: 'good' });
+});
+
 
 app.get("/deleteDesignations/:id", (req, res) => {
     console.log("designation deleted");
@@ -109,39 +152,13 @@ app.post("/createDesignation", cors(), (req, res) => {
     res.json({ stat: 'good' });
 });
 
-app.get("/EventView/:id", (req, res) => {
-    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type");
-    console.log(req.params.id);
-    const event = [
-        {eventId : 3, eventName : 'Cloud Study Jam 2018', hostingAffiliation : 'GDG Cloud Sri Lanka',date : "January 13, 2018" ,time : "9:00 am to 3:30 pm", status : "Closed"}
-    ];
-
-    const event2 = [
-        {eventId : "002", eventName : "IEEE Sri Lanka Section AGM 2018", hostingAffiliation : "IEEE Sri Lanka Section",date : "Feb 7, 2018" ,time : "5:30 pm to 10:00 pm", status : "Open",
-        venue:"Hilton Colombo Residences, 200 Union Place, Colombo 02",
-        description:"All IEEE members (Graduate Student and above) of IEEE Sri Lanka Section are invited for the AGM and the fellowship dinner.",banner:"event2",
-        eventForm : "https://docs.google.com/forms/d/e/1FAIpQLScnAo1ZYa9_9U17CtsOtf6XG2A8ONW9eIvdQdjIPhc7IGWIFw/viewform?embedded=true"},
-        ['Anuka Jaysundara','Prabhasha Amarathunga',' Maneesha Rajapaksha',' Malaka Jayawardena', 'Thimithi Weerathunga']
-    ];
-  
-    const event3 = [
-        {eventId : "003", eventName : "Cloud Study Jam 2018" ,
-        hostingAffiliation : "GDG Cloud Sri Lanka", date : "January 13, 2018" ,time : "9:00 am to 3:30 pm", status : "Closed",
-        venue:"Dialog Auditorium, Dr Colvin R de Silva Mw, Colombo",
-        description:"Want to get started on the Google Cloud, but don't know where to begin?",banner:"event3",
-        eventForm : "https://docs.google.com/forms/d/e/1FAIpQLScnAo1ZYa9_9U17CtsOtf6XG2A8ONW9eIvdQdjIPhc7IGWIFw/viewform?embedded=true"},
-       ['Anuka Jaysundara','Prabhasha Amarathunga',' Maneesha Rajapaksha',' Malaka Jayawardena', 'Thimithi Weerathunga']
-    ];
-
-    if(req.params.id == 001)
-        res.json(event1);
-    else if(req.params.id == 002)
-        res.json(event2);
-    else if(req.params.id == 003)
-        res.json(event3);
-});
 
 app.get("/contact",(req,res) => {res.send("Contact me at anuka@GMAIL.COM");});
+
+
+//======================================================================================================
+//================================== Handlle Error     ===========================================
+//======================================================================================================
 
 app.use((req, res, next) => {
     const error = new Error("Not found");
