@@ -43,7 +43,7 @@ export default function Sidebar() {
 
                     <li className="nav-item pointer_cursor">
                         <a className="nav-link">
-                            <i className="nav-icon fas fa-users"></i>
+                            <i className="nav-icon fas fa-handshake"></i>
                             <p>
                             <Link to="/AffiliationTable">Affiliation Management</Link> 
                 <span className="badge badge-info right">2</span>
