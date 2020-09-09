@@ -143,13 +143,14 @@ exports.active_members = async function (req, res, next) {
 
 exports.update_member = async function (req, res, next) {
 
+    console.log(req.body);
     try {
-        const update = await  Member.findByIdAndUpdate({
-            _id: id
+        const update = await  Member.findOneAndUpdate({
+            memberShipNo: eq.body.memberShipNo
         }, {
             fname : req.body.fname,
-            lname : req.body.fname,
-            ieeeMail : req.body.ieeeMail,
+            lname : req.body.lname,
+            email : req.body.email,
             contactNo : req.body.contactNo,
         }, {new: true})
     
@@ -160,6 +161,10 @@ exports.update_member = async function (req, res, next) {
 
 }
 exports.get_specific_user = async function (req, res, next) {
+
+    console.log(req.body);
+    var id = req.body.id
+
 
     try {
         const update = await  Member.findOne({
