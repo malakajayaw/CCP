@@ -28,8 +28,6 @@ app.use("/member", memberRoutes);
 app.use("/event", eventRoutes);
 
 
-
-
 app.get("/events",(req,res) => {
     const events = [ 
         {eventId : "001", eventName : "How to Invest in Share Market", hostingAffiliation : "IEEE Young Professionals Sri Lanka", date : "March 27, 2018" ,time : "5:30 pm to 8:30 pm", status : "Open",
@@ -182,18 +180,18 @@ app.use((req, res, next) => {
 //======================================================================================================
 
 // Connecting to the database
-//mongoose
-//  .connect(dbConfig.url, {
-//    useNewUrlParser: true,
-//    useUnifiedTopology: true,
-//  })
-//  .then(() => {
-//    console.log("Successfully connected to the database now");
-//  })
-//  .catch((err) => {
-//    console.log("Could not connect to the database. Exiting now...", err);
-//    process.exit();
-//  });
+mongoose
+ .connect(dbConfig.url, {
+   useNewUrlParser: true,
+   useUnifiedTopology: true,
+ })
+ .then(() => {
+   console.log("Successfully connected to the database now");
+ })
+ .catch((err) => {
+   console.log("Could not connect to the database. Exiting now...", err);
+   process.exit();
+ });
 
 
 
