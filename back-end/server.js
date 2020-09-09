@@ -62,17 +62,10 @@ app.get("/affiliation",(req,res) => {
     //console.log(req.body);
 });
 
-app.get("/brochure",(req,res) => {
-    const brochure = [
-        {bid: 1 , title: 'Gold', msg: '24k Bracelet' },
-        {bid: 2 ,title: 'Silver', msg: 'Necklace' }
-
-    ];
-    res.json(brochure);
-    //console.log(req.body);
+app.get("/deleteAffiliations/:id", (req, res) => {
+  console.log("Affiliation Deleted");
+  console.log(req.params.id);
 });
-
-
 
 app.get("/EventView/:id", (req, res) => {
     res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type");
@@ -83,16 +76,7 @@ app.get("/EventView/:id", (req, res) => {
     res.json(event);
 });
 
-app.get("/manageaffiliation/:id", (req, res) => {
-    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type");
-    console.log(req.params.id);
-    const manageaffiliation = [
-        {affiliationId : 1, affiID : '001', affiliationtype : 'Student Branch', affiliationname:"UOC" ,  affiliationno: "IEEE001"  , date : "March 27, 2018" , status : "Available"},
-        {affiliationId : 2, affiID : '002', affiliationtype : 'Women In Engineering',affiliationname:"SLIIT" ,affiliationno: "IEEE002"  , date : "Feb 7, 2018" , status : "Available"},
-        {affiliationId : 3, affiID : '003', affiliationtype : 'Young Professionals',affiliationname:"UOP" ,affiliationno: "IEEE003"  , date : "January 13, 2018" , status : "Not Available"}
-    ];
-    res.json(event);
-});
+
 
 
 app.get("/contact",(req,res) => {res.send("Contact me at anuka@GMAIL.COM");});
