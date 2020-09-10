@@ -24,7 +24,7 @@ function EventView(props) {
     }
 
   return (  <div>
-    <ContentHeader pageName={props.page}/>
+    {/* <ContentHeader pageName={props.page}/> */}
     <section className="content" >
   <div className="card">
     <div className="card-header">

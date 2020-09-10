@@ -133,12 +133,7 @@ app.get("/EventView/:id",(req, res) => {
     ['Anuka Jaysundara','Prabhasha Amarathunga',' Maneesha Rajapaksha',' Malaka Jayawardena', 'Thimithi Weerathunga']
  ];
 
- if(req.params.id == 001)
      res.json(event1);
- else if(req.params.id == 002)
-     res.json(event2);
- else if(req.params.id == 003)
-     res.json(event3);
 });
 
 app.post("/addEvent", cors(), (req, res) => {

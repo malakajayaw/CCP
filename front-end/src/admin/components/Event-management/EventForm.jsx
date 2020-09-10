@@ -75,7 +75,7 @@ function EventForm(props) {
 
 
   return (    <div>
-    <ContentHeader pageName={props.page}/>
+    {/* <ContentHeader pageName={props.page}/> */}
      <section className="content w-100" >
   <div className="container-fluid d-flex justify-content-center">
   <div className="card card-warning w-50">

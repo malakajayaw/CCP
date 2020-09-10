@@ -31,16 +31,11 @@ function App() {
    return (
     <div className="wrapper">
       <NavBar />
-    
-        <div className="wrapper">
-            <NavBar />
             <div className="content-wrapper">
                 <ContentHeader pageName={page} />
-
                 <Router>
                     <SideBar />
                     <Switch>
-
                         <Route path="/Admin/EventTable"> <EventTable /> </Route>
                         <Route path="/Admin/MemberRequest"> <MemberRequest /> </Route>
                         <Route path="/Admin/EventView/:eventId"> <EventView /> </Route>
@@ -59,11 +54,9 @@ function App() {
                     <Route path="/Admin/EventReportView/:id"> <EventReportView/> </Route>
     
                     </Switch>
-                </Router>
-                
+                </Router> 
             </div>
             <Footer />
-        </div>
         </div>
 
     );
