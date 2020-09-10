@@ -17,7 +17,6 @@ import EditDesignation from './components/Designation-management/EditDesignation
 import ActivityTable from './components/Activity-log/ActivityTable';
 import AdminLogin from './components/Login/AdminLogin';
 import MemberEdit from './components/Member-management/MemberEdit';
-
 import EventReportTable from './components/EventReport-management/EventReportTable'
 import EventReportForm from './components/EventReport-management/EventReportForm'
 import EventAttendance from './components/EventAttendance-management/EventAttendance'
@@ -32,8 +31,7 @@ function App() {
    return (
     <div className="wrapper">
       <NavBar />
-      
-     
+    
         <div className="wrapper">
             <NavBar />
             <div className="content-wrapper">
@@ -45,8 +43,8 @@ function App() {
 
                         <Route path="/Admin/EventTable"> <EventTable /> </Route>
                         <Route path="/Admin/MemberRequest"> <MemberRequest /> </Route>
-                        <Route path="/EventView/:id"> <EventView /> </Route>
-                        <Route path="/EventForm"> <EventForm /> </Route>
+                        <Route path="/Admin/EventView/:eventId"> <EventView /> </Route>
+                        <Route path="/Admin/EventForm"> <EventForm /> </Route>
                         <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
                         <Route path="/DesignationChair"> <EditAssignedMemberForm /> </Route>
                         <Route path="/ActivityLog"> <EditDesignation /> </Route>
@@ -57,16 +55,11 @@ function App() {
                     </Switch>
                 </Router>
                 
-        
-
-                {/* <EventView display={display.eventView} onClick={showContent}/>
-        <EventForm display={display.eventForm} onClick={showContent}/>
-        <EventTable  display={display.event} onClick={showContent}/> */}
             </div>
-
             <Footer />
-
         </div>
+        </div>
+
     );
 }
 
