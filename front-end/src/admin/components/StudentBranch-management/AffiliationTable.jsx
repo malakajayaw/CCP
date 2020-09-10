@@ -73,13 +73,6 @@ class AffiliationTable extends Component{
        .then(affiliation => this.setState({affiliation}, () => console.log('Affiliation fetched..',affiliation)));
    };
 
-   deleteAffiliation(id) {
-    console.log(id);
-    fetch('http://localhost:5000/deleteAffiliations' + id)
-        .then(res => res.json())
-        .then(affiliation => this.setState({ affiliation }, () => console.log('Affiliation fetched..', affiliation)));
-}
-
    render(){
     console.log(this.props);
        return ( <section className="content" style={{display : this.props.display}}>
@@ -116,7 +109,7 @@ class AffiliationTable extends Component{
                  <td className="project-actions text-center">   
                      
                      <Link to="/ManageAffiliation" className="btn btn-info btn-sm mr-1"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
-                     <Link to={this.deleteAffiliation + affiliation.affiliationId} className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1"/> Delete</Link>
+                     <Link to="" className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1"/> Delete</Link>
                  </td>
                  </tr>)}
           
