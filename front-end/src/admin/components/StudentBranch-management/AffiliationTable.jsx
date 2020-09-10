@@ -79,7 +79,7 @@ class AffiliationTable extends Component{
        <div className="container-fluid">
          <div className="card">
            <div className="card-header">
-             <Link to="/StudentForm" type="button" className="btn btn-success float-right add_btn ml-2"> Add Affiliation</Link>
+             <Link to="/Admin/StudentForm" type="button" className="btn btn-success float-right add_btn ml-2"> Add Affiliation</Link>
              
             
            </div>
@@ -108,7 +108,7 @@ class AffiliationTable extends Component{
                  <td><span className ={affiliation.status ==='Available' ? "badge badge-success" : "badge badge-danger"  }>{affiliation.status}</span> </td>      
                  <td className="project-actions text-center">   
                      
-                     <Link to="/ManageAffiliation" className="btn btn-info btn-sm mr-1"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
+                     <Link to="/Admin/ManageAffiliation" className="btn btn-info btn-sm mr-1"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
                      <Link to="" className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1"/> Delete</Link>
                  </td>
                  </tr>)}
