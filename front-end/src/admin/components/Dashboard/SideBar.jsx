@@ -44,14 +44,12 @@ export default function Sidebar() {
             
 
           <li className="nav-item pointer_cursor">
-            <a  className="nav-link">
+          <Link id="affiliationNav"  className="nav-link" to="/Admin/AffiliationTable">
               <i className="nav-icon fas fa-handshake"></i>
-              <Link to="/AffiliationTable">Affiliation Management</Link> 
-              <p>
+              Affiliation Management
                 <span className="badge badge-info right">2</span>
             
-                            </p>
-                        </a>
+                    </Link>
                     </li>
 
                     <li className="nav-item pointer_cursor">
