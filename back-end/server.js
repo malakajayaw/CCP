@@ -4,6 +4,8 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const fileUpload = require('express-fileupload');
+const multer = require("multer");
 
 
 const MongoClient = require("mongodb").MongoClient;
@@ -14,6 +16,7 @@ const port = process.env.PORT || 5000;
 //===================================import routes    =================================================
 //======================================================================================================
 const memberRoutes = require("./app/routes/member.route");
+const eventRoutes = require("./app/routes/event.route");
 
 
 
@@ -32,6 +35,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan("dev"));
+ app.use(fileUpload());
 mongoose.set("useCreateIndex", true);
 
 //======================================================================================================
@@ -40,8 +44,41 @@ mongoose.set("useCreateIndex", true);
 
 //user routes
 app.use("/member", memberRoutes);
+app.use("/event", eventRoutes);
 
 
+const upload = multer();
+
+const fs = require("fs");
+const { promisify } = require("util");
+const pipeline  = promisify(require("stream").pipeline)
+
+
+app.post("/upload", (req, res) => {
+  // res.setHeader('Content-Type', 'application/json')
+  //res.send("Hi");
+//   if(req.files === null){
+//     return res.status(400).json({msg:'No file uploaded'})
+// }
+
+// const file = req.files.banner;
+
+// const {files} = req; 
+// const fileName = files.banner.name;
+// await pipeline(files.stream, fs.createWriteStream(`${__dirname}/./public/${fileName}`));
+
+console.log(req);
+if(req.files === null){
+      return res.status(400).json({msg:'No file uploaded'})
+  }
+
+  const file = req.files.banner;
+  file.mv(`${__dirname}/./public/${file.name}`,err => {if(err)console.log(err);return res.status(500).send(err)});
+
+  res.json({fileName: file.name})
+
+console.log(req.files.banner);
+});
 
 
 app.get("/events",(req,res) => {
@@ -93,9 +130,13 @@ app.post("/createDesignation", cors(), (req, res) => {
 app.get("/EventView/:id", (req, res) => {
     res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type");
     console.log(req.params.id);
-    const event = [
-        {eventId : 3, eventName : 'Cloud Study Jam 2018', hostingAffiliation : 'GDG Cloud Sri Lanka',date : "January 13, 2018" ,time : "9:00 am to 3:30 pm", status : "Closed"}
-    ];
+    const event1 = [
+      {eventId : "001", eventName : "How to Invest in Share Market", hostingAffiliation : "IEEE Young Professionals Sri Lanka", date : "March 27, 2018" ,time : "5:30 pm to 8:30 pm", status : "Open",
+     venue:"Colombo Stock Exchange Auditorium, World trade Centre, Colombo 1",
+     description: "YP LETs Talks is one of the key events of the IEEE Young Professionals Sri Lanka Section which brings together young professionals representing each and every domain of engineering",banner:"event1",
+     eventForm : "https://docs.google.com/forms/d/e/1FAIpQLScnAo1ZYa9_9U17CtsOtf6XG2A8ONW9eIvdQdjIPhc7IGWIFw/viewform?embedded=true"} ,
+     ['Anuka Jaysundara','Prabhasha Amarathunga',' Maneesha Rajapaksha',' Malaka Jayawardena', 'Thimithi Weerathunga']
+];
 
     const event2 = [
         {eventId : "002", eventName : "IEEE Sri Lanka Section AGM 2018", hostingAffiliation : "IEEE Sri Lanka Section",date : "Feb 7, 2018" ,time : "5:30 pm to 10:00 pm", status : "Open",
@@ -114,7 +155,7 @@ app.get("/EventView/:id", (req, res) => {
        ['Anuka Jaysundara','Prabhasha Amarathunga',' Maneesha Rajapaksha',' Malaka Jayawardena', 'Thimithi Weerathunga']
     ];
 
-    if(req.params.id == 001)
+    if(req.params.id === "5f58625c6dc02c13b45d7f6d")
         res.json(event1);
     else if(req.params.id == 002)
         res.json(event2);
@@ -122,7 +163,12 @@ app.get("/EventView/:id", (req, res) => {
         res.json(event3);
 });
 
-app.get("/contact",(req,res) => {res.send("Contact me at anuka@GMAIL.COM");});
+app.post("/addEvent", cors(), (req, res) => {
+  res.setHeader('Content-Type', 'application/json')
+  console.log("Add Event");
+  console.log(req.body);
+  res.json({ stat: 'good' });
+});
 
 
 //======================================================================================================

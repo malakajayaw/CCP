@@ -14,7 +14,6 @@ import CreateDesignationForm from './components/Designation-management/CreateDes
 import EditAssignedMemberForm from './components/Designation-management/EditAssignedMemberForm';
 import EditDesignation from './components/Designation-management/EditDesignation';
 import MemberEdit from './components/Member-management/MemberEdit';
-
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import { toast } from 'react-toastify';
@@ -38,11 +37,10 @@ function App() {
                 <Router>
                     <SideBar />
                     <Switch>
-
                         <Route path="/Admin/EventTable"> <EventTable /> </Route>
                         <Route path="/Admin/MemberRequest"> <MemberRequest /> </Route>
-                        <Route path="/EventView/:id"> <EventView /> </Route>
-                        <Route path="/EventForm"> <EventForm /> </Route>
+                        <Route path="/Admin/EventView/:eventId"> <EventView /> </Route>
+                        <Route path="/Admin/EventForm"> <EventForm /> </Route>
                         <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
                         <Route path="/DesignationChair"> <EditAssignedMemberForm /> </Route>
                         <Route path="/ActivityLog"> <EditDesignation /> </Route>
@@ -53,13 +51,7 @@ function App() {
                     </Switch>
                 </Router>
                 
-        
-
-                {/* <EventView display={display.eventView} onClick={showContent}/>
-        <EventForm display={display.eventForm} onClick={showContent}/>
-        <EventTable  display={display.event} onClick={showContent}/> */}
             </div>
-
             <Footer />
 
         </div>
