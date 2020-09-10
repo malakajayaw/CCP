@@ -10,7 +10,7 @@ export const add_event_report = (data) => {
     submissionComment:data.submissioncomment,
     }
     return new Promise( (resolve,reject) => {
-        return axios.post(`${Config.host}${Config.port}/event/report/add` , { ...dataSet })
+        return axios.post(`${Config.host}${Config.port}/eventReport/report/add` , { ...dataSet })
             .then( result => {
                 console.log(result.data);
                     resolve({code : 200 , message : result.data })
@@ -26,7 +26,7 @@ export const delete_report = (id) => {
         id: id
     }
     return new Promise( (resolve,reject) => {
-        return axios.post(`${Config.host}${Config.port}/event/report/delete` , { ...data })
+        return axios.post(`${Config.host}${Config.port}/eventReport/report/delete` , { ...data })
             .then( result => {
                 console.log(result.data);
                     resolve({code : 200 , message : result.data })
@@ -42,7 +42,7 @@ export const get_spec_report = (id) => {
         id: id
     }
     return new Promise( (resolve,reject) => {
-        return axios.post(`${Config.host}${Config.port}/event/report/spec` , { ...data })
+        return axios.post(`${Config.host}${Config.port}/eventReport/report/spec` , { ...data })
             .then( result => {
                 console.log(result.data);
                     resolve({code : 200 , message : result.data })
@@ -57,7 +57,7 @@ export const get_spec_report = (id) => {
 export const get_all_reports = () => {
 
     return new Promise( (resolve,reject) => {
-        return axios.get(`${Config.host}${Config.port}/event/report/all`)
+        return axios.get(`${Config.host}${Config.port}/eventReport/report/all`)
             .then( result => {
                 console.log(result.data);
                     resolve({code : 200 , data : result.data })
