@@ -45,10 +45,11 @@ function App() {
                         <Route path="/Admin/MemberRequest"> <MemberRequest /> </Route>
                         <Route path="/Admin/EventView/:eventId"> <EventView /> </Route>
                         <Route path="/Admin/EventForm"> <EventForm /> </Route>
-                        <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
-                        <Route path="/DesignationChair"> <EditAssignedMemberForm /> </Route>
-                        <Route path="/ActivityLog"> <EditDesignation /> </Route>
-                        <Route path="/AddDesignation"> <CreateDesignationForm /> </Route>
+                           <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
+                           <Route path="/DesignationChair"> <AssignedDesignationsTable /> </Route>
+                           <Route path="/ActivityLog"> <ActivityTable /> </Route>
+                           <Route path="/AddDesignation"> <CreateDesignationForm /> </Route>
+                           <Route path="/EditDesignation/:desId"> <EditDesignation /> </Route>
                         <Route path="/Admin/MemberAdd"> <MemberAdd /> </Route>
                         <Route path="/Admin/MemberList"> <MemberList /> </Route>
                         <Route path="/Admin/MemberEdit"> <MemberEdit /> </Route>
