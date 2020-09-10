@@ -49,7 +49,7 @@ function EventTable(props){
       <div className="card">
         <div className="card-header">
           <Link to="/admin/EventForm" type="button" id="addEventBtn" className="btn btn-success float-right add_btn ml-2"> Add Event</Link>
-          <Link to="/VReport" type="button" className="btn btn-info float-right add_btn"> Event Reports</Link>
+          <Link to="/Admin/EventReportTable" type="button" className="btn btn-info float-right add_btn"> Event Reports</Link>
           
         </div>
         {/* <!-- /.card-header --> */}
