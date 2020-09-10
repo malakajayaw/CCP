@@ -40,13 +40,16 @@ export default function Sidebar() {
                     <span className="badge badge-info right"></span>
                     </Link>
             </li>
- 
+
+            
+
           <li className="nav-item pointer_cursor">
             <a  className="nav-link">
-              <i className="nav-icon fas fa-users"></i>
+              <i className="nav-icon fas fa-handshake"></i>
+              <Link to="/AffiliationTable">Affiliation Management</Link> 
               <p>
-                Student Branch Management
                 <span className="badge badge-info right">2</span>
+            
                             </p>
                         </a>
                     </li>

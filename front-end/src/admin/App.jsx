@@ -21,10 +21,14 @@ import EventReportTable from './components/EventReport-management/EventReportTab
 import EventReportForm from './components/EventReport-management/EventReportForm'
 import EventAttendance from './components/EventAttendance-management/EventAttendance'
 import EventReportView from './components/EventReport-management/EventReportView'
+import ManageAffiliation from './components/StudentBranch-management/ManageAffiliation'
+import StudentForm from './components/StudentBranch-management/StudentForm'
+import AffiliationTable from './components/StudentBranch-management/AffiliationTable';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure() 
+
 function App() {
     const [page, setPage] = useState("Event");
               
@@ -52,6 +56,9 @@ function App() {
                         <Route path="/Admin/EventReportForm"> <EventReportForm/> </Route>
                     <Route path="/Admin/EventAttendance"> <EventAttendance/> </Route>
                     <Route path="/Admin/EventReportView/:id"> <EventReportView/> </Route>
+                      <Route path="/Admin/ManageAffiliation"> <ManageAffiliation /> </Route>
+                    <Route path="/Admin/StudentForm"> <StudentForm /> </Route>
+                    <Route path="/Admin/AffiliationTable"> <AffiliationTable /> </Route>
     
                     </Switch>
                 </Router> 
@@ -60,6 +67,7 @@ function App() {
         </div>
 
     );
+                  
 }
 
 export default App;
