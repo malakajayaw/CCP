@@ -28,6 +28,7 @@ app.use("/member", memberRoutes);
 app.use("/event", eventRoutes);
 
 
+
 app.get("/events",(req,res) => {
     const events = [ 
         {eventId : "001", eventName : "How to Invest in Share Market", hostingAffiliation : "IEEE Young Professionals Sri Lanka", date : "March 27, 2018" ,time : "5:30 pm to 8:30 pm", status : "Open",
