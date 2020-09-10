@@ -52,7 +52,10 @@ function App() {
                            <Route path="/EditDesignation/:desId"> <EditDesignation /> </Route>
                         <Route path="/Admin/MemberAdd"> <MemberAdd /> </Route>
                         <Route path="/Admin/MemberList"> <MemberList /> </Route>
-                        <Route path="/Admin/MemberEdit"> <MemberEdit /> </Route>
+                        <Route path="/Admin/MemberEdit/:id"> <MemberEdit /> </Route>
+                        <Route path="/Admin/EventReportTable"> <EventReportTable/> </Route>
+                        
+    
                     </Switch>
                 </Router>
                 
