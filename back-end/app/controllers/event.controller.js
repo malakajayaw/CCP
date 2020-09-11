@@ -35,23 +35,17 @@ exports.addEvent = function (req, res, next) {
         banner: fileName
     });
     console.log(new_event);
-    // check userdata
-    Event.find({
-        eventName: new_event.eventName
-    }, function (err, docs) {
-        if (docs.length == 0) {
-            //save 
-            new_event.save(function (err) {
-                if (err) {
-                    return next(err);
-                }
-                console.log("Event added successfully ");
-                res.status(201).send('Event added Successfully');
-            })
-        } else {
-            res.status(403).send('Already have')
+
+   //save event  
+    new_event.save(function (err) {
+        if (err) {
+            return next(err);
         }
+        console.log("Event added successfully ");
+        res.status(201).send('Event added Successfully');
     })
+        
+    
 }
 
 //======================================================================================================

@@ -42,40 +42,6 @@ app.use("/event", eventRoutes);
 app.use("/eventReport", eventReport);
 
 
-const upload = multer();
-
-const fs = require("fs");
-const { promisify } = require("util");
-const pipeline  = promisify(require("stream").pipeline)
-
-
-app.post("/upload", (req, res) => {
-  // res.setHeader('Content-Type', 'application/json')
-  //res.send("Hi");
-//   if(req.files === null){
-//     return res.status(400).json({msg:'No file uploaded'})
-// }
-
-// const file = req.files.banner;
-
-// const {files} = req; 
-// const fileName = files.banner.name;
-// await pipeline(files.stream, fs.createWriteStream(`${__dirname}/./public/${fileName}`));
-
-console.log(req);
-if(req.files === null){
-      return res.status(400).json({msg:'No file uploaded'})
-  }
-
-  const file = req.files.banner;
-  file.mv(`${__dirname}/./public/${file.name}`,err => {if(err)console.log(err);return res.status(500).send(err)});
-
-  res.json({fileName: file.name})
-
-console.log(req.files.banner);
-});
-
-
 app.get("/events",(req,res) => {
     const events = [ 
         {eventId : "001", eventName : "How to Invest in Share Market", hostingAffiliation : "IEEE Young Professionals Sri Lanka", date : "March 27, 2018" ,time : "5:30 pm to 8:30 pm", status : "Open",

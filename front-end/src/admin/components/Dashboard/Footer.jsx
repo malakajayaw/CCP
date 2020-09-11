@@ -8,7 +8,6 @@ function Footer() {
      <b>Version</b> 1.0
    </div>
  </footer>);
- 
 }
 
 export default Footer;
