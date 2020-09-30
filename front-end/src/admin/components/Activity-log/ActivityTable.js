@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { add_activity, get_all_activities } from '../../controllers/activity.controller'
+import Config from '../../controllers/config.controller'
 
 class ActivityTable extends Component {
 

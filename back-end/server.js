@@ -14,6 +14,7 @@ const port = process.env.PORT || 5000;
 const memberRoutes = require("./app/routes/member.route");
 const eventRoutes = require("./app/routes/event.route");
 const eventReport = require("./app/routes/event.report.route");
+const activity = require("./app/routes/activity.route");
 
 
 
@@ -40,6 +41,7 @@ mongoose.set("useCreateIndex", true);
 app.use("/member", memberRoutes);
 app.use("/event", eventRoutes);
 app.use("/eventReport", eventReport);
+app.use("/activity", activity);
 
 
 app.get("/events",(req,res) => {
