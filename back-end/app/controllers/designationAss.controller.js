@@ -1,26 +1,31 @@
 //import Event model
-const Designation = require('../model/designations.model');
+const Assignments = require('../model/designationAssignments.model');
 
 //======================================================================================================
 //================================== Add Designation  =============================================
 //====================================================================================================== 
-exports.addDesignation = function (req, res, next) {
+exports.addAssignment = function (req, res, next) {
 
-    let new_designation = Designation({
+    let new_assignment = Assignments({
+        AssNo: req.body.AssNo,
         DesNo: req.body.DesNo,
         title: req.body.title,
-        affiliationNo: req.body.affiliationNo,
+        MemNo: req.body.MemNo,
+        forYear: req.body.forYear,
+        AssBy: req.body.AssBy,
         updated_at: req.body.updated_at,
+        created_at: req.body.created_at,
+        state: req.body.state
     });
-    console.log(new_designation);
+    console.log(new_assignment);
 
     //save event  
-    new_designation.save(function (err) {
+    new_assignment.save(function (err) {
         if (err) {
             return next(err);
         }
-        console.log("Designation added successfully ");
-        res.status(201).send('Designation added Successfully');
+        console.log("Assigned successfully ");
+        res.status(201).send('Assigned Successfully');
     })
 
 
@@ -29,9 +34,9 @@ exports.addDesignation = function (req, res, next) {
 //======================================================================================================
 //================================== Get all activities       =============================================
 //====================================================================================================== 
-exports.get_all_designations = function (req, res, next) {
+exports.get_all_assignments = function (req, res, next) {
     // check userdata
-    Designation.find(function (err, docs) {
+    Assignments.find(function (err, docs) {
         if (docs.length != 0) {
             res.status(200).send({
                 data: docs

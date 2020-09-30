@@ -47,27 +47,13 @@ exports.addActivity = function (req, res, next) {
 
 exports.get_all_activities = async function (req, res, next) {
     // check userdata
-    console.log("called ");
-    const result = await Activity.find({})
-
-    console.log(result);
-
-
-    if (result.length == 0)
-
-        return res.status(403).send({
-
-            msg: "no data found"
-
-        })
-
-    else
-
-        return res.status(200).send({
-
-            msg: "data found",
-
-            data: result
-
-        })
+    Activity.find(function (err, docs) {
+        if (docs.length != 0) {
+            res.status(200).send({
+                data: docs
+            });
+        } else {
+            res.status(403).send('No data found')
+        }
+    })
 }
