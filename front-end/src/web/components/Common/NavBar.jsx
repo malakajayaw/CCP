@@ -100,8 +100,8 @@ function NavBar() {
             </a>
             <div className="dropdown-menu dropdown-menu-right dropdown-default"
               aria-labelledby="navbarDropdownMenuLink-333">
-              <a className="dropdown-item" href="#">Action</a>
-              <a className="dropdown-item" href="#">Another action</a>
+              <a className="dropdown-item" href="/MemberLogin">Login</a>
+              <a className="dropdown-item" href="/UserProfile">My Account</a>
               <a className="dropdown-item" href="#">Something else here</a>
             </div>
           </li>
