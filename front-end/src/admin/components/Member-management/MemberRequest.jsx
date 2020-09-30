@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
   get_all_requsests,
@@ -75,6 +76,7 @@ const MemberRequest = (props) => {
   };
 
   return (
+  
     <section className="content" style={{ display: props.display }}>
       <div className="container-fluid">
         <h6>Member Requests</h6>
