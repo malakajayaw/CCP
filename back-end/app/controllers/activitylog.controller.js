@@ -2,7 +2,7 @@
 const Activity = require('../model/activity.model');
 
 //======================================================================================================
-//================================== Add activity  =============================================
+//================================== Add activity  =====================================================
 //====================================================================================================== 
 exports.addActivity = function (req, res, next) {
 
@@ -27,23 +27,46 @@ exports.addActivity = function (req, res, next) {
 }
 
 //======================================================================================================
-//================================== Get all activities       =============================================
+//================================== Get all activities    =============================================
 //====================================================================================================== 
-exports.get_all_activities = function (req, res, next) {
+//exports.get_all_activities = function (req, res, next) {
+//    // check userdata
+//    console.log("called ");
+//    Activity.find(
+//        function (err, docs) {
+//        if (docs.length != 0) {
+//            res.status(200).send({
+//                data: docs
+//            });
+//        } else {
+//            res.status(403).send('No data found')
+//        }
+//    })
+//}
+
+exports.get_all_activities = async function (req, res, next) {
     // check userdata
-    Activity.find(function (err, docs) {
-        if (docs.length != 0) {
-            //res.status(200).send({
-            //    data: docs
-            //});
-            const actl = [
-            { actId: 1, editId: '0124', activity: 'Insert', table: 'Member', date: '02/10/2020 18:10:04', param: 'Nimal' },
-            { actId: 2, editId: '0136', activity: 'Delete', table: 'Event', date: '02/10/2020 18:10:04', param: 'SLIIT IEEE Con' },
-            { actId: 3, editId: '0175', activity: 'Update', table: 'Affiliation', date: '02/10/2020 18:10:04', param: 'SLIIT SB' }
-    ];
-            res.json(actl);
-        } else {
-            res.status(403).send('No data found')
-        }
-    })
+    console.log("called ");
+    const result = await Activity.find({})
+
+    console.log(result);
+
+
+    if (result.length == 0)
+
+        return res.status(403).send({
+
+            msg: "no data found"
+
+        })
+
+    else
+
+        return res.status(200).send({
+
+            msg: "data found",
+
+            data: result
+
+        })
 }
