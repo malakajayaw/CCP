@@ -8,6 +8,7 @@ import ClosedAll from './components/Events/ClosedAll';
 import EventView from './components/Events/EventView';
 import Registration from './components/Member/Registration';
 import MemberLogin from './components/Login/MemberLogin';
+import UserProfile from './components/Member/UserProfile';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
               <Route path="/closedAll">  <ClosedAll /> </Route>
               <Route path="/view/:eventId">  <EventView /> </Route>
               <Route path="/Registration">  <Registration /> </Route>
+              <Route path="/UserProfile">  <UserProfile /> </Route>
               <Route path="/MemberLogin">  <MemberLogin /> </Route>
               <Route path="/">  <UpcomingEvents /> </Route>
         </Switch>
