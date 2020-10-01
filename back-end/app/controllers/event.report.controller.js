@@ -11,7 +11,7 @@ exports.add_report_add = function (req, res, next) {
 
   let newDate = new Date();
 
-  const today = moment(newDate).format("MMM Do YY");
+  const today = moment(newDate).format("MMM Do Y Y");
   let new_report = EventReport({
     reportname: req.body.reportname,
     submssionState: req.body.submssionState,
