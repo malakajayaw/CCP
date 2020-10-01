@@ -55,3 +55,21 @@ export const get_event = (id) => {
             })
     })
 }
+
+export const deleteEvent = (id) => {
+
+    var  datanew = {
+         id :id
+     }
+  
+     return new Promise( (resolve,reject) => {
+         return axios.post(`${Config.host}${Config.port}/event/delete` , { ...datanew })
+             .then( result => {
+                //  console.log(result.data);
+                     resolve({code : 200 , message : result.data.message })
+             })
+             .catch( err => {
+                 reject({ code : 0 , error : err})
+             })
+     })
+ }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { useState ,useEffect} from 'react';
-import {get_all_events} from "../../controllers/event.controller";
+import {get_all_events,deleteEvent} from "../../controllers/event.controller";
 import Config from "../../controllers/config.controller";
 import ContentHeader from '../Dashboard/ContentHeader'
 
@@ -24,6 +24,14 @@ function EventTable(props){
       await setEvents(res.data.data);
     }
 
+    const onDelete = async (id) => {
+        const result = await deleteEvent(id)
+        if(result.code == 200){
+          Config.setToast(result.message)
+          getData()
+        }
+      }
+
     var today = new Date();
     var status = null;
 
@@ -44,7 +52,8 @@ function EventTable(props){
           <td className="project-actions text-center">   
               <Link to={"/Admin/EventView/"+events._id}  className="btn btn-primary btn-sm mr-1"><i className="fas fa-folder mr-1"/> View</Link> 
               <Link to="/Admin/EventForm"  className="btn btn-info btn-sm mr-1 editEventBtn"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
-              <Link to="/Admin/EventView" className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1"/> Delete</Link> 
+              {/* <Link to="/Admin/EventView" className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1"/> Delete</Link>  */}
+              <a className="btn btn-danger btn-sm mr-1" onClick={()=> onDelete(events._id)}> <i className="fas fa-trash mr-1" />Delete</a>
           </td>
       </tr>
         );
@@ -93,7 +102,6 @@ function EventTable(props){
     {/* <!-- /.container-fluid --> */}
     </div> 
   </section>
-   <script src={__dirname+"index.js"}></script>
   </div> 
  );
 
