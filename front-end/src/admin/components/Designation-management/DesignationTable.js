@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { get_all_designations, delete_report } from "../../controllers/designation.controller";
+import { get_all_designations, remove_designation } from "../../controllers/designation.controller";
 import Config from '../../controllers/config.controller'
 //import EventReportView from './EventReportView'
 import { Link } from "react-router-dom";
@@ -20,6 +20,18 @@ const DesignationTable = (props) => {
         await SetDesignation(res.data.data);
     }
 
+
+    const delete_func = async (id) => {
+        const res = await remove_designation(id)
+        if (res.code == 200) {
+            Config.setToast("Designation removed")
+            forceUpdate();
+        } else {
+            Config.setToast("Something went wrong")
+            forceUpdate();
+        }
+    }
+
     const readydata = () => {
         return designation.map((designation, i) => {
             return (
@@ -27,7 +39,17 @@ const DesignationTable = (props) => {
                     <td>{designation.DesNo}</td>
                     <td>{designation.affiliationNo}</td>
                     <td>{designation.title}</td>
-                    <td></td>
+                    <td className="project-actions text-center">
+                        <Link to={`/Admin/EditDesignation/${designation.DesNo}`}><a className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
+                            {" "}
+                            <i className="fas fa-folder mr-1" />
+                             Edit{" "}
+                        </a></Link>
+                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(designation.DesNo)}>
+                            {" "}
+                            <i className="fas fa-trash mr-1" />Remove{" "}
+                        </a>
+                    </td>
                 </tr>
             );
         });
@@ -38,8 +60,7 @@ const DesignationTable = (props) => {
             <div className="container-fluid">
                 <div className="card">
                     <div className="card-header">
-                        {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-                        {/*<button type="button" onClick={() => {props.onClick("EReport"); }} className="btn btn-success float-right add_btn" >Repport Management</button>*/}
+                        <Link to="/AddDesignation" type="button" className="btn btn-info float-right add_btn">Add Designation</Link>
                     </div>
                     {/* <!-- /.card-header --> */}
                     <div className="card-body">

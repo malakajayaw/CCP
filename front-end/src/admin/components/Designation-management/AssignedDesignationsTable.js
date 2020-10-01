@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { get_all_assignments, delete_report } from "../../controllers/designationAss.controller";
+import { get_all_assignments, remove_assignment } from "../../controllers/designationAss.controller";
 import Config from '../../controllers/config.controller'
 //import EventReportView from './EventReportView'
 import { Link } from "react-router-dom";
@@ -20,6 +20,17 @@ const AssignedDesignationsTable = (props) => {
         await SetAssignments(res.data.data);
     }
 
+    const delete_func = async (id) => {
+        const res = await remove_assignment(id)
+        if (res.code == 200) {
+            Config.setToast("Member removed")
+            forceUpdate();
+        } else {
+            Config.setToast("Something went wrong")
+            forceUpdate();
+        }
+    }
+
     const readydata = () => {
         return assignment.map((assignment, i) => {
             return (
@@ -27,7 +38,17 @@ const AssignedDesignationsTable = (props) => {
                     <td>{assignment.title}</td>
                     <td>{assignment.MemNo}</td>
                     <td>{assignment.forYear}</td>
-                    <td></td>
+                    <td className="project-actions text-center">
+                        <Link to={`/Admin/EditDesignation/${assignment.AssNo}`}><a className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
+                            {" "}
+                            <i className="fas fa-folder mr-1" />
+                             Edit{" "}
+                        </a></Link>
+                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(assignment.AssNo)}>
+                            {" "}
+                            <i className="fas fa-trash mr-1" />Remove{" "}
+                        </a>
+                    </td>
                 </tr>
             );
         });
