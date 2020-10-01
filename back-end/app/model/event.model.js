@@ -8,7 +8,8 @@ let Event = new Schema({
         required: true,
     },
     eventDate: {
-        type: { $dateToString: { format: "%Y-%m-%d" } }
+        type: Date
+       // type: { $dateToString: { format: "%Y-%m-%d" } }
       //  required: true,
     },
     startTime: {
@@ -36,10 +37,6 @@ let Event = new Schema({
     },
     formLink: {
         type: String,
-    },
-    status: {
-        type: String,
-        default: "Open"
     },
     banner: {
         type:String
