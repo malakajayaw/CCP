@@ -23,16 +23,24 @@ function EventTable(props){
       var res = await get_all_events();
       await setEvents(res.data.data);
     }
-  
+
+    var today = new Date();
+    var status = null;
 
     const loadData = () => {
       return events.map((events, index) => {
-        return (
+        var eventDate = new Date(events.eventDate);
+        if(today <= eventDate)
+          status = "Open";
+        else
+          status = "Closed";
+
+          return (
            <tr key={index} >
            <td>{events.eventName}</td>
           <td >{events.hostingAffiliation}</td>
-          <td>{events.eventDate}</td>
-          <td ><span className ={events.status == 'Open' ? "badge badge-success" : "badge badge-danger"  }>{events.status}</span> </td>      
+          <td>{(new Date(events.eventDate).toDateString())}</td>
+          <td ><span className ={status == "Open" ? "badge badge-success" : "badge badge-danger"  }>{status}</span> </td>      
           <td className="project-actions text-center">   
               <Link to={"/Admin/EventView/"+events._id}  className="btn btn-primary btn-sm mr-1"><i className="fas fa-folder mr-1"/> View</Link> 
               <Link to="/Admin/EventForm"  className="btn btn-info btn-sm mr-1 editEventBtn"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
@@ -85,6 +93,7 @@ function EventTable(props){
     {/* <!-- /.container-fluid --> */}
     </div> 
   </section>
+   <script src={__dirname+"index.js"}></script>
   </div> 
  );
 

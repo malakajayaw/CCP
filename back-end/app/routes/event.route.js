@@ -8,4 +8,6 @@ router.post('/addEvent',  EventController.addEvent);
 //get all events
 router.get('/all/events',  EventController.get_all_events);
 
+router.post('/specificEvent',  EventController.get_event);
+
 module.exports = router;

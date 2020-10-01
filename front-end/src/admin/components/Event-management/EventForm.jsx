@@ -1,6 +1,4 @@
 import React,{useState} from 'react';
-import ContentHeader from '../Dashboard/ContentHeader';
-import { add_event} from '../../controllers/event.controller'
 import Config from '../../controllers/config.controller'
 import Axios from 'axios';
 
@@ -53,13 +51,13 @@ function EventForm(props) {
     data.append("volunteers",eventData.volunteers)
     data.append("formLink",eventData.formLink);
     data.append("banner",eventData.banner);
-
     try{
       const res = await Axios.post('/event/addEvent',data, {
         headers : {
           'Content-Type' : 'multipart/form-data'
         }
       });
+
       if(res.status === 201)
       {
         clear()
