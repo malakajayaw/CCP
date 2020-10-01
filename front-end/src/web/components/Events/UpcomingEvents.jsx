@@ -2,10 +2,13 @@ import React from 'react';
 import {  Link } from "react-router-dom";
 import Carousel from './Carousel';
 import ClosedEvents from './ClosedEvents';
+import NavBar from '../Common/NavBar';
+import Footer from '../Common/Footer';
 
 function UpcomingEvents() {
     return (
       <div>
+       <NavBar/>
     <Carousel />
     <div className="container" style={{marginTop:"5rem"}}>
         <h1 style={{color:"#1DA1F2"}} className="text-center">UPCOMING EVENTS</h1>
@@ -81,6 +84,7 @@ function UpcomingEvents() {
     </div>
         </div>
         <ClosedEvents />
+        <Footer/>
         </div>
         
     );
