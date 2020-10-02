@@ -6,7 +6,7 @@ function NavBar() {
     <nav className="mb-1 navbar navbar-expand-lg navbar-light scrolling-navbar" >
     
         <Link to="/" className="navbar-brand ml-5" style={{color:"white"}} >
-       <img src="images/ieee-icon.png" height="40" alt="IEEE logo" />
+       <img src="/images/ieee-icon.png" height="40" alt="IEEE logo" />
        </Link>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
         aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,7 +16,7 @@ function NavBar() {
 
       <ul className="navbar-nav ml-auto">
 
-      <li className="nav-item active">
+      {/* <li className="nav-item active">
         <a className="nav-link" href="#">Home
           <span className="sr-only">(current)</span>
         </a>
@@ -92,7 +92,7 @@ function NavBar() {
       </li>
       <li className="nav-item">
         <a className="nav-link" href="#">Contact Us</a>
-      </li>
+      </li> */}
           <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">

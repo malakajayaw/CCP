@@ -3,24 +3,21 @@ import {useParams } from "react-router-dom";
 import { useState,useEffect } from 'react';
 import ContentHeader from '../Dashboard/ContentHeader'
 import { BrowserRouter as Router, Link } from "react-router-dom";
+import { get_event} from '../../controllers/event.controller';
 
 function EventView(props) {
 
-    const [event, setEvent] = useState({event : ['','']});
+    const [event, setEvent] = useState({event:['']});
     let { eventId } = useParams();
     var i = 0;
-    var volunteers = [];
 
     useEffect(() => {
-      fetch('/EventView/'+eventId)
-      .then(res => res.json())
-      .then(event => setEvent({event}));
-    } ,[] );
-
-    function volList(){
-      for(i = 0 ; i < event.event[1].length ; i++){
-        volunteers.push(event.event[1][i]);
-      }
+      onLoadEvent(eventId);
+  }, []); 
+  
+    const onLoadEvent = async (eventId) => {
+      const result = await get_event(eventId);
+      await  setEvent(result.data.data);
     }
 
   return (  <div>
@@ -41,14 +38,15 @@ function EventView(props) {
     <div className="card-body">
       <div className="row">
         <div className="col-12 col-md-12 col-lg-8 order-1 order-md-1">
-        <img className="mb-4 shadow-lg bg-white rounded" alt="Event Banner" src={__dirname+"images/Events/"+event.event[0].banner+".jpg"} style={{float:"left", maxWidth:"100%", maxHeight:"300px" }}/>
-     
+        <div className="row">
+        <img className="mb-4 shadow-lg bg-white rounded" alt="Event Banner" src={__dirname+"images/Events/"+event.banner} style={{float:"left", width:"100%", maxHeight:"300px" }}/>
+     </div>
           <div className="row">
             <div className="col-12 col-sm-6">
               <div className="info-box bg-light">
                 <div className="info-box-content">
                   <span className="info-box-text text-center text-muted">Date<i className="far fa-calendar-alt ml-2"></i></span>
-                    <span className="info-box-number text-center text-muted mb-0">{event.event[0].date}</span>
+                    <span className="info-box-number text-center text-muted mb-0">{(new Date(event.eventDate).toDateString())}</span>
                 </div>
               </div>
             </div>
@@ -56,7 +54,7 @@ function EventView(props) {
               <div className="info-box bg-light">
                 <div className="info-box-content">
                   <span className="info-box-text text-center text-muted">Time<i className="far fa-clock ml-2"></i></span>
-                  <span className="info-box-number text-center text-muted mb-0">{event.event[0].time}</span>
+                  <span className="info-box-number text-center text-muted mb-0">{event.startTime} to {event.endTime}</span>
                 </div>
               </div>
             </div>
@@ -66,7 +64,7 @@ function EventView(props) {
               <div className="info-box bg-light">
                 <div className="info-box-content">
                   <span className="info-box-text text-center text-muted">Venue<i className="fas fa-map-marker-alt ml-2"></i></span>
-                  <span className="info-box-number text-center text-muted mb-0">{event.event[0].venue}</span>
+                  <span className="info-box-number text-center text-muted mb-0">{event.venue}</span>
                 </div>
               </div>
             </div>
@@ -74,19 +72,17 @@ function EventView(props) {
           <div className="row info-box bg-light">
             <div className="col-12 px-4">
          
-          <h3 className="text-primary mt-3 mb-3">{event.event[0].eventName} </h3>
+          <h3 className="text-primary mt-3 mb-3">{event.eventName} </h3>
           <div className="text-muted">
-            <p className="text-md"><i className="fas fa-bullhorn"></i> <b>{event.event[0].hostingAffiliation}</b>
+            <p className="text-md"><i className="fas fa-bullhorn"></i> <b>{event.hostingAffiliation}</b>
             </p>
           </div>
-          <p className="text-muted">{event.event[0].description}</p>
+          <p className="text-muted">{event.description}</p>
           
           <h5 className="mt-2 text-muted">Event Volunteers</h5>
           <ul className="list-unstyled">
 
-          { volList() }
-          { volunteers.map((volunteer,index) =>
-             <li className="text-secondary" key={index}>{volunteer}</li>) } 
+             <li className="text-secondary" >{event.volunteers}</li>
 
           </ul>    
             </div>
@@ -94,7 +90,7 @@ function EventView(props) {
         </div>
 
         <div className="col-12 col-md-12 col-lg-4 order-2 order-md-2">
-         <iframe src={event.event[0].eventForm} title="registrationForm" width="100%"  height="100%" frameBorder="0" marginHeight="0" marginWidth="0">Loading…</iframe>
+         <iframe src={event.formLink} title="registrationForm" width="100%"  height="100%" frameBorder="0" marginHeight="0" marginWidth="0">Loading…</iframe>
         </div>
       </div>
     </div>

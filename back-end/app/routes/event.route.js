@@ -8,4 +8,8 @@ router.post('/addEvent',  EventController.addEvent);
 //get all events
 router.get('/all/events',  EventController.get_all_events);
 
+router.post('/specificEvent',  EventController.get_event);
+
+router.post('/delete',  EventController.deleteEvent);
+
 module.exports = router;

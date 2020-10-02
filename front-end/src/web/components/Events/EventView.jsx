@@ -1,7 +1,25 @@
 import React from 'react';
+import {get_event} from "../../../admin/controllers/event.controller";
+import { useState,useEffect } from 'react';
+import {useParams } from "react-router-dom";
+import NavBar from '../Common/NavBar';
 
 function EventView() {
+
+    const [event, setEvent] = useState({event:['']});
+    let { eventId } = useParams();
+
+    useEffect(() => {
+      onLoadEvent(eventId);
+  }, []); 
+
+    const onLoadEvent = async (eventId) => {
+      const result = await get_event(eventId);
+      await  setEvent(result.data.data);
+    }
+
     return (<div>
+        <NavBar/>
         <section className="content" >
       <div className="card">
         <div className="card-header">
@@ -14,14 +32,14 @@ function EventView() {
         <div className="card-body">
           <div className="row">
             <div className="col-12 col-md-12 col-lg-8 order-1 order-md-1">
-            <img className="mb-4 shadow-lg bg-white rounded w-100" alt="Event Banner" src={__dirname+"images/Events/event4.jpg"} style={{float:"left", maxWidth:"100%", maxHeight:"300px" }} />
+            <img className="mb-4 shadow-lg bg-white rounded w-100" alt="Event Banner" src={__dirname+"images/Events/"+event.banner} style={{float:"left", maxWidth:"100%", maxHeight:"300px" }} />
          
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="info-box bg-light">
                     <div className="info-box-content">
                       <span className="info-box-text text-center text-muted">Date<i className="far fa-calendar-alt ml-2"></i></span>
-                        <span className="info-box-number text-center text-muted mb-0">Sep 30,2020</span>
+                        <span className="info-box-number text-center text-muted mb-0">{(new Date(event.eventDate).toDateString())}</span>
                     </div>
                   </div>
                 </div>
@@ -29,7 +47,7 @@ function EventView() {
                   <div className="info-box bg-light">
                     <div className="info-box-content">
                       <span className="info-box-text text-center text-muted">Time<i className="far fa-clock ml-2"></i></span>
-                      <span className="info-box-number text-center text-muted mb-0">04:30 PM to 9:30 PM</span>
+                      <span className="info-box-number text-center text-muted mb-0">{event.startTime} to {event.endTime}</span>
                     </div>
                   </div>
                 </div>
@@ -39,7 +57,7 @@ function EventView() {
                   <div className="info-box bg-light">
                     <div className="info-box-content">
                       <span className="info-box-text text-center text-muted">Venue<i className="fas fa-map-marker-alt ml-2"></i></span>
-                      <span className="info-box-number text-center text-muted mb-0">Bandaranayake Memorial International Conference Hall, Bauddhaloka Mawatha, Colombo 00700</span>
+                      <span className="info-box-number text-center text-muted mb-0">{event.venue}</span>
                     </div>
                   </div>
                 </div>
@@ -47,20 +65,13 @@ function EventView() {
               <div className="row info-box bg-light">
                 <div className="col-12 px-4">
              
-              <h3 className="text-primary mt-3 mb-3">Congress 2019 </h3>
+              <h3 className="text-primary mt-3 mb-3">{event.eventName}</h3>
               <div className="text-muted">
-                <p className="text-md"><i className="fas fa-bullhorn"></i> <b>Young Professionals</b>
+                <p className="text-md"><i className="fas fa-bullhorn"></i> <b>{event.hostingAffiliation}</b>
                 </p>
               </div>
               <p className="text-muted" style={{lineHeight:"2"}}>
-              YP LETs Talks is one of the key events of the IEEE Young Professionals Sri Lanka Section which brings together young professionals representing each and every domain of engineering. The YP team’s target is to create a platform between young professionals and prominent speakers to share their success stories, input tips and guidelines to reach the zenith through the theme Road to Success.
-              <br/> <br/>
-This year’s first session will be "How to Invest in Share Market" targeting to widening and strengthening the knowledge and attitudes of the participants about Share Market Investments. The audience will comprise of recent graduates and young professionals from technical backgrounds.
-<br/> <br/>
-Awaits to meet the motivated and enthusiastic individuals to get most out of this inspiring opportunity by eminent professionals.
-<br/> <br/>
-Registration fee of 500 LKR will be charged for Non-IEEE members and free entry for IEEE Members. (Payment details for non-members will be informed later)
-         
+              {event.description}
               </p>
               
                 </div>
