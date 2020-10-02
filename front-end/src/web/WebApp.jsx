@@ -8,6 +8,7 @@ import ClosedAll from './components/Events/ClosedAll';
 import EventView from './components/Events/EventView';
 import Registration from './components/Member/Registration';
 import MemberLogin from './components/Login/MemberLogin';
+// import MemberLogin from '../admin/components/';
 import UserProfile from './components/Member/UserProfile';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
