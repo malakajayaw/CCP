@@ -59,7 +59,8 @@ function ClosedEvents() {
       };
 
 
-    return (<div className="container">
+    return (
+    <div className="container">
 
         <h1 className="text-center text-danger">CLOSED EVENTS</h1>
         <p className="text-center">These are the past events of the organization. Click on an event to view more details.</p>

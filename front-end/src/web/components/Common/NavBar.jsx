@@ -6,7 +6,7 @@ function NavBar() {
     <nav className="mb-1 navbar navbar-expand-lg navbar-light scrolling-navbar" >
     
         <Link to="/" className="navbar-brand ml-5" style={{color:"white"}} >
-       <img src="images/ieee-icon.png" height="40" alt="IEEE logo" />
+       <img src="/images/ieee-icon.png" height="40" alt="IEEE logo" />
        </Link>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
         aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">

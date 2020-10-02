@@ -2,6 +2,7 @@ import React from 'react';
 import {get_event} from "../../../admin/controllers/event.controller";
 import { useState,useEffect } from 'react';
 import {useParams } from "react-router-dom";
+import NavBar from '../Common/NavBar';
 
 function EventView() {
 
@@ -18,6 +19,7 @@ function EventView() {
     }
 
     return (<div>
+        <NavBar/>
         <section className="content" >
       <div className="card">
         <div className="card-header">

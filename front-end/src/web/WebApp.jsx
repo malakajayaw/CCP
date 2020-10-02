@@ -12,7 +12,6 @@ function App() {
   return ( <div>
      { <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet"></link>}
     <Router>
-    <NavBar/>
         <Switch>
               <Route path="/upcomingAll">  <UpComingAll /> </Route>
               <Route path="/closedAll">  <ClosedAll /> </Route>

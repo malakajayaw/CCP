@@ -2,6 +2,7 @@ import React from 'react';
 import {  Link } from "react-router-dom";
 import {get_all_events} from "../../../admin/controllers/event.controller";
 import { useState ,useEffect} from 'react';
+import NavBar from '../Common/NavBar';
 
 function UpComingAll() {
 
@@ -53,13 +54,14 @@ function UpComingAll() {
         };
 
    return ( 
+     <div>
+         <NavBar/>
    <div className="container mt-5">
-
    <h1 style={{color:"#1DA1F2"}} className="text-center">ALL UPCOMING EVENTS</h1>
    <p className="text-center">These are the upcoming events of the organization. Click on an event to view more details and register.</p>
 
    {loadData()}
-
+    </div>
    </div>);
 }
 

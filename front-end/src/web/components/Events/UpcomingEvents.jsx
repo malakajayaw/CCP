@@ -4,6 +4,7 @@ import Carousel from './Carousel';
 import ClosedEvents from './ClosedEvents';
 import {get_all_events} from "../../../admin/controllers/event.controller";
 import { useState ,useEffect} from 'react';
+import NavBar from '../Common/NavBar';
 
 function UpcomingEvents() {
 
@@ -58,7 +59,8 @@ function UpcomingEvents() {
 
     return (
       <div>
-    <Carousel />
+        <NavBar/>
+        <Carousel />
     <div className="container" style={{marginTop:"5rem"}}>
     <h1 style={{color:"#1DA1F2"}} className="text-center">UPCOMING EVENTS</h1>
         <p className="text-center">These are the upcoming events of the organization. Click on an event to view more details and register.</p>
