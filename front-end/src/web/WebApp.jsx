@@ -4,8 +4,12 @@ import NavBar from './components/Common/NavBar';
 import Footer from './components/Common/Footer';
 import UpcomingEvents from './components/Events/UpcomingEvents';
 import UpComingAll from './components/Events/UpComingAll';
-import ClosedAll from './components/Events/ClosedEvents';
+import ClosedAll from './components/Events/ClosedAll';
 import EventView from './components/Events/EventView';
+import Registration from './components/Member/Registration';
+import MemberLogin from './components/Login/MemberLogin';
+// import MemberLogin from '../admin/components/';
+import UserProfile from './components/Member/UserProfile';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -16,9 +20,11 @@ function App() {
                 <Route path="/upcomingAll">  <UpComingAll /> </Route>
                 <Route path="/closedAll">  <ClosedAll /> </Route>
                 <Route path="/view/:eventId">  <EventView /> </Route>
+                <Route path="/Registration">  <Registration /> </Route>
+                <Route path="/UserProfile">  <UserProfile /> </Route>
+                <Route path="/MemberLogin">  <MemberLogin /> </Route>
                 <Route path="/">  <UpcomingEvents /> </Route>
             </Switch>
-            <Footer />
         </Router>
     </div>
     );
