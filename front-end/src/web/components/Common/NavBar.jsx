@@ -93,16 +93,19 @@ function NavBar() {
       <li className="nav-item">
         <a className="nav-link" href="#">Contact Us</a>
       </li> */}
-          <li className="nav-item dropdown">
-            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              <i className="fas fa-user"></i>
-            </a>
-            <div className="dropdown-menu dropdown-menu-right dropdown-default"
-              aria-labelledby="navbarDropdownMenuLink-333">
-              <a className="dropdown-item" href="/MemberLogin">Login</a>
-              <a className="dropdown-item" href="/UserProfile">My Account</a>
-              <a className="dropdown-item" href="#">Something else here</a>
+                    <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i className="fas fa-user"></i>
+                        </a>
+                        <div className="dropdown-menu dropdown-menu-right dropdown-default"
+                            aria-labelledby="navbarDropdownMenuLink-333">
+                            <a className="dropdown-item" href="/MemberLogin">Login</a>
+                            <a className="dropdown-item" href="/UserProfile">My Account</a>
+                            <a className="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </nav>);
 }

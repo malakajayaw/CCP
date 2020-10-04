@@ -76,11 +76,9 @@ function UpcomingEvents() {
                 </div>
             </div>
             <ClosedEvents />
+            <Footer />
         </div>
-        <ClosedEvents />
-        <Footer/>
-        </div>
-        
+
     );
 }
 
