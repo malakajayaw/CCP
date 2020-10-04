@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer() {
    return (
-    <footer className="page-footer font-small special-color-dark pt-4 mt-5">
+    <footer className="page-footer font-small special-color-dark pt-4 mt-5  sticky-bottom" >
     
       <div className="container">
         <ul className="list-unstyled list-inline text-center">
