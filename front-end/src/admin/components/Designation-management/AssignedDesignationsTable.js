@@ -1,68 +1,90 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { get_all_assignments, remove_assignment } from "../../controllers/designationAss.controller";
+import Config from '../../controllers/config.controller'
+//import EventReportView from './EventReportView'
+import { Link } from "react-router-dom";
 
-class AssignedDesignationsTable extends Component {
+import useForceUpdate from 'use-force-update';
 
-    constructor(props) {
-        super(props);
-        this.state = { assd: [''] }
+
+const AssignedDesignationsTable = (props) => {
+    const [assignment, SetAssignments] = useState([]);
+    const forceUpdate = useForceUpdate();
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    async function getData() {
+        var res = await get_all_assignments();
+        await SetAssignments(res.data.data);
     }
 
-    componentDidMount() {
+    const delete_func = async (id) => {
+        const res = await remove_assignment(id)
+        if (res.code == 200) {
+            Config.setToast("Member removed")
+            forceUpdate();
+        } else {
+            Config.setToast("Something went wrong")
+            forceUpdate();
+        }
+    }
 
-        fetch('http://localhost:5000/assigndesignations')
-            .then(res => res.json())
-            .then(assd => this.setState({ assd }, () => console.log('Assigned designations fetched..', assd)));
+    const readydata = () => {
+        return assignment.map((assignment, i) => {
+            return (
+                <tr key={i}>
+                    <td>{assignment.title}</td>
+                    <td>{assignment.MemNo}</td>
+                    <td>{assignment.forYear}</td>
+                    <td className="project-actions text-center">
+                        <Link to={`/Admin/EditDesignation/${assignment.AssNo}`}><a className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
+                            {" "}
+                            <i className="fas fa-folder mr-1" />
+                             Edit{" "}
+                        </a></Link>
+                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(assignment.AssNo)}>
+                            {" "}
+                            <i className="fas fa-trash mr-1" />Remove{" "}
+                        </a>
+                    </td>
+                </tr>
+            );
+        });
     };
 
-    render() {
-        console.log(this.props);
-        return (<section className="content">
-
+    return (
+        <section className="content" style={{ display: props.display }}>
             <div className="container-fluid">
                 <div className="card">
                     <div className="card-header">
+                        {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
+                        {/*<button type="button" onClick={() => {props.onClick("EReport"); }} className="btn btn-success float-right add_btn" >Repport Management</button>*/}
                     </div>
                     {/* <!-- /.card-header --> */}
                     <div className="card-body">
-                        <table id="AdesTable" className="table table-bordered table-striped dataTable">
+                        <table
+                            id="eventReportTable"
+                            className="table table-bordered table-striped dataTable"
+                        >
                             <thead>
                                 <tr>
                                     <th>Designation Title</th>
                                     <th>Designated Member</th>
+                                    <th>Year</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
 
-                                {this.state.assd.map(assd => <tr key={assd.assdId} >
-                                    <td>{assd.dTitle}</td>
-                                    <td>{assd.dMem}</td>
-                                    <td className="project-actions text-center">
-                                        <Link to={"/EditDesignation/" + assd.assdId} className="btn btn-primary btn-sm mr-1"><i className="fas fa-pencil-alt mr-1" /> Edit</Link>
-                                        <Link to="/EventView" className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1" /> Delete</Link>
-                                    </td>
-                                </tr>)}
-
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Designation Title</th>
-                                    <th>Designated Member</th>
-                                    <th>Action</th>
-                                </tr>
-                            </tfoot>
+                            <tbody>{readydata()}</tbody>
                         </table>
                     </div>
                 </div>
                 {/* <!-- /.container-fluid --> */}
             </div>
-
-
         </section>
-        );
-    }
-}
-
+    );
+};
 
 export default AssignedDesignationsTable;

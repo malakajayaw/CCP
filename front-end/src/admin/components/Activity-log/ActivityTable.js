@@ -1,30 +1,53 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { get_all_activities, delete_report } from "../../controllers/activity.controller";
+import Config from '../../controllers/config.controller'
+//import EventReportView from './EventReportView'
+import { Link } from "react-router-dom";
 
-class ActivityTable extends Component {
+import useForceUpdate from 'use-force-update';
 
 
-    constructor(props) {
-        super(props);
-        this.state = { act: [''] }
+const ActivityTable = (props) => {
+    const [activity, SetActivities] = useState([]);
+    const forceUpdate = useForceUpdate();
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    async function getData() {
+        var res = await get_all_activities();
+        await SetActivities(res.data.data);
     }
 
-    componentDidMount() {
-
-        fetch('http://localhost:5000/activitylog')
-            .then(res => res.json())
-            .then(act => this.setState({ act }, () => console.log('Activity log fetched..', act)));
+    const readydata = () => {
+        return activity.map((activity, i) => {
+            return (
+                <tr key={i}>
+                    <td>{activity.memberID}</td>
+                    <td>{activity.action}</td>
+                    <td>{activity.table}</td>
+                    <td>{activity.datetime}</td>
+                    <td>{activity.parameters}</td>
+                </tr>
+            );
+        });
     };
 
-    render() {
-        console.log(this.props);
-
-        return (<section className="content">
+    return (
+        <section className="content" style={{ display: props.display }}>
             <div className="container-fluid">
                 <div className="card">
+                    <div className="card-header">
+                        {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
+                        {/*<button type="button" onClick={() => {props.onClick("EReport"); }} className="btn btn-success float-right add_btn" >Repport Management</button>*/}
+                    </div>
                     {/* <!-- /.card-header --> */}
                     <div className="card-body">
-                        <table id="desTable" className="table table-bordered table-striped dataTable">
+                        <table
+                            id="eventReportTable"
+                            className="table table-bordered table-striped dataTable"
+                        >
                             <thead>
                                 <tr>
                                     <th>Member ID</th>
@@ -34,35 +57,15 @@ class ActivityTable extends Component {
                                     <th>Parameters</th>
                                 </tr>
                             </thead>
-                            <tbody>
 
-                                {this.state.act.map(act => <tr key={act.actId} >
-                                    <td>{act.editId}</td>
-                                    <td>{act.activity}</td>
-                                    <td>{act.table}</td>
-                                    <td>{act.date}</td>
-                                    <td>{act.param}</td>
-                                </tr>)}
-
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Designation ID</th>
-                                    <th>Branch</th>
-                                    <th>Designation Title</th>
-                                    <th>Action</th>
-                                </tr>
-                            </tfoot>
+                            <tbody>{readydata()}</tbody>
                         </table>
                     </div>
                 </div>
                 {/* <!-- /.container-fluid --> */}
             </div>
-
         </section>
-        );
-    }
-}
-
+    );
+};
 
 export default ActivityTable;
