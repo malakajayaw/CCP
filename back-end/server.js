@@ -46,7 +46,7 @@ app.use("/eventReport", eventReport);
 app.use("/activity", activity);
 app.use("/designations", designations);
 app.use("/assignments", assignments);
-
+app.use("/affiliation", affiliation)
 
 app.get("/events",(req,res) => {
     const events = [ 
@@ -68,6 +68,7 @@ app.get("/events",(req,res) => {
     res.json(events);
     //console.log(req.body);
 });
+
 
 app.get("/designations", (req, res) => {
     console.log("designations got request");
