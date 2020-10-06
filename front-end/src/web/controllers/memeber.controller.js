@@ -113,3 +113,20 @@ export const get_specific_mem = (id) => {
             })
     })
 }
+export const sign_controller = (mem, pass) => {
+
+    var data = {
+        memberShipNo:mem,
+        uPass:pass
+    }
+    return new Promise( (resolve,reject) => {
+        return axios.post (`${Config.host}${Config.port}/member/signin`, {...data})
+            .then( result => {
+                console.log(result.data);
+                    resolve({code : 200 , data : result.data })
+            })
+            .catch( err => {
+                reject({ code : 0 , error : err})
+            })
+    })
+}

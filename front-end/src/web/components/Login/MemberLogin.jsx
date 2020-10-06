@@ -5,7 +5,36 @@ import Background from "../../images/Login.jpg";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
+import {sign_controller} from "../../controllers/memeber.controller"
+
 class MemberLogin extends Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      // user login details
+      memberShipNo: "",
+      uPass: "",
+    };
+  }
+
+  formValueChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value })
+}
+
+onSubmitForm = async (e) => {
+  e.preventDefault()
+  var status = await sign_controller(this.state.memberShipNo, this.state.uPass)
+  console.log(status);
+  if(status.code == 200){
+    this.props.history.push("/Dashboard");
+  }
+
+}
+
+
+
   render() {
     return (
       <div>
@@ -33,12 +62,15 @@ class MemberLogin extends Component {
                 <div className="card-body login-card-body">
                   <p className="login-box-msg">IEEE - Sri Lanka Section</p>
 
-                  <form action="App.jsx">
+                  <form onSubmit={(e)=>this.onSubmitForm(e)}>
                     <div className="input-group mb-3">
                       <input
-                        type="email"
+                        type="text"
                         className="form-control"
-                        placeholder="Email"
+                        placeholder="Membership Number"
+                        name="memberShipNo"
+                        onChange={(e)=> this.formValueChange(e)}
+                        value={this.state.memberShipNo}
                       />
                       <div className="input-group-append">
                         <div className="input-group-text">
@@ -51,6 +83,10 @@ class MemberLogin extends Component {
                         type="password"
                         className="form-control"
                         placeholder="Password"
+                        name="uPass"
+                        value={this.state.uPass}
+                        onChange={(e)=> this.formValueChange(e)}
+
                       />
                       <div className="input-group-append">
                         <div className="input-group-text">
@@ -68,13 +104,9 @@ class MemberLogin extends Component {
                       </div>
 
                       <div className="col-5">
-                        <Link
-                          to="/Dashboard"
-                          type="button"
-                          className="btn btn-primary btn-block"
-                        >
-                          Sign In
-                        </Link>
+                        <button type="submit"> Sign In</button>
+                         
+                        
                       </div>
                     </div>
                   </form>
@@ -96,4 +128,4 @@ class MemberLogin extends Component {
     );
   }
 }
-export default MemberLogin;
+export default withRouter( MemberLogin);
