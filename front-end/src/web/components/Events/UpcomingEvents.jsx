@@ -5,7 +5,7 @@ import ClosedEvents from './ClosedEvents';
 import {get_all_events} from "../../../admin/controllers/event.controller";
 import { useState ,useEffect} from 'react';
 import NavBar from '../Common/NavBar';
-
+import Footer from '../Common/Footer';
 function UpcomingEvents() {
 
     const [events, setEvents] = useState([]);
