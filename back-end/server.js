@@ -17,7 +17,7 @@ const eventReport = require("./app/routes/event.report.route");
 const activity = require("./app/routes/activity.route");
 const designations = require("./app/routes/designations.route");
 const assignments = require("./app/routes/designationsAss.route");
-
+const affiliation = require("./app/routes/affiliation.route");
 
 
 
