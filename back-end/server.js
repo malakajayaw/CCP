@@ -49,67 +49,6 @@ app.use("/assignments", assignments);
 app.use("/affiliation", affiliation)
 
 
-
-app.get("/designations", (req, res) => {
-    console.log("designations got request");
-    const des = [
-        { desId: 1, branchName: 'SB 1', branchid: 1, desTitle: 'Secretary' },
-        { desId: 2, branchName: 'SB 2', branchid: 2, desTitle: '	Cordinator' },
-        { desId: 3, branchName: 'SB 3', branchid: 3, desTitle: 'Treasurer' }
-    ];
-    res.json(des);
-});
-
-
-app.get("/deleteDesignations/:id", (req, res) => {
-    console.log("designation deleted");
-    console.log(req.params.id);
-});
-
-app.get("/assigndesignations", (req, res) => {
-    const assd = [
-        { assdId: 1, dTitle: 'Secretary', dMem: 'Malaka Jayawardhana' },
-        { assdId: 2, dTitle: 'Treassurer', dMem: 'Anuka Jayasundara' },
-        { assdId: 3, dTitle: 'Cordinator', dMem: 'Maneesha Rajapakshe' }
-    ];
-    res.json(assd);
-});
-
-app.get("/activitylog", (req, res) => {
-    const actl = [
-        { actId: 1, editId: '0124', activity: 'Insert', table: 'Member', date: '02/10/2020 18:10:04', param: 'Nimal' },
-        { actId: 2, editId: '0136', activity: 'Delete', table: 'Event', date: '02/10/2020 18:10:04', param: 'SLIIT IEEE Con' },
-        { actId: 3, editId: '0175', activity: 'Update', table: 'Affiliation', date: '02/10/2020 18:10:04', param: 'SLIIT SB' }
-    ];
-    //Event.find(function (err, docs) { res.json(actl) });
-    res.json(actl);
-});
-
-app.post("/editAssignedMem", cors(), (req, res) => {
-    res.setHeader('Content-Type', 'application/json')
-    //res.send("Hi");
-    console.log("Edit Assign Mem");
-    console.log(req.body);
-    res.json({ stat: 'good' });
-});
-
-app.post("/editDesignation", cors(), (req, res) => {
-    res.setHeader('Content-Type', 'application/json')
-    //res.send("Hi");
-    console.log("Edit Designation");
-    console.log(req.body);
-    res.json({ stat: 'good' });
-});
-
-app.post("/createDesignation", cors(), (req, res) => {
-    res.setHeader('Content-Type', 'application/json')
-    //res.send("Hi");
-    console.log("Create Designation");
-    console.log(req.body);
-    res.json({ stat: 'good' });
-});
-
-
 app.post("/addAffiliation", cors(), (req, res) => {
     res.setHeader('Content-Type', 'application/json')
     //res.send("Hi");
