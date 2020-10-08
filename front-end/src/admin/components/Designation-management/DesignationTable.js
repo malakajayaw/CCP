@@ -1,30 +1,62 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { get_all_designations, remove_designation } from "../../controllers/designation.controller";
+import Config from '../../controllers/config.controller'
+//import EventReportView from './EventReportView'
+import { Link } from "react-router-dom";
 
-class DesignationTable extends Component {
+import useForceUpdate from 'use-force-update';
 
-    constructor(props) {
-        super(props);
-        this.state = { des: [''] }
+
+const DesignationTable = (props) => {
+    const [designation, SetDesignation] = useState([]);
+    const forceUpdate = useForceUpdate();
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    async function getData() {
+        var res = await get_all_designations();
+        await SetDesignation(res.data.data);
     }
 
-    deleteDes(id) {
-        console.log(id);
-        fetch('http://localhost:5000/deleteDesignations' + id)
-            .then(res => res.json())
-            .then(des => this.setState({ des }, () => console.log('Designations fetched..', des)));
+
+    const delete_func = async (id) => {
+        const res = await remove_designation(id)
+        if (res.code == 200) {
+            Config.setToast("Designation removed")
+            forceUpdate();
+        } else {
+            Config.setToast("Something went wrong")
+            forceUpdate();
+        }
     }
 
-    componentDidMount() {
-        fetch('http://localhost:5000/designations')
-            .then(res => res.json())
-            .then(des => this.setState({ des }, () => console.log('Designations fetched..', des)));
+    const readydata = () => {
+        return designation.map((designation, i) => {
+            return (
+                <tr key={i}>
+                    <td>{designation.DesNo}</td>
+                    <td>{designation.affiliationNo}</td>
+                    <td>{designation.title}</td>
+                    <td className="project-actions text-center">
+                        <Link to={`/Admin/EditDesignation/${designation.DesNo}`}><a className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
+                            {" "}
+                            <i className="fas fa-folder mr-1" />
+                             Edit{" "}
+                        </a></Link>
+                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(designation.DesNo)}>
+                            {" "}
+                            <i className="fas fa-trash mr-1" />Remove{" "}
+                        </a>
+                    </td>
+                </tr>
+            );
+        });
     };
 
-    render() {
-        console.log(this.props);
-
-        return (<section className="content">
+    return (
+        <section className="content" style={{ display: props.display }}>
             <div className="container-fluid">
                 <div className="card">
                     <div className="card-header">
@@ -32,7 +64,10 @@ class DesignationTable extends Component {
                     </div>
                     {/* <!-- /.card-header --> */}
                     <div className="card-body">
-                        <table id="desTable" className="table table-bordered table-striped dataTable">
+                        <table
+                            id="eventReportTable"
+                            className="table table-bordered table-striped dataTable"
+                        >
                             <thead>
                                 <tr>
                                     <th>Designation ID</th>
@@ -41,37 +76,15 @@ class DesignationTable extends Component {
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
 
-                                {this.state.des.map(des => <tr key={des.desId} >
-                                    <td>{des.desId}</td>
-                                    <td>{des.branchName}</td>
-                                    <td>{des.desTitle}</td>
-                                    <td className="project-actions text-center">
-                                        <Link to={"EditDesignation/" + des.desId} className="btn btn-primary btn-sm mr-1"><i className="fas fa-pencil-alt mr-1" /> Edit</Link>
-                                        <Link to={this.deleteDes + des.desId} className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1" /> Delete</Link>
-                                    </td>
-                                </tr>)}
-
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Designation ID</th>
-                                    <th>Branch</th>
-                                    <th>Designation Title</th>
-                                    <th>Action</th>
-                                </tr>
-                            </tfoot>
+                            <tbody>{readydata()}</tbody>
                         </table>
                     </div>
                 </div>
                 {/* <!-- /.container-fluid --> */}
             </div>
-
         </section>
-        );
-    }
-}
-
+    );
+};
 
 export default DesignationTable;

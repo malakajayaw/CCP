@@ -11,6 +11,7 @@ router.post('/req/action',  MemberController.acceptOrReject);
 router.get('/all/active',  MemberController.active_members);
 router.post('/mem/update',  MemberController.update_member);
 router.post('/specif/member',  MemberController.get_specific_user);
+router.post('/signin',  MemberController.login);
 
 
 module.exports = router;

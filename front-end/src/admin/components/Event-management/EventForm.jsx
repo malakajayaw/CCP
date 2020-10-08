@@ -1,13 +1,24 @@
-import React,{useState} from 'react';
-import ContentHeader from '../Dashboard/ContentHeader';
-import { add_event} from '../../controllers/event.controller'
-import Config from '../../controllers/config.controller'
+import React,{useState, useEffect} from 'react';
+import Config from '../../controllers/config.controller';
+import { get_all_active_members} from '../../controllers/memeber.controller'
 import Axios from 'axios';
 
 function EventForm(props) {
 
   const [eventData,setEventData] = useState({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',volunteers:[''],formLink:'',banner:null });
   const [vols,setVols] = useState([]);
+
+  const [members, Setmembers] = useState([]);
+
+    useEffect(() => {
+      getData();
+  }, []); 
+
+
+  async function getData() {
+    var res = await get_all_active_members()
+    await   Setmembers(res.data.data);
+  }
 
   const handleChange = event =>
   { 
@@ -22,7 +33,6 @@ function EventForm(props) {
       vols.push(event.target.value); 
       setEventData({...eventData, volunteers : vols}) 
     }else{
-      console.log(vols.length);
       if(vols.length === 1 ){
         vols.splice(0,vols.length)
       }else{
@@ -53,13 +63,13 @@ function EventForm(props) {
     data.append("volunteers",eventData.volunteers)
     data.append("formLink",eventData.formLink);
     data.append("banner",eventData.banner);
-
     try{
       const res = await Axios.post('/event/addEvent',data, {
         headers : {
           'Content-Type' : 'multipart/form-data'
         }
       });
+
       if(res.status === 201)
       {
         clear()
@@ -73,6 +83,13 @@ function EventForm(props) {
     }
   }
 
+  const loadMembers = () => {
+    return   members.map((member, index) => {
+      return(  
+      <option value={member.memberShipNo} key={index}> {member.memberShipNo}</option>
+      )
+    })
+  }
 
   return (    <div>
     {/* <ContentHeader pageName={props.page}/> */}
@@ -122,12 +139,8 @@ function EventForm(props) {
      
       <div className="form-group">
           <label>Volunteers</label>
-          <select id="volunteers" className="form-control"  value={vols} onChange={handleVolunteers}  data-placeholder="Select volunteers" style={{width: "100%"}} multiple>
-            <option value="Anuka Jaysundara" > Anuka Jaysundara</option>
-            <option value="Prabhasha Amarathunga">Prabhasha Amarathunga</option>
-            <option value="Maneesha Rajapaksha">Maneesha Rajapaksha</option>
-            <option value="Malaka Jayawardena">Malaka Jayawardena</option>
-            <option value="Thimithi Weerathung"> Thimithi Weerathunga</option>
+          <select id="volunteers" className="form-control"  value={vols} onChange={handleVolunteers}  data-placeholder="Select volunteers" style={{width: "100%"}} multiple>      
+            {loadMembers()}
           </select>
       </div>
 

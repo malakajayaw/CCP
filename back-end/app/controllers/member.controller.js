@@ -1,6 +1,8 @@
 //import User model
 const Member = require('../model/member.model');
 
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 
 //======================================================================================================
@@ -45,7 +47,8 @@ exports.get_all_requsts = function (req, res, next) {
     console.log("Called");
     // check userdata
     Member.find({
-        newrequest: true,   newrequest:true
+        newrequest: true,
+        newrequest: true
     }, function (err, docs) {
         if (docs.length != 0) {
 
@@ -65,60 +68,68 @@ exports.get_all_requsts = function (req, res, next) {
 //================================== accept or reject      =============================================
 //====================================================================================================== 
 
-exports.acceptOrReject = async  function (req, res, next) {
+exports.acceptOrReject = async function (req, res, next) {
     console.log(req.body);
-   
+
     var state = req.body.state
     var memberShipNo = req.body.memberShipNo
     if (state == null || state == undefined || state == "") {
         state = false
     }
 
-    if(state === true){
+    if (state === true) {
         try {
             console.log(memberShipNo);
-            const search  = await Member.findOne({ memberShipNo: memberShipNo})
-            if(!search){
-                return  res.status(402).send("No exsisting member");
+            const search = await Member.findOne({
+                memberShipNo: memberShipNo
+            })
+            if (!search) {
+                return res.status(402).send("No exsisting member");
             }
-            const log = await  Member.findOneAndUpdate({
+            const log = await Member.findOneAndUpdate({
                 memberShipNo: memberShipNo
             }, {
                 state: state,
-                newrequest:false
+                newrequest: false
             }, {
                 new: true
             })
-    
-          return  res.status(200).send({
-              message : "Requset Accepted Successfully"
-          });
+
+            return res.status(200).send({
+                message: "Requset Accepted Successfully"
+            });
         } catch (error) {
-            return  res.status(403).send("Something went wrong");
+            return res.status(403).send("Something went wrong");
         }
-    }else if(state === false){
+    } else if (state === false) {
         try {
             console.log(memberShipNo);
-            const search  = await Member.findOne({ memberShipNo: memberShipNo})
-            if(!search){
-                return  res.status(402).send("No exsisting member");
-            }
-            const log = await  Member.findOneAndDelete({
+            const search = await Member.findOne({
                 memberShipNo: memberShipNo
             })
-    
-          return  res.status(200).send({
-            message : "Requset Decline Successfully"
-          });
+            if (!search) {
+                return res.status(402).send("No exsisting member");
+            }
+            const log = await Member.findOneAndDelete({
+                memberShipNo: memberShipNo
+            })
+
+            return res.status(200).send({
+                message: "Requset Decline Successfully"
+            });
         } catch (error) {
-            return  res.status(403).send("Something went wrong");
+            return res.status(403).send("Something went wrong");
         }
     }
-   
+
 
 
 
 }
+
+//======================================================================================================
+//================================== View Active Members   =============================================
+//====================================================================================================== 
 
 exports.active_members = async function (req, res, next) {
 
@@ -149,16 +160,18 @@ exports.update_member = async function (req, res, next) {
 
     console.log(req.body);
     try {
-        const update = await  Member.findOneAndUpdate({
+        const update = await Member.findOneAndUpdate({
             memberShipNo: req.body.memberShipNo
         }, {
-            fname : req.body.fname,
-            lname : req.body.lname,
-            email : req.body.email,
-            contactNo : req.body.contactNo,
-        }, {new: true})
-    
-       return res.status(200).send("Update");
+            fname: req.body.fname,
+            lname: req.body.lname,
+            email: req.body.email,
+            contactNo: req.body.contactNo,
+        }, {
+            new: true
+        })
+
+        return res.status(200).send("Update");
     } catch (error) {
         return res.status(403).send("Something went wrong");
     }
@@ -171,14 +184,62 @@ exports.get_specific_user = async function (req, res, next) {
 
 
     try {
-        const update = await  Member.findOne({
-            _id: id })
-    
-       return res.status(200).send({
-           data: update
-       });
+        const update = await Member.findOne({
+            _id: id
+        })
+
+        return res.status(200).send({
+            data: update
+        });
     } catch (error) {
         return res.status(403).send("Something went wrong");
+    }
+
+}
+
+
+exports.login = async function (req, res) {
+
+    console.log(req.body);
+    const user_details = await Member.findOne({
+        memberShipNo: req.body.memberShipNo
+    });
+    if (user_details === null) {
+        return res.status(406).send({
+            data: null,
+            success: false,
+            message: 'No user found',
+        });
+    } else {
+
+        console.log(user_details.password);
+        console.log(req.body.uPass);
+        // const isEqual = await bcrypt.compare(req.body.uPass, user_details.password)
+        const isEqual = await user_details.password.localeCompare(req.body.uPass)
+        if (isEqual == 1 || isEqual== -1) {
+            return res.status(406).send({
+                data: null,
+                success: false,
+                message: 'Password is incorrect',
+            });
+        } else {
+            const token = jwt.sign({
+                memberShipNo: user_details.memberShipNo,
+                email: user_details.email,
+                nic: user_details.nic,
+                role: user_details.role
+            },"thisistokenforieee2019", {
+                expiresIn: '240h'
+            });
+            return res.status(200).send({
+                data: {
+                    "token": token,
+                    "role": user_details.role
+                },
+                success: true,
+                message: 'Successfully login',
+            });
+        }
     }
 
 }

@@ -11,14 +11,14 @@ exports.addEvent = function (req, res, next) {
     if(req.files !== null)
     {
         const file = req.files.banner;
-        fileName = file.name;
-        console.log(req.files);
-        file.mv(`${__dirname}/../public/images/events/${fileName}`,err => {
-            if(err){
-                console.log(err);
-                return res.status(500).send(err)
-            }  
-        });
+        fileName =  Math.random().toString(36).substring(2, 15) + file.name;
+        file.mv(`${__dirname}/../../../front-end/public/images/events/${fileName}`,err => {
+        //file.mv(`${__dirname}/../public/images/events/${fileName}`,err => {
+                if(err){
+                    console.log(err);
+                    return res.status(500).send(err)
+                }  
+            });
     }
     
     let new_event = Event({
@@ -62,4 +62,44 @@ exports.get_all_events = function (req, res, next) {
             res.status(403).send('No data found')
         }
     })
+}
+
+//======================================================================================================
+//================================== Get a specific event  =============================================
+//====================================================================================================== 
+exports.get_event = async function (req, res, next) {
+
+    var id = req.body.id;
+    try {
+        const update = await  Event.findOne({
+            _id: id })
+       return res.status(200).send({
+           data: update
+       });
+    } catch (error) {
+        return res.status(403).send("Something went wrong");
+    }
+
+}
+
+
+exports.deleteEvent = async  function (req, res, next) {
+
+    var id = req.body.id
+
+        try {
+            const search  = await Event.findOne({ _id: id})
+            if(!search){
+                return  res.status(402).send("No exsisting event");
+            }
+            const log = await  Event.findOneAndDelete({
+                _id: id
+            })
+    
+          return  res.status(200).send({
+            message : "Event Successfully Deleted!"
+          });
+        } catch (error) {
+            return  res.status(403).send("Something went wrong");
+        }
 }
