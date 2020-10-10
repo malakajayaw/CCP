@@ -71,7 +71,7 @@ function ClosedEvents() {
 
         <div className="row mt-5">
     <div className="col text-center">
-        <Link to="/closedAll" className="btn btn-outline-primary waves-effect mt-5" >All Closed Events</Link>
+        <Link to="/allEvents" className="btn btn-outline-primary waves-effect mt-5" >All Events</Link>
     </div>
     </div>
         </div>

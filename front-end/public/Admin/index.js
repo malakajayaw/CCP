@@ -1,9 +1,9 @@
 //custom js
 
 $(function () {
-  document
-    .getElementById("eventNav")
-    .addEventListener("click", delayLoad);
+  // document
+  //   .getElementById("eventNav")
+  //   .addEventListener("click", delayLoad);
 
   function delayLoad() {
     setTimeout(loadDataTable, 1000);
@@ -12,26 +12,26 @@ $(function () {
     setTimeout(loadJs, 10);
   }
   var editEventBtns = [];
-  function loadDataTable() {
-    document
-      .getElementById("addEventBtn")
-      .addEventListener("click", delayLoadJs);
+  // function loadDataTable() {
+  //   document
+  //     .getElementById("addEventBtn")
+  //     .addEventListener("click", delayLoadJs);
 
      
-    editEventBtns = $("a.editEventBtn");
+  //   editEventBtns = $("a.editEventBtn");
 
-    $("#eventTable").DataTable({
-      responsive: true,
-      autoWidth: false,
-    });
+  //   $("#eventTable").DataTable({
+  //     responsive: true,
+  //     autoWidth: false,
+  //   });
 
 
-    console.log(editEventBtns,addMemberBtns);
-    for (var i = 0; i < editEventBtns.length; i++) {
-      editEventBtns[i].addEventListener("click", delayLoadJs);
-    }
+  //   console.log(editEventBtns,addMemberBtns);
+  //   for (var i = 0; i < editEventBtns.length; i++) {
+  //     editEventBtns[i].addEventListener("click", delayLoadJs);
+  //   }
    
-  }
+  // }
 
   function loadJs() {
     $("#eventTime").daterangepicker({

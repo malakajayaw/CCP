@@ -5,6 +5,7 @@ import ContentHeader from '../Dashboard/ContentHeader'
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { get_event} from '../../controllers/event.controller';
 
+
 function EventView(props) {
 
     const [event, setEvent] = useState({event:['']});
