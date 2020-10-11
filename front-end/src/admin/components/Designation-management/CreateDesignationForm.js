@@ -5,6 +5,7 @@ import Config from '../../controllers/config.controller'
 import useForceUpdate from 'use-force-update';
 
 import { addDesignation } from '../../controllers/designation.controller'
+import { get_all_affiliations } from "../../controllers/affiliation.controller";
 
 const CreateDesignationForm = (props) => {
     const forceUpdate = useForceUpdate();
@@ -80,6 +81,25 @@ const CreateDesignationForm = (props) => {
         })
     }
 
+    const [affiliations, setAffiliations] = useState([]);
+    useEffect(() => {
+        getAffData();
+    }, []);
+
+    async function getAffData() {
+        var res = await get_all_affiliations();
+        await setAffiliations(res.data.data);
+        console.log(affiliations);
+    }
+
+    const loadAffData = () => {
+        return affiliations.map((affiliations, index) => {
+            return (
+                <option>{affiliations.affiliationname}</option>
+            );
+        });
+    };
+
 
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
@@ -113,10 +133,7 @@ const CreateDesignationForm = (props) => {
                                                 <div className="form-group">
                                                     <label>Affiliation</label>
                                                     <select className="select2" id="affiliation" name="affiliationNo" multiple="multiple" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange}>
-                                                        <option>SB 1</option>
-                                                        <option>SB 2</option>
-                                                        <option>SB 3</option>
-                                                        <option>SB 4</option>
+                                                        {loadAffData()}
                                                     </select>
                                                 </div>
 

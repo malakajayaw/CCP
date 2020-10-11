@@ -5,6 +5,9 @@ import Config from '../../controllers/config.controller'
 import { Link } from "react-router-dom";
 
 import useForceUpdate from 'use-force-update';
+//Datatable Modules
+//import "datatables.net-dt/js/dataTables.dataTables"
+//import "datatables.net-dt/css/jquery.dataTables.min.css"
 
 
 const DesignationTable = (props) => {
@@ -46,7 +49,7 @@ const DesignationTable = (props) => {
                             <i className="fas fa-folder mr-1" />
                              Edit{" "}
                         </a></Link>
-                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(designation.DesNo)}>
+                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(designation._id)}>
                             {" "}
                             <i className="fas fa-trash mr-1" />Remove{" "}
                         </a>

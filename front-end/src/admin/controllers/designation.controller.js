@@ -1,6 +1,8 @@
 import axios from "axios";
 import Config from "./config.controller";
 
+//=============================================================================== Add Designation
+
 export const addDesignation = (data) => {
     console.log(data.DesNo);
     data = {
@@ -23,6 +25,8 @@ export const addDesignation = (data) => {
 
 }
 
+//=============================================================================== Get all designations
+
 export const get_all_designations = () => {
     return new Promise((resolve, reject) => {
         return axios.get(`${Config.host}${Config.port}/designations/getDesignations`)
@@ -36,13 +40,34 @@ export const get_all_designations = () => {
     })
 }
 
+//=============================================================================== Get spec designations
+
+export const get_spec_designations = (id) => {
+    console.log(id);
+    var data = {
+        DesNo: id
+    }
+    return new Promise((resolve, reject) => {
+        return axios.get(`${Config.host}${Config.port}/designations/getSpecDesignations`, { ...data })
+            .then(result => {
+                console.log(result.data);
+                resolve({ code: 200, message: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}
+
+//=============================================================================== Delete designation
+
 export const remove_designation = (id) => {
     console.log(id);
     var data = {
         id: id
     }
     return new Promise((resolve, reject) => {
-        return axios.post(`${Config.host}${Config.port}/designations/delete`, { ...data })
+        return axios.post(`${Config.host}${Config.port}/designations/deleteDesignations`, { ...data })
             .then(result => {
                 console.log(result.data);
                 resolve({ code: 200, message: result.data })

@@ -1,9 +1,7 @@
-//import Event model
 const Designation = require('../model/designations.model');
 
-//======================================================================================================
-//================================== Add Designation  =============================================
-//====================================================================================================== 
+//=============================================================================== Add Designation
+
 exports.addDesignation = function (req, res, next) {
 
     let new_designation = Designation({
@@ -27,9 +25,8 @@ exports.addDesignation = function (req, res, next) {
 
 }
 
-//======================================================================================================
-//================================== Get all activities       =============================================
-//====================================================================================================== 
+//=============================================================================== Get all designations
+
 exports.get_all_designations = function (req, res, next) {
     // check userdata
     Designation.find(function (err, docs) {
@@ -42,3 +39,35 @@ exports.get_all_designations = function (req, res, next) {
         }
     })
 }
+
+//=============================================================================== Get spec designations
+
+exports.get_spec_des = async function (req, res, next) {
+    var id = req.body.DesNo;
+
+    try {
+        const log = await Designation.findOne({
+            DesNo: id,
+        });
+        return res.status(200).send({
+            data: log,
+        });
+    } catch (error) {
+        return res.status(405).send("Something went wrong");
+    }
+};
+
+//=============================================================================== Delete designation
+
+exports.delete_designation = async function (req, res, next) {
+    var id = req.body.id;
+
+    try {
+        const log = await Designation.findOneAndDelete({
+            _id: id,
+        });
+        return res.status(200).send("Deleted");
+    } catch (error) {
+        return res.status(405).send("Something went wrong");
+    }
+};

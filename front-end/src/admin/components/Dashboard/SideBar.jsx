@@ -53,27 +53,27 @@ export default function Sidebar() {
                     </li>
 
                     <li className="nav-item pointer_cursor">
-                        <a className="nav-link">
+                        <Link id="eventNav" className="nav-link" to="/Admin/DesignationAdmin">
                             <i className="nav-icon fa fa-address-card"></i>
-                            <Link to="/DesignationAdmin">Designation Management</Link>
-                            <span className="badge badge-info right"></span>
-                        </a>
+                   Designation Management
+                    <span className="badge badge-info right"></span>
+                        </Link>
                     </li>
 
                     <li className="nav-item pointer_cursor">
-                        <a className="nav-link">
+                        <Link id="eventNav" className="nav-link" to="/Admin/ActivityLog">
                             <i className="nav-icon fa fa-briefcase"></i>
-                            <Link to="/ActivityLog">Activity log</Link>
-                            <span className="badge badge-info right"></span>
-                        </a>
+                   Activity log
+                    <span className="badge badge-info right"></span>
+                        </Link>
                     </li>
 
                     <li className="nav-item pointer_cursor">
-                        <a className="nav-link">
+                        <Link id="eventNav" className="nav-link" to="/Admin/DesignationChair">
                             <i className="nav-icon fa fa-address-card"></i>
-                            <Link to="/DesignationChair">Designation Management(Chair)</Link>
-                            <span className="badge badge-info right"></span>
-                        </a>
+                   Designation Management(Chair)
+                    <span className="badge badge-info right"></span>
+                        </Link>
                     </li>
 
                 </ul>

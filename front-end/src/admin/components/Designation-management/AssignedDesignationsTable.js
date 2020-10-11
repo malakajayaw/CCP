@@ -5,6 +5,9 @@ import Config from '../../controllers/config.controller'
 import { Link } from "react-router-dom";
 
 import useForceUpdate from 'use-force-update';
+//Datatable Modules
+//import "datatables.net-dt/js/dataTables.dataTables"
+//import "datatables.net-dt/css/jquery.dataTables.min.css"
 
 
 const AssignedDesignationsTable = (props) => {
@@ -37,12 +40,13 @@ const AssignedDesignationsTable = (props) => {
                 <tr key={i}>
                     <td>{assignment.title}</td>
                     <td>{assignment.MemNo}</td>
+                    <td>Not yet implemented</td>
                     <td>{assignment.forYear}</td>
                     <td className="project-actions text-center">
                         <Link to={`/Admin/EditDesignation/${assignment.AssNo}`}><a className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
                             {" "}
                             <i className="fas fa-folder mr-1" />
-                             Edit{" "}
+                             Update{" "}
                         </a></Link>
                         <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(assignment.AssNo)}>
                             {" "}
@@ -59,8 +63,9 @@ const AssignedDesignationsTable = (props) => {
             <div className="container-fluid">
                 <div className="card">
                     <div className="card-header">
+                        <Link to="/PastDesignation" type="button" className="btn btn-info float-right add_btn">Past Designations</Link>
                         {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-                        {/*<button type="button" onClick={() => {props.onClick("EReport"); }} className="btn btn-success float-right add_btn" >Repport Management</button>*/}
+                        {/*<button type="button" onClick={() => { props.onClick("Pdesignations"); }} className="btn btn-success float-right add_btn" >Past Designations</button>*/}
                     </div>
                     {/* <!-- /.card-header --> */}
                     <div className="card-body">
@@ -72,6 +77,7 @@ const AssignedDesignationsTable = (props) => {
                                 <tr>
                                     <th>Designation Title</th>
                                     <th>Designated Member</th>
+                                    <th>Member Name</th>
                                     <th>Year</th>
                                     <th>Action</th>
                                 </tr>

@@ -44,9 +44,9 @@ function App() {
                         <Route path="/Admin/MemberRequest"> <MemberRequest /> </Route>
                         <Route path="/Admin/EventView/:eventId"> <EventView /> </Route>
                         <Route path="/Admin/EventForm"> <EventForm /> </Route>
-                           <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
-                           <Route path="/DesignationChair"> <AssignedDesignationsTable /> </Route>
-                           <Route path="/ActivityLog"> <ActivityTable /> </Route>
+                           <Route path="/Admin/DesignationAdmin"> <DesignationTable /> </Route>
+                           <Route path="/Admin/DesignationChair"> <AssignedDesignationsTable /> </Route>
+                           <Route path="/Admin/ActivityLog"> <ActivityTable /> </Route>
                            <Route path="/AddDesignation"> <CreateDesignationForm /> </Route>
                            <Route path="/EditDesignation/:desId"> <EditDesignation /> </Route>
                         <Route path="/Admin/MemberAdd"> <MemberAdd /> </Route>
