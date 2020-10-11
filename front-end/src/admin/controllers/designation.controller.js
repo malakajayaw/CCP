@@ -45,13 +45,13 @@ export const get_all_designations = () => {
 export const get_spec_designations = (id) => {
     console.log(id);
     var data = {
-        DesNo: id
+        id: id
     }
     return new Promise((resolve, reject) => {
-        return axios.get(`${Config.host}${Config.port}/designations/getSpecDesignations`, { ...data })
+        return axios.post(`${Config.host}${Config.port}/designations/getSpecDesignations`, { ...data })
             .then(result => {
                 console.log(result.data);
-                resolve({ code: 200, message: result.data })
+                resolve({ code: 200, data: result.data })
             })
             .catch(err => {
                 reject({ code: 0, error: err })
@@ -71,6 +71,29 @@ export const remove_designation = (id) => {
             .then(result => {
                 console.log(result.data);
                 resolve({ code: 200, message: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}
+
+//=============================================================================== Update designation
+
+export const update_designation = (data, id) => {
+
+    data = {
+        id: id,
+        title: data.title,
+        affiliationNo: data.affiliationNo,
+        type: data.type,
+
+    }
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/designations/updateDesignation`, { ...data })
+            .then(result => {
+                console.log(result.data);
+                resolve({ code: 200, message: result.data.message })
             })
             .catch(err => {
                 reject({ code: 0, error: err })

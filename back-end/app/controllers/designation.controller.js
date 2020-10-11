@@ -43,17 +43,17 @@ exports.get_all_designations = function (req, res, next) {
 //=============================================================================== Get spec designations
 
 exports.get_spec_des = async function (req, res, next) {
-    var id = req.body.DesNo;
+    var id = req.body.id;
 
     try {
         const log = await Designation.findOne({
-            DesNo: id,
+            _id: id,
         });
         return res.status(200).send({
             data: log,
         });
     } catch (error) {
-        return res.status(405).send("Something went wrong");
+        return res.status(405).send("Something went wrong in get_spec_des");
     }
 };
 
@@ -71,3 +71,26 @@ exports.delete_designation = async function (req, res, next) {
         return res.status(405).send("Something went wrong");
     }
 };
+
+//=============================================================================== Update designation
+
+exports.update_designation = async function (req, res, next) {
+
+    console.log(req.body);
+    try {
+        const update = await Designation.findOneAndUpdate({
+            _id: req.body.id
+        }, {
+                title: req.body.fname,
+                affiliationNo: req.body.lname,
+                type: req.body.email,
+        }, {
+            new: true
+        })
+
+        return res.status(200).send("Update");
+    } catch (error) {
+        return res.status(403).send("Something went wrong");
+    }
+
+}
