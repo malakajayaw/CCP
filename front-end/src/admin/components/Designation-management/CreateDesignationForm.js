@@ -40,6 +40,7 @@ const CreateDesignationForm = (props) => {
         DesNo: 'not set',
         title: "not set",
         affiliationNo: "not set",
+        type: "not set",
         created_at: today,
 
 
@@ -74,6 +75,7 @@ const CreateDesignationForm = (props) => {
             DesNo: 'not set',
             title: "not set",
             affiliationNo: "not set",
+            type: "not set",
             created_at: today,
         })
     }
@@ -115,6 +117,14 @@ const CreateDesignationForm = (props) => {
                                                         <option>SB 2</option>
                                                         <option>SB 3</option>
                                                         <option>SB 4</option>
+                                                    </select>
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label>type</label>
+                                                    <select className="select2" id="type" name="type" multiple="multiple" data-placeholder="Select type" style={{ width: "100%" }} onChange={handleChange}>
+                                                        <option>Normal</option>
+                                                        <option>Chair</option>
                                                     </select>
                                                 </div>
 

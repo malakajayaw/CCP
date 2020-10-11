@@ -10,13 +10,16 @@ let Designations = new Schema({
         unique: true
 
     },
-
     title: {
         type: String,
         required: true,
 
     },
     affiliationNo: {
+        type: String,
+        required: true,
+    },
+    type: {
         type: String,
         required: true,
     },

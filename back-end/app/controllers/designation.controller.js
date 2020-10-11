@@ -10,6 +10,7 @@ exports.addDesignation = function (req, res, next) {
         DesNo: req.body.DesNo,
         title: req.body.title,
         affiliationNo: req.body.affiliationNo,
+        type: req.body.type,
         updated_at: req.body.updated_at,
     });
     console.log(new_designation);

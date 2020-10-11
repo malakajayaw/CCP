@@ -7,6 +7,7 @@ export const addDesignation = (data) => {
         DesNo: data.DesNo,
         title: data.title,
         affiliationNo: data.affiliationNo,
+        type: data.type,
         updated_at: data.updated_at
     }
     return new Promise((resolve, reject) => {

@@ -39,6 +39,7 @@ const DesignationTable = (props) => {
                     <td>{designation.DesNo}</td>
                     <td>{designation.affiliationNo}</td>
                     <td>{designation.title}</td>
+                    <td>{designation.type}</td>
                     <td className="project-actions text-center">
                         <Link to={`/Admin/EditDesignation/${designation.DesNo}`}><a className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
                             {" "}
@@ -73,6 +74,7 @@ const DesignationTable = (props) => {
                                     <th>Designation ID</th>
                                     <th>Branch</th>
                                     <th>Designation Title</th>
+                                    <th>Type</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
