@@ -5,7 +5,6 @@ const Designation = require('../model/designations.model');
 exports.addDesignation = function (req, res, next) {
 
     let new_designation = Designation({
-        DesNo: req.body.DesNo,
         title: req.body.title,
         affiliationNo: req.body.affiliationNo,
         type: req.body.type,

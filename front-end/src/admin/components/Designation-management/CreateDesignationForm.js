@@ -38,7 +38,6 @@ const CreateDesignationForm = (props) => {
 
 
     let [designation, setDesignation] = useState({
-        DesNo: 'not set',
         title: "not set",
         affiliationNo: "not set",
         type: "not set",
@@ -73,7 +72,6 @@ const CreateDesignationForm = (props) => {
     const clear = () => {
         console.log("Clear call");
         setDesignation({
-            DesNo: 'not set',
             title: "not set",
             affiliationNo: "not set",
             type: "not set",
@@ -124,8 +122,6 @@ const CreateDesignationForm = (props) => {
                                         <form onSubmit={onSubmit}>
                                             <div class="form-group">
 
-                                                <label for="inputFName">Designation Id : </label>
-                                                <input type="text" id="DesNo" name="DesNo" class="form-control" onChange={handleChange}/>
 
                                                 <label for="inputFName">Designation Title : </label>
                                                 <input type="text" id="title" name="title" class="form-control" onChange={handleChange}/>

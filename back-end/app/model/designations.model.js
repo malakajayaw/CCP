@@ -3,13 +3,6 @@ const Schema = mongoose.Schema;
 
 let Designations = new Schema({
 
-
-    DesNo: {
-        type: String,
-        required: true,
-        unique: true
-
-    },
     title: {
         type: String,
         required: true,

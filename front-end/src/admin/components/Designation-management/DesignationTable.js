@@ -40,7 +40,6 @@ const DesignationTable = (props) => {
         return designation.map((designation, i) => {
             return (
                 <tr key={i}>
-                    <td>{designation.DesNo}</td>
                     <td>{designation.affiliationNo}</td>
                     {/*loadAffData(designation.affiliationNo)*/}
                     <td>{designation.title}</td>
@@ -95,7 +94,6 @@ const DesignationTable = (props) => {
                         >
                             <thead>
                                 <tr>
-                                    <th>Designation ID</th>
                                     <th>Branch</th>
                                     <th>Designation Title</th>
                                     <th>Type</th>

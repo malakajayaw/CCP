@@ -6,7 +6,6 @@ import Config from "./config.controller";
 export const addDesignation = (data) => {
     console.log(data.DesNo);
     data = {
-        DesNo: data.DesNo,
         title: data.title,
         affiliationNo: data.affiliationNo,
         type: data.type,
