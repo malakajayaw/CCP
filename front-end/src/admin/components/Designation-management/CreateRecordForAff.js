@@ -88,9 +88,6 @@ const CreateRecord = (props) => {
 
     async function getAffData() {
         var res = await get_all_affiliations();
-        if (res.dat.data.length==0) {
-            return null;
-        }
         await setAffiliations(res.data.data);
         console.log(affiliations);
     }
