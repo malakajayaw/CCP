@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { get_all_designations, remove_designation } from "../../controllers/designation.controller";
+import { get_affiliation } from "../../controllers/affiliation.controller";
 import Config from '../../controllers/config.controller'
 //import EventReportView from './EventReportView'
 import { Link } from "react-router-dom";
@@ -57,6 +58,24 @@ const DesignationTable = (props) => {
                 </tr>
             );
         });
+    };
+
+    const [affiliations, setAffiliations] = useState({
+
+        affiliationname: "",
+    });
+
+    async function getAffData(affid) {
+        var res = await get_affiliation(affid);
+        await setAffiliations(res.data.data);
+        console.log(affiliations);
+    }
+
+    const loadAffData = (afffid) => {
+        getAffData(afffid);
+        return (
+            <td>{affiliations.affiliationname}</td>
+            );
     };
 
     return (

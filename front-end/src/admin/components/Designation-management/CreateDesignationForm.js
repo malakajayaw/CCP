@@ -95,7 +95,7 @@ const CreateDesignationForm = (props) => {
     const loadAffData = () => {
         return affiliations.map((affiliations, index) => {
             return (
-                <option>{affiliations.affiliationname}</option>
+                <option value={affiliations._id }>{affiliations.affiliationname}</option>
             );
         });
     };

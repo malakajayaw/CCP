@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation } 
 import { useForm } from "react-hook-form";
 
 import { update_designation, get_spec_designations } from '../../controllers/designation.controller'
+import { get_all_affiliations } from "../../controllers/affiliation.controller";
 import Config from '../../controllers/config.controller'
 
 const EditDesignation = (props) => {
@@ -56,9 +57,25 @@ const EditDesignation = (props) => {
 
     }
 
-    //  const getData = async  (id) =>{
-    //       const result = await
-    //  }
+    const [affiliations, setAffiliations] = useState([]);
+    useEffect(() => {
+        getAffData();
+    }, []);
+
+    async function getAffData() {
+        var res = await get_all_affiliations();
+        await setAffiliations(res.data.data);
+        console.log(affiliations);
+    }
+
+    const loadAffData = () => {
+        return affiliations.map((affiliations, index) => {
+            return (
+                <option value={affiliations._id}>{affiliations.affiliationname}</option>
+            );
+        });
+    };
+
 
     const handleChange = (e) => {
         setDesignation({ ...designation, [e.target.name]: e.target.value });
@@ -95,22 +112,21 @@ const EditDesignation = (props) => {
                                             </div>
 
                                             <div className="form-group">
-                                                <label for="inputLName">Affiliation ID</label>
-                                                <input type="text" id="inputLName" className="form-control" required name="addlname"
-                                                    onChange={handleChange}
-                                                    name="affiliationNo"
-                                                    value={designation.affiliationNo} />
+                                                <label>Affiliation</label>
+                                                <select className="select2" id="affiliation" name="affiliationNo" multiple="multiple" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange}>
+                                                    {loadAffData()}
+                                                </select>
                                             </div>
 
                                             <div className="form-group">
-                                                <label for="inputLName">Type</label>
-                                                <input type="text" id="inputLName" className="form-control" required name="addlname"
-                                                    onChange={handleChange}
-                                                    name="type"
-                                                    value={designation.type} />
+                                                <label>Type</label>
+                                                <select value= {designation.type} className="select2" id="type" name="type" data-placeholder="Select Type" style={{ width: "100%" }} onChange={handleChange}>
+                                                    <option value= "Normal">Normal</option>
+                                                    <option value= "Chair">Chair</option>
+                                                </select>
                                             </div>
 
-                                            
+
                                             <div className="row">
                                                 <div className="col-12">
                                                     {/* <button type="button" className="btn btn-secondary" onClick={clear}>Cancel</button> */}
