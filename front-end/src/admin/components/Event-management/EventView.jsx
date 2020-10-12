@@ -1,16 +1,20 @@
 import React from 'react';
 import {useParams } from "react-router-dom";
 import { useState,useEffect } from 'react';
+import Config from '../../controllers/config.controller';
 import ContentHeader from '../Dashboard/ContentHeader'
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import { get_event} from '../../controllers/event.controller';
+import { get_event, deleteForm} from '../../controllers/event.controller';
+import $ from "jquery";
+import Axios from 'axios';
 
-
-function EventView(props) {
+function EventView() {
 
     const [event, setEvent] = useState({event:['']});
+    const [formData, setFormData] = useState([]);
     let { eventId } = useParams();
-    var i = 0;
+    var i = 0,k=0;
+    var responder;
 
     useEffect(() => {
       onLoadEvent(eventId);
@@ -20,6 +24,67 @@ function EventView(props) {
       const result = await get_event(eventId);
       await  setEvent(result.data.data);
     }
+
+    const onDelete = async (id) => {
+      const result = await deleteForm(id)
+      if(result.code == 200){
+        Config.setToast(result.message)
+      }
+      onLoadEvent(eventId)
+    }
+
+    const loadRegForm = () => {
+      if(event.registrationForm == null)  
+        return ( <div className="d-flex justify-content-center"><Link to={"/Admin/RegistrationForm/"+eventId} type="button" className="btn btn-outline-warning btn-block">Create Form</Link></div>);
+      else{
+        var adminRegFormBody = document.getElementById("adminRegFormBody");
+        var count  = adminRegFormBody.childElementCount;
+        if(count == 1){
+          $("#adminRegFormBody").append(event.registrationForm); 
+          return(<button type='submit' style={{display : event.registrationForm == null && "none" }} className='btn btn-outline-primary btn-block'>Register</button>);
+        }
+      }
+    };
+
+    const sendData = async e =>{
+      e.preventDefault();
+     
+      const data = new FormData();
+
+      data.append("eventId", eventId);
+
+      while(k < event.registrationForm.length){
+
+        formData.push(e.target[k].value)
+        setFormData(formData)
+  
+        if(e.target[k].id ==  "MemberIDField" || e.target[k].id == "PublicField")
+          responder = e.target[k].value;
+
+        k++;
+      }
+      
+      k = 0;
+
+      data.append("formData", formData);
+      data.append("responder", responder);
+
+      try{
+        const res = await Axios.post('/event/register',data);
+  
+        if(res.status === 201)
+        {
+          $('#adminRegForm').trigger("reset");
+          Config.setToast("Registered Successfully!")
+        }
+      }catch(err){
+        if(err.response.status === 500)
+            console.log('There was a problem with then server');
+          else
+            console.log(err.response.data);
+      }
+    }
+    
 
   return (  <div>
     {/* <ContentHeader pageName={props.page}/> */}
@@ -91,8 +156,37 @@ function EventView(props) {
         </div>
 
         <div className="col-12 col-md-12 col-lg-4 order-2 order-md-2">
-         <iframe src={event.formLink} title="registrationForm" width="100%"  height="100%" frameBorder="0" marginHeight="0" marginWidth="0">Loading…</iframe>
-        </div>
+          
+          <form id="adminRegForm"  method="post" onSubmit={sendData}>
+            
+            <div className="card-body" >
+              
+            <div className="container mb-3">
+              <div className="row">
+                <div className="col">
+                  <Link to={"/Admin/Responses/"+eventId} type="button" className="btn btn-warning float-right btn-block text-white" style={{display : event.registrationForm == null && "none" }} id="responsesButton">View Responses</Link>
+                </div>
+                <div className="col">
+                  <a className="btn btn-danger float-right btn-block text-white" id="deleteFormButton" onClick={()=> onDelete(eventId)} style={{display : event.registrationForm == null && "none" }}>Delete Form</a>
+                </div>
+              </div>
+            </div>
+         
+            <div className="info-box bg-light" style={{display : event.registrationForm == null && "none" }}>
+           
+                <div className="info-box-content" id="adminRegFormBody" >
+                  <div className="d-flex justify-content-center">
+                      <h3 className="text-primary mt-3 mb-3">Event Form </h3>
+                  </div>
+                </div>
+            </div>
+            </div>      
+            <div className="card-footer" id="adminRegFormFooter">
+            { loadRegForm()}
+            </div>    
+            </form>
+           
+          </div>
       </div>
     </div>
     {/* <!-- /.card-body --> */}

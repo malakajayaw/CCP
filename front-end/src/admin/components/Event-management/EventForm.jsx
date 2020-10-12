@@ -74,7 +74,6 @@ function EventForm(props) {
     data.append("volunteers",selectedMembers)
     data.append("formLink",eventData.formLink);
     data.append("banner",eventData.banner);
-    console.log(selectedMembers);
     try{
       const res = await Axios.post('/event/addEvent',data, {
         headers : {
