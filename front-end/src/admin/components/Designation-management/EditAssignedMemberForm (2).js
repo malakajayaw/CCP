@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation } 
 
 import { useForm } from "react-hook-form";
 
-import { update_designation_mem, get_spec_designations } from '../../controllers/designation.controller'
+import { update_assignment, get_spec_assignment } from '../../controllers/designationAss.controller'
 import Config from '../../controllers/config.controller'
 
 const EditAssignedMemberForm = (props) => {
@@ -14,8 +14,10 @@ const EditAssignedMemberForm = (props) => {
 
     const newId = id.AssId
 
-    const [Designation, setDesignation] = useState({
+    const [assignment, setAssignment] = useState({
+        DesNo:"",
         MemNo: "",
+        forYear: "",
 
     });
 
@@ -28,12 +30,12 @@ const EditAssignedMemberForm = (props) => {
 
 
     const onLoadMemebrer = async (newId) => {
-        const result = await get_spec_designations(newId)
+        const result = await get_spec_assignment(newId)
         console.log("reult: " + result.data.data);
         // const newD = result.data.data
 
-        await console.log(Designation);
-        setDesignation(result.data.data)
+        await console.log(assignment);
+        setAssignment(result.data.data)
     }
 
 
@@ -43,7 +45,7 @@ const EditAssignedMemberForm = (props) => {
 
         // alert(JSON.stringify(member))
         e.preventDefault()
-        const result = await update_designation_mem(Designation, id.AssId)
+        const result = await update_assignment(assignment, id.AssId)
         console.log(result);
         if (result.code == 200) {
             Config.setToast("Update  successfully")
@@ -58,8 +60,8 @@ const EditAssignedMemberForm = (props) => {
     //  }
 
     const handleChange = (e) => {
-        setDesignation({ ...Designation, [e.target.name]: e.target.value });
-        console.log(Designation);
+        setAssignment({ ...assignment, [e.target.name]: e.target.value });
+        console.log(assignment);
     }
 
     return (<section className="content" style={{ display: props.display }}>
@@ -85,20 +87,27 @@ const EditAssignedMemberForm = (props) => {
                                             <div className="form-group">
                                                 <label >Member ID</label>
                                                 <input type="text" className="form-control" required name="addfname"
-                                                    value={Designation.MemNo}
+                                                    value={assignment.MemNo}
                                                     name="MemNo"
                                                     onChange={handleChange}
                                                 />
                                             </div>
 
                                             <div className="form-group">
-                                                <label >Member Name</label>
-                                                <input disabled type="text" className="form-control" required name="addfname"
-                                                    value="Not implmented"
-                                                    name="MemNo"
+                                                <input disabled hidden type="text" id="inputLName" className="form-control" required name="addlname"
                                                     onChange={handleChange}
-                                                />
+                                                    name="DesNo"
+                                                    value={assignment.DesNo} />
                                             </div>
+
+                                            <div className="form-group">
+                                                <label for="inputLName">Year</label>
+                                                <input type="text" id="inputLName" className="form-control" required name="addlname"
+                                                    onChange={handleChange}
+                                                    name="forYear"
+                                                    value={assignment.forYear} />
+                                            </div>
+
 
                                             <div className="row">
                                                 <div className="col-12">

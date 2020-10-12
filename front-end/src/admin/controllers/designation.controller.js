@@ -99,3 +99,44 @@ export const update_designation = (data, id) => {
             })
     })
 }
+
+//=============================================================================== Update designation member
+
+export const update_designation_mem = (data, id) => {
+
+    data = {
+        id: id,
+        MemNo: data.MemNo,
+
+    }
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/designations/updateDesignationMem`, { ...data })
+            .then(result => {
+                console.log(result.data);
+                resolve({ code: 200, message: result.data.message })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}
+
+//=============================================================================== Remove designation member
+
+export const remove_designation_mem = (data, id) => {
+
+    data = {
+        id: id
+
+    }
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/designations/removeDesignationMem`, { ...data })
+            .then(result => {
+                console.log(result.data);
+                resolve({ code: 200, message: result.data.message })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}
