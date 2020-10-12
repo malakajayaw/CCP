@@ -94,8 +94,7 @@ const EditAssignedMemberForm = (props) => {
                                             </div>
 
                                             <div className="form-group">
-                                                <label for="inputLName">Des ID</label>
-                                                <input type="text" id="inputLName" className="form-control" required name="addlname"
+                                                <input disabled hidden type="text" id="inputLName" className="form-control" required name="addlname"
                                                     onChange={handleChange}
                                                     name="DesNo"
                                                     value={assignment.DesNo} />

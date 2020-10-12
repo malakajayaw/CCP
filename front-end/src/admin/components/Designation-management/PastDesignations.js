@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { get_all_designations, remove_designation } from "../../controllers/designation.controller";
-import { get_affiliation } from "../../controllers/affiliation.controller";
+import { get_all_past_designations, remove_past_designation } from "../../controllers/pastdes.controller";
 import Config from '../../controllers/config.controller'
 //import EventReportView from './EventReportView'
 import { Link } from "react-router-dom";
@@ -11,8 +10,8 @@ import useForceUpdate from 'use-force-update';
 //import "datatables.net-dt/css/jquery.dataTables.min.css"
 
 
-const DesignationTable = (props) => {
-    const [designation, SetDesignation] = useState([]);
+const PastDesignations = (props) => {
+    const [pastdes, SetPastDes] = useState([]);
     const forceUpdate = useForceUpdate();
 
     useEffect(() => {
@@ -20,15 +19,14 @@ const DesignationTable = (props) => {
     }, []);
 
     async function getData() {
-        var res = await get_all_designations();
-        await SetDesignation(res.data.data);
+        var res = await get_all_past_designations();
+        await SetPastDes(res.data.data);
     }
 
-
     const delete_func = async (id) => {
-        const res = await remove_designation(id)
+        const res = await remove_past_designation(id)
         if (res.code == 200) {
-            Config.setToast("Designation removed")
+            Config.setToast("Member removed")
             forceUpdate();
         } else {
             Config.setToast("Something went wrong")
@@ -37,21 +35,21 @@ const DesignationTable = (props) => {
     }
 
     const readydata = () => {
-        return designation.map((designation, i) => {
+        return pastdes.map((pastdes, i) => {
             return (
                 <tr key={i}>
-                    <td>{designation.DesNo}</td>
-                    <td>{designation.affiliationNo}</td>
-                    {/*loadAffData(designation.affiliationNo)*/}
-                    <td>{designation.title}</td>
-                    <td>{designation.type}</td>
+                    <td>{pastdes.affiliationNo}</td>
+                    <td>{pastdes.title}</td>
+                    <td>{pastdes.MemNo}</td>
+                    <td>Not yet implemented</td>
+                    <td>{pastdes.Year}</td>
                     <td className="project-actions text-center">
-                        <Link to={`/Admin/EditDesignation/${designation._id}`}><a className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
+                        <Link to={`/Admin/EditPastDes/${pastdes._id}`}><a className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
                             {" "}
                             <i className="fas fa-folder mr-1" />
-                             Edit{" "}
+                             Update{" "}
                         </a></Link>
-                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(designation._id)}>
+                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(pastdes._id)}>
                             {" "}
                             <i className="fas fa-trash mr-1" />Remove{" "}
                         </a>
@@ -61,31 +59,12 @@ const DesignationTable = (props) => {
         });
     };
 
-    const [affiliations, setAffiliations] = useState({
-
-        affiliationname: "",
-    });
-
-    async function getAffData(affid) {
-        var res = await get_affiliation(affid);
-        await setAffiliations(res.data.data);
-        console.log(affiliations);
-    }
-
-    const loadAffData = (afffid) => {
-        getAffData(afffid);
-        return (
-            <td>{affiliations.affiliationname}</td>
-            );
-    };
-
     return (
         <section className="content" style={{ display: props.display }}>
             <div className="container-fluid">
                 <div className="card">
                     <div className="card-header">
-                        <Link to="/Admin/AddDesignation" type="button" className="btn btn-info float-right add_btn">Add Designation</Link>
-                        <Link to="/Admin/PastDesignations" type="button" className="btn btn-info float-right add_btn">Past Designations</Link>
+                        <Link to="/Admin/AddPastDesignation" type="button" className="btn btn-info float-right add_btn">Add Record</Link>
                     </div>
                     {/* <!-- /.card-header --> */}
                     <div className="card-body">
@@ -95,10 +74,11 @@ const DesignationTable = (props) => {
                         >
                             <thead>
                                 <tr>
-                                    <th>Designation ID</th>
-                                    <th>Branch</th>
+                                    <th>Affiliation</th>
                                     <th>Designation Title</th>
-                                    <th>Type</th>
+                                    <th>Member ID</th>
+                                    <th>Member Name</th>
+                                    <th>Year</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -113,4 +93,4 @@ const DesignationTable = (props) => {
     );
 };
 
-export default DesignationTable;
+export default PastDesignations;
