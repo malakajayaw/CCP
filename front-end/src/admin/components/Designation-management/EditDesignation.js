@@ -67,7 +67,7 @@ const EditDesignation = (props) => {
 
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
-            <h6>Update Member Details</h6>
+            <h6>Update Designation</h6>
             <div className="card">
                 <div className="card-header">
 

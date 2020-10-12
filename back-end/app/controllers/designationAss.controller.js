@@ -1,5 +1,6 @@
-
 const Assignments = require('../model/designationAssignments.model');
+
+//=============================================================================== Add Assignment
 
 exports.addAssignment = function (req, res, next) {
 
@@ -28,6 +29,8 @@ exports.addAssignment = function (req, res, next) {
 
 }
 
+//=============================================================================== Get all assignments
+
 exports.get_all_assignments = function (req, res, next) {
     // check userdata
     Assignments.find(function (err, docs) {
@@ -40,6 +43,8 @@ exports.get_all_assignments = function (req, res, next) {
         }
     })
 }
+
+//=============================================================================== Delete assignment
 
 exports.delete_assignment = async function (req, res, next) {
     var id = req.body.id;
@@ -54,7 +59,9 @@ exports.delete_assignment = async function (req, res, next) {
     }
 };
 
-exports.get_spec_ass = async function (req, res, next) {
+//=============================================================================== Get spec assignment
+
+exports.getSpecAssignment = async function (req, res, next) {
     var id = req.body.id;
 
     try {
@@ -68,3 +75,26 @@ exports.get_spec_ass = async function (req, res, next) {
         return res.status(405).send("Something went wrong");
     }
 };
+
+//=============================================================================== Update assignment
+
+exports.updateAssignment = async function (req, res, next) {
+
+    console.log(req.body);
+    try {
+        const update = await Assignments.findOneAndUpdate({
+            _id: req.body.id
+        }, {
+                DesNo: req.body.DesNo,
+                MemNo: req.body.MemNo,
+                forYear: req.body.forYear
+        }, {
+            new: false
+        })
+
+        return res.status(200).send("Update");
+    } catch (error) {
+        return res.status(403).send("Something went wrong");
+    }
+
+}
