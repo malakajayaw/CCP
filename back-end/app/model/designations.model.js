@@ -16,6 +16,9 @@ let Designations = new Schema({
         type: String,
         required: true,
     },
+    MemNo: {
+        type: String,
+    },
     updated_at: {
         type: String,
 
