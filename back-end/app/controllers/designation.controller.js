@@ -81,11 +81,11 @@ exports.update_designation = async function (req, res, next) {
         const update = await Designation.findOneAndUpdate({
             _id: req.body.id
         }, {
-                title: req.body.fname,
-                affiliationNo: req.body.lname,
-                type: req.body.email,
+                title: req.body.title,
+                affiliationNo: req.body.affiliationNo,
+                type: req.body.type,
         }, {
-            new: true
+            new: false
         })
 
         return res.status(200).send("Update");

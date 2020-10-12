@@ -46,7 +46,7 @@ const EditDesignation = (props) => {
 
         // alert(JSON.stringify(member))
         e.preventDefault()
-        const result = await update_designation(designation, id)
+        const result = await update_designation(designation, id.desId)
         console.log(result);
         if (result.code == 200) {
             Config.setToast("Update  successfully")
@@ -62,6 +62,7 @@ const EditDesignation = (props) => {
 
     const handleChange = (e) => {
         setDesignation({ ...designation, [e.target.name]: e.target.value });
+        console.log(designation);
     }
 
     return (<section className="content" style={{ display: props.display }}>
