@@ -43,12 +43,12 @@ const AssignedDesignationsTable = (props) => {
                     <td>Not yet implemented</td>
                     <td>{assignment.forYear}</td>
                     <td className="project-actions text-center">
-                        <Link to={`/EditAssigned/${assignment._id}`}><a className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
+                        <Link to={`/Admin/EditAssigned/${assignment._id}`}><a className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
                             {" "}
                             <i className="fas fa-folder mr-1" />
                              Update{" "}
                         </a></Link>
-                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(assignment.AssNo)}>
+                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(assignment._id)}>
                             {" "}
                             <i className="fas fa-trash mr-1" />Remove{" "}
                         </a>
@@ -63,7 +63,7 @@ const AssignedDesignationsTable = (props) => {
             <div className="container-fluid">
                 <div className="card">
                     <div className="card-header">
-                        <Link to="/PastDesignation" type="button" className="btn btn-info float-right add_btn">Past Designations</Link>
+                        <Link to="/Admin/PastSpecDesignations" type="button" className="btn btn-info float-right add_btn">Past Designations</Link>
                         {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
                         {/*<button type="button" onClick={() => { props.onClick("Pdesignations"); }} className="btn btn-success float-right add_btn" >Past Designations</button>*/}
                     </div>
