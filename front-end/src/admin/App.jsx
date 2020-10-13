@@ -57,7 +57,7 @@ function App() {
                         <Route path="/Admin/EventReportTable"> <EventReportTable/> </Route>
                     <Route path="/Admin/EventAttendanceAttended"> <EventAttendanceAttended/> </Route>
                     <Route path="/Admin/EventAttendanceConfirmed"> <EventAttendanceConfirmed/> </Route>
-                        <Route path="/Admin/EventAttendanceRegistered"> <EventAttendanceRegistered/> </Route>
+                        <Route path="/Admin/EventAttendanceRegistered/:id"> <EventAttendanceRegistered/> </Route>
                         <Route path="/Admin/EventReportForm/:id"> <EventReportForm/> </Route>
                     <Route path="/Admin/EventReportView/:id"> <EventReportView/> </Route>
                       <Route path="/Admin/ManageAffiliation"> <ManageAffiliation /> </Route>
