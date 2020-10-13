@@ -33,7 +33,6 @@ const EventReportTable = (props) => {
     }
   };
 
-
   const readydata = () => {
     return eventsReports.map((eventreport, i) => {
       return (
