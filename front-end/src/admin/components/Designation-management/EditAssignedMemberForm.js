@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation } 
 
 import { useForm } from "react-hook-form";
 
+import moment from 'moment';
 import { update_designation_mem, get_spec_designations } from '../../controllers/designation.controller'
+import { addPastDesignation } from '../../controllers/pastdes.controller'
 import Config from '../../controllers/config.controller'
 
 const EditAssignedMemberForm = (props) => {
@@ -16,35 +18,52 @@ const EditAssignedMemberForm = (props) => {
 
     const [Designation, setDesignation] = useState({
         MemNo: "",
-
     });
 
     useEffect(() => {
         //console.log("id: " + JSON.stringify(id));
         //console.log("id: " + id.desId);
+        
         onLoadMemebrer(newId);
     }, []);
 
+    let [pastdes, setPastDes] = useState({
+        title: "not set",
+        affiliationNo: "not set",
+        MemNo: "not set",
+        Year: "not set",
+        created_at: "not set",
 
+
+    });
 
     const onLoadMemebrer = async (newId) => {
+        const date = new Date()
+        const currentYear = new Date().getFullYear();
         const result = await get_spec_designations(newId)
-        console.log("reult: " + result.data.data);
+        console.log(currentYear);
         // const newD = result.data.data
 
-        await console.log(Designation);
         setDesignation(result.data.data)
+        await console.log("Destination: " + JSON.stringify(Designation));
+        setPastDes({
+            ...pastdes,
+            title: result.data.data.title,
+            affiliationNo: result.data.data.affiliationNo,
+            Year: currentYear.toString(),
+            created_at: date
+        });
+        //setPastDes({ ...pastdes, affiliationNo: result.data.data.affiliationNo });
     }
-
-
-
 
     const onSubmit = async (e) => {
 
-        // alert(JSON.stringify(member))
+         //alert(JSON.stringify(member))
         e.preventDefault()
         const result = await update_designation_mem(Designation, id.AssId)
         console.log(result);
+        const result2 = await addPastDesignation(pastdes)
+        console.log(result2);
         if (result.code == 200) {
             Config.setToast("Update  successfully")
         }
@@ -58,8 +77,10 @@ const EditAssignedMemberForm = (props) => {
     //  }
 
     const handleChange = (e) => {
+        setPastDes({ ...pastdes, [e.target.name]: e.target.value });
         setDesignation({ ...Designation, [e.target.name]: e.target.value });
         console.log(Designation);
+        console.log(pastdes);
     }
 
     return (<section className="content" style={{ display: props.display }}>

@@ -33,10 +33,11 @@ const EditDesignation = (props) => {
 
     const onLoadMemebrer = async (newId) => {
         const result = await get_spec_designations(newId)
-        console.log("reult: " + result.data.data);
+        console.log("result: " + result.data.data);
         // const newD = result.data.data
 
         await console.log(designation);
+        console.log("result: " + JSON.stringify(result.data.data));
         setDesignation(result.data.data)
     }
 
