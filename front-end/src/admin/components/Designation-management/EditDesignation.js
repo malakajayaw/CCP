@@ -114,14 +114,14 @@ const EditDesignation = (props) => {
 
                                             <div className="form-group">
                                                 <label>Affiliation</label>
-                                                <select className="select2" id="affiliation" name="affiliationNo" multiple="multiple" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange}>
+                                                <select required className="select2" value={designation.affiliationNo} id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange}>
                                                     {loadAffData()}
                                                 </select>
                                             </div>
 
                                             <div className="form-group">
                                                 <label>Type</label>
-                                                <select value= {designation.type} className="select2" id="type" name="type" data-placeholder="Select Type" style={{ width: "100%" }} onChange={handleChange}>
+                                                <select required value= {designation.type} className="select2" id="type" name="type" data-placeholder="Select Type" style={{ width: "100%" }} onChange={handleChange}>
                                                     <option value= "Normal">Normal</option>
                                                     <option value= "Chair">Chair</option>
                                                 </select>

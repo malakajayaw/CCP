@@ -125,22 +125,22 @@ const CreateRecord = (props) => {
                                             <div class="form-group">
 
                                                 <div className="form-group">
-                                                    <select hidden className="select2" id="affiliationNo" name="affiliationNo" multiple="multiple" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange} disabled>
+                                                    <select hidden className="select2" id="affiliationNo" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange} disabled>
                                                         {loadAffData()}
                                                     </select>
                                                 </div>
 
                                                 <label for="inputFName"> Designation Title : </label>
-                                                <input type="text" id="title" name="title" class="form-control" onChange={handleChange} />
+                                                <input required type="text" id="title" name="title" class="form-control" onChange={handleChange} />
 
                                                 <label for="inputFName">Member ID : </label>
-                                                <input type="text" id="MemNo" name="MemNo" class="form-control" onChange={handleChange} />
+                                                <input required type="text" id="MemNo" name="MemNo" class="form-control" onChange={handleChange} />
 
                                                 <label for="inputFName">Member Name : </label>
-                                                <input type="text" id="MemName" name="MemName" class="form-control" onChange={handleChange} disabled value="Not yet implemented"/>
+                                                <input required type="text" id="MemName" name="MemName" class="form-control" onChange={handleChange} disabled value="Not yet implemented"/>
 
                                                 <label for="inputFName">Year : </label>
-                                                <input type="text" id="Year" name="Year" class="form-control" onChange={handleChange} />
+                                                <input required type="text" id="Year" name="Year" class="form-control" onChange={handleChange} />
 
                                                 <div class="card-footer" style={{ padding: '0px ' }}>
                                                     {/* <button type="button" class="btn btn-default float-right">Clear</button> */}

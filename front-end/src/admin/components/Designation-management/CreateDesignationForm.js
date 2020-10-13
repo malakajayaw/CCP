@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Select from 'react-select'
 
 import moment from 'moment';
 import Config from '../../controllers/config.controller'
@@ -16,7 +17,6 @@ const CreateDesignationForm = (props) => {
     const [today, setToday] = useState(
 
     );
-
     const todayfucn = () => {
         let newDate = new Date()
 
@@ -82,6 +82,7 @@ const CreateDesignationForm = (props) => {
     const [affiliations, setAffiliations] = useState([]);
     useEffect(() => {
         getAffData();
+
     }, []);
 
     async function getAffData() {
@@ -97,7 +98,6 @@ const CreateDesignationForm = (props) => {
             );
         });
     };
-
 
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
@@ -124,20 +124,22 @@ const CreateDesignationForm = (props) => {
 
 
                                                 <label for="inputFName">Designation Title : </label>
-                                                <input type="text" id="title" name="title" class="form-control" onChange={handleChange}/>
+                                                <input required type="text" id="title" name="title" class="form-control" onChange={handleChange} />
 
                                                 <div className="form-group">
                                                     <label>Affiliation</label>
-                                                    <select className="select2" id="affiliation" name="affiliationNo" multiple="multiple" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange}>
+                                                    <select required className="select2" id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange}>
+                                                        <option value="" disabled selected hidden value= "">Select Affiliation</option>
                                                         {loadAffData()}
                                                     </select>
                                                 </div>
 
                                                 <div className="form-group">
                                                     <label>type</label>
-                                                    <select className="select2" id="type" name="type" multiple="multiple" data-placeholder="Select type" style={{ width: "100%" }} onChange={handleChange}>
-                                                        <option>Normal</option>
-                                                        <option>Chair</option>
+                                                    <select required className="select2" id="type" name="type" data-placeholder="Select type" style={{ width: "100%" }} onChange={handleChange}>
+                                                        <option value="" disabled selected hidden value = "">Select type</option>
+                                                        <option value= "Normal">Normal</option>
+                                                        <option value="Chair">Chair</option>
                                                     </select>
                                                 </div>
 

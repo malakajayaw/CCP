@@ -39,6 +39,25 @@ export const get_all_designations = () => {
     })
 }
 
+//=============================================================================== Get aff spec designations
+
+export const get_aff_spec_designations = (id) => {
+    console.log(id);
+    var data = {
+        id: id
+    }
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/designations/getAffSpecDesignations`, { ...data })
+            .then(result => {
+                console.log(result.data);
+                resolve({ code: 200, data: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}
+
 //=============================================================================== Get spec designations
 
 export const get_spec_designations = (id) => {

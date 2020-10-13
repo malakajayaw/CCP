@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { get_all_designations, remove_designation_mem } from "../../controllers/designation.controller";
+import { get_aff_spec_designations, remove_designation_mem } from "../../controllers/designation.controller";
 import Config from '../../controllers/config.controller'
 //import EventReportView from './EventReportView'
 import { Link } from "react-router-dom";
@@ -19,7 +19,7 @@ const AssignedDesignationsTable = (props) => {
     }, []);
 
     async function getData() {
-        var res = await get_all_designations();
+        var res = await get_aff_spec_designations("5f85d2e1b708c81ce0a4de85");
         await SetDesignation(res.data.data);
     }
 

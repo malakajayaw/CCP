@@ -40,6 +40,23 @@ exports.get_all_designations = function (req, res, next) {
     })
 }
 
+//=============================================================================== Get aff spec designations
+
+exports.get_aff_spec_des = async function (req, res, next) {
+    var id = req.body.id;
+
+    try {
+        const log = await Designation.find({
+            affiliationNo: id,
+        });
+        return res.status(200).send({
+            data: log,
+        });
+    } catch (error) {
+        return res.status(405).send("Something went wrong in get_spec_des");
+    }
+};
+
 //=============================================================================== Get spec designations
 
 exports.get_spec_des = async function (req, res, next) {

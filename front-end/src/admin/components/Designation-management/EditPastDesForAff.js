@@ -108,7 +108,7 @@ const EditPastDes = (props) => {
                                             
 
                                             <div className="form-group">
-                                                <select hidden className="select2" id="affiliationNo" name="affiliationNo" value={pastdes.affiliationNo} data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange} disabled>
+                                                <select required hidden className="select2" id="affiliationNo" name="affiliationNo" value={pastdes.affiliationNo} data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange} disabled>
                                                     {loadAffData()}
                                                 </select>
                                             </div>

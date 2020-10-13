@@ -105,18 +105,10 @@ const EditPastDes = (props) => {
 
 
                                         <div className="card-body">
-                                            <div className="form-group">
-                                                <label >Affiliation </label>
-                                                <input type="text" className="form-control" required name="addfname"
-                                                    value={pastdes.affiliationNo}
-                                                    name="affiliationNo"
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
-
+                                            
                                             <div className="form-group">
                                                 <label>Affiliation</label>
-                                                <select className="select2" id="affiliationNo" name="affiliationNo" value={pastdes.affiliationNo } data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange}>
+                                                <select required className="select2" id="affiliationNo" name="affiliationNo" value={pastdes.affiliationNo } data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange}>
                                                     {loadAffData()}
                                                 </select>
                                             </div>

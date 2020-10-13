@@ -19,7 +19,7 @@ const PastSpecDesignations = (props) => {
     }, []);
 
     async function getData() {
-        var res = await get_spec_aff_past_designations("5f8282f52c72080b9c31766c");
+        var res = await get_spec_aff_past_designations("5f85d2e1b708c81ce0a4de85");
         await SetPastDes(res.data.data);
     }
 
