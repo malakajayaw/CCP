@@ -75,7 +75,7 @@ const EventReportView = (props) => {
                             type="text"
                             id="inputReportNameView"
                             readOnly
-                            value="EventReport1"
+                            value="Event Report 1"
                             class="form-control"
                           />
                           {/* <input type="file" id="inputReportNameView" class="form-control"/> */}
@@ -85,6 +85,7 @@ const EventReportView = (props) => {
                             type="text"
                             id="inputEventNameView"
                             name="eventname"
+                            value="Event 1"
                             class="form-control"
                             readOnly
                           />
@@ -133,7 +134,10 @@ const EventReportView = (props) => {
                             />
                           </div>
                           <div>
+                          {/* <pdf src={__dirname+"reports/"+eventsReports.reportname}/> */}
+
                             <a
+
                               href={eventsReports.file_path}
                               className="card-link m-3"
                               target="_blank"

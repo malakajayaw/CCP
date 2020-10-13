@@ -33,12 +33,13 @@ const EventReportTable = (props) => {
     }
   };
 
+
   const readydata = () => {
     return eventsReports.map((eventreport, i) => {
       return (
         <tr key={i}>
-          <td>Event {i + 1}</td>
-          <td>{eventreport.reportname}</td>
+          <td>Event {eventreport.eventname}</td>
+          <td>Report {eventreport.reportname}</td>
           <td>Submited</td>
           <td className="project-actions text-center">
             <Link to={`/Admin/EventReportView/${eventreport._id}`}>

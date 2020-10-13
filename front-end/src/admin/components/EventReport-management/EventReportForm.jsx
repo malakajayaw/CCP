@@ -5,6 +5,8 @@ import Config from "../../controllers/config.controller";
 import useForceUpdate from "use-force-update";
 
 import { add_event_report } from "../../controllers/event.report.controller";
+import { get_event} from '../../controllers/event.controller';
+import { useParams } from "react-router-dom";
 
 const EventReportAdd = (props) => {
   const forceUpdate = useForceUpdate();
@@ -13,6 +15,13 @@ const EventReportAdd = (props) => {
     value1: "Not Submitted",
   });
   const [today, setToday] = useState();
+
+  // const [eventID, setEventId] = useState();
+
+  let { id } = useParams();
+
+  // const params = useParams();
+  // const eventID = params.eventId;
 
   const todayfucn = () => {
     let newDate = new Date();
@@ -28,16 +37,28 @@ const EventReportAdd = (props) => {
 
     const today = moment(newDate).format("MMM Do YY");
     setToday(today);
+    //setEventId(eventID);
     todayfucn();
+    onLoadEvent(id);
   });
 
+  const onLoadEvent = async (eventId) => {
+    const result = await get_event(eventId);
+    await  setEventName(result.data.data.eventName);
+    console.log(result.data);
+    console.log(id);
+  }
+
+  let [eventName, setEventName] = useState("");
   let [event, setEvent] = useState({
-    eventname: "IEEE",
+    eventname: {id},
     submissionstate: "Not Submitted",
     date: today,
     submissioncomment: "",
     file: "",
   });
+
+
 
   const handleChange = (e) => {
     setEvent({ ...event, [e.target.name]: e.target.value });
@@ -54,10 +75,12 @@ const EventReportAdd = (props) => {
       forceUpdate();
     }
   };
+ 
 
   const clear = () => {
     console.log("Clear call");
     setEvent({
+      reportname: "",
       eventname: "IEEE",
       submissionstate: "Not Submitted",
       date: today,
@@ -116,7 +139,7 @@ const EventReportAdd = (props) => {
                             id="inputEventName"
                             name="eventname"
                             class="form-control"
-                            value={event.eventname}
+                            value={eventName}
                             readOnly
                           />
 

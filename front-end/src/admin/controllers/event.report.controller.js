@@ -5,6 +5,7 @@ export const add_event_report = (data) => {
   console.log(data);
   const formData = new FormData();
   formData.append("pdf", data.file);
+  formData.set("reportname", data.reportname);
   formData.set("eventname", data.eventname);
   formData.set("created_at", data.date);
   formData.set("submssionState", data.submissionstate);
@@ -34,6 +35,7 @@ export const delete_report = (id) => {
   var data = {
     id: id,
   };
+
   return new Promise((resolve, reject) => {
     return axios
       .post(`${Config.host}${Config.port}/eventReport/report/delete`, {

@@ -55,7 +55,7 @@ function App() {
                         <Route path="/Admin/MemberList"> <MemberList /> </Route>
                         <Route path="/Admin/MemberEdit/:id"> <MemberEdit /> </Route>
                         <Route path="/Admin/EventReportTable"> <EventReportTable/> </Route>
-                        <Route path="/Admin/EventReportForm"> <EventReportForm/> </Route>
+                        <Route path="/Admin/EventReportForm/:id"> <EventReportForm/> </Route>
                         <Route path="/Admin/EventAttendanceRegistered"> <EventAttendanceRegistered/> </Route>
                     <Route path="/Admin/EventAttendanceConfirmed"> <EventAttendanceConfirmed/> </Route>
                     <Route path="/Admin/EventAttendanceAttended"> <EventAttendanceAttended/> </Route>

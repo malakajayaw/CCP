@@ -8,10 +8,9 @@ let EventReport = new Schema({
 
   // },
 
-  // reportname: {
-  //   type: String,
-  //   required: true,
-  // },
+  reportname: {
+    type: String,
+  },
 
   submssionState: {
     type: String,

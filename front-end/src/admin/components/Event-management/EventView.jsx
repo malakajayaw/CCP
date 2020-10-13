@@ -84,7 +84,7 @@ function EventView() {
             console.log(err.response.data);
       }
     }
-    
+    // const id = event.eventName;
 
   return (  <div>
     {/* <ContentHeader pageName={props.page}/> */}
@@ -96,7 +96,8 @@ function EventView() {
       <h3 className="card-title">Event Details</h3>
       </div>
       <div className="col-6">
-      <Link to="/Admin/EventReportForm" type="button" className="btn btn-info float-right add_btn ml-2">Add Report</Link>
+      
+      <Link to={"/Admin/EventReportForm/"+eventId} type="button" className="btn btn-info float-right add_btn ml-2">Add Report</Link>
       <Link to="/Admin/EventAttendanceRegistered" type="button" className="btn btn-success float-right add_btn">Add Attendance</Link>
       </div>
       </div>
