@@ -5,8 +5,6 @@ import ContentHeader from './components/Dashboard/ContentHeader';
 import Footer from './components/Dashboard/Footer';
 import EventTable from './components/Event-management/EventTable';
 import EventView from './components/Event-management/EventView';
-import RegistrationForm from './components/Event-management/RegistrationForm';
-import ResponsesView from './components/Event-management/ResponsesView';
 import EventForm from './components/Event-management/EventForm';
 import MemberRequest from './components/Member-management/MemberRequest';
 import MemberAdd from './components/Member-management/MemberAdd';
@@ -21,7 +19,9 @@ import AdminLogin from './components/Login/AdminLogin';
 import MemberEdit from './components/Member-management/MemberEdit';
 import EventReportTable from './components/EventReport-management/EventReportTable'
 import EventReportForm from './components/EventReport-management/EventReportForm'
-import EventAttendance from './components/EventAttendance-management/EventAttendance'
+import EventAttendanceRegistered from './components/EventAttendance-management/EventAttendanceRegistered'
+import EventAttendanceConfirmed from './components/EventAttendance-management/EventAttendanceConfirmed'
+import EventAttendanceAttended from './components/EventAttendance-management/EventAttendanceAttended'
 import EventReportView from './components/EventReport-management/EventReportView'
 import ManageAffiliation from './components/StudentBranch-management/ManageAffiliation'
 import StudentForm from './components/StudentBranch-management/StudentForm'
@@ -45,8 +45,6 @@ function App() {
                         <Route path="/Admin/EventTable"> <EventTable /> </Route>
                         <Route path="/Admin/MemberRequest"> <MemberRequest /> </Route>
                         <Route path="/Admin/EventView/:eventId"> <EventView /> </Route>
-                        <Route path="/Admin/RegistrationForm/:eventId"> <RegistrationForm /> </Route>
-                        <Route path="/Admin/Responses/:eventId"> <ResponsesView /> </Route>
                         <Route path="/Admin/EventForm"> <EventForm /> </Route>
                            <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
                            <Route path="/DesignationChair"> <AssignedDesignationsTable /> </Route>
@@ -57,8 +55,10 @@ function App() {
                         <Route path="/Admin/MemberList"> <MemberList /> </Route>
                         <Route path="/Admin/MemberEdit/:id"> <MemberEdit /> </Route>
                         <Route path="/Admin/EventReportTable"> <EventReportTable/> </Route>
-                        <Route path="/Admin/EventReportForm"> <EventReportForm/> </Route>
-                    <Route path="/Admin/EventAttendance"> <EventAttendance/> </Route>
+                    <Route path="/Admin/EventAttendanceAttended"> <EventAttendanceAttended/> </Route>
+                    <Route path="/Admin/EventAttendanceConfirmed"> <EventAttendanceConfirmed/> </Route>
+                        <Route path="/Admin/EventAttendanceRegistered"> <EventAttendanceRegistered/> </Route>
+                        <Route path="/Admin/EventReportForm/:id"> <EventReportForm/> </Route>
                     <Route path="/Admin/EventReportView/:id"> <EventReportView/> </Route>
                       <Route path="/Admin/ManageAffiliation"> <ManageAffiliation /> </Route>
                     <Route path="/Admin/StudentForm"> <StudentForm /> </Route>

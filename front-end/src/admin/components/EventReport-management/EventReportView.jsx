@@ -3,9 +3,7 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import Config from "../../controllers/config.controller";
 
-import {
-  get_spec_report,
-} from "../../controllers/event.report.controller";
+import { get_spec_report } from "../../controllers/event.report.controller";
 import { useLocation, useParams } from "react-router-dom";
 
 const EventReportView = (props) => {
@@ -19,6 +17,7 @@ const EventReportView = (props) => {
     created_at: "",
     submissionComment: "",
     submssionState: "Submited",
+    file_path: "",
   });
 
   useEffect(() => {
@@ -31,6 +30,19 @@ const EventReportView = (props) => {
     console.log(result.message.data);
     SetEventReports(result.message.data);
     console.log(eventsReports.submssionState);
+  };
+
+  const getFileName = (URL) => {
+
+    let parts = URL.split("/");
+    // let maxLength = 0;
+
+    // for (let i = 0; i < parts.length; i++) {
+    //   if (parts[i].length > maxLength) {
+    //     maxLength = parts[i].length;
+    //   }
+    // }
+    return parts.pop() || parts.pop();
   };
 
   return (
@@ -63,7 +75,7 @@ const EventReportView = (props) => {
                             type="text"
                             id="inputReportNameView"
                             readOnly
-                            value="EventReport1"
+                            value="Event Report 1"
                             class="form-control"
                           />
                           {/* <input type="file" id="inputReportNameView" class="form-control"/> */}
@@ -73,6 +85,7 @@ const EventReportView = (props) => {
                             type="text"
                             id="inputEventNameView"
                             name="eventname"
+                            value="Event 1"
                             class="form-control"
                             readOnly
                           />
@@ -119,6 +132,22 @@ const EventReportView = (props) => {
                               value={eventsReports.submissionComment}
                               name="submissioncomment"
                             />
+                          </div>
+                          <div>
+                          {/* <pdf src={__dirname+"reports/"+eventsReports.reportname}/> */}
+
+                            <a
+
+                              href={eventsReports.file_path}
+                              className="card-link m-3"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <i className="far fa-file-pdf"></i>
+                              <span className="ml-4">
+                                {getFileName(eventsReports.file_path)}
+                              </span>
+                            </a>
                           </div>
                         </div>
                       </form>

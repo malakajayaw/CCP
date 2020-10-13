@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { get_all_reports, delete_report } from "../../controllers/event.report.controller";
-import Config from '../../controllers/config.controller'
-import EventReportView from './EventReportView'
+import {
+  get_all_reports,
+  delete_report,
+} from "../../controllers/event.report.controller";
+import Config from "../../controllers/config.controller";
+import EventReportView from "./EventReportView";
 import { Link } from "react-router-dom";
 
-import useForceUpdate from 'use-force-update';
-
+import useForceUpdate from "use-force-update";
 
 const EventReportTable = (props) => {
   const [eventsReports, SetEventReports] = useState([]);
@@ -21,32 +23,39 @@ const EventReportTable = (props) => {
   }
 
   const delete_func = async (id) => {
-    const res = await delete_report(id)
-    if(res.code == 200){
-      Config.setToast("Report Delete")
+    const res = await delete_report(id);
+    if (res.code == 200) {
+      Config.setToast("Report Delete");
       forceUpdate();
-    }else{
-      Config.setToast("Something went wrong")
+    } else {
+      Config.setToast("Something went wrong");
       forceUpdate();
-    } 
-  }
+    }
+  };
 
- 
   const readydata = () => {
     return eventsReports.map((eventreport, i) => {
       return (
         <tr key={i}>
-          <td>Event {i + 1}</td>
-          <td>{eventreport.reportname}</td>
+          <td>Event {eventreport.eventname}</td>
+          <td>Report {eventreport.reportname}</td>
           <td>Submited</td>
           <td className="project-actions text-center">
-           <Link to={`/Admin/EventReportView/${eventreport._id}`}><a className="btn btn-primary btn-sm mr-1"  style={{color:'black'}}>
-              {" "}
-              <i className="fas fa-folder mr-1" />
-              View{" "}
-            </a></Link> 
+            <Link to={`/Admin/EventReportView/${eventreport._id}`}>
+              <a
+                className="btn btn-primary btn-sm mr-1"
+                style={{ color: "black" }}
+              >
+                {" "}
+                <i className="fas fa-folder mr-1" />
+                View{" "}
+              </a>
+            </Link>
 
-            <a className="btn btn-danger btn-sm mr-1" onClick={()=> delete_func(eventreport._id)}>
+            <a
+              className="btn btn-danger btn-sm mr-1"
+              onClick={() => delete_func(eventreport._id)}
+            >
               {" "}
               <i className="fas fa-trash mr-1" />
               Delete{" "}
@@ -81,6 +90,16 @@ const EventReportTable = (props) => {
               </thead>
 
               <tbody>{readydata()}</tbody>
+
+              <tfoot>
+                <tr>
+                  <th>Event Name</th>
+                  <th>Report Name</th>
+                  <th>Submission Status</th>
+                  <th>Manage</th>
+                </tr>
+              </tfoot>
+              
             </table>
           </div>
         </div>
