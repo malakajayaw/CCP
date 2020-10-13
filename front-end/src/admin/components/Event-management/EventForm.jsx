@@ -2,13 +2,18 @@ import React,{useState, useEffect} from 'react';
 import Config from '../../controllers/config.controller';
 import { get_all_active_members} from '../../controllers/memeber.controller'
 import Axios from 'axios';
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/js/bootstrap"
+import 'jquery/dist/jquery.min.js';
+import { Multiselect } from 'multiselect-react-dropdown';
 
 function EventForm(props) {
 
-  const [eventData,setEventData] = useState({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',volunteers:[''],formLink:'',banner:null });
+  const [eventData,setEventData] = useState({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',formLink:'',banner:null });
   const [vols,setVols] = useState([]);
-
   const [members, Setmembers] = useState([]);
+  const [selectedMembers, setSelectedMembers] = useState();
+  var memberIds = [];
 
     useEffect(() => {
       getData();
@@ -17,7 +22,17 @@ function EventForm(props) {
 
   async function getData() {
     var res = await get_all_active_members()
-    await   Setmembers(res.data.data);
+    await   Setmembers( setMemeberIds(res.data.data));
+    
+  }
+
+  function setMemeberIds(members){
+    var i = 0;
+    members.forEach(member => {
+        memberIds[i] = member.memberShipNo
+        i++;
+    });
+    return memberIds;
   }
 
   const handleChange = event =>
@@ -26,27 +41,23 @@ function EventForm(props) {
     // console.log(eventData.eventName+' '+eventData.eventDate+' '+eventData.startTime+' '+eventData.endTime+' '+eventData.venue+' '+eventData.description+' '+eventData.hostingAffiliation+' '+eventData.volunteers+' '+eventData.banner);
   };
     
-  const handleVolunteers = event =>
-  { 
-    if(!vols.includes(event.target.value))
-    {
-      vols.push(event.target.value); 
-      setEventData({...eventData, volunteers : vols}) 
-    }else{
-      if(vols.length === 1 ){
-        vols.splice(0,vols.length)
-      }else{
-        var index = vols.indexOf(event.target.value);
-        vols.splice(index,1);
-      }
-    }
-  };
+
+  function onSelect(selectedList, selectedMember) {
+    vols.push(selectedMember);
+    setSelectedMembers(vols);
+  }
+
+  function onRemove(selectedList, selectedMember) {
+    for( var i = 0; i < selectedMembers.length; i++)
+    { if ( selectedMembers[i] === selectedMember) { selectedMembers.splice(i, 1); }}
+    setSelectedMembers(selectedMembers);
+}
 
   const handleBanner = event =>
   {  setEventData({...eventData, banner : event.target.files[0] })};
 
   const clear = () => {
-  setEventData({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',volunteers:[''],formLink:'',banner:null  })
+  setEventData({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',formLink:'',banner:null  })
   setVols([]);
   }
 
@@ -60,7 +71,7 @@ function EventForm(props) {
     data.append("venue",eventData.venue);
     data.append("description",eventData.description);
     data.append("hostingAffiliation",eventData.hostingAffiliation);
-    data.append("volunteers",eventData.volunteers)
+    data.append("volunteers",selectedMembers)
     data.append("formLink",eventData.formLink);
     data.append("banner",eventData.banner);
     try{
@@ -81,14 +92,6 @@ function EventForm(props) {
         else
           console.log(err.response.data);
     }
-  }
-
-  const loadMembers = () => {
-    return   members.map((member, index) => {
-      return(  
-      <option value={member.memberShipNo} key={index}> {member.memberShipNo}</option>
-      )
-    })
   }
 
   return (    <div>
@@ -136,20 +139,18 @@ function EventForm(props) {
         <label htmlFor="hostingAffiliation">Hosting Affiliation</label>
         <input type="text" value={eventData.hostingAffiliation} onChange={handleChange}  className="form-control" id="hostingAffiliation" placeholder="Enter hosting affiliation" required/>
       </div>
-     
-      <div className="form-group">
-          <label>Volunteers</label>
-          <select id="volunteers" className="form-control"  value={vols} onChange={handleVolunteers}  data-placeholder="Select volunteers" style={{width: "100%"}} multiple>      
-            {loadMembers()}
-          </select>
-      </div>
 
       <div className="form-group">
+        <label>Volunteers</label>
+        <Multiselect options={members} isObject={false} onSelect={onSelect} onRemove={onRemove}  displayValue="name"  />
+      </div>
+
+      {/* <div className="form-group">
         <label htmlFor="formLink">Google Form link</label>
         <input type="text" value={eventData.formLink} onChange={handleChange}  className="form-control" id="formLink" placeholder="Enter Google Form link" />
-      </div>
+      </div> */}
   
-      <div className="form-group">
+      {/* <div className="form-group">
         <label htmlFor="eventBanner">Event Banner</label>
         <div className="input-group">
           <div className="custom-file">
@@ -157,13 +158,12 @@ function EventForm(props) {
             <label className="custom-file-label" htmlFor="banner">Choose an image</label>
           </div>
         </div>
-      </div>
-
-      {/* <div className="form-group">
-        <label htmlFor="eventBanner">Event Banner</label>
-            <input type="file" className="form-control" id="banner" name="banner" accept="image/*" onChange={handleBanner} />
       </div> */}
 
+    <div class="form-group">
+      <label for="banner">Event Banner</label>
+      <input type="file" class="form-control-file" id="banner" accept="image/*" onChange={handleBanner}/>
+    </div>
 
     </div>
     {/* <!-- /.card-body --> */}

@@ -3,6 +3,7 @@ import {get_event} from "../../../admin/controllers/event.controller";
 import { useState,useEffect } from 'react';
 import {useParams } from "react-router-dom";
 import NavBar from '../Common/NavBar';
+import Footer from '../Common/Footer';
 
 function EventView() {
 
@@ -88,6 +89,7 @@ function EventView() {
       {/* <!-- /.card --> */}
     
     </section>
+    <Footer />
     </div>
     );
  }
