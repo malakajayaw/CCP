@@ -3,9 +3,7 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import Config from "../../controllers/config.controller";
 
-import {
-  get_spec_report,
-} from "../../controllers/event.report.controller";
+import { get_spec_report } from "../../controllers/event.report.controller";
 import { useLocation, useParams } from "react-router-dom";
 
 const EventReportView = (props) => {
@@ -19,6 +17,7 @@ const EventReportView = (props) => {
     created_at: "",
     submissionComment: "",
     submssionState: "Submited",
+    file_path: "",
   });
 
   useEffect(() => {
@@ -31,6 +30,11 @@ const EventReportView = (props) => {
     console.log(result.message.data);
     SetEventReports(result.message.data);
     console.log(eventsReports.submssionState);
+  };
+
+  const getFileName = (URL) => {
+    let parts = URL.split("/");
+    return parts.pop() || parts.pop();
   };
 
   return (
@@ -63,7 +67,7 @@ const EventReportView = (props) => {
                             type="text"
                             id="inputReportNameView"
                             readOnly
-                            value="EventReport1"
+                            value={getFileName(eventsReports.file_path)}
                             class="form-control"
                           />
                           {/* <input type="file" id="inputReportNameView" class="form-control"/> */}
@@ -120,6 +124,19 @@ const EventReportView = (props) => {
                               name="submissioncomment"
                             />
                           </div>
+                          <div>
+                            <a
+                              href={eventsReports.file_path}
+                              className="card-link m-3"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <i className="far fa-file-pdf"></i>
+                              <span className="ml-4">
+                                {getFileName(eventsReports.file_path)}
+                              </span>
+                            </a>
+                          </div>
                         </div>
                       </form>
                     </div>
@@ -131,7 +148,6 @@ const EventReportView = (props) => {
         </div>
         {/* <!-- /.container-fluid --> */}
       </div>
-      {console.log("bye")}
     </section>
   );
 };
