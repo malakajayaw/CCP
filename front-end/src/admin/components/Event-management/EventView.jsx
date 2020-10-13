@@ -97,7 +97,7 @@ function EventView() {
       </div>
       <div className="col-6">
       <Link to="/Admin/EventReportForm" type="button" className="btn btn-info float-right add_btn ml-2">Add Report</Link>
-      <Link to="/Admin/EventAttendance" type="button" className="btn btn-success float-right add_btn">Add Attendance</Link>
+      <Link to="/Admin/EventAttendanceRegistered" type="button" className="btn btn-success float-right add_btn">Add Attendance</Link>
       </div>
       </div>
     </div>
