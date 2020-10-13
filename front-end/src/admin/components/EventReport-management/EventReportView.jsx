@@ -33,7 +33,15 @@ const EventReportView = (props) => {
   };
 
   const getFileName = (URL) => {
+
     let parts = URL.split("/");
+    // let maxLength = 0;
+
+    // for (let i = 0; i < parts.length; i++) {
+    //   if (parts[i].length > maxLength) {
+    //     maxLength = parts[i].length;
+    //   }
+    // }
     return parts.pop() || parts.pop();
   };
 
@@ -67,7 +75,7 @@ const EventReportView = (props) => {
                             type="text"
                             id="inputReportNameView"
                             readOnly
-                            value={getFileName(eventsReports.file_path)}
+                            value="EventReport1"
                             class="form-control"
                           />
                           {/* <input type="file" id="inputReportNameView" class="form-control"/> */}
@@ -148,6 +156,7 @@ const EventReportView = (props) => {
         </div>
         {/* <!-- /.container-fluid --> */}
       </div>
+      {console.log("bye")}
     </section>
   );
 };

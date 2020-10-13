@@ -36,6 +36,7 @@ const EventReportAdd = (props) => {
     submissionstate: "Not Submitted",
     date: today,
     submissioncomment: "",
+    file: "",
   });
 
   const handleChange = (e) => {
@@ -75,7 +76,9 @@ const EventReportAdd = (props) => {
       <div className="container-fluid">
         <div className="card">
           <div className="card-header">
+            {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
           </div>
+          {/* <!-- /.card-header --> */}
           <div className="card-body">
             <section class="content">
               <div class="row justify-content-md-center">
@@ -107,8 +110,7 @@ const EventReportAdd = (props) => {
                             type="file"
                             onChange={handleChangeFile}
                           />
-
-                          <label for="inputEName">Event Name : </label>
+                          <label for="inputEName">Event : </label>
                           <input
                             type="text"
                             id="inputEventName"
@@ -129,6 +131,7 @@ const EventReportAdd = (props) => {
                           />
 
                           <label>Date :</label>
+
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text">
@@ -148,7 +151,7 @@ const EventReportAdd = (props) => {
 
                           <div class="form-group">
                             <label for="inputSCmnt">
-                              Submission Comments :{" "}
+                              Additional Comments :{" "}
                             </label>
                             <input
                               type="text"
@@ -176,6 +179,7 @@ const EventReportAdd = (props) => {
           </div>
         </div>
       </div>
+      {console.log("bye")}
     </section>
   );
 };

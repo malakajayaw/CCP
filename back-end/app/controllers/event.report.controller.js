@@ -1,12 +1,12 @@
-//import Event Report model
+//import User model
 const EventReport = require("../model/eventreport.model");
 
-const moment = require('moment')
+const moment = require("moment");
 
 //======================================================================================================
 //================================== Current Date =============================================
 //======================================================================================================
-exports.add_report_add = function (req, res, next) {
+exports.add_report_add = async function (req, res, next) {
   let newDate = new Date();
 
   let PdfFile = null;
@@ -23,8 +23,7 @@ exports.add_report_add = function (req, res, next) {
     if (err) return res.status(400).send("Failed to upload PDF!");
   });
 
-  const today = moment(newDate).format("MMM Do Y Y");
-
+  const today = moment(newDate).format("MMM Do YY");
   let new_report = EventReport({
     reportname: req.body.reportname,
     submssionState: req.body.submssionState,
@@ -39,7 +38,6 @@ exports.add_report_add = function (req, res, next) {
   } catch (error) {
     throw error;
   }
-  return res.status(403).send("Already have");
 };
 
 exports.get_all_reports = async function (req, res, next) {
