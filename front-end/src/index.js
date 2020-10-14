@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import AdminLogin from './admin/components/Login/AdminLogin';
 import App from './admin/App';
 import WebApp from './web/WebApp';
 import './index.css';
@@ -9,6 +10,7 @@ ReactDOM.render(
   <React.StrictMode>
        <Router>
             <Switch>
+                    <Route path="/adminlogin">  <AdminLogin /> </Route>
                     <Route path="/admin">  <App /> </Route>
                     <Route path="/">  <WebApp /> </Route>
                     
