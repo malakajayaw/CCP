@@ -46,7 +46,7 @@ function AdminLogin(props) {
           </div>
 
           <div className="col-4">
-          <Link to='/Dashboard' type="button" className="btn btn-primary btn-block">Sign In</Link>
+          <Link to='/Admin' type="button" className="btn btn-primary btn-block">Sign In</Link>
          
 
           </div>

@@ -34,13 +34,39 @@ export default function Sidebar() {
                     </Link>
             </li>
 
-            <li className="nav-item pointer_cursor">
-            <Link id="memberNav" className="nav-link" to="/Admin/MemberRequest">
-                    <i className="nav-icon fas fa-users"></i>
-                  Member Management
-                    <span className="badge badge-info right"></span>
-                    </Link>
-            </li>
+            <li class="nav-item has-treeview">
+            <a href="/Admin/MemberRequest" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+              Member Management
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            
+            {/* <ul class="nav nav-treeview">
+
+            <li class="nav-item">
+                <a href="/Admin/MemberList" class="nav-link">
+                     &emsp; &emsp;
+                  <p>Active Members</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="/Admin/MemberRequest" class="nav-link">
+                  &emsp; &emsp;
+                  <p>Requests</p>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="/Admin/MemberAdd" class="nav-link">
+                &emsp; &emsp;
+                  <p>Create Profile</p>
+                </a>
+              </li>
+            </ul> */}
+          </li>
 
             
 
@@ -54,27 +80,27 @@ export default function Sidebar() {
                     </li>
 
                     <li className="nav-item pointer_cursor">
-                        <a className="nav-link">
+                        <Link id="eventNav" className="nav-link" to="/Admin/DesignationAdmin">
                             <i className="nav-icon fa fa-address-card"></i>
-                            <Link to="/DesignationAdmin">Designation Management</Link>
-                            <span className="badge badge-info right"></span>
-                        </a>
+                   Designation Management
+                    <span className="badge badge-info right"></span>
+                        </Link>
                     </li>
 
                     <li className="nav-item pointer_cursor">
-                        <a className="nav-link">
+                        <Link id="eventNav" className="nav-link" to="/Admin/ActivityLog">
                             <i className="nav-icon fa fa-briefcase"></i>
-                            <Link to="/ActivityLog">Activity log</Link>
-                            <span className="badge badge-info right"></span>
-                        </a>
+                   Activity log
+                    <span className="badge badge-info right"></span>
+                        </Link>
                     </li>
 
                     <li className="nav-item pointer_cursor">
-                        <a className="nav-link">
+                        <Link id="eventNav" className="nav-link" to="/Admin/DesignationChair">
                             <i className="nav-icon fa fa-address-card"></i>
-                            <Link to="/DesignationChair">Designation Management(Chair)</Link>
-                            <span className="badge badge-info right"></span>
-                        </a>
+                   Designation Management(Chair)
+                    <span className="badge badge-info right"></span>
+                        </Link>
                     </li>
 
                 </ul>
