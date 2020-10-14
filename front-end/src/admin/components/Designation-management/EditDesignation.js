@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 
 import { update_designation, get_spec_designations } from '../../controllers/designation.controller'
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
+import { add_activity } from '../../controllers/activity.controller'
 import Config from '../../controllers/config.controller'
 
 const EditDesignation = (props) => {
@@ -23,6 +24,14 @@ const EditDesignation = (props) => {
 
     });
 
+    let [activity, setActivity] = useState({
+        MemNo: "To be taken from redux",
+        action: "Edit designation",
+        table: "Designations",
+        parameters: "not set",
+        datetime: "not set"
+    });
+
     useEffect(() => {
         //console.log("id: " + JSON.stringify(id));
         //console.log("id: " + id.desId);
@@ -32,9 +41,15 @@ const EditDesignation = (props) => {
 
 
     const onLoadMemebrer = async (newId) => {
+        const date = new Date();
         const result = await get_spec_designations(newId)
         console.log("result: " + result.data.data);
         // const newD = result.data.data
+        setActivity({
+            ...activity,
+            parameters: result.data.data.MemNo,
+            datetime: date.toLocaleString()
+        });
 
         await console.log(designation);
         console.log("result: " + JSON.stringify(result.data.data));
@@ -45,11 +60,13 @@ const EditDesignation = (props) => {
 
 
     const onSubmit = async (e) => {
-
+        activity.parameters = designation.affiliationNo + " / " + designation.title + " / " + designation.type;
         // alert(JSON.stringify(member))
         e.preventDefault()
         const result = await update_designation(designation, id.desId)
         console.log(result);
+        const result3 = await add_activity(activity)
+        console.log(result3);
         if (result.code == 200) {
             Config.setToast("Update  successfully")
         }

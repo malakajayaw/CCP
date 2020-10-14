@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { get_all_designations, remove_designation } from "../../controllers/designation.controller";
 import { get_affiliation } from "../../controllers/affiliation.controller";
+import { add_activity } from '../../controllers/activity.controller';
 import Config from '../../controllers/config.controller'
 //import EventReportView from './EventReportView'
 import { Link } from "react-router-dom";
@@ -15,6 +16,14 @@ const DesignationTable = (props) => {
     const [designation, SetDesignation] = useState([]);
     const forceUpdate = useForceUpdate();
 
+    let [activity, setActivity] = useState({
+        MemNo: "To be taken from redux",
+        action: "Delete designation",
+        table: "Designations",
+        parameters: "not set",
+        datetime: "not set"
+    });
+
     useEffect(() => {
         getData();
     }, []);
@@ -25,7 +34,8 @@ const DesignationTable = (props) => {
     }
 
 
-    const delete_func = async (id) => {
+    const delete_func = async (id, name,aff) => {
+        addActivity(name,aff)
         const res = await remove_designation(id)
         if (res.code == 200) {
             Config.setToast("Designation removed")
@@ -34,6 +44,16 @@ const DesignationTable = (props) => {
             Config.setToast("Something went wrong")
             forceUpdate();
         }
+    }
+
+    const addActivity = async (name, aff) => {
+        console.log(name);
+        const date = new Date();
+        activity.parameters = name + " / " +aff;
+        activity.datetime = date.toLocaleString();
+        console.log("act: " + JSON.stringify(activity));
+        const result3 = await add_activity(activity)
+        console.log(result3);
     }
 
     const readydata = () => {
@@ -50,7 +70,7 @@ const DesignationTable = (props) => {
                             <i className="fas fa-folder mr-1" />
                              Edit{" "}
                         </a></Link>
-                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(designation._id)}>
+                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(designation._id, designation.title, designation.affiliationNo)}>
                             {" "}
                             <i className="fas fa-trash mr-1" />Remove{" "}
                         </a>

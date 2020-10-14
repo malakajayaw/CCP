@@ -39,7 +39,7 @@ const EditAssignedMemberForm = (props) => {
     });
 
     let [activity, setActivity] = useState({
-        MemNo: "not set",
+        MemNo: "To be taken from redux",
         action: "New assignment",
         table: "Designations",
         parameters: "not set",
@@ -54,7 +54,7 @@ const EditAssignedMemberForm = (props) => {
         // const newD = result.data.data
 
         setDesignation(result.data.data)
-        await console.log("Destination: " + JSON.stringify(Designation));
+        await console.log("Destination: " + JSON.stringify(Designation.MemNo));
         setPastDes({
             ...pastdes,
             title: result.data.data.title,
@@ -64,9 +64,6 @@ const EditAssignedMemberForm = (props) => {
         });
         setActivity({
             ...activity,
-            MemNo: "To be taken from redux",
-            action: "New assignment",
-            table: "Designations",
             parameters: result.data.data.MemNo,
             datetime: date.toLocaleString()
         });
