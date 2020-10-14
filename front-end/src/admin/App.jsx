@@ -5,7 +5,11 @@ import ContentHeader from './components/Dashboard/ContentHeader';
 import Footer from './components/Dashboard/Footer';
 import EventTable from './components/Event-management/EventTable';
 import EventView from './components/Event-management/EventView';
+import RegistrationForm from './components/Event-management/RegistrationForm';
+import ResponsesView from './components/Event-management/ResponsesView';
+import IndividualResponses from './components/Event-management/IndividualResponses';
 import EventForm from './components/Event-management/EventForm';
+import EventUpdate from './components/Event-management/EventUpdate';
 import MemberRequest from './components/Member-management/MemberRequest';
 import MemberAdd from './components/Member-management/MemberAdd';
 import MemberList from './components/Member-management/MemberList';
@@ -43,6 +47,10 @@ function App() {
                         <Route path="/Admin/EventTable"> <EventTable /> </Route>
                         <Route path="/Admin/MemberRequest"> <MemberRequest /> </Route>
                         <Route path="/Admin/EventView/:eventId"> <EventView /> </Route>
+                        <Route path="/Admin/RegistrationForm/:eventId"> <RegistrationForm /> </Route>
+                        <Route path="/Admin/EventUpdate/:eventId"> <EventUpdate /> </Route>
+                        <Route path="/Admin/Responses/:eventId"> <ResponsesView /> </Route>
+                        <Route path="/Admin/IndividualResponses/:eventId"> <IndividualResponses /> </Route>
                         <Route path="/Admin/EventForm"> <EventForm /> </Route>
                            <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
                            <Route path="/DesignationChair"> <AssignedDesignationsTable /> </Route>

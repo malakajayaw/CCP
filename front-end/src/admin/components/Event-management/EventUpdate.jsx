@@ -1,31 +1,43 @@
 import React,{useState, useEffect} from 'react';
 import Config from '../../controllers/config.controller';
 import { get_all_active_members} from '../../controllers/memeber.controller'
+import { get_event, deleteForm} from '../../controllers/event.controller';
+import {useParams } from "react-router-dom";
 import Axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap"
 import 'jquery/dist/jquery.min.js';
 import { Multiselect } from 'multiselect-react-dropdown';
 
-function EventForm(props) {
+function EventUpdate() {
 
   const [eventData,setEventData] = useState({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',banner:null });
   const [vols,setVols] = useState([]);
   const [members, Setmembers] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState();
+  const [bannerChange, setBannerChange] = useState(false);
+  let { eventId } = useParams();
   var memberIds = [];
-  //const vols = [];
 
     useEffect(() => {
       getData();
   }, []); 
 
 
-  async function getData() {
-    var memberRes = await get_all_active_members()
-    await   Setmembers( setMemeberIds(memberRes.data.data));
-    
-  }
+    const getData = async () => {
+
+        var eventResult = await get_event(eventId)
+        var memberIdResult = await get_all_active_members()
+
+        setEventData(eventResult.data.data);
+        Setmembers( setMemeberIds(memberIdResult.data.data))
+
+        var selectedVolArr = eventResult.data.data.volunteers[0].split(',')
+      
+        setVols(selectedVolArr);
+        setSelectedMembers(selectedVolArr);
+        console.log(selectedMembers);
+    }
 
   function setMemeberIds(members){
     var i = 0;
@@ -48,22 +60,25 @@ function EventForm(props) {
   }
 
   function onRemove(selectedList, selectedMember) {
-     for( var i = 0; i < selectedMembers.length; i++)
-     { if ( selectedMembers[i] === selectedMember) { selectedMembers.splice(i, 1); }}
-    setSelectedMembers(selectedMembers);
+    for( var i = 0; i < vols.length; i++)
+    { if ( vols[i] === selectedMember) { vols.splice(i, 1); }}
+    setVols(vols);
+    setSelectedMembers(vols);
+    console.log(selectedMembers);
 }
 
   const handleBanner = event =>
-  {  setEventData({...eventData, banner : event.target.files[0] })};
+  {  setEventData({...eventData, banner : event.target.files[0] }); setBannerChange(true)};
 
   const clear = () => {
   setEventData({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',formLink:'',banner:null  })
   setVols([]);
-}
+  }
 
   const send = async event =>{
     event.preventDefault();
     const data = new FormData();
+    data.append("eventId",eventId);
     data.append("eventName",eventData.eventName);
     data.append("eventDate",eventData.eventDate);
     data.append("startTime",eventData.startTime);
@@ -71,11 +86,11 @@ function EventForm(props) {
     data.append("venue",eventData.venue);
     data.append("description",eventData.description);
     data.append("hostingAffiliation",eventData.hostingAffiliation);
-    data.append("volunteers",selectedMembers);
+    data.append("volunteers",selectedMembers)
     data.append("formLink",eventData.formLink);
     data.append("banner",eventData.banner);
     try{
-      const res = await Axios.post('/event/addEvent',data, {
+      const res = await Axios.post('/event/update',data, {
         headers : {
           'Content-Type' : 'multipart/form-data'
         }
@@ -84,11 +99,11 @@ function EventForm(props) {
       if(res.status === 200)
       {
         clear()
-        Config.setToast("Event added successfully")
+        Config.setToast("Event Updated Successfully!")
       }
     }catch(err){
       if(err.response.status === 500)
-           Config.setToast('There was a problem with then server');
+          Config.setToast('There was a problem with then server');
         else
           console.log(err.response.data);
     }
@@ -97,12 +112,13 @@ function EventForm(props) {
   return (    <div>
     {/* <ContentHeader pageName={props.page}/> */}
      <section className="content w-100" >
+         {console.log(eventData)}
   <div className="container-fluid d-flex justify-content-center">
   <div className="card card-warning w-50">
   <div className="card-header">
-    <h3 className="card-title">Event Form</h3>
+    <h3 className="card-title">Event Update Form</h3>
   </div>
-  <form id="eventForm"  method="post" onSubmit={send}>
+  <form id="eventUpdate"  method="post" onSubmit={send}>
     <div className="card-body">
 
       <div className="form-group">
@@ -112,7 +128,7 @@ function EventForm(props) {
 
       <div className="form-group">
         <label htmlFor="eventDate">Date</label>
-        <input type="date" id="eventDate" value={eventData.eventDate} onChange={handleChange} className="form-control" required/>
+        <input type="date" id="eventDate" value={eventData.eventDate.slice(0,10)} onChange={handleChange} className="form-control" required/>
       </div>
 
       <div className="form-group">
@@ -142,11 +158,12 @@ function EventForm(props) {
 
       <div className="form-group">
         <label>Volunteers</label>
-        <Multiselect options={members} isObject={false} onSelect={onSelect} onRemove={onRemove}  displayValue="name"  />
+        <Multiselect options={members} selectedValues={vols} isObject={false} onSelect={onSelect} onRemove={onRemove}  displayValue="name"  />
       </div>
 
     <div class="form-group">
       <label for="banner">Event Banner</label>
+      <img className="mb-4 shadow-lg bg-white rounded"  src={__dirname+"images/Events/"+eventData.banner} style={{ width:"100%", maxHeight:"300px", display :bannerChange && "none"}}/>
       <input type="file" class="form-control-file" id="banner" accept="image/*" onChange={handleBanner}/>
     </div>
 
@@ -154,7 +171,7 @@ function EventForm(props) {
     {/* <!-- /.card-body --> */}
 
     <div className="card-footer">
-      <button type="submit" className="btn btn-primary">Publish</button>
+      <button type="submit" className="btn btn-primary">Update Event</button>
     </div>
   </form>
   <div className="d-none" id="dialog-confirm" title="Empty the recycle bin?">
@@ -164,10 +181,11 @@ function EventForm(props) {
 </div>
 </section>
 </div>);
+
+
 }
 
-
-export default EventForm;
+export default EventUpdate;
 
 
 //https://tempusdominus.github.io/bootstrap-4/Usage/ - date and time picker
