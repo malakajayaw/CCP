@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-
 import moment from "moment";
 import Config from "../../controllers/config.controller";
 import useForceUpdate from "use-force-update";
-
 import { add_event_report } from "../../controllers/event.report.controller";
 import { get_event} from '../../controllers/event.controller';
 import { useParams } from "react-router-dom";
@@ -16,12 +14,7 @@ const EventReportAdd = (props) => {
   });
   const [today, setToday] = useState();
 
-  // const [eventID, setEventId] = useState();
-
   let { id } = useParams();
-
-  // const params = useParams();
-  // const eventID = params.eventId;
 
   const todayfucn = () => {
     let newDate = new Date();
@@ -67,7 +60,7 @@ const EventReportAdd = (props) => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await add_event_report(event);
+  const result = await add_event_report(event);
     console.log(result);
     if (result.code == 200) {
       clear();
