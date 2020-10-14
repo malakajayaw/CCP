@@ -35,7 +35,7 @@ export default function Sidebar() {
             </li>
 
             <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+            <a href="/Admin/MemberRequest" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
               Member Management
@@ -43,7 +43,7 @@ export default function Sidebar() {
               </p>
             </a>
             
-            <ul class="nav nav-treeview">
+            {/* <ul class="nav nav-treeview">
 
             <li class="nav-item">
                 <a href="/Admin/MemberList" class="nav-link">
@@ -65,7 +65,7 @@ export default function Sidebar() {
                   <p>Create Profile</p>
                 </a>
               </li>
-            </ul>
+            </ul> */}
           </li>
 
             
