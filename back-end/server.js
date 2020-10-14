@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const fileUpload = require('express-fileupload');
-const multer = require("multer");
 
 
 const MongoClient = require("mongodb").MongoClient;

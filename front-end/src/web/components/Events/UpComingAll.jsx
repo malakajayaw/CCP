@@ -3,6 +3,7 @@ import {  Link } from "react-router-dom";
 import {get_all_events} from "../../../admin/controllers/event.controller";
 import { useState ,useEffect} from 'react';
 import NavBar from '../Common/NavBar';
+import Footer from '../Common/Footer';
 
 function UpComingAll() {
 
@@ -62,6 +63,7 @@ function UpComingAll() {
 
    {loadData()}
     </div>
+    <Footer />
    </div>);
 }
 
