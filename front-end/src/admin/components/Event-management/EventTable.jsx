@@ -12,6 +12,7 @@ import $ from "jquery"
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 
+
 function EventTable(props){
 
   const initialValue = {events : ['']}; 
@@ -59,8 +60,7 @@ function EventTable(props){
           <td ><span className ={status == "Open" ? "badge badge-success" : "badge badge-danger"  }>{status}</span> </td>      
           <td className="project-actions text-center">   
               <Link to={"/Admin/EventView/"+events._id}  className="btn btn-primary btn-sm mr-1"><i className="fas fa-folder mr-1"/> View</Link> 
-              <Link to="/Admin/EventForm"  className="btn btn-info btn-sm mr-1 editEventBtn"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
-              {/* <Link to="/Admin/EventView" className="btn btn-danger btn-sm mr-1"><i className="fas fa-trash mr-1"/> Delete</Link>  */}
+              <Link to={"/Admin/EventUpdate/"+events._id}  className="btn btn-info btn-sm mr-1 editEventBtn"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
               <a className="btn btn-danger btn-sm mr-1" onClick={()=> onDelete(events._id)}> <i className="fas fa-trash mr-1" />Delete</a>
           </td>
       </tr>
