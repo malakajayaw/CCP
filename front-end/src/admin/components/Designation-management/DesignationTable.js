@@ -7,9 +7,9 @@ import Config from '../../controllers/config.controller'
 import { Link } from "react-router-dom";
 
 import useForceUpdate from 'use-force-update';
+import 'jquery/dist/jquery.min.js';
+import $ from "jquery"
 //Datatable Modules
-import "jquery/dist/jquery"
-import $ from "jquery";
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 
@@ -31,9 +31,10 @@ const DesignationTable = (props) => {
     }, []);
 
     async function getData() {
+        //$.noConflict();
         var res = await get_all_designations();
         await SetDesignation(res.data.data);
-        //$("#DesTable").datatable();
+        $("#DesTable").dataTable();
     }
 
 
