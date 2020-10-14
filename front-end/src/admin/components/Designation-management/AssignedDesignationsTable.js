@@ -6,9 +6,11 @@ import Config from '../../controllers/config.controller'
 import { Link } from "react-router-dom";
 
 import useForceUpdate from 'use-force-update';
+import 'jquery/dist/jquery.min.js';
+import $ from "jquery"
 //Datatable Modules
-//import "datatables.net-dt/js/dataTables.dataTables"
-//import "datatables.net-dt/css/jquery.dataTables.min.css"
+import "datatables.net-dt/js/dataTables.dataTables"
+import "datatables.net-dt/css/jquery.dataTables.min.css"
 
 
 const AssignedDesignationsTable = (props) => {
@@ -30,6 +32,7 @@ const AssignedDesignationsTable = (props) => {
     async function getData() {
         var res = await get_aff_spec_designations("5f85d2e1b708c81ce0a4de85");
         await SetDesignation(res.data.data);
+        $("#AssDes").dataTable();
     }
 
     const delete_func = async (Designation, id, name) => {
@@ -89,7 +92,7 @@ const AssignedDesignationsTable = (props) => {
                     {/* <!-- /.card-header --> */}
                     <div className="card-body">
                         <table
-                            id="eventReportTable"
+                            id="AssDes"
                             className="table table-bordered table-striped dataTable"
                         >
                             <thead>
