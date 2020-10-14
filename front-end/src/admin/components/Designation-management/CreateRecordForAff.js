@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation } from "react-router-dom";
+import Select from 'react-select'
 
 import moment from 'moment';
 import Config from '../../controllers/config.controller'
@@ -7,6 +8,7 @@ import useForceUpdate from 'use-force-update';
 
 import { addPastDesignation } from '../../controllers/pastdes.controller'
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
+import { get_all_active_members } from "../../controllers/memeber.controller";
 import { add_activity } from '../../controllers/activity.controller'
 
 const CreateRecord = (props) => {
@@ -55,6 +57,32 @@ const CreateRecord = (props) => {
 
 
     });
+
+    const [member, setMember] = useState([]);
+    useEffect(() => {
+        getMemData();
+
+    }, []);
+
+    async function getMemData() {
+        var res = await get_all_active_members();
+        await setMember(res.data.data);
+        console.log("mem: " + member);
+    }
+
+    const selMem = member.map(item => {
+        const container = {};
+
+        container["value"] = item._id;
+        container["label"] = item.fname + " " + item.lname + " - " + item._id;
+        console.log("sel: " + JSON.stringify(container));
+        return container;
+    })
+
+    const handleMemChange = (e) => {
+        setPastDes({ ...pastdes, "MemNo": e.value });
+        console.log(e);
+    }
 
     const handleChange = (e) => {
         setPastDes({ ...pastdes, [e.target.name]: e.target.value, affiliationNo: aff });
@@ -149,11 +177,10 @@ const CreateRecord = (props) => {
                                                 <label for="inputFName"> Designation Title : </label>
                                                 <input required type="text" id="title" name="title" class="form-control" onChange={handleChange} />
 
-                                                <label for="inputFName">Member ID : </label>
-                                                <input required type="text" id="MemNo" name="MemNo" class="form-control" onChange={handleChange} />
-
-                                                <label for="inputFName">Member Name : </label>
-                                                <input required type="text" id="MemName" name="MemName" class="form-control" onChange={handleChange} disabled value="Not yet implemented"/>
+                                                <div className="form-group">
+                                                    <label>Member</label>
+                                                    <Select required value="" className="select2" id="MemNo" name="MemNo" data-placeholder="Select Member" style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
+                                                </div>
 
                                                 <label for="inputFName">Year : </label>
                                                 <input required type="text" id="Year" name="Year" class="form-control" onChange={handleChange} />

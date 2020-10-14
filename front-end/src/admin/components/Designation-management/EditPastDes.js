@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { update_past_designation, get_spec_past_designations } from '../../controllers/pastdes.controller'
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
 import { add_activity } from '../../controllers/activity.controller'
+import { get_all_active_members } from "../../controllers/memeber.controller";
 import Config from '../../controllers/config.controller'
 
 const EditPastDes = (props) => {
@@ -38,6 +39,32 @@ const EditPastDes = (props) => {
         //console.log("id: " + id.desId);
         onLoadMemebrer(newId);
     }, []);
+
+    const [member, setMember] = useState([]);
+    useEffect(() => {
+        getMemData();
+
+    }, []);
+
+    async function getMemData() {
+        var res = await get_all_active_members();
+        await setMember(res.data.data);
+        console.log("mem: " + member);
+    }
+
+    const selMem = member.map(item => {
+        const container = {};
+
+        container["value"] = item._id;
+        container["label"] = item.fname + " " + item.lname + " - " + item._id;
+        console.log("sel: " + JSON.stringify(container));
+        return container;
+    })
+
+    const handleMemChange = (e) => {
+        setPastDes({ ...pastdes, "MemNo": e.value });
+        console.log(e);
+    }
 
     const handleAffChange = (e) => {
         setPastDes({ ...pastdes, "affiliationNo": e.value });
@@ -150,19 +177,8 @@ const EditPastDes = (props) => {
                                             </div>
 
                                             <div className="form-group">
-                                                <label for="inputLName">Member ID</label>
-                                                <input type="text" id="inputLName" className="form-control" required name="addlname"
-                                                    onChange={handleChange}
-                                                    name="MemNo"
-                                                    value={pastdes.MemNo} />
-                                            </div>
-
-                                            <div className="form-group">
-                                                <label for="inputLName">Member Name</label>
-                                                <input type="text" id="inputLName" className="form-control" required name="addlname" disabled
-                                                    onChange={handleChange}
-                                                    name="forYear"
-                                                    value="Not yet implemented" />
+                                                <label>Member</label>
+                                                <Select required value="" className="select2" id="MemNo" name="MemNo" data-placeholder="Select Member" style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
                                             </div>
 
                                             <div className="form-group">

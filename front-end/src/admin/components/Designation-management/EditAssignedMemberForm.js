@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation } from "react-router-dom";
+import Select from 'react-select'
 
 import { useForm } from "react-hook-form";
 
@@ -7,6 +8,7 @@ import moment from 'moment';
 import { update_designation_mem, get_spec_designations } from '../../controllers/designation.controller'
 import { addPastDesignation } from '../../controllers/pastdes.controller'
 import { add_activity } from '../../controllers/activity.controller'
+import { get_all_active_members } from "../../controllers/memeber.controller";
 import Config from '../../controllers/config.controller'
 
 const EditAssignedMemberForm = (props) => {
@@ -45,6 +47,32 @@ const EditAssignedMemberForm = (props) => {
         parameters: "not set",
         datetime: "not set"
     });
+
+    const [member, setMember] = useState([]);
+    useEffect(() => {
+        getMemData();
+
+    }, []);
+
+    async function getMemData() {
+        var res = await get_all_active_members();
+        await setMember(res.data.data);
+        console.log("mem: " + member);
+    }
+
+    const selMem = member.map(item => {
+        const container = {};
+
+        container["value"] = item._id;
+        container["label"] = item.fname + " " + item.lname + " - " + item._id;
+        console.log("sel: " + JSON.stringify(container));
+        return container;
+    })
+
+    const handleMemChange = (e) => {
+        setPastDes({ ...pastdes, "MemNo": e.value });
+        console.log(e);
+    }
 
     const onLoadMemebrer = async (newId) => {
         const date = new Date();
@@ -94,9 +122,9 @@ const EditAssignedMemberForm = (props) => {
     //  }
 
     const handleChange = (e) => {
-        setActivity({ ...activity, parameters: e.target.value});
-        setPastDes({ ...pastdes, [e.target.name]: e.target.value });
-        setDesignation({ ...Designation, [e.target.name]: e.target.value });
+        setActivity({ ...activity, parameters: e.value});
+        setPastDes({ ...pastdes, MemNo: e.value });
+        setDesignation({ ...Designation, MemNo: e.value });
         console.log("Designation" + JSON.stringify(Designation));
         console.log("pastdes" + JSON.stringify(pastdes));
     }
@@ -121,22 +149,10 @@ const EditAssignedMemberForm = (props) => {
 
 
                                         <div className="card-body">
-                                            <div className="form-group">
-                                                <label >Member ID</label>
-                                                <input type="text" className="form-control" required name="addfname"
-                                                    value={Designation.MemNo}
-                                                    name="MemNo"
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
 
                                             <div className="form-group">
-                                                <label >Member Name</label>
-                                                <input disabled type="text" className="form-control" required name="addfname"
-                                                    value="Not implmented"
-                                                    name="MemNo"
-                                                    onChange={handleChange}
-                                                />
+                                                <label>Member</label>
+                                                <Select required value="" className="select2" id="MemNo" name="MemNo" data-placeholder="Select Member" style={{ width: "100%" }} onChange={handleChange} options={selMem} />
                                             </div>
 
                                             <div className="row">
