@@ -2,9 +2,6 @@
 const EventReport = require("../model/eventreport.model");
 const moment = require("moment");
 
-//======================================================================================================
-//================================== Current Date =============================================
-//======================================================================================================
 exports.add_report_add = async function (req, res, next) {
   let newDate = new Date();
 
@@ -43,8 +40,7 @@ exports.add_report_add = async function (req, res, next) {
 };
 
 exports.get_all_reports = async function (req, res, next) {
-  console.log("Called");
-  // check userdata
+  //console.log("Called");
   const result = await EventReport.find();
 
   return res.status(200).send({

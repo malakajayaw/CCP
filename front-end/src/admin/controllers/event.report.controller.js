@@ -2,7 +2,7 @@ import axios from "axios";
 import Config from "./config.controller";
 
 export const add_event_report = (data) => {
-  console.log(data);
+  //console.log(data);
   const formData = new FormData();
   formData.append("pdf", data.file);
   formData.set("eventname", data.eventname);
@@ -21,7 +21,7 @@ export const add_event_report = (data) => {
     return axios
       .post(`${Config.host}${Config.port}/eventReport/report/add`, formData)
       .then((result) => {
-        console.log(result.data);
+        //console.log(result.data);
         resolve({ code: 200, message: result.data });
       })
       .catch((err) => {
@@ -30,7 +30,7 @@ export const add_event_report = (data) => {
   });
 };
 export const delete_report = (id) => {
-  console.log(id);
+  //console.log(id);
   var data = {
     id: id,
   };
@@ -40,7 +40,7 @@ export const delete_report = (id) => {
         ...data,
       })
       .then((result) => {
-        console.log(result.data);
+        //console.log(result.data);
         resolve({ code: 200, message: result.data });
       })
       .catch((err) => {
@@ -49,7 +49,7 @@ export const delete_report = (id) => {
   });
 };
 export const get_spec_report = (id) => {
-  console.log(id);
+  //console.log(id);
   var data = {
     id: id,
   };
@@ -57,7 +57,7 @@ export const get_spec_report = (id) => {
     return axios
       .post(`${Config.host}${Config.port}/eventReport/report/spec`, { ...data })
       .then((result) => {
-        console.log(result.data);
+        //console.log(result.data);
         resolve({ code: 200, message: result.data });
       })
       .catch((err) => {
@@ -71,7 +71,7 @@ export const get_all_reports = () => {
     return axios
       .get(`${Config.host}${Config.port}/eventReport/report/all`)
       .then((result) => {
-        console.log(result.data);
+        //console.log(result.data);
         resolve({ code: 200, data: result.data });
       })
       .catch((err) => {

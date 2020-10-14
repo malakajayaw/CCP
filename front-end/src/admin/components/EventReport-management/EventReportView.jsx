@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-
 import moment from "moment";
 import Config from "../../controllers/config.controller";
-
 import { get_spec_report } from "../../controllers/event.report.controller";
 import { useLocation, useParams } from "react-router-dom";
 
@@ -43,9 +41,7 @@ const EventReportView = (props) => {
       <div className="container-fluid">
         <div className="card">
           <div className="card-header">
-            {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
           </div>
-          {/* <!-- /.card-header --> */}
           <div className="card-body">
             <section class="content">
               <div class="row justify-content-md-center">
@@ -71,7 +67,6 @@ const EventReportView = (props) => {
                             value={getFileName(eventsReports.file_path)}
                             class="form-control"
                           />
-                          {/* <input type="file" id="inputReportNameView" class="form-control"/> */}
 
                           <label for="inputEName">Event Name : </label>
                           <input
@@ -148,7 +143,6 @@ const EventReportView = (props) => {
             </section>
           </div>
         </div>
-        {/* <!-- /.container-fluid --> */}
       </div>
     </section>
   );
