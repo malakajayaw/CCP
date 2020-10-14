@@ -216,7 +216,7 @@ class UserProfile extends Component {
                         Membership Number
                       </label>
                       <div className="col-lg-9">
-                        <input disabled className="form-control" type="text" />
+                        <input disabled value={user.memberShipNo} className="form-control" type="text" />
                       </div>
                     </div>
                     <div className="form-group row">
@@ -227,7 +227,7 @@ class UserProfile extends Component {
                         <input
                           className="form-control"
                           type="password"
-                          defaultValue={11111122333}
+
                         />
                       </div>
                     </div>
@@ -239,7 +239,7 @@ class UserProfile extends Component {
                         <input
                           className="form-control"
                           type="password"
-                          defaultValue={11111122333}
+                          
                         />
                       </div>
                     </div>
@@ -251,7 +251,7 @@ class UserProfile extends Component {
                         <input
                           className="form-control"
                           type="password"
-                          defaultValue={11111122333}
+                         
                         />
                       </div>
                     </div>
