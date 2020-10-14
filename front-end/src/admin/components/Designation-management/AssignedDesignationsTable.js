@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { get_aff_spec_designations, remove_designation_mem } from "../../controllers/designation.controller";
+import { add_activity } from '../../controllers/activity.controller'
 import Config from '../../controllers/config.controller'
 //import EventReportView from './EventReportView'
 import { Link } from "react-router-dom";
@@ -14,6 +15,14 @@ const AssignedDesignationsTable = (props) => {
     const [Designation, SetDesignation] = useState([]);
     const forceUpdate = useForceUpdate();
 
+    let [activity, setActivity] = useState({
+        MemNo: "To be taken from redux",
+        action: "Remove assignment",
+        table: "Designations",
+        parameters: "not set",
+        datetime: "not set"
+    });
+
     useEffect(() => {
         getData();
     }, []);
@@ -23,8 +32,9 @@ const AssignedDesignationsTable = (props) => {
         await SetDesignation(res.data.data);
     }
 
-    const delete_func = async (Designation, id) => {
-        const res = await remove_designation_mem(Designation,id)
+    const delete_func = async (Designation, id, name) => {
+        addActivity(name)
+        const res = await remove_designation_mem(Designation, id)
         if (res.code == 200) {
             Config.setToast("Member removed")
             forceUpdate();
@@ -32,6 +42,16 @@ const AssignedDesignationsTable = (props) => {
             Config.setToast("Something went wrong")
             forceUpdate();
         }
+    }
+
+    const addActivity = async (name) => {
+        console.log(name);
+        const date = new Date();
+        activity.parameters = name;
+        activity.datetime = date.toLocaleString();
+        console.log("act: " + JSON.stringify(activity));
+        const result3 = await add_activity(activity)
+        console.log(result3);
     }
 
     const readydata = () => {
@@ -47,7 +67,7 @@ const AssignedDesignationsTable = (props) => {
                             <i className="fas fa-folder mr-1" />
                              Assign New{" "}
                         </a></Link>
-                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(Designation,Designation._id)}>
+                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(Designation, Designation._id, Designation.MemNo)}>
                             {" "}
                             <i className="fas fa-trash mr-1" />Remove{" "}
                         </a>

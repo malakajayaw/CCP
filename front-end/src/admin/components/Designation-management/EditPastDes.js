@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 
 import { update_past_designation, get_spec_past_designations } from '../../controllers/pastdes.controller'
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
+import { add_activity } from '../../controllers/activity.controller'
 import Config from '../../controllers/config.controller'
 
 const EditPastDes = (props) => {
@@ -23,6 +24,14 @@ const EditPastDes = (props) => {
 
     });
 
+    let [activity, setActivity] = useState({
+        MemNo: "To be taken from redux",
+        action: "Edit record - Admin",
+        table: "Records",
+        parameters: "not set",
+        datetime: "not set"
+    });
+
     useEffect(() => {
         //console.log("id: " + JSON.stringify(id));
         //console.log("id: " + id.desId);
@@ -32,9 +41,15 @@ const EditPastDes = (props) => {
 
 
     const onLoadMemebrer = async (newId) => {
+        const date = new Date();
         const result = await get_spec_past_designations(newId)
         console.log("reult: " + result.data.data);
         // const newD = result.data.data
+        setActivity({
+            ...activity,
+            datetime: date.toLocaleString()
+        });
+
 
         await console.log(pastdes);
         setPastDes(result.data.data)
@@ -44,11 +59,13 @@ const EditPastDes = (props) => {
 
 
     const onSubmit = async (e) => {
-
+        activity.parameters = pastdes.title + " / " + pastdes.MemNo + " / " + pastdes.Year + " / " + pastdes.affiliationNo;
         // alert(JSON.stringify(member))
         e.preventDefault()
         const result = await update_past_designation(pastdes, id.Id)
         console.log(result);
+        const result3 = await add_activity(activity)
+        console.log(result3);
         if (result.code == 200) {
             Config.setToast("Update  successfully")
         }

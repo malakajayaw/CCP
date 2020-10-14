@@ -57,7 +57,7 @@ function App() {
                         <Route path="/Admin/ActivityLog"> <ActivityTable /> </Route>
                         <Route path="/Admin/AddDesignation"> <CreateDesignationForm /> </Route>
                        <Route path="/Admin/AddPastDesignation"> <CreateRecord /> </Route>
-                       <Route path="/Admin/AddPastDesignationForAff"> <CreateRecordForAff /> </Route>
+                       <Route path="/Admin/AddPastDesignationForAff/:aff"> <CreateRecordForAff /> </Route>
                         <Route path="/Admin/EditDesignation/:desId"> <EditDesignation /> </Route>
                         <Route path="/Admin/EditAssigned/:AssId"> <EditAssignedMemberForm /> </Route>
                        <Route path="/Admin/EditPastDes/:Id"> <EditPastDes /> </Route>

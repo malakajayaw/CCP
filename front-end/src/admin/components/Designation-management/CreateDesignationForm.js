@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Select from 'react-select'
+//import Select from 'react-select'
 
 import moment from 'moment';
 import Config from '../../controllers/config.controller'
@@ -7,6 +7,7 @@ import useForceUpdate from 'use-force-update';
 
 import { addDesignation } from '../../controllers/designation.controller'
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
+import { add_activity } from '../../controllers/activity.controller'
 
 const CreateDesignationForm = (props) => {
     const forceUpdate = useForceUpdate();
@@ -20,7 +21,7 @@ const CreateDesignationForm = (props) => {
     const todayfucn = () => {
         let newDate = new Date()
 
-        const today = moment(newDate).format("MMM Do YY");
+        const today = newDate.toLocaleString();
         setToday(today)
 
         console.log(today);
@@ -30,7 +31,7 @@ const CreateDesignationForm = (props) => {
     useEffect(() => {
         let newDate = new Date()
 
-        const today = moment(newDate).format("MMM Do YY");
+        const today = newDate.toLocaleString();
         setToday(today)
         todayfucn()
     });
@@ -46,17 +47,30 @@ const CreateDesignationForm = (props) => {
 
     });
 
+    let [activity, setActivity] = useState({
+        MemNo: "To be taken from redux",
+        action: "New Designation",
+        table: "Designations",
+        parameters: "not set",
+        datetime: ""
+    });
+
     const handleChange = (e) => {
         setDesignation({ ...designation, [e.target.name]: e.target.value });
     }
 
-
     const onSubmit = async (e) => {
+        const date = new Date();
         e.preventDefault()
-
-        console.log(designation);
+        //console.log("des" + JSON.stringify(designation.affiliationNo));
         const result = await addDesignation(designation)
-        console.log(result);
+        await console.log(result);
+        const det = designation.affiliationNo + "/" + designation.title + "/" + designation.type
+        activity.parameters = det;
+        activity.datetime = date.toLocaleString();
+        console.log("act" + JSON.stringify(activity));
+        const result3 = await add_activity(activity)
+        console.log(result3);
         if (result.code == 200) {
             clear()
             Config.setToast("Designation Added Successfully")

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation } from "react-router-dom";
 
 import moment from 'moment';
 import Config from '../../controllers/config.controller'
@@ -6,10 +7,12 @@ import useForceUpdate from 'use-force-update';
 
 import { addPastDesignation } from '../../controllers/pastdes.controller'
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
+import { add_activity } from '../../controllers/activity.controller'
 
 const CreateRecord = (props) => {
     const forceUpdate = useForceUpdate();
-
+    const id = useParams()
+    const aff = id.aff
     const [submit, setSubmit] = useState({
         value1: "Not Submitted"
     });
@@ -35,7 +38,13 @@ const CreateRecord = (props) => {
         todayfucn()
     });
 
-
+    let [activity, setActivity] = useState({
+        MemNo: "To be taken from redux",
+        action: "New Record - Chair",
+        table: "Records",
+        parameters: "not set",
+        datetime: ""
+    });
 
     let [pastdes, setPastDes] = useState({
         title: "",
@@ -48,16 +57,23 @@ const CreateRecord = (props) => {
     });
 
     const handleChange = (e) => {
-        setPastDes({ ...pastdes, [e.target.name]: e.target.value });
+        setPastDes({ ...pastdes, [e.target.name]: e.target.value, affiliationNo: aff });
     }
 
 
     const onSubmit = async (e) => {
+        const date = new Date();
         e.preventDefault()
 
         console.log(pastdes);
         const result = await addPastDesignation(pastdes)
         console.log(result);
+        const det = pastdes.title + "/" + pastdes.MemNo + "/" + pastdes.Year + " / " + pastdes.affiliationNo
+        activity.parameters = det;
+        activity.datetime = date.toLocaleString();
+        console.log("act" + JSON.stringify(activity));
+        const result3 = await add_activity(activity)
+        console.log(result3);
         if (result.code == 200) {
             clear()
             Config.setToast("Record Added Successfully")
