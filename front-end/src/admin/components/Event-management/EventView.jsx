@@ -85,7 +85,6 @@ function EventView() {
       }
     }
     // const id = event.eventName;
-
   return (  <div>
     {/* <ContentHeader pageName={props.page}/> */}
     <section className="content" >
@@ -96,9 +95,22 @@ function EventView() {
       <h3 className="card-title">Event Details</h3>
       </div>
       <div className="col-6">
-      <Link to={"/Admin/EventReportForm/"+eventId} type="button" className="btn btn-info float-right add_btn ml-2">Add Report</Link>
-      <Link to="/Admin/EventAttendanceRegistered" type="button" className="btn btn-success float-right add_btn">Add Attendance</Link>
-      </div>
+        
+                <Link
+                  to= {`/Admin/EventReportForm/${event.eventName}`}
+                  type="button"
+                  className="btn btn-info float-right add_btn ml-2"
+                >
+                  Add Report
+                </Link>
+                <Link
+                  to="/Admin/EventAttendance"
+                  type="button"
+                  className="btn btn-success float-right add_btn"
+                >
+                  Add Attendance
+                </Link>
+        </div>
       </div>
     </div>
     <div className="card-body">

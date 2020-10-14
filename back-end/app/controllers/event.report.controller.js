@@ -1,6 +1,5 @@
-//import User model
+//import Event Report model
 const EventReport = require("../model/eventreport.model");
-
 const moment = require("moment");
 
 //======================================================================================================
@@ -23,8 +22,10 @@ exports.add_report_add = async function (req, res, next) {
     if (err) return res.status(400).send("Failed to upload PDF!");
   });
 
-  const today = moment(newDate).format("MMM Do YY");
+  const today = moment(newDate).format("MMM Do Y Y");
+
   let new_report = EventReport({
+    eventName: req.body.eventname,
     reportname: req.body.reportname,
     submssionState: req.body.submssionState,
     submissionComment: req.body.submissionComment,
@@ -38,6 +39,7 @@ exports.add_report_add = async function (req, res, next) {
   } catch (error) {
     throw error;
   }
+  return res.status(403).send("Already have");
 };
 
 exports.get_all_reports = async function (req, res, next) {

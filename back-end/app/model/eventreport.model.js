@@ -8,9 +8,10 @@ let EventReport = new Schema({
 
   // },
 
-  reportname: {
-    type: String,
-  },
+  eventName: {
+     type: String,
+     required: true,
+   },
 
   submssionState: {
     type: String,
@@ -28,10 +29,12 @@ let EventReport = new Schema({
   },
   created_at: {
     type: String,
+   
   },
   file_path: {
     type: String,
   },
+
 });
 
 module.exports = mongoose.model("eventreports", EventReport);

@@ -33,12 +33,18 @@ const EventReportTable = (props) => {
     }
   };
 
+  const getFileName = (URL) => {
+    let parts = URL.split("/");
+    return parts.pop() || parts.pop();
+  };
+
   const readydata = () => {
     return eventsReports.map((eventreport, i) => {
+      console.log(eventreport)
       return (
         <tr key={i}>
-          <td>Event {eventreport.eventname}</td>
-          <td>Report {eventreport.reportname}</td>
+          <td>{eventreport.eventName}</td>
+          <td>{getFileName(eventreport.file_path)}</td>
           <td>Submited</td>
           <td className="project-actions text-center">
             <Link to={`/Admin/EventReportView/${eventreport._id}`}>
@@ -46,7 +52,7 @@ const EventReportTable = (props) => {
                 className="btn btn-primary btn-sm mr-1"
                 style={{ color: "black" }}
               >
-                {" "}
+
                 <i className="fas fa-folder mr-1" />
                 View{" "}
               </a>
@@ -56,9 +62,9 @@ const EventReportTable = (props) => {
               className="btn btn-danger btn-sm mr-1"
               onClick={() => delete_func(eventreport._id)}
             >
-              {" "}
+
               <i className="fas fa-trash mr-1" />
-              Delete{" "}
+              Delete
             </a>
           </td>
         </tr>
@@ -71,10 +77,7 @@ const EventReportTable = (props) => {
       <div className="container-fluid">
         <div className="card">
           <div className="card-header">
-            {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-            {/*<button type="button" onClick={() => {props.onClick("EReport"); }} className="btn btn-success float-right add_btn" >Repport Management</button>*/}
           </div>
-          {/* <!-- /.card-header --> */}
           <div className="card-body">
             <table
               id="eventReportTable"

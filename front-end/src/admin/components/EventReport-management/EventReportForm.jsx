@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-
+import { useParams } from "react-router-dom";
 import moment from "moment";
 import Config from "../../controllers/config.controller";
 import useForceUpdate from "use-force-update";
 
 import { add_event_report } from "../../controllers/event.report.controller";
-import { get_event} from '../../controllers/event.controller';
-import { useParams } from "react-router-dom";
 
 const EventReportAdd = (props) => {
+  let { val } = useParams();
   const forceUpdate = useForceUpdate();
 
   const [submit, setSubmit] = useState({
@@ -16,19 +15,10 @@ const EventReportAdd = (props) => {
   });
   const [today, setToday] = useState();
 
-  // const [eventID, setEventId] = useState();
-
-  let { id } = useParams();
-
-  // const params = useParams();
-  // const eventID = params.eventId;
-
   const todayfucn = () => {
     let newDate = new Date();
-
     const today = moment(newDate).format("MMM Do YY");
     setToday(today);
-
     console.log(today);
   };
 
@@ -37,28 +27,15 @@ const EventReportAdd = (props) => {
 
     const today = moment(newDate).format("MMM Do YY");
     setToday(today);
-    //setEventId(eventID);
     todayfucn();
-    onLoadEvent(id);
   });
 
-  const onLoadEvent = async (eventId) => {
-    const result = await get_event(eventId);
-    await  setEventName(result.data.data.eventName);
-    console.log(result.data);
-    console.log(id);
-  }
-
-  let [eventName, setEventName] = useState("");
   let [event, setEvent] = useState({
-    eventname: {id},
+    eventname: val,
     submissionstate: "Not Submitted",
-    date: today,
+    date: moment(new Date()).format("MMM Do YY"),
     submissioncomment: "",
-    file: "",
   });
-
-
 
   const handleChange = (e) => {
     setEvent({ ...event, [e.target.name]: e.target.value });
@@ -75,13 +52,11 @@ const EventReportAdd = (props) => {
       forceUpdate();
     }
   };
- 
 
   const clear = () => {
     console.log("Clear call");
     setEvent({
-      reportname: "",
-      eventname: "IEEE",
+      eventname: val,
       submissionstate: "Not Submitted",
       date: today,
       submissioncomment: "",
@@ -94,14 +69,13 @@ const EventReportAdd = (props) => {
     }
   };
 
+  console.log(event.eventname);
+
   return (
     <section className="content" style={{ display: props.display }}>
       <div className="container-fluid">
         <div className="card">
-          <div className="card-header">
-            {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-          </div>
-          {/* <!-- /.card-header --> */}
+          <div className="card-header"></div>
           <div className="card-body">
             <section class="content">
               <div class="row justify-content-md-center">
@@ -133,13 +107,14 @@ const EventReportAdd = (props) => {
                             type="file"
                             onChange={handleChangeFile}
                           />
-                          <label for="inputEName">Event : </label>
+
+                          <label for="inputEName">Event Name : </label>
                           <input
                             type="text"
                             id="inputEventName"
                             name="eventname"
                             class="form-control"
-                            value={eventName}
+                            value={event.eventname}
                             readOnly
                           />
 
@@ -154,7 +129,6 @@ const EventReportAdd = (props) => {
                           />
 
                           <label>Date :</label>
-
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text">
@@ -163,7 +137,7 @@ const EventReportAdd = (props) => {
                             </div>
                             <input
                               type="text"
-                              value={today}
+                              value={event.date}
                               name="date"
                               class="form-control"
                               data-inputmask-alias="datetime"
@@ -174,7 +148,7 @@ const EventReportAdd = (props) => {
 
                           <div class="form-group">
                             <label for="inputSCmnt">
-                              Additional Comments :{" "}
+                              Submission Comments :{" "}
                             </label>
                             <input
                               type="text"
@@ -202,7 +176,6 @@ const EventReportAdd = (props) => {
           </div>
         </div>
       </div>
-      {console.log("bye")}
     </section>
   );
 };
