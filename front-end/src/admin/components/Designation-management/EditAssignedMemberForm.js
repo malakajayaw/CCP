@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import moment from 'moment';
 import { update_designation_mem, get_spec_designations } from '../../controllers/designation.controller'
 import { addPastDesignation } from '../../controllers/pastdes.controller'
+import { add_activity } from '../../controllers/activity.controller'
 import Config from '../../controllers/config.controller'
 
 const EditAssignedMemberForm = (props) => {
@@ -37,8 +38,16 @@ const EditAssignedMemberForm = (props) => {
 
     });
 
+    let [activity, setActivity] = useState({
+        MemNo: "not set",
+        action: "New assignment",
+        table: "Designations",
+        parameters: "not set",
+        datetime: "not set"
+    });
+
     const onLoadMemebrer = async (newId) => {
-        const date = new Date()
+        const date = new Date();
         const currentYear = new Date().getFullYear();
         const result = await get_spec_designations(newId)
         console.log(currentYear);
@@ -51,7 +60,15 @@ const EditAssignedMemberForm = (props) => {
             title: result.data.data.title,
             affiliationNo: result.data.data.affiliationNo,
             Year: currentYear.toString(),
-            created_at: date
+            created_at: date.toLocaleString()
+        });
+        setActivity({
+            ...activity,
+            MemNo: "To be taken from redux",
+            action: "New assignment",
+            table: "Designations",
+            parameters: result.data.data.MemNo,
+            datetime: date.toLocaleString()
         });
         //setPastDes({ ...pastdes, affiliationNo: result.data.data.affiliationNo });
     }
@@ -64,6 +81,9 @@ const EditAssignedMemberForm = (props) => {
         console.log(result);
         const result2 = await addPastDesignation(pastdes)
         console.log(result2);
+        console.log("activity" + JSON.stringify(activity));
+        const result3 = await add_activity(activity)
+        console.log(result3);
         if (result.code == 200) {
             Config.setToast("Update  successfully")
         }
@@ -77,10 +97,11 @@ const EditAssignedMemberForm = (props) => {
     //  }
 
     const handleChange = (e) => {
+        setActivity({ ...activity, parameters: e.target.value});
         setPastDes({ ...pastdes, [e.target.name]: e.target.value });
         setDesignation({ ...Designation, [e.target.name]: e.target.value });
-        console.log(Designation);
-        console.log(pastdes);
+        console.log("Designation" + JSON.stringify(Designation));
+        console.log("pastdes" + JSON.stringify(pastdes));
     }
 
     return (<section className="content" style={{ display: props.display }}>

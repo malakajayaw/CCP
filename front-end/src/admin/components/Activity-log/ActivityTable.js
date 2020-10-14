@@ -24,7 +24,7 @@ const ActivityTable = (props) => {
         return activity.map((activity, i) => {
             return (
                 <tr key={i}>
-                    <td>{activity.memberID}</td>
+                    <td>{activity.MemNo}</td>
                     <td>{activity.action}</td>
                     <td>{activity.table}</td>
                     <td>{activity.datetime}</td>
