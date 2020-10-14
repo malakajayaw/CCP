@@ -1,8 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let Designations = new Schema({
+let PastDesignations = new Schema({
 
+
+    AssNo: {
+        type: String,
+
+    },
     title: {
         type: String,
         required: true,
@@ -12,12 +17,13 @@ let Designations = new Schema({
         type: String,
         required: true,
     },
-    type: {
+    MemNo: {
         type: String,
         required: true,
     },
-    MemNo: {
+    Year: {
         type: String,
+        required: true,
     },
     updated_at: {
         type: String,
@@ -34,4 +40,4 @@ let Designations = new Schema({
 });
 
 
-module.exports = mongoose.model('designations', Designations);
+module.exports = mongoose.model('PastDesignations', PastDesignations);

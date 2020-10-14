@@ -17,6 +17,7 @@ const activity = require("./app/routes/activity.route");
 const designations = require("./app/routes/designations.route");
 const assignments = require("./app/routes/designationsAss.route");
 const affiliation = require("./app/routes/affiliation.route");
+const pastdes = require("./app/routes/pastdes.route");
 
 
 
@@ -46,6 +47,7 @@ app.use("/activity", activity);
 app.use("/designations", designations);
 app.use("/assignments", assignments);
 app.use("/affiliation", affiliation)
+app.use("/pastdes", pastdes)
 
 //======================================================================================================
 //================================== Handlle Error     ===========================================

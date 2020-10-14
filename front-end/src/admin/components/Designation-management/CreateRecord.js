@@ -5,23 +5,25 @@ import moment from 'moment';
 import Config from '../../controllers/config.controller'
 import useForceUpdate from 'use-force-update';
 
-import { addDesignation } from '../../controllers/designation.controller'
+import { addPastDesignation } from '../../controllers/pastdes.controller'
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
+import { get_all_active_members } from "../../controllers/memeber.controller";
 import { add_activity } from '../../controllers/activity.controller'
 
-const CreateDesignationForm = (props) => {
+const CreateRecord = (props) => {
     const forceUpdate = useForceUpdate();
+
     const [submit, setSubmit] = useState({
         value1: "Not Submitted"
     });
     const [today, setToday] = useState(
 
     );
-    var temp;
+
     const todayfucn = () => {
         let newDate = new Date()
 
-        const today = newDate.toLocaleString();
+        const today = moment(newDate).format("MMM Do YY");
         setToday(today)
 
         console.log(today);
@@ -31,15 +33,18 @@ const CreateDesignationForm = (props) => {
     useEffect(() => {
         let newDate = new Date()
 
-        const today = newDate.toLocaleString();
+        const today = moment(newDate).format("MMM Do YY");
         setToday(today)
         todayfucn()
     });
 
-    let [designation, setDesignation] = useState({
-        title: "not set",
-        affiliationNo: "not set",
-        type: "not set",
+
+
+    let [pastdes, setPastDes] = useState({
+        title: "",
+        affiliationNo: "",
+        MemNo: "",
+        Year: "",
         created_at: today,
 
 
@@ -47,28 +52,55 @@ const CreateDesignationForm = (props) => {
 
     let [activity, setActivity] = useState({
         MemNo: "To be taken from redux",
-        action: "New Designation",
-        table: "Designations",
+        action: "Edit Record - Admin",
+        table: "Records",
         parameters: "not set",
         datetime: ""
     });
 
+    const [member, setMember] = useState([]);
+    useEffect(() => {
+        getMemData();
+
+    }, []);
+
+    async function getMemData() {
+        var res = await get_all_active_members();
+        await setMember(res.data.data);
+        console.log("mem: " + member);
+    }
+
+    const selMem = member.map(item => {
+        const container = {};
+
+        container["value"] = item._id;
+        container["label"] = item.fname + " " + item.lname +" - " + item._id;
+        console.log("sel: " + JSON.stringify(container));
+        return container;
+    })
+
     const handleChange = (e) => {
-        setDesignation({ ...designation, [e.target.name]: e.target.value });
+        setPastDes({ ...pastdes, [e.target.name]: e.target.value });
     }
 
     const handleAffChange = (e) => {
-        setDesignation({ ...designation, "affiliationNo": e.value });
+        setPastDes({ ...pastdes, "affiliationNo": e.value });
+        console.log(e);
+    }
+
+    const handleMemChange = (e) => {
+        setPastDes({ ...pastdes, "MemNo": e.value });
         console.log(e);
     }
 
     const onSubmit = async (e) => {
         const date = new Date();
         e.preventDefault()
-        //console.log("des" + JSON.stringify(designation.affiliationNo));
-        const result = await addDesignation(designation)
-        await console.log(result);
-        const det = designation.affiliationNo + "/" + designation.title + "/" + designation.type
+
+        console.log(pastdes);
+        const result = await addPastDesignation(pastdes)
+        console.log(result);
+        const det = pastdes.title + "/" + pastdes.MemNo + "/" + pastdes.Year + " / " + pastdes.affiliationNo
         activity.parameters = det;
         activity.datetime = date.toLocaleString();
         console.log("act" + JSON.stringify(activity));
@@ -76,21 +108,20 @@ const CreateDesignationForm = (props) => {
         console.log(result3);
         if (result.code == 200) {
             clear()
-            Config.setToast("Designation Added Successfully")
+            Config.setToast("Record Added Successfully")
             forceUpdate();
 
         }
-
-
 
     }
 
     const clear = () => {
         console.log("Clear call");
-        setDesignation({
-            title: "not set",
-            affiliationNo: "not set",
-            type: "not set",
+        setPastDes({
+            title: "",
+            affiliationNo: "",
+            MemNo: "",
+            Year: "",
             created_at: today,
         })
     }
@@ -98,14 +129,22 @@ const CreateDesignationForm = (props) => {
     const [affiliations, setAffiliations] = useState([]);
     useEffect(() => {
         getAffData();
-
     }, []);
 
     async function getAffData() {
         var res = await get_all_affiliations();
         await setAffiliations(res.data.data);
-        console.log("aff: " + affiliations);
+        console.log(affiliations);
     }
+
+    const loadAffData = () => {
+        return affiliations.map((affiliations, index) => {
+            return (
+                <option value={affiliations._id }>{affiliations.affiliationname}</option>
+            );
+        });
+    };
+
 
     const sel = affiliations.map(item => {
         const container = {};
@@ -115,6 +154,7 @@ const CreateDesignationForm = (props) => {
         console.log("sel: " + JSON.stringify(container));
         return container;
     })
+
 
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
@@ -139,23 +179,21 @@ const CreateDesignationForm = (props) => {
                                         <form onSubmit={onSubmit}>
                                             <div class="form-group">
 
-
-                                                <label for="inputFName">Designation Title : </label>
-                                                <input required type="text" id="title" name="title" class="form-control" onChange={handleChange} />
-                                                
                                                 <div className="form-group">
                                                     <label>Affiliation</label>
-                                                    <Select required value = "" className="select2" id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+                                                    <Select required value="" className="select2" id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
                                                 </div>
 
+                                                <label for="inputFName"> Designation Title : </label>
+                                                <input required type="text" id="title" name="title" class="form-control" onChange={handleChange} />
+
                                                 <div className="form-group">
-                                                    <label>type</label>
-                                                    <select required className="select2" id="type" name="type" data-placeholder="Select type" style={{ width: "100%" }} onChange={handleChange}>
-                                                        <option value="" disabled selected hidden value = "">Select type</option>
-                                                        <option value= "Normal">Normal</option>
-                                                        <option value="Chair">Chair</option>
-                                                    </select>
+                                                    <label>Member</label>
+                                                    <Select required value="" className="select2" id="MemNo" name="MemNo" data-placeholder="Select Member" style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
                                                 </div>
+
+                                                <label for="inputFName">Year : </label>
+                                                <input required type="text" id="Year" name="Year" class="form-control" onChange={handleChange} />
 
                                                 <div class="card-footer" style={{ padding: '0px ' }}>
                                                     {/* <button type="button" class="btn btn-default float-right">Clear</button> */}
@@ -182,4 +220,4 @@ const CreateDesignationForm = (props) => {
     </section>);
 }
 
-export default CreateDesignationForm;
+export default CreateRecord;

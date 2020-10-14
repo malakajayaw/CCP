@@ -4,31 +4,32 @@ import Select from 'react-select'
 
 import { useForm } from "react-hook-form";
 
-import { update_designation, get_spec_designations } from '../../controllers/designation.controller'
+import { update_past_designation, get_spec_past_designations } from '../../controllers/pastdes.controller'
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
 import { add_activity } from '../../controllers/activity.controller'
+import { get_all_active_members } from "../../controllers/memeber.controller";
 import Config from '../../controllers/config.controller'
 
-const EditDesignation = (props) => {
+const EditPastDes = (props) => {
 
     const id = useParams()
     const { register, handleSubmit } = useForm();
 
 
-    const newId = id.desId
+    const newId = id.Id
 
-    const [designation, setDesignation] = useState({
-
+    const [pastdes, setPastDes] = useState({
+        affiliationNo:"",
         title: "",
-        affiliationNo: "",
-        type: "",
+        MemNo: "",
+        Year: "",
 
     });
 
     let [activity, setActivity] = useState({
         MemNo: "To be taken from redux",
-        action: "Edit designation",
-        table: "Designations",
+        action: "Edit record - Admin",
+        table: "Records",
         parameters: "not set",
         datetime: "not set"
     });
@@ -39,32 +40,60 @@ const EditDesignation = (props) => {
         onLoadMemebrer(newId);
     }, []);
 
+    const [member, setMember] = useState([]);
+    useEffect(() => {
+        getMemData();
 
+    }, []);
+
+    async function getMemData() {
+        var res = await get_all_active_members();
+        await setMember(res.data.data);
+        console.log("mem: " + member);
+    }
+
+    const selMem = member.map(item => {
+        const container = {};
+
+        container["value"] = item._id;
+        container["label"] = item.fname + " " + item.lname + " - " + item._id;
+        console.log("sel: " + JSON.stringify(container));
+        return container;
+    })
+
+    const handleMemChange = (e) => {
+        setPastDes({ ...pastdes, "MemNo": e.value });
+        console.log(e);
+    }
+
+    const handleAffChange = (e) => {
+        setPastDes({ ...pastdes, "affiliationNo": e.value });
+        console.log(e);
+    }
 
     const onLoadMemebrer = async (newId) => {
         const date = new Date();
-        const result = await get_spec_designations(newId)
-        console.log("result: " + result.data.data);
+        const result = await get_spec_past_designations(newId)
+        console.log("reult: " + result.data.data);
         // const newD = result.data.data
         setActivity({
             ...activity,
-            parameters: result.data.data.MemNo,
             datetime: date.toLocaleString()
         });
 
-        await console.log(designation);
-        console.log("result: " + JSON.stringify(result.data.data));
-        setDesignation(result.data.data)
+
+        await console.log(pastdes);
+        setPastDes(result.data.data)
     }
 
 
 
 
     const onSubmit = async (e) => {
-        activity.parameters = designation.affiliationNo + " / " + designation.title + " / " + designation.type;
+        activity.parameters = pastdes.title + " / " + pastdes.MemNo + " / " + pastdes.Year + " / " + pastdes.affiliationNo;
         // alert(JSON.stringify(member))
         e.preventDefault()
-        const result = await update_designation(designation, id.desId)
+        const result = await update_past_designation(pastdes, id.Id)
         console.log(result);
         const result3 = await add_activity(activity)
         console.log(result3);
@@ -74,6 +103,15 @@ const EditDesignation = (props) => {
 
 
 
+    }
+
+    //  const getData = async  (id) =>{
+    //       const result = await
+    //  }
+
+    const handleChange = (e) => {
+        setPastDes({ ...pastdes, [e.target.name]: e.target.value });
+        console.log(pastdes);
     }
 
     const [affiliations, setAffiliations] = useState([]);
@@ -104,19 +142,9 @@ const EditDesignation = (props) => {
         return container;
     })
 
-    const handleAffChange = (e) => {
-        setDesignation({ ...designation, "affiliationNo": e.value });
-        console.log(e);
-    }
-
-    const handleChange = (e) => {
-        setDesignation({ ...designation, [e.target.name]: e.target.value });
-        console.log(designation);
-    }
-
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
-            <h6>Update Designation</h6>
+            <h6>Edit Record</h6>
             <div className="card">
                 <div className="card-header">
 
@@ -128,34 +156,38 @@ const EditDesignation = (props) => {
                             <div className="col-md-6">
                                 <div className="card card-success">
                                     <div className="card-header">
-                                        <h3 className="card-title">Edit Designation</h3>
+                                        <h3 className="card-title">Change Record </h3>
                                     </div>
                                     <form onSubmit={onSubmit}>
 
 
                                         <div className="card-body">
-                                            <div className="form-group">
-                                                <label >Title</label>
-                                                <input type="text" className="form-control" required name="addfname"
-                                                    value={designation.title}
-                                                    name="title"
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
 
                                             <div className="form-group">
                                                 <label>Affiliation</label>
-                                                <Select required value="" className="select2" id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+                                                <Select required value={pastdes.affiliationNo} className="select2" id="affiliation" name="affiliationNo" placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
                                             </div>
 
                                             <div className="form-group">
-                                                <label>Type</label>
-                                                <select required value= {designation.type} className="select2" id="type" name="type" data-placeholder="Select Type" style={{ width: "100%" }} onChange={handleChange}>
-                                                    <option value= "Normal">Normal</option>
-                                                    <option value= "Chair">Chair</option>
-                                                </select>
+                                                <label for="inputLName">Designation Title</label>
+                                                <input type="text" id="inputLName" className="form-control" required name="addlname"
+                                                    onChange={handleChange}
+                                                    name="title"
+                                                    value={pastdes.title} />
                                             </div>
 
+                                            <div className="form-group">
+                                                <label>Member</label>
+                                                <Select required value="" className="select2" id="MemNo" name="MemNo" data-placeholder="Select Member" style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label for="inputLName">Year</label>
+                                                <input type="text" id="inputLName" className="form-control" required name="addlname"
+                                                    onChange={handleChange}
+                                                    name="Year"
+                                                    value={pastdes.Year} />
+                                            </div>
 
                                             <div className="row">
                                                 <div className="col-12">
@@ -184,4 +216,4 @@ const EditDesignation = (props) => {
 
 }
 
-export default EditDesignation;
+export default EditPastDes;

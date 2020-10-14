@@ -15,9 +15,15 @@ import MemberAdd from './components/Member-management/MemberAdd';
 import MemberList from './components/Member-management/MemberList';
 import DesignationTable from './components/Designation-management/DesignationTable';
 import AssignedDesignationsTable from './components/Designation-management/AssignedDesignationsTable';
+import PastDesignations from './components/Designation-management/PastDesignations';
+import PastSpecDesignations from './components/Designation-management/PastSpecDesignations';
 import CreateDesignationForm from './components/Designation-management/CreateDesignationForm';
+import CreateRecord from './components/Designation-management/CreateRecord';
+import CreateRecordForAff from './components/Designation-management/CreateRecordForAff';
 import EditAssignedMemberForm from './components/Designation-management/EditAssignedMemberForm';
 import EditDesignation from './components/Designation-management/EditDesignation';
+import EditPastDes from './components/Designation-management/EditPastDes';
+import EditPastDesForAff from './components/Designation-management/EditPastDesForAff';
 import ActivityTable from './components/Activity-log/ActivityTable';
 import AdminLogin from './components/Login/AdminLogin';
 import MemberEdit from './components/Member-management/MemberEdit';
@@ -52,11 +58,18 @@ function App() {
                         <Route path="/Admin/Responses/:eventId"> <ResponsesView /> </Route>
                         <Route path="/Admin/IndividualResponses/:eventId"> <IndividualResponses /> </Route>
                         <Route path="/Admin/EventForm"> <EventForm /> </Route>
-                           <Route path="/DesignationAdmin"> <DesignationTable /> </Route>
-                           <Route path="/DesignationChair"> <AssignedDesignationsTable /> </Route>
-                           <Route path="/ActivityLog"> <ActivityTable /> </Route>
-                           <Route path="/AddDesignation"> <CreateDesignationForm /> </Route>
-                           <Route path="/EditDesignation/:desId"> <EditDesignation /> </Route>
+                        <Route path="/Admin/DesignationAdmin"> <DesignationTable /> </Route>
+                        <Route path="/Admin/DesignationChair"> <AssignedDesignationsTable /> </Route>
+                       <Route path="/Admin/PastDesignations"> <PastDesignations /> </Route>
+                       <Route path="/Admin/PastSpecDesignations"> <PastSpecDesignations /> </Route>
+                        <Route path="/Admin/ActivityLog"> <ActivityTable /> </Route>
+                        <Route path="/Admin/AddDesignation"> <CreateDesignationForm /> </Route>
+                       <Route path="/Admin/AddPastDesignation"> <CreateRecord /> </Route>
+                       <Route path="/Admin/AddPastDesignationForAff/:aff"> <CreateRecordForAff /> </Route>
+                        <Route path="/Admin/EditDesignation/:desId"> <EditDesignation /> </Route>
+                        <Route path="/Admin/EditAssigned/:AssId"> <EditAssignedMemberForm /> </Route>
+                       <Route path="/Admin/EditPastDes/:Id"> <EditPastDes /> </Route>
+                       <Route path="/Admin/EditPastDesForAff/:Id"> <EditPastDesForAff /> </Route>
                         <Route path="/Admin/MemberAdd"> <MemberAdd /> </Route>
                         <Route path="/Admin/MemberList"> <MemberList /> </Route>
                         <Route path="/Admin/MemberEdit/:id"> <MemberEdit /> </Route>
