@@ -8,8 +8,10 @@ import { Link } from "react-router-dom";
 
 import useForceUpdate from 'use-force-update';
 //Datatable Modules
-//import "datatables.net-dt/js/dataTables.dataTables"
-//import "datatables.net-dt/css/jquery.dataTables.min.css"
+import "jquery/dist/jquery"
+import $ from "jquery";
+import "datatables.net-dt/js/dataTables.dataTables"
+import "datatables.net-dt/css/jquery.dataTables.min.css"
 
 
 const DesignationTable = (props) => {
@@ -31,6 +33,7 @@ const DesignationTable = (props) => {
     async function getData() {
         var res = await get_all_designations();
         await SetDesignation(res.data.data);
+        //$("#DesTable").datatable();
     }
 
 
@@ -109,7 +112,7 @@ const DesignationTable = (props) => {
                     {/* <!-- /.card-header --> */}
                     <div className="card-body">
                         <table
-                            id="eventReportTable"
+                            id="DesTable"
                             className="table table-bordered table-striped dataTable"
                         >
                             <thead>
