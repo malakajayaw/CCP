@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Select from 'react-select'
 
 import moment from 'moment';
 import Config from '../../controllers/config.controller'
@@ -60,6 +61,10 @@ const CreateRecord = (props) => {
         setPastDes({ ...pastdes, [e.target.name]: e.target.value });
     }
 
+    const handleAffChange = (e) => {
+        setPastDes({ ...pastdes, "affiliationNo": e.value });
+        console.log(e);
+    }
 
     const onSubmit = async (e) => {
         const date = new Date();
@@ -81,10 +86,7 @@ const CreateRecord = (props) => {
 
         }
 
-
-
     }
-
 
     const clear = () => {
         console.log("Clear call");
@@ -117,6 +119,16 @@ const CreateRecord = (props) => {
     };
 
 
+    const sel = affiliations.map(item => {
+        const container = {};
+
+        container["value"] = item._id;
+        container["label"] = item.affiliationname + " - " + item._id;
+        console.log("sel: " + JSON.stringify(container));
+        return container;
+    })
+
+
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
             <div className="card">
@@ -142,10 +154,7 @@ const CreateRecord = (props) => {
 
                                                 <div className="form-group">
                                                     <label>Affiliation</label>
-                                                    <select required className="select2" id="affiliationNo" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange}>
-                                                        <option value="" disabled selected hidden>Select Affiliation</option>
-                                                        {loadAffData()}
-                                                    </select>
+                                                    <Select required value="" className="select2" id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
                                                 </div>
 
                                                 <label for="inputFName"> Designation Title : </label>

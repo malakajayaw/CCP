@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation } from "react-router-dom";
+import Select from 'react-select'
 
 import { useForm } from "react-hook-form";
 
@@ -94,6 +95,19 @@ const EditDesignation = (props) => {
         });
     };
 
+    const sel = affiliations.map(item => {
+        const container = {};
+
+        container["value"] = item._id;
+        container["label"] = item.affiliationname + " - " + item._id;
+        console.log("sel: " + JSON.stringify(container));
+        return container;
+    })
+
+    const handleAffChange = (e) => {
+        setDesignation({ ...designation, "affiliationNo": e.value });
+        console.log(e);
+    }
 
     const handleChange = (e) => {
         setDesignation({ ...designation, [e.target.name]: e.target.value });
@@ -131,9 +145,7 @@ const EditDesignation = (props) => {
 
                                             <div className="form-group">
                                                 <label>Affiliation</label>
-                                                <select required className="select2" value={designation.affiliationNo} id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange}>
-                                                    {loadAffData()}
-                                                </select>
+                                                <Select required value="" className="select2" id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
                                             </div>
 
                                             <div className="form-group">

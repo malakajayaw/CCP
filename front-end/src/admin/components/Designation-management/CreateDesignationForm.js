@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-//import Select from 'react-select'
+import Select from 'react-select'
 
 import moment from 'moment';
 import Config from '../../controllers/config.controller'
@@ -11,13 +11,13 @@ import { add_activity } from '../../controllers/activity.controller'
 
 const CreateDesignationForm = (props) => {
     const forceUpdate = useForceUpdate();
-
     const [submit, setSubmit] = useState({
         value1: "Not Submitted"
     });
     const [today, setToday] = useState(
 
     );
+    var temp;
     const todayfucn = () => {
         let newDate = new Date()
 
@@ -35,8 +35,6 @@ const CreateDesignationForm = (props) => {
         setToday(today)
         todayfucn()
     });
-
-
 
     let [designation, setDesignation] = useState({
         title: "not set",
@@ -57,6 +55,11 @@ const CreateDesignationForm = (props) => {
 
     const handleChange = (e) => {
         setDesignation({ ...designation, [e.target.name]: e.target.value });
+    }
+
+    const handleAffChange = (e) => {
+        setDesignation({ ...designation, "affiliationNo": e.value });
+        console.log(e);
     }
 
     const onSubmit = async (e) => {
@@ -82,7 +85,6 @@ const CreateDesignationForm = (props) => {
 
     }
 
-
     const clear = () => {
         console.log("Clear call");
         setDesignation({
@@ -102,16 +104,17 @@ const CreateDesignationForm = (props) => {
     async function getAffData() {
         var res = await get_all_affiliations();
         await setAffiliations(res.data.data);
-        console.log(affiliations);
+        console.log("aff: " + affiliations);
     }
 
-    const loadAffData = () => {
-        return affiliations.map((affiliations, index) => {
-            return (
-                <option value={affiliations._id }>{affiliations.affiliationname}</option>
-            );
-        });
-    };
+    const sel = affiliations.map(item => {
+        const container = {};
+
+        container["value"] = item._id;
+        container["label"] = item.affiliationname + " - " + item._id;
+        console.log("sel: " + JSON.stringify(container));
+        return container;
+    })
 
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
@@ -139,13 +142,10 @@ const CreateDesignationForm = (props) => {
 
                                                 <label for="inputFName">Designation Title : </label>
                                                 <input required type="text" id="title" name="title" class="form-control" onChange={handleChange} />
-
+                                                
                                                 <div className="form-group">
                                                     <label>Affiliation</label>
-                                                    <select required className="select2" id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange}>
-                                                        <option value="" disabled selected hidden value= "">Select Affiliation</option>
-                                                        {loadAffData()}
-                                                    </select>
+                                                    <Select required value = "" className="select2" id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
                                                 </div>
 
                                                 <div className="form-group">
