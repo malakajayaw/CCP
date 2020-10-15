@@ -1,78 +1,187 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation } from "react-router-dom";
+import Select from 'react-select'
 
-class EditDesignation extends Component {
+import { useForm } from "react-hook-form";
 
-    constructor(props) {
-        super(props);
-        //this.state = { values: { dtitle: "" }, isSubmitting: false, isError: false }
+import { update_designation, get_spec_designations } from '../../controllers/designation.controller'
+import { get_all_affiliations } from "../../controllers/affiliation.controller";
+import { add_activity } from '../../controllers/activity.controller'
+import Config from '../../controllers/config.controller'
+
+const EditDesignation = (props) => {
+
+    const id = useParams()
+    const { register, handleSubmit } = useForm();
+
+
+    const newId = id.desId
+
+    const [designation, setDesignation] = useState({
+
+        title: "",
+        affiliationNo: "",
+        type: "",
+
+    });
+
+    let [activity, setActivity] = useState({
+        MemNo: "To be taken from redux",
+        action: "Edit designation",
+        table: "Designations",
+        parameters: "not set",
+        datetime: "not set"
+    });
+
+    useEffect(() => {
+        //console.log("id: " + JSON.stringify(id));
+        //console.log("id: " + id.desId);
+        onLoadMemebrer(newId);
+    }, []);
+
+
+
+    const onLoadMemebrer = async (newId) => {
+        const date = new Date();
+        const result = await get_spec_designations(newId)
+        console.log("result: " + result.data.data);
+        // const newD = result.data.data
+        setActivity({
+            ...activity,
+            parameters: result.data.data.MemNo,
+            datetime: date.toLocaleString()
+        });
+
+        await console.log(designation);
+        console.log("result: " + JSON.stringify(result.data.data));
+        setDesignation(result.data.data)
     }
 
-    componentDidMount() {
-        //fetch('http://localhost:5000/designations')
-        //    .then(res => res.json())
-        //    .then(des => this.setState({ des }, () => console.log('Designations fetched..', des)));
-        const mal = this.props.fetch;
-        console.log("edit id",mal);
+
+
+
+    const onSubmit = async (e) => {
+        activity.parameters = designation.affiliationNo + " / " + designation.title + " / " + designation.type;
+        // alert(JSON.stringify(member))
+        e.preventDefault()
+        const result = await update_designation(designation, id.desId)
+        console.log(result);
+        const result3 = await add_activity(activity)
+        console.log(result3);
+        if (result.code == 200) {
+            Config.setToast("Update  successfully")
+        }
+
+
+
+    }
+
+    const [affiliations, setAffiliations] = useState([]);
+    useEffect(() => {
+        getAffData();
+    }, []);
+
+    async function getAffData() {
+        var res = await get_all_affiliations();
+        await setAffiliations(res.data.data);
+        console.log(affiliations);
+    }
+
+    const loadAffData = () => {
+        return affiliations.map((affiliations, index) => {
+            return (
+                <option value={affiliations._id}>{affiliations.affiliationname}</option>
+            );
+        });
     };
 
-    render() {
-        return (<section className="content w-100" >
-            <div className="container-fluid d-flex justify-content-center">
-                <div className="card card-warning w-50">
-                    <div className="card-header">
-                        <h3 className="card-title">Edit Designation</h3>
-                    </div>
-                    {/* name,date,venue,banner,description,volunteers,hosting aff, */}
-                    {/* <!-- /.card-header --> */}
-                    {/* <!-- form start --> */}
-                    <form role="form" id="editdesigname" onSubmit={this.editDesignationSubmit } method="post">
-                        <div className="card-body">
-                            <div className="form-group">
-                                <label htmlFor="eventName">Designation Name</label>
-                                <input type="text" className="form-control" id="dtitle" name="dtitle" placeholder="Enter Designation Title" required />
+    const sel = affiliations.map(item => {
+        const container = {};
+
+        container["value"] = item._id;
+        container["label"] = item.affiliationname + " - " + item._id;
+        console.log("sel: " + JSON.stringify(container));
+        return container;
+    })
+
+    const handleAffChange = (e) => {
+        setDesignation({ ...designation, "affiliationNo": e.value });
+        console.log(e);
+    }
+
+    const handleChange = (e) => {
+        setDesignation({ ...designation, [e.target.name]: e.target.value });
+        console.log(designation);
+    }
+
+    return (<section className="content" style={{ display: props.display }}>
+        <div className="container-fluid">
+            <h6>Update Designation</h6>
+            <div className="card">
+                <div className="card-header">
+
+                </div>
+                <div className="card-body">
+
+                    <section className="content">
+                        <div className="row justify-content-md-center">
+                            <div className="col-md-6">
+                                <div className="card card-success">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Edit Designation</h3>
+                                    </div>
+                                    <form onSubmit={onSubmit}>
+
+
+                                        <div className="card-body">
+                                            <div className="form-group">
+                                                <label >Title</label>
+                                                <input type="text" className="form-control" required name="addfname"
+                                                    value={designation.title}
+                                                    name="title"
+                                                    onChange={handleChange}
+                                                />
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label>Affiliation</label>
+                                                <Select required value="" className="select2" id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label>Type</label>
+                                                <select required value= {designation.type} className="select2" id="type" name="type" data-placeholder="Select Type" style={{ width: "100%" }} onChange={handleChange}>
+                                                    <option value= "Normal">Normal</option>
+                                                    <option value= "Chair">Chair</option>
+                                                </select>
+                                            </div>
+
+
+                                            <div className="row">
+                                                <div className="col-12">
+                                                    {/* <button type="button" className="btn btn-secondary" onClick={clear}>Cancel</button> */}
+                                                    <button type="submit" className="btn btn-success float-right" >Update Designation </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+
+                                </div>
+
+
                             </div>
-
                         </div>
-                        {/* <!-- /.card-body --> */}
 
-                        <div className="card-footer">
-                            <button type="submit" className="btn btn-primary">Edit Designation</button>
-                        </div>
-                    </form>
+                    </section>
+
+
                 </div>
             </div>
-        </section>);
-    }
+        </div>
 
-    editDesignationSubmit = e => {
-        e.preventDefault();
-        let myForm = document.getElementById('editdesigname');
-        let formData = new FormData(myForm);
-        var object = {};
-        formData.forEach((value, key) => { object[key] = value });
-        var json = JSON.stringify(object);
-        this.setState({ xvalue: json });
-        console.log(json);
-
-        fetch('http://localhost:5000/editDesignation', {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(object)
-        }).then(response => {
-            console.log(response)
-        })
-            .catch(error => {
-                console.log(error)
-            })
-
-    }
+    </section>);
 
 }
-
 
 export default EditDesignation;

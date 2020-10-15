@@ -26,4 +26,7 @@ router.post('/getResponses',  EventController.getResponses);
 //delete a event form
 router.post('/deleteForm',  EventController.deleteForm);
 
+//update event
+router.post('/update',  EventController.updateEvent);
+
 module.exports = router;
