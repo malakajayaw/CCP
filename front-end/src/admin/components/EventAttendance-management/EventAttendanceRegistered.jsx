@@ -8,6 +8,10 @@ import Config from "../../controllers/config.controller";
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap"
 import 'jquery/dist/jquery.min.js';
+import "jquery/dist/jquery"
+import $ from "jquery";
+import "datatables.net-dt/js/dataTables.dataTables"
+import "datatables.net-dt/css/jquery.dataTables.min.css"
 import useForceUpdate from "use-force-update";
 
  
@@ -24,6 +28,7 @@ function EventAttendanceRegistered(props) {
   async function getData(id) {
     var res = await get_responses(id);//getresponsesbyid (event id)
     await setResponses(res.data.data);
+    $("#eventattTable").dataTable();
   }
 
   const loadData = () => {//2
@@ -73,7 +78,7 @@ function EventAttendanceRegistered(props) {
               Attended Members
             </Link>
           <h5>Registered Members for the Event</h5>
-            <table id="eventReportTable" className="table table-bordered table-striped dataTable">
+            <table id="eventattTable" className="table table-bordered table-striped dataTable">
               <thead>
               <tr>
                 <th>Membership Number</th>
