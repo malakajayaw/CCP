@@ -74,7 +74,7 @@ const CreateRecord = (props) => {
         const container = {};
 
         container["value"] = item._id;
-        container["label"] = item.fname + " " + item.lname +" - " + item._id;
+        container["label"] = item.memberShipNo + " - " + item.fname + " " + item.lname;
         console.log("sel: " + JSON.stringify(container));
         return container;
     })
@@ -150,7 +150,7 @@ const CreateRecord = (props) => {
         const container = {};
 
         container["value"] = item._id;
-        container["label"] = item.affiliationname + " - " + item._id;
+        container["label"] = item.affiliationname + " - " + item.affiliationno;
         console.log("sel: " + JSON.stringify(container));
         return container;
     })

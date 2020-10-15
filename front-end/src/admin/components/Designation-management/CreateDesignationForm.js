@@ -111,7 +111,7 @@ const CreateDesignationForm = (props) => {
         const container = {};
 
         container["value"] = item._id;
-        container["label"] = item.affiliationname + " - " + item._id;
+        container["label"] = item.affiliationname + " - " + item.affiliationno;
         console.log("sel: " + JSON.stringify(container));
         return container;
     })

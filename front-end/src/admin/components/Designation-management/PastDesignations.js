@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { get_all_past_designations, remove_past_designation } from "../../controllers/pastdes.controller";
 import { add_activity } from '../../controllers/activity.controller';
+import { get_all_active_members } from "../../controllers/memeber.controller";
+import { get_all_affiliations } from "../../controllers/affiliation.controller";
 import Config from '../../controllers/config.controller'
 //import EventReportView from './EventReportView'
 import { Link } from "react-router-dom";
@@ -57,14 +59,62 @@ const PastDesignations = (props) => {
         console.log(result3);
     }
 
+    const [affiliations, setAffiliations] = useState([]);
+    useEffect(() => {
+        getAffData();
+
+    }, []);
+
+    async function getAffData() {
+        var res1 = await get_all_affiliations();
+        await setAffiliations(res1.data.data);
+        console.log("aff: " + affiliations);
+    }
+
+    const setAffData = (id) => {
+        return affiliations.map((affiliations, index) => {
+            if (id == affiliations._id) {
+                return (affiliations.affiliationname);
+            }
+        });
+    };
+
+    const [member, setMember] = useState([]);
+    useEffect(() => {
+        getMemData();
+
+    }, []);
+
+    async function getMemData() {
+        var res1 = await get_all_active_members();
+        await setMember(res1.data.data);
+        console.log("aff: " + member);
+    }
+
+    const setMemData = (id) => {
+        return member.map((member, index) => {
+            if (id == member._id) {
+                return (member.fname + " " + member.lname);
+            }
+        });
+    };
+
+    const setMemNo = (id) => {
+        return member.map((member, index) => {
+            if (id == member._id) {
+                return (member.memberShipNo);
+            }
+        });
+    };
+
     const readydata = () => {
         return pastdes.map((pastdes, i) => {
             return (
                 <tr key={i}>
-                    <td>{pastdes.affiliationNo}</td>
+                    <td>{setAffData(pastdes.affiliationNo)}</td>
                     <td>{pastdes.title}</td>
-                    <td>{pastdes.MemNo}</td>
-                    <td>Not yet implemented</td>
+                    <td>{setMemNo(pastdes.MemNo)}</td>
+                    <td>{setMemData(pastdes.MemNo)}</td>
                     <td>{pastdes.Year}</td>
                     <td className="project-actions text-center">
                         <Link to={`/Admin/EditPastDes/${pastdes._id}`}><a className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>

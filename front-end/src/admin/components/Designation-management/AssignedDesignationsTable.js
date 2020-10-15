@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { get_aff_spec_designations, remove_designation_mem } from "../../controllers/designation.controller";
+import { get_all_active_members } from "../../controllers/memeber.controller";
 import { add_activity } from '../../controllers/activity.controller'
 import Config from '../../controllers/config.controller'
 //import EventReportView from './EventReportView'
@@ -57,13 +58,41 @@ const AssignedDesignationsTable = (props) => {
         console.log(result3);
     }
 
+    const [member, setMember] = useState([]);
+    useEffect(() => {
+        getMemData();
+
+    }, []);
+
+    async function getMemData() {
+        var res1 = await get_all_active_members();
+        await setMember(res1.data.data);
+        console.log("aff: " + member);
+    }
+
+    const setMemData = (id) => {
+        return member.map((member, index) => {
+            if (id == member._id) {
+                return (member.fname + " " + member.lname);
+            }
+        });
+    };
+
+    const setMemNo = (id) => {
+        return member.map((member, index) => {
+            if (id == member._id) {
+                return (member.memberShipNo);
+            }
+        });
+    };
+
     const readydata = () => {
         return Designation.map((Designation, i) => {
             return (
                 <tr key={i}>
                     <td>{Designation.title}</td>
-                    <td>{Designation.MemNo}</td>
-                    <td>Not yet implemented</td>
+                    <td>{setMemNo(Designation.MemNo)}</td>
+                    <td>{setMemData(Designation.MemNo)}</td>
                     <td className="project-actions text-center">
                         <Link to={`/Admin/EditAssigned/${Designation._id}`}><a className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
                             {" "}
