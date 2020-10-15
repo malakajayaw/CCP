@@ -123,10 +123,7 @@ function StudentForm(props) {
         <input type="date" id="date" value={affiliationData.date} onChange={handleChange} className="form-control" required/>
       </div>
 
-      <div className="form-group">
-        <label htmlFor="status">Status</label>
-        <input type="text" value={affiliationData.status} onChange={handleChange}  className="form-control" id="status" placeholder="Enter the status" required/>
-      </div>
+      
 
 
       <div className="form-group">
