@@ -99,7 +99,6 @@ function EventAttendanceRegistered(props) {
           
       </div>
       <button type="button" onClick={() => {props.onClick("EventView"); }} className="btn btn-success float-right add_btn" >Save Changes</button>
-      {/* <!-- /.container-fluid --> */}
       </div>   
     </section>
     );

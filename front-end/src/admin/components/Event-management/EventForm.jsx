@@ -9,11 +9,12 @@ import { Multiselect } from 'multiselect-react-dropdown';
 
 function EventForm(props) {
 
-  const [eventData,setEventData] = useState({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',formLink:'',banner:null });
+  const [eventData,setEventData] = useState({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',banner:null });
   const [vols,setVols] = useState([]);
   const [members, Setmembers] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState();
   var memberIds = [];
+  //const vols = [];
 
     useEffect(() => {
       getData();
@@ -21,8 +22,8 @@ function EventForm(props) {
 
 
   async function getData() {
-    var res = await get_all_active_members()
-    await   Setmembers( setMemeberIds(res.data.data));
+    var memberRes = await get_all_active_members()
+    await   Setmembers( setMemeberIds(memberRes.data.data));
     
   }
 
@@ -37,8 +38,7 @@ function EventForm(props) {
 
   const handleChange = event =>
   { 
-    setEventData({...eventData, [event.target.id] :event.target.value})
-    // console.log(eventData.eventName+' '+eventData.eventDate+' '+eventData.startTime+' '+eventData.endTime+' '+eventData.venue+' '+eventData.description+' '+eventData.hostingAffiliation+' '+eventData.volunteers+' '+eventData.banner);
+    setEventData({...eventData, [event.target.id] :event.target.value});
   };
     
 
@@ -48,8 +48,8 @@ function EventForm(props) {
   }
 
   function onRemove(selectedList, selectedMember) {
-    for( var i = 0; i < selectedMembers.length; i++)
-    { if ( selectedMembers[i] === selectedMember) { selectedMembers.splice(i, 1); }}
+     for( var i = 0; i < selectedMembers.length; i++)
+     { if ( selectedMembers[i] === selectedMember) { selectedMembers.splice(i, 1); }}
     setSelectedMembers(selectedMembers);
 }
 
@@ -59,7 +59,7 @@ function EventForm(props) {
   const clear = () => {
   setEventData({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',formLink:'',banner:null  })
   setVols([]);
-  }
+}
 
   const send = async event =>{
     event.preventDefault();
@@ -71,7 +71,7 @@ function EventForm(props) {
     data.append("venue",eventData.venue);
     data.append("description",eventData.description);
     data.append("hostingAffiliation",eventData.hostingAffiliation);
-    data.append("volunteers",selectedMembers)
+    data.append("volunteers",selectedMembers);
     data.append("formLink",eventData.formLink);
     data.append("banner",eventData.banner);
     try{
@@ -81,14 +81,14 @@ function EventForm(props) {
         }
       });
 
-      if(res.status === 201)
+      if(res.status === 200)
       {
         clear()
         Config.setToast("Event added successfully")
       }
     }catch(err){
       if(err.response.status === 500)
-          console.log('There was a problem with then server');
+           Config.setToast('There was a problem with then server');
         else
           console.log(err.response.data);
     }
@@ -144,21 +144,6 @@ function EventForm(props) {
         <label>Volunteers</label>
         <Multiselect options={members} isObject={false} onSelect={onSelect} onRemove={onRemove}  displayValue="name"  />
       </div>
-
-      {/* <div className="form-group">
-        <label htmlFor="formLink">Google Form link</label>
-        <input type="text" value={eventData.formLink} onChange={handleChange}  className="form-control" id="formLink" placeholder="Enter Google Form link" />
-      </div> */}
-  
-      {/* <div className="form-group">
-        <label htmlFor="eventBanner">Event Banner</label>
-        <div className="input-group">
-          <div className="custom-file">
-            <input type="file" className="form-control" id="banner" accept="image/*" onChange={handleBanner} />
-            <label className="custom-file-label" htmlFor="banner">Choose an image</label>
-          </div>
-        </div>
-      </div> */}
 
     <div class="form-group">
       <label for="banner">Event Banner</label>

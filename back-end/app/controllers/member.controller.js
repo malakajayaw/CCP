@@ -231,10 +231,12 @@ exports.login = async function (req, res) {
             },"thisistokenforieee2019", {
                 expiresIn: '240h'
             });
+            console.log(user_details);
             return res.status(200).send({
                 data: {
                     "token": token,
-                    "role": user_details.role
+                    "role": user_details.role,
+                    "details":user_details
                 },
                 success: true,
                 message: 'Successfully login',
