@@ -2,7 +2,6 @@ import React from 'react';
 import {useParams } from "react-router-dom";
 import { useState,useEffect } from 'react';
 import Config from '../../controllers/config.controller';
-import ContentHeader from '../Dashboard/ContentHeader'
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { get_event, deleteForm} from '../../controllers/event.controller';
 import $ from "jquery";
@@ -16,6 +15,7 @@ function EventView() {
     var i = 0,k=0;
     var responder;
 
+  
     useEffect(() => {
       onLoadEvent(eventId);
   }, []); 
@@ -39,7 +39,7 @@ function EventView() {
       else{
         var adminRegFormBody = document.getElementById("adminRegFormBody");
         var count  = adminRegFormBody.childElementCount;
-        if(count == 1){
+        if(count === 1){          
           $("#adminRegFormBody").append(event.registrationForm); 
           return(<button type='submit' style={{display : event.registrationForm == null && "none" }} className='btn btn-outline-primary btn-block'>Register</button>);
         }
@@ -55,10 +55,14 @@ function EventView() {
 
       while(k < event.registrationForm.length){
 
-        formData.push(e.target[k].value)
+        if(e.target[k].tagName === "SELECT")
+          formData.push(e.target[k].options[e.target[k].selectedIndex].value);
+        else
+          formData.push(e.target[k].value)
+      
         setFormData(formData)
-  
-        if(e.target[k].id ==  "MemberIDField" || e.target[k].id == "PublicField")
+
+        if(e.target[k].id ===  "MemberIDField" || e.target[k].id === "PublicField")
           responder = e.target[k].value;
 
         k++;
@@ -79,7 +83,7 @@ function EventView() {
         }
       }catch(err){
         if(err.response.status === 500)
-            console.log('There was a problem with then server');
+            Config.setToast('There was a problem with then server');
           else
             console.log(err.response.data);
       }
@@ -188,7 +192,7 @@ function EventView() {
            
                 <div className="info-box-content" id="adminRegFormBody" >
                   <div className="d-flex justify-content-center">
-                      <h3 className="text-primary mt-3 mb-3">Event Form </h3>
+                      <h3 className="text-primary mt-3 mb-3">Event Registration Form </h3>
                   </div>
                 </div>
             </div>
