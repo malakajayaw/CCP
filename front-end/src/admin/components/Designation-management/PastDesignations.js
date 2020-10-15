@@ -56,7 +56,7 @@ const PastDesignations = (props) => {
     const addActivity = async (title, mem, year, aff) => {
         console.log(title);
         const date = new Date();
-        activity.parameters = title + " / " + mem + " / " + year + " / " + aff;
+        activity.parameters = title + " / " + setMemData(mem) + " / " + year + " / " + setAffData(aff);
         activity.datetime = date.toLocaleString();
         console.log("act: " + JSON.stringify(activity));
         const result3 = await add_activity(activity)

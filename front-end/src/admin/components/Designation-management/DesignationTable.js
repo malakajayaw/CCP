@@ -53,7 +53,7 @@ const DesignationTable = (props) => {
     const addActivity = async (name, aff) => {
         console.log(name);
         const date = new Date();
-        activity.parameters = name + " / " +aff;
+        activity.parameters = name + " / " + setAffData(aff);
         activity.datetime = date.toLocaleString();
         console.log("act: " + JSON.stringify(activity));
         const result3 = await add_activity(activity)

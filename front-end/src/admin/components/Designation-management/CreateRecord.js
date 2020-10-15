@@ -69,6 +69,14 @@ const CreateRecord = (props) => {
         await setMember(res.data.data);
         console.log("mem: " + member);
     }
+    
+    const setMemData = (id) => {
+        return member.map((member, index) => {
+            if (id == member._id) {
+                return (member.fname + " " + member.lname + " - " + member.memberShipNo);
+            }
+        });
+    };
 
     const selMem = member.map(item => {
         const container = {};
@@ -96,21 +104,28 @@ const CreateRecord = (props) => {
     const onSubmit = async (e) => {
         const date = new Date();
         e.preventDefault()
-
         console.log(pastdes);
-        const result = await addPastDesignation(pastdes)
-        console.log(result);
-        const det = pastdes.title + "/" + pastdes.MemNo + "/" + pastdes.Year + " / " + pastdes.affiliationNo
-        activity.parameters = det;
-        activity.datetime = date.toLocaleString();
-        console.log("act" + JSON.stringify(activity));
-        const result3 = await add_activity(activity)
-        console.log(result3);
-        if (result.code == 200) {
-            clear()
-            Config.setToast("Record Added Successfully")
-            forceUpdate();
+        if (pastdes.affiliationNo == "") {
+            Config.setToast("Select affiliation")
+        }
+        if (pastdes.MemNo == "") {
+            Config.setToast("Select Member")
+        }
+        else {
+            const result = await addPastDesignation(pastdes)
+            console.log(result);
+            const det = pastdes.title + "/" + setMemData(pastdes.MemNo) + "/" + pastdes.Year + " / " + setAffData(pastdes.affiliationNo)
+            activity.parameters = det;
+            activity.datetime = date.toLocaleString();
+            console.log("act" + JSON.stringify(activity));
+            const result3 = await add_activity(activity)
+            console.log(result3);
+            if (result.code == 200) {
+                clear()
+                Config.setToast("Record Added Successfully")
+                forceUpdate();
 
+            }
         }
 
     }
@@ -145,6 +160,13 @@ const CreateRecord = (props) => {
         });
     };
 
+    const setAffData = (id) => {
+        return affiliations.map((affiliations, index) => {
+            if (id == affiliations._id) {
+                return (affiliations.affiliationno + " - " + affiliations.affiliationname);
+            }
+        });
+    };
 
     const sel = affiliations.map(item => {
         const container = {};

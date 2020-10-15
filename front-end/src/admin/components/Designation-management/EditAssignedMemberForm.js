@@ -60,6 +60,17 @@ const EditAssignedMemberForm = (props) => {
         console.log("mem: " + member);
     }
 
+    const setMemData = (id) => {
+        return member.map((member, index) => {
+            if (id == member._id) {
+                return (member.fname + " " + member.lname + " - " + member.memberShipNo);
+            }
+            else {
+                return ("");
+            }
+        });
+    };
+
     const selMem = member.map(item => {
         const container = {};
 
@@ -102,6 +113,9 @@ const EditAssignedMemberForm = (props) => {
 
          //alert(JSON.stringify(member))
         e.preventDefault()
+        const det = setMemData(Designation.MemNo) + " / " + Designation.title;
+        console.log("det: " + det);
+        activity.parameters = JSON.stringify(det);
         const result = await update_designation_mem(Designation, id.AssId)
         console.log(result);
         const result2 = await addPastDesignation(pastdes)
@@ -125,6 +139,7 @@ const EditAssignedMemberForm = (props) => {
         setActivity({ ...activity, parameters: e.value});
         setPastDes({ ...pastdes, MemNo: e.value });
         setDesignation({ ...Designation, MemNo: e.value });
+        console.log("activity" + JSON.stringify(activity));
         console.log("Designation" + JSON.stringify(Designation));
         console.log("pastdes" + JSON.stringify(pastdes));
     }

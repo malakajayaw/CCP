@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { get_spec_aff_past_designations, remove_past_designation } from "../../controllers/pastdes.controller";
 import { get_all_active_members } from "../../controllers/memeber.controller";
+import { get_all_affiliations } from "../../controllers/affiliation.controller";
 import { add_activity } from '../../controllers/activity.controller';
 import Config from '../../controllers/config.controller'
 //import EventReportView from './EventReportView'
@@ -42,17 +43,17 @@ const PastSpecDesignations = (props) => {
         const res = await remove_past_designation(id)
         if (res.code == 200) {
             Config.setToast("Member removed")
-            getData();
+            forceUpdate();
         } else {
             Config.setToast("Something went wrong")
-            getData();
+            forceUpdate();
         }
     }
 
     const addActivity = async (title, mem, year, aff) => {
         console.log(title);
         const date = new Date();
-        activity.parameters = title + " / " + mem + " / " + year + " / " + aff;
+        activity.parameters = title + " / " + setMemData(mem) + " / " + year + " / " + setAffData(aff);
         activity.datetime = date.toLocaleString();
         console.log("act: " + JSON.stringify(activity));
         const result3 = await add_activity(activity)
@@ -83,6 +84,26 @@ const PastSpecDesignations = (props) => {
         return member.map((member, index) => {
             if (id == member._id) {
                 return (member.memberShipNo);
+            }
+        });
+    };
+
+    const [affiliations, setAffiliations] = useState([]);
+    useEffect(() => {
+        getAffData();
+
+    }, []);
+
+    async function getAffData() {
+        var res = await get_all_affiliations();
+        await setAffiliations(res.data.data);
+        console.log("aff: " + affiliations);
+    }
+
+    const setAffData = (id) => {
+        return affiliations.map((affiliations, index) => {
+            if (id == affiliations._id) {
+                return (affiliations.affiliationno + " - " + affiliations.affiliationname);
             }
         });
     };

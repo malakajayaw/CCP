@@ -52,6 +52,14 @@ const EditPastDes = (props) => {
         console.log("mem: " + member);
     }
 
+    const setMemData = (id) => {
+        return member.map((member, index) => {
+            if (id == member._id) {
+                return (member.fname + " " + member.lname + " - " + member.memberShipNo);
+            }
+        });
+    };
+
     const selMem = member.map(item => {
         const container = {};
 
@@ -84,7 +92,7 @@ const EditPastDes = (props) => {
 
 
     const onSubmit = async (e) => {
-        activity.parameters = pastdes.title + " / " + pastdes.MemNo + " / " + pastdes.Year + " / " + pastdes.affiliationNo;
+        activity.parameters = pastdes.title + " / " + setMemData(pastdes.MemNo) + " / " + pastdes.Year + " / " + setAffData(pastdes.affiliationNo);
         // alert(JSON.stringify(member))
         e.preventDefault()
         const result = await update_past_designation(pastdes, id.Id)
@@ -118,6 +126,14 @@ const EditPastDes = (props) => {
         await setAffiliations(res.data.data);
         console.log(affiliations);
     }
+
+    const setAffData = (id) => {
+        return affiliations.map((affiliations, index) => {
+            if (id == affiliations._id) {
+                return (affiliations.affiliationno + " - " + affiliations.affiliationname);
+            }
+        });
+    };
 
     const loadAffData = () => {
         return affiliations.map((affiliations, index) => {

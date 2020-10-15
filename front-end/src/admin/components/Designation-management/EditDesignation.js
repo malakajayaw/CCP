@@ -61,7 +61,7 @@ const EditDesignation = (props) => {
 
 
     const onSubmit = async (e) => {
-        activity.parameters = designation.affiliationNo + " / " + designation.title + " / " + designation.type;
+        activity.parameters = setAffData(designation.affiliationNo) + " / " + designation.title + " / " + designation.type;
         // alert(JSON.stringify(member))
         e.preventDefault()
         const result = await update_designation(designation, id.desId)
@@ -86,6 +86,14 @@ const EditDesignation = (props) => {
         await setAffiliations(res.data.data);
         console.log(affiliations);
     }
+
+    const setAffData = (id) => {
+        return affiliations.map((affiliations, index) => {
+            if (id == affiliations._id) {
+                return (affiliations.affiliationno + " - " + affiliations.affiliationname);
+            }
+        });
+    };
 
     const loadAffData = () => {
         return affiliations.map((affiliations, index) => {
@@ -145,7 +153,7 @@ const EditDesignation = (props) => {
 
                                             <div className="form-group">
                                                 <label>Affiliation</label>
-                                                <Select required value="" className="select2" id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+                                                <Select required value={designation.affiliationNo} className="select2" id="affiliation" name="affiliationNo" placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
                                             </div>
 
                                             <div className="form-group">

@@ -36,8 +36,8 @@ const AssignedDesignationsTable = (props) => {
         $("#AssDes").dataTable();
     }
 
-    const delete_func = async (Designation, id, name) => {
-        addActivity(name)
+    const delete_func = async (Designation, id, name, title) => {
+        addActivity(name, title)
         const res = await remove_designation_mem(Designation, id)
         if (res.code == 200) {
             Config.setToast("Member removed")
@@ -48,10 +48,10 @@ const AssignedDesignationsTable = (props) => {
         }
     }
 
-    const addActivity = async (name) => {
+    const addActivity = async (name, title) => {
         console.log(name);
         const date = new Date();
-        activity.parameters = name;
+        activity.parameters = setMemData(name) + " / " + title;
         activity.datetime = date.toLocaleString();
         console.log("act: " + JSON.stringify(activity));
         const result3 = await add_activity(activity)
@@ -99,7 +99,7 @@ const AssignedDesignationsTable = (props) => {
                             <i className="fas fa-folder mr-1" />
                              Assign New{" "}
                         </a></Link>
-                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(Designation, Designation._id, Designation.MemNo)}>
+                        <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(Designation, Designation._id, Designation.MemNo, Designation.title)}>
                             {" "}
                             <i className="fas fa-trash mr-1" />Remove{" "}
                         </a>

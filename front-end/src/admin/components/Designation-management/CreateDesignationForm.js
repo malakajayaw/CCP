@@ -65,20 +65,25 @@ const CreateDesignationForm = (props) => {
     const onSubmit = async (e) => {
         const date = new Date();
         e.preventDefault()
-        //console.log("des" + JSON.stringify(designation.affiliationNo));
-        const result = await addDesignation(designation)
-        await console.log(result);
-        const det = designation.affiliationNo + "/" + designation.title + "/" + designation.type
-        activity.parameters = det;
-        activity.datetime = date.toLocaleString();
-        console.log("act" + JSON.stringify(activity));
-        const result3 = await add_activity(activity)
-        console.log(result3);
-        if (result.code == 200) {
-            clear()
-            Config.setToast("Designation Added Successfully")
-            forceUpdate();
+        console.log("des" + designation.affiliationNo);
+        if (designation.affiliationNo == "not set") {
+            Config.setToast("Enter affiliation")
+        }
+        else {
+            const result = await addDesignation(designation)
+            await console.log(result);
+            const det = setAffData(designation.affiliationNo) + "/" + designation.title + "/" + designation.type
+            activity.parameters = det;
+            activity.datetime = date.toLocaleString();
+            console.log("act" + JSON.stringify(activity));
+            const result3 = await add_activity(activity)
+            console.log(result3);
+            if (result.code == 200) {
+                clear()
+                Config.setToast("Designation Added Successfully")
+                forceUpdate();
 
+            }
         }
 
 
@@ -107,12 +112,20 @@ const CreateDesignationForm = (props) => {
         console.log("aff: " + affiliations);
     }
 
+    const setAffData = (id) => {
+        return affiliations.map((affiliations, index) => {
+            if (id == affiliations._id) {
+                return (affiliations.affiliationno + " - " + affiliations.affiliationname);
+            }
+        });
+    };
+
     const sel = affiliations.map(item => {
         const container = {};
 
         container["value"] = item._id;
         container["label"] = item.affiliationname + " - " + item.affiliationno;
-        console.log("sel: " + JSON.stringify(container));
+        //console.log("sel: " + JSON.stringify(container));
         return container;
     })
 
@@ -145,7 +158,7 @@ const CreateDesignationForm = (props) => {
                                                 
                                                 <div className="form-group">
                                                     <label>Affiliation</label>
-                                                    <Select required value = "" className="select2" id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+                                                    <Select required value="" className="select2" id="affiliation" name="affiliationNo" placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} ></Select>
                                                 </div>
 
                                                 <div className="form-group">
