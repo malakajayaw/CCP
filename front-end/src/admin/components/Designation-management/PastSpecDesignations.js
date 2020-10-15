@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { get_spec_aff_past_designations, remove_past_designation } from "../../controllers/pastdes.controller";
-import { get_all_active_members } from "../../controllers/memeber.controller";
+import { get_all_members } from "../../controllers/designation.controller";
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
 import { add_activity } from '../../controllers/activity.controller';
 import Config from '../../controllers/config.controller'
@@ -67,7 +67,7 @@ const PastSpecDesignations = (props) => {
     }, []);
 
     async function getMemData() {
-        var res1 = await get_all_active_members();
+        var res1 = await get_all_members();
         await setMember(res1.data.data);
         console.log("aff: " + member);
     }

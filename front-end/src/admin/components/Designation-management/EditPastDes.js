@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { update_past_designation, get_spec_past_designations } from '../../controllers/pastdes.controller'
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
 import { add_activity } from '../../controllers/activity.controller'
-import { get_all_active_members } from "../../controllers/memeber.controller";
+import { get_all_members } from "../../controllers/designation.controller";
 import Config from '../../controllers/config.controller'
 
 const EditPastDes = (props) => {
@@ -47,7 +47,7 @@ const EditPastDes = (props) => {
     }, []);
 
     async function getMemData() {
-        var res = await get_all_active_members();
+        var res = await get_all_members();
         await setMember(res.data.data);
         console.log("mem: " + member);
     }

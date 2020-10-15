@@ -159,3 +159,37 @@ export const remove_designation_mem = (data, id) => {
             })
     })
 }
+
+//=============================================================================== get all members
+
+export const get_all_members = () => {
+    return new Promise((resolve, reject) => {
+        return axios.get(`${Config.host}${Config.port}/designations/getAllMembers`)
+            .then(result => {
+                console.log(result.data);
+                resolve({ code: 200, data: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}
+
+//=============================================================================== get aff spec members
+
+export const get_aff_spec_members = (id) => {
+    console.log(id);
+    var data = {
+        id: id
+    }
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/designations/getAffSpecMembers`, { ...data })
+            .then(result => {
+                console.log(result.data);
+                resolve({ code: 200, data: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}

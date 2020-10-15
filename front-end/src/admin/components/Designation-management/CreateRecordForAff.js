@@ -8,7 +8,8 @@ import useForceUpdate from 'use-force-update';
 
 import { addPastDesignation } from '../../controllers/pastdes.controller'
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
-import { get_all_active_members } from "../../controllers/memeber.controller";
+import { get_aff_spec_members } from "../../controllers/designation.controller";
+//import { get_all_active_members } from "../../controllers/memeber.controller";
 import { add_activity } from '../../controllers/activity.controller'
 
 const CreateRecord = (props) => {
@@ -21,7 +22,7 @@ const CreateRecord = (props) => {
     const [today, setToday] = useState(
 
     );
-
+    var affil = "5f85d364b708c81ce0a4de86";
     const todayfucn = () => {
         let newDate = new Date()
 
@@ -65,7 +66,7 @@ const CreateRecord = (props) => {
     }, []);
 
     async function getMemData() {
-        var res = await get_all_active_members();
+        var res = await get_aff_spec_members(affil);
         await setMember(res.data.data);
         console.log("mem: " + member);
     }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { get_aff_spec_designations, remove_designation_mem } from "../../controllers/designation.controller";
+import { get_aff_spec_designations, remove_designation_mem, get_all_members } from "../../controllers/designation.controller";
 import { get_all_active_members } from "../../controllers/memeber.controller";
 import { add_activity } from '../../controllers/activity.controller'
 import Config from '../../controllers/config.controller'
@@ -65,7 +65,7 @@ const AssignedDesignationsTable = (props) => {
     }, []);
 
     async function getMemData() {
-        var res1 = await get_all_active_members();
+        var res1 = await get_all_members();
         await setMember(res1.data.data);
         console.log("aff: " + member);
     }

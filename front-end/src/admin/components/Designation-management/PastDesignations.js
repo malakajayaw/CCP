@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { get_all_past_designations, remove_past_designation } from "../../controllers/pastdes.controller";
 import { add_activity } from '../../controllers/activity.controller';
-import { get_all_active_members } from "../../controllers/memeber.controller";
+import { get_all_members } from "../../controllers/designation.controller";
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
 import Config from '../../controllers/config.controller'
 //import EventReportView from './EventReportView'
@@ -90,7 +90,7 @@ const PastDesignations = (props) => {
     }, []);
 
     async function getMemData() {
-        var res1 = await get_all_active_members();
+        var res1 = await get_all_members();
         await setMember(res1.data.data);
         console.log("aff: " + member);
     }

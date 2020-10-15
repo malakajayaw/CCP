@@ -5,10 +5,9 @@ import Select from 'react-select'
 import { useForm } from "react-hook-form";
 
 import moment from 'moment';
-import { update_designation_mem, get_spec_designations } from '../../controllers/designation.controller'
+import { update_designation_mem, get_spec_designations, get_aff_spec_members } from '../../controllers/designation.controller'
 import { addPastDesignation } from '../../controllers/pastdes.controller'
 import { add_activity } from '../../controllers/activity.controller'
-import { get_all_active_members } from "../../controllers/memeber.controller";
 import Config from '../../controllers/config.controller'
 
 const EditAssignedMemberForm = (props) => {
@@ -18,6 +17,7 @@ const EditAssignedMemberForm = (props) => {
 
 
     const newId = id.AssId
+    var affil = "5f85d364b708c81ce0a4de86";
 
     const [Designation, setDesignation] = useState({
         MemNo: "",
@@ -55,7 +55,7 @@ const EditAssignedMemberForm = (props) => {
     }, []);
 
     async function getMemData() {
-        var res = await get_all_active_members();
+        var res = await get_aff_spec_members(affil);
         await setMember(res.data.data);
         console.log("mem: " + member);
     }
