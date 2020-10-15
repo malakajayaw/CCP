@@ -11,17 +11,10 @@ import MemberLogin from './components/Login/MemberLogin';
 // import MemberLogin from '../admin/components/';
 import UserProfile from './components/Member/UserProfile';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import {store, persistor} from '../web/components/Redux/Store/Store'
-toast.configure() 
+
 function App() {
   return ( <div>
      { <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet"></link>}
-     <Provider store={store}>
-      <PersistGate persistor={persistor} >
     <Router>
         <Switch>
               <Route path="/upcomingAll">  <UpComingAll /> </Route>
@@ -33,8 +26,6 @@ function App() {
               <Route path="/">  <UpcomingEvents /> </Route>
         </Switch>
     </Router>
-    </PersistGate>
-    </Provider>
   </div> 
   );
 }

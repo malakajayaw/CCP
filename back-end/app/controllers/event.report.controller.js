@@ -1,22 +1,33 @@
-//import User model
+//import Event Report model
 const EventReport = require("../model/eventreport.model");
+const moment = require("moment");
 
-const moment = require('moment')
-
-//======================================================================================================
-//================================== Current Date =============================================
-//======================================================================================================
-exports.add_report_add = function (req, res, next) {
-  console.log(req.body);
-
+exports.add_report_add = async function (req, res, next) {
   let newDate = new Date();
 
+  let PdfFile = null;
+  try {
+    PdfFile = req.files.pdf;
+  } catch (err) {
+    return res.status(404).send("Please upload the PDF");
+  }
+
+  const pdfName = "REPORT_" + req.body.eventname + "_" + Date.now() + ".pdf";
+  const uploadFileURL = "http://localhost:5000/assets/reports/" + pdfName;
+
+  await PdfFile.mv("./app/public/reports/" + pdfName, (err, result) => {
+    if (err) return res.status(400).send("Failed to upload PDF!");
+  });
+
   const today = moment(newDate).format("MMM Do Y Y");
+
   let new_report = EventReport({
+    eventName: req.body.eventname,
     reportname: req.body.reportname,
     submssionState: req.body.submssionState,
     submissionComment: req.body.submissionComment,
     created_at: today,
+    file_path: uploadFileURL,
   });
 
   try {
@@ -27,9 +38,9 @@ exports.add_report_add = function (req, res, next) {
   }
   return res.status(403).send("Already have");
 };
+
 exports.get_all_reports = async function (req, res, next) {
-  console.log("Called");
-  // check userdata
+  //console.log("Called");
   const result = await EventReport.find();
 
   return res.status(200).send({

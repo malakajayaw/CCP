@@ -14,7 +14,6 @@ function RegistrationForm() {
     const [fieldName, setFieldName] = useState('');
     const [fieldNames, setFieldNames] = useState([]);
     const [eventType, setEventType] = useState();
-    const [optionName, setOptionName] = useState();
     let { eventId } = useParams();
     var fieldId;
 
@@ -28,12 +27,6 @@ function RegistrationForm() {
        setEventType(event.target.value);
     };
 
-    const handleOptionChange = event =>
-    { 
-      setOptionName(event.target.value);
-    };
-
-
     const addEventType = (event) => {
       event.preventDefault();
       if(eventType == "membersOnly"){
@@ -41,13 +34,13 @@ function RegistrationForm() {
         fieldNames.push("Member ID");
         fieldId = fieldName.replace(/ /g, '');
 
-        formFields.push("<div class='form-group'><label for='MemberIDField'>Member ID</label><br/><input type='text' class='form-control' id='MemberIDField' placeholder='Enter Member ID' required/></div>");
+        formFields.push("<div className='form-group'><label htmlFor='MemberIDField'>Member ID</label><br/><input type='text' className='form-control' id='MemberIDField' placeholder='Enter Member ID' required/></div><br/>");
       }else if(eventType == "public"){
 
         fieldNames.push("Member ID or Name");
         fieldId = fieldName.replace(/ /g, '');
 
-        formFields.push("<div class='form-group'><label for='PublicField'>Member ID or Name</label><br/><input type='text' class='form-control' id='PublicField' placeholder='Enter Member ID or Name' required/></div>");
+        formFields.push("<div className='form-group'><label htmlFor='PublicField'>Member ID or Name</label><br/><input type='text' className='form-control' id='PublicField' placeholder='Enter Member ID or Name' required/></div><br/>");
       }else{
         return;
       }
@@ -59,61 +52,26 @@ function RegistrationForm() {
       setFieldName('');
     };
 
-    const addField = (fieldType) =>{
+    const addField = () =>{
         
         fieldId = fieldName.replace(/ /g, '');
 
         if(fieldId.length > 30)
           fieldId = fieldId.substring(0,25);
 
-
-        if(fieldType === "text")
-          formFields.push("<div class='form-group'><label for='"+fieldId+"'>"+fieldName+"</label><br/><input type='text' class='form-control' id='"+fieldId+"' placeholder='Enter "+fieldName+"' required/></div>");
-        else if(fieldType === "selection"){
-
-          var optionsArr = optionName.split(',');
-          
-          var optionsStr = '';
-
-          optionsArr.forEach(option => {
-            optionsStr = optionsStr.concat("<option value="+option+">"+option+"</option>")
-        });
-
-        if(fieldName == '')
-          Config.setToast("Enter field name first!")
-        else
-          formFields.push("<div class='form-group'><label class='mr-sm-2' for='"+fieldId+"'>"+fieldName+"</label><select class='custom-select mr-sm-2' id='"+fieldId+"' required>"+optionsStr+"</select></div></div>");
-        }
-        else if(fieldType === "date")
-          formFields.push("<div class='form-group'><label for='"+fieldId+"'>"+fieldName+"</label><br/><input type='date' class='form-control' id='"+fieldId+"'  required/></div>");
-        else if(fieldType === "time")
-          formFields.push("<div class='form-group'><label for='"+fieldId+"'>"+fieldName+"</label><br/><input type='time' class='form-control' id='"+fieldId+"'  required/></div>");
-        else if(fieldType === "textArea")
-          formFields.push("<div class='form-group'><label for='"+fieldId+"'>"+fieldName+"</label><br/><textarea class='form-control' id='"+fieldId+"' rows='3' required></textarea></div>");
-
+        formFields.push("<div className='form-group'><label htmlFor='"+fieldId+"'>"+fieldName+"</label><br/><input type='text' className='form-control' id='"+fieldId+"' placeholder='Enter "+fieldName+"' required/></div><br/>");
         setformFields(formFields);
+
         fieldNames.push(fieldName);
         setFieldNames(fieldNames)
 
         loadField();
         setFieldName('');
-        setOptionName('');
-      }
-
+    
+    }
 
     const loadField = () => {
         $("#previewRegFormBody").append($(formFields[formFields.length-1]))
-    };
-
-    const undo = () => {
-      formFields.pop();
-      setformFields(formFields);
-
-      fieldNames.pop();
-      setFieldNames(fieldNames)
-
-      let previewRegFormBody = document.getElementById('previewRegFormBody');
-      previewRegFormBody.removeChild(previewRegFormBody.lastElementChild);
     };
 
     const createForm =  async (e) => {
@@ -121,8 +79,6 @@ function RegistrationForm() {
       const result = await addRegistrationForm (formFields, fieldNames ,eventId)
       if(result.code == 200)
         Config.setToast("Registration Form Created Successfully!")
-      else
-        Config.setToast('There was a problem with then server');
       
     }
 
@@ -144,7 +100,7 @@ function RegistrationForm() {
 
     <div className="card-body">
     <div className="row">
-        <div className="col-12 col-md-12 col-lg-7 order-1 order-md-1">
+        <div className="col-12 col-md-12 col-lg-8 order-1 order-md-1">
 
         <div className="d-flex justify-content-center mb-3">
           <h2 className="m-0 text-dark">Event Form Preview</h2>
@@ -165,7 +121,7 @@ function RegistrationForm() {
         </form>
         </div>
 
-        <div className="col-12 col-md-12 col-lg-5 order-2 order-md-2">
+        <div className="col-12 col-md-12 col-lg-4 order-2 order-md-2">
             
             <div className="card-body">
 
@@ -183,21 +139,10 @@ function RegistrationForm() {
 
                 <div className="form-group">
                     <label htmlFor="fieldName">Field Name</label>
-                    <input type="text"  value={fieldName} onChange={handleChange} className="form-control" id="fieldName" placeholder="Enter Field name" />
+                    <input type="text"  value={fieldName} onChange={handleChange} className="form-control" id="fieldName" placeholder="Enter Field name" required/>
                 </div>
-                
-                <div className="form-group">
-                    <label htmlFor="selectionOptions">Option names (separate names by commas)</label>
-                    <input type="text"  value={optionName} onChange={handleOptionChange} className="form-control" id="selectionOptions" placeholder="Enter option name" />
-                </div>
-              
-                <button type="submit" className="btn btn-primary mb-2 mr-4" onClick={() => addField('text')}>Add Text Field</button>
-                <button type="submit" className="btn btn-primary mb-2 mr-4" onClick={() => addField('date')}>Add Date Field</button>
-                <button type="submit" className="btn btn-primary mb-2 mr-4" onClick={() => addField('time')}>Add Time Field</button> 
-                <button type="submit" className="btn btn-primary mb-2" onClick={() => addField('selection')}>Add Selection Field</button>
-                <button type="submit" className="btn btn-primary mb-2" onClick={() => addField('textArea')}>Add  Text Area Field</button>
 
-                <button type="submit" className="btn btn-block btn-outline-danger mt-5" onClick={undo}>Undo</button>
+                <button type="submit" className="btn btn-primary mb-5" onClick={addField}>Add Field</button>
                 <button type="submit" className="btn btn-block btn-outline-warning" onClick={createForm}>Create From</button>
             </div>
             {/* <!-- /.card-body --> */}     

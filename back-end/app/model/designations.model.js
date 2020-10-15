@@ -3,6 +3,14 @@ const Schema = mongoose.Schema;
 
 let Designations = new Schema({
 
+
+    DesNo: {
+        type: String,
+        required: true,
+        unique: true
+
+    },
+
     title: {
         type: String,
         required: true,
@@ -11,13 +19,6 @@ let Designations = new Schema({
     affiliationNo: {
         type: String,
         required: true,
-    },
-    type: {
-        type: String,
-        required: true,
-    },
-    MemNo: {
-        type: String,
     },
     updated_at: {
         type: String,

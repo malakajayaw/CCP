@@ -14,7 +14,9 @@ exports.addEvent = function (req, res, next) {
         const file = req.files.banner;
         fileName =  Math.random().toString(36).substring(2, 15) + file.name;
         file.mv(`${__dirname}/../../../front-end/public/images/events/${fileName}`,err => {
+        //file.mv(`${__dirname}/../public/images/events/${fileName}`,err => {
                 if(err){
+                    console.log(err);
                     return res.status(500).send(err)
                 }  
             });
@@ -29,16 +31,20 @@ exports.addEvent = function (req, res, next) {
         description: req.body.description,
         hostingAffiliation: req.body.hostingAffiliation,
         volunteers: req.body.volunteers,
+        status: req.body.status,
+        formLink : req.body.formLink,
         banner: fileName,
         registrationForm : null,
         fieldNames : null
     });
+    console.log(new_event);
 
    //save event  
     new_event.save(function (err) {
         if (err) {
             return next(err);
         }
+        console.log("Event added successfully ");
         res.status(201).send('Event added Successfully');
     })
     
@@ -181,45 +187,3 @@ exports.getResponses = async function (req, res, next) {
     }
  
  }
-
- exports.updateEvent = async function (req, res, next) {
-
-    var fileName = '';
-
-    if(req.files !== null)
-    {
-        const file = req.files.banner;
-        fileName =  Math.random().toString(36).substring(2, 15) + file.name;
-        file.mv(`${__dirname}/../../../front-end/public/images/events/${fileName}`,err => {
-        //file.mv(`${__dirname}/../public/images/events/${fileName}`,err => {
-                if(err){
-                    console.log(res.status(500).send(err));
-                }  
-            });
-    }else{
-        fileName = req.body.banner;
-    }
-    
-    try {
-        const update = await Event.findOneAndUpdate({
-            _id: req.body.eventId
-        }, {
-            eventName: req.body.eventName,
-            eventDate: req.body.eventDate,
-            startTime: req.body.startTime,
-            endTime: req.body.endTime,
-            venue: req.body.venue,
-            description: req.body.description,
-            hostingAffiliation: req.body.hostingAffiliation,
-            volunteers: req.body.volunteers,
-            banner: fileName
-        }, {
-            new: true
-        })
-
-        return res.status(200).send("Event Updated");
-    } catch (error) {
-        return res.status(403).send("Something went wrong");
-    }
-    
-}

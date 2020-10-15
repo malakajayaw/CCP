@@ -3,13 +3,12 @@ const router = express.Router();
 const AffiliationController = require('../controllers/affiliation.controller');
 
 // add affiliation
-router.post('/addAffiliation',  AffiliationController.addAffiliation);
+//router.post('/addAffiliation', AffiliationController.addAffiliation);
 
 //get all affiliation
-router.get('/all/affiliations',  AffiliationController.get_all_affiliations);
+//router.get('/getAffiliation', AffiliationController.get_all_affiliation);
 
-router.post('/specificAffiliation',  AffiliationController.get_affiliation);
-
-router.post('/delete',  AffiliationController.deleteAffiliation);
+//get edit affiliation
+//router.get('/editAffiliation', AffiliationController.editAffiliation);
 
 module.exports = router;

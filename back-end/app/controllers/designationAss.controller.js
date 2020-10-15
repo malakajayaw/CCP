@@ -1,7 +1,9 @@
+//import Event model
 const Assignments = require('../model/designationAssignments.model');
 
-//=============================================================================== Add Assignment
-
+//======================================================================================================
+//================================== Add Designation  =============================================
+//====================================================================================================== 
 exports.addAssignment = function (req, res, next) {
 
     let new_assignment = Assignments({
@@ -29,8 +31,9 @@ exports.addAssignment = function (req, res, next) {
 
 }
 
-//=============================================================================== Get all assignments
-
+//======================================================================================================
+//================================== Get all activities       =============================================
+//====================================================================================================== 
 exports.get_all_assignments = function (req, res, next) {
     // check userdata
     Assignments.find(function (err, docs) {
@@ -42,59 +45,4 @@ exports.get_all_assignments = function (req, res, next) {
             res.status(403).send('No data found')
         }
     })
-}
-
-//=============================================================================== Delete assignment
-
-exports.delete_assignment = async function (req, res, next) {
-    var id = req.body.id;
-
-    try {
-        const log = await Assignments.findOneAndDelete({
-            _id: id,
-        });
-        return res.status(200).send("Deleted");
-    } catch (error) {
-        return res.status(405).send("Something went wrong");
-    }
-};
-
-//=============================================================================== Get spec assignment
-
-exports.getSpecAssignment = async function (req, res, next) {
-    var id = req.body.id;
-
-    try {
-        const log = await Assignments.findOne({
-            _id: id,
-        });
-        return res.status(200).send({
-            data: log,
-        });
-    } catch (error) {
-        return res.status(405).send("Something went wrong");
-    }
-};
-
-//=============================================================================== Update assignment
-
-exports.updateAssignment = async function (req, res, next) {
-
-    console.log(req.body);
-    try {
-        const update = await Assignments.findOneAndUpdate({
-            _id: req.body.id
-        }, {
-                DesNo: req.body.DesNo,
-                MemNo: req.body.MemNo,
-                forYear: req.body.forYear
-        }, {
-            new: false
-        })
-
-        return res.status(200).send("Update");
-    } catch (error) {
-        return res.status(403).send("Something went wrong");
-    }
-
 }

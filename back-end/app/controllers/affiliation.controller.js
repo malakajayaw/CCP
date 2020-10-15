@@ -1,15 +1,11 @@
-//import affiliation model
+//import Affiliation model
 const Affiliation = require('../model/affiliation.model');
 
 //======================================================================================================
 //================================== Add Affiliation  =============================================
 //====================================================================================================== 
-exports.addAffiliation = function (req, res, next) {
+exports.addaAffiliation = function (req, res, next) {
 
-    var fileName = '';
-
-    
-    
     let new_affiliation = Affiliation({
         affiID: req.body.affiID,
         affiliationtype: req.body.affiliationtype,
@@ -17,10 +13,11 @@ exports.addAffiliation = function (req, res, next) {
         affiliationno: req.body.affiliationno,
         date: req.body.date,
         status: req.body.status,
+        updated_at: req.body.updated_at,
     });
     console.log(new_affiliation);
 
-   //save affiliation  
+    //save affiliation  
     new_affiliation.save(function (err) {
         if (err) {
             return next(err);
@@ -28,16 +25,16 @@ exports.addAffiliation = function (req, res, next) {
         console.log("Affiliation added successfully ");
         res.status(201).send('Affiliation added Successfully');
     })
-        
-    
+
+
 }
 
 //======================================================================================================
-//================================== Get all affiliations       =============================================
+//================================== Get all Affiliation       =============================================
 //====================================================================================================== 
-exports.get_all_affiliations = function (req, res, next) {
+exports.get_all_affiliation = function (req, res, next) {
     // check userdata
-    Affiliation.find( function (err, docs) {
+    Affiliation.find(function (err, docs) {
         if (docs.length != 0) {
             res.status(200).send({
                 data: docs
@@ -46,44 +43,4 @@ exports.get_all_affiliations = function (req, res, next) {
             res.status(403).send('No data found')
         }
     })
-}
-
-//======================================================================================================
-//================================== Get a specific affiliation  =============================================
-//====================================================================================================== 
-exports.get_affiliation = async function (req, res, next) {
-
-    var id = req.body.id;
-    try {
-        const update = await  Affiliation.findOne({
-            _id: id })
-       return res.status(200).send({
-           data: update
-       });
-    } catch (error) {
-        return res.status(403).send("Something went wrong");
-    }
-
-}
-
-
-exports.deleteAffiliation = async  function (req, res, next) {
-
-    var id = req.body.id
-
-        try {
-            const search  = await Affiliation.findOne({ _id: id})
-            if(!search){
-                return  res.status(402).send("No exsisting affiliation");
-            }
-            const log = await  Affiliation.findOneAndDelete({
-                _id: id
-            })
-    
-          return  res.status(200).send({
-            message : "Affiliation Successfully Deleted!"
-          });
-        } catch (error) {
-            return  res.status(403).send("Something went wrong");
-        }
 }

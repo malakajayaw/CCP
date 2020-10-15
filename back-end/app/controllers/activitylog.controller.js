@@ -7,11 +7,11 @@ const Activity = require('../model/activity.model');
 exports.addActivity = function (req, res, next) {
 
     let new_activity = Activity({
-        MemNo: req.body.MemNo,
+        memberID: req.body.memberID,
         action: req.body.action,
         table: req.body.table,
         parameters: req.body.parameters,
-        datetime: req.body.datetime
+        EntryNo: req.body.EntryNo
     });
     console.log(new_activity);
 

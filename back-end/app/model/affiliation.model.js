@@ -28,7 +28,7 @@ let Affiliation = new Schema({
     },
     status: {
         type: String,
-        required: true,
+        default: "Available"
     },
     updated_at: {
         type: String,

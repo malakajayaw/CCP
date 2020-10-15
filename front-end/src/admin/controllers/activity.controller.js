@@ -4,11 +4,10 @@ import Config from "./config.controller";
 export const add_activity = (data) => {
 
     data = {
-        MemNo: data.MemNo,
+        memberID: data.memberID,
         action: data.action,
         table: data.table,
-        parameters: data.parameters,
-        datetime: data.datetime
+        parameters: data.parameters
     }
     return new Promise((resolve, reject) => {
         return axios.post(`${Config.host}${Config.port}/activity/addActivity`, { ...data })

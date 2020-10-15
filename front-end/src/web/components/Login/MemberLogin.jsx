@@ -4,11 +4,11 @@ import Footer from "../Common/Footer";
 import Background from "../../images/Login.jpg";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
-import { setCurrentUser } from "../Redux/Action/authAction";
-import { connect } from "react-redux";
-import { sign_controller } from "../../controllers/memeber.controller";
-import { toast } from "react-toastify";
+
+import {sign_controller} from "../../controllers/memeber.controller"
+
 class MemberLogin extends Component {
+
   constructor() {
     super();
 
@@ -19,30 +19,21 @@ class MemberLogin extends Component {
     };
   }
 
-  setErrorToast(msg) {
-    toast.error(msg, {
-      hideProgressBar: true,
-      closeOnClick: true,
-      draggable: true,
-    });
+  formValueChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value })
+}
+
+onSubmitForm = async (e) => {
+  e.preventDefault()
+  var status = await sign_controller(this.state.memberShipNo, this.state.uPass)
+  console.log(status);
+  if(status.code == 200){
+    this.props.history.push("/Dashboard");
   }
 
-  formValueChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+}
 
-  onSubmitForm = async (e) => {
-    e.preventDefault();
-    sign_controller(this.state.memberShipNo, this.state.uPass)
-      .then((result) => {
-         this.props.setCurrentUser(result.data.data.details);
-        this.props.history.push("/UserProfile");
-      })
-      .catch((err) => {
-        console.log(err.code);
-        this.setErrorToast("Invalid Credentials")
-      });
-  };
+
 
   render() {
     return (
@@ -59,9 +50,10 @@ class MemberLogin extends Component {
               backgroundRepeat: "no-repeat",
             }}
           >
+
             <div className="login-box">
               <div className="login-logo">
-                <a href="/MemberLogin" style={{ color: "white" }}>
+                <a href="/MemberLogin" style= {{color:'white'}}>
                   <b>Member Login</b>
                 </a>
               </div>
@@ -70,14 +62,14 @@ class MemberLogin extends Component {
                 <div className="card-body login-card-body">
                   <p className="login-box-msg">IEEE - Sri Lanka Section</p>
 
-                  <form onSubmit={(e) => this.onSubmitForm(e)}>
+                  <form onSubmit={(e)=>this.onSubmitForm(e)}>
                     <div className="input-group mb-3">
                       <input
                         type="text"
                         className="form-control"
                         placeholder="Membership Number"
                         name="memberShipNo"
-                        onChange={(e) => this.formValueChange(e)}
+                        onChange={(e)=> this.formValueChange(e)}
                         value={this.state.memberShipNo}
                       />
                       <div className="input-group-append">
@@ -93,7 +85,8 @@ class MemberLogin extends Component {
                         placeholder="Password"
                         name="uPass"
                         value={this.state.uPass}
-                        onChange={(e) => this.formValueChange(e)}
+                        onChange={(e)=> this.formValueChange(e)}
+
                       />
                       <div className="input-group-append">
                         <div className="input-group-text">
@@ -112,13 +105,15 @@ class MemberLogin extends Component {
 
                       <div className="col-5">
                         <button type="submit"> Sign In</button>
+                         
+                        
                       </div>
                     </div>
                   </form>
 
                   <p className="mb-2">
                     <br></br>
-                    <a href="">I forgot my password</a>
+                    <a href="forgot-password.html">I forgot my password</a>
                   </p>
                   <p className="mb-2">
                     <a href="/Registration">Don't have an Accout? Create New</a>
@@ -133,4 +128,4 @@ class MemberLogin extends Component {
     );
   }
 }
-export default connect(null, { setCurrentUser })(withRouter(MemberLogin));
+export default withRouter( MemberLogin);

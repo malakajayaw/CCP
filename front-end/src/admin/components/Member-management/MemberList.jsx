@@ -3,10 +3,6 @@ import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import { get_all_active_members, accept_or_reject} from '../../controllers/memeber.controller'
 import Config from '../../controllers/config.controller'
 
-import "jquery/dist/jquery"
-import $ from "jquery";
-import "datatables.net-dt/js/dataTables.dataTables"
-import "datatables.net-dt/css/jquery.dataTables.min.css"
 
 
   const MemberRequest = (props) => {
@@ -41,7 +37,6 @@ import "datatables.net-dt/css/jquery.dataTables.min.css"
 async function getData() {
       var res = await get_all_active_members()
    await   Setmembers(res.data.data);
-   $("#memberTable").dataTable();
   
 }
 

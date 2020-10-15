@@ -13,9 +13,9 @@ function NavBar() {
 
 
       {/* <!-- Right navbar links --> */}
-      {/* <ul className="navbar-nav ml-auto">
+      <ul className="navbar-nav ml-auto">
      
-     
+        {/* <!-- Notifications Dropdown Menu --> */}
         <li className="nav-item dropdown">
           <a className="nav-link" data-toggle="dropdown" href="#">
             <i className="far fa-bell"></i>
@@ -42,7 +42,7 @@ function NavBar() {
             <a href="#" className="dropdown-item dropdown-footer">See All Notifications</a>
           </div>
         </li>
-      </ul> */}
+      </ul>
     </nav>);
 }
 
