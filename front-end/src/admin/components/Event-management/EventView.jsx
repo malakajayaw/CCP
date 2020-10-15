@@ -107,14 +107,7 @@ function EventView() {
                 >
                   Add Report
                 </Link>
-                <Link
-                  to="/Admin/EventAttendance"
-                  type="button"
-                  className="btn btn-success float-right add_btn"
-                >
-                  Add Attendance
-                </Link>
-        </div>
+      <Link to={"/Admin/EventAttendanceRegistered/"+eventId} type="button" className="btn btn-success float-right add_btn">Add Attendance</Link>
       </div>
     </div>
     <div className="card-body">
@@ -208,7 +201,7 @@ function EventView() {
     {/* <!-- /.card-body --> */}
   </div>
   {/* <!-- /.card --> */}
-
+</div>
 </section>
 </div>);
 }

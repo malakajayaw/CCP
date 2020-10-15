@@ -6,7 +6,10 @@ import {
 import Config from "../../controllers/config.controller";
 import EventReportView from "./EventReportView";
 import { Link } from "react-router-dom";
-
+import "jquery/dist/jquery"
+import $ from "jquery";
+import "datatables.net-dt/js/dataTables.dataTables"
+import "datatables.net-dt/css/jquery.dataTables.min.css"
 import useForceUpdate from "use-force-update";
 
 const EventReportTable = (props) => {
@@ -20,6 +23,7 @@ const EventReportTable = (props) => {
   async function getData() {
     var res = await get_all_reports();
     await SetEventReports(res.data.data);
+    $("#eventReportTable").dataTable();
   }
 
   const delete_func = async (id) => {
