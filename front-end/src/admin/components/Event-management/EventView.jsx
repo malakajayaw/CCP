@@ -201,7 +201,7 @@ function EventView() {
     {/* <!-- /.card-body --> */}
   </div>
   {/* <!-- /.card --> */}
-
+</div>
 </section>
 </div>);
 }
