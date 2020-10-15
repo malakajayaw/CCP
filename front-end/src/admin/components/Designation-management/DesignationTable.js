@@ -43,10 +43,10 @@ const DesignationTable = (props) => {
         const res = await remove_designation(id)
         if (res.code == 200) {
             Config.setToast("Designation removed")
-            forceUpdate();
+            getData();
         } else {
             Config.setToast("Something went wrong")
-            forceUpdate();
+            getData();
         }
     }
 

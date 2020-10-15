@@ -41,10 +41,10 @@ const AssignedDesignationsTable = (props) => {
         const res = await remove_designation_mem(Designation, id)
         if (res.code == 200) {
             Config.setToast("Member removed")
-            forceUpdate();
+            getData();
         } else {
             Config.setToast("Something went wrong")
-            forceUpdate();
+            getData();
         }
     }
 

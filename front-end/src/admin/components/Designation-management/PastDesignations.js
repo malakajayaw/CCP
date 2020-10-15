@@ -49,6 +49,10 @@ const PastDesignations = (props) => {
         }
     }
 
+    async function refresh() {
+        getData();
+    }
+
     const addActivity = async (title, mem, year, aff) => {
         console.log(title);
         const date = new Date();
