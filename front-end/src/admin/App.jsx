@@ -29,7 +29,9 @@ import AdminLogin from './components/Login/AdminLogin';
 import MemberEdit from './components/Member-management/MemberEdit';
 import EventReportTable from './components/EventReport-management/EventReportTable'
 import EventReportForm from './components/EventReport-management/EventReportForm'
-import EventAttendance from './components/EventAttendance-management/EventAttendance'
+import EventAttendanceRegistered from './components/EventAttendance-management/EventAttendanceRegistered'
+import EventAttendanceConfirmed from './components/EventAttendance-management/EventAttendanceConfirmed'
+import EventAttendanceAttended from './components/EventAttendance-management/EventAttendanceAttended'
 import EventReportView from './components/EventReport-management/EventReportView'
 import ManageAffiliation from './components/StudentBranch-management/ManageAffiliation'
 import StudentForm from './components/StudentBranch-management/StudentForm'
@@ -74,12 +76,14 @@ function App() {
                         <Route path="/Admin/MemberList"> <MemberList /> </Route>
                         <Route path="/Admin/MemberEdit/:id"> <MemberEdit /> </Route>
                         <Route path="/Admin/EventReportTable"> <EventReportTable/> </Route>
-                        <Route path="/Admin/EventReportForm"> <EventReportForm/> </Route>
-                    <Route path="/Admin/EventAttendance"> <EventAttendance/> </Route>
-                    <Route path="/Admin/EventReportView/:id"> <EventReportView/> </Route>
-                      <Route path="/Admin/ManageAffiliation"> <ManageAffiliation /> </Route>
-                    <Route path="/Admin/StudentForm"> <StudentForm /> </Route>
-                    <Route path="/Admin/AffiliationTable"> <AffiliationTable /> </Route>
+                        <Route path="/Admin/EventAttendanceAttended"> <EventAttendanceAttended/> </Route>
+                        <Route path="/Admin/EventAttendanceConfirmed"> <EventAttendanceConfirmed/> </Route>
+                        <Route path="/Admin/EventReportForm/:val"> <EventReportForm/> </Route>
+                        <Route path="/Admin/EventReportView/:id"> <EventReportView/> </Route>
+                        <Route path="/Admin/ManageAffiliation"> <ManageAffiliation /> </Route>
+                        <Route path="/Admin/StudentForm"> <StudentForm /> </Route>
+                        <Route path="/Admin/AffiliationTable"> <AffiliationTable /> </Route>
+                        <Route path="/Admin/EventAttendanceRegistered/:id"> <EventAttendanceRegistered/> </Route>
     
                     </Switch>
                 </Router> 
