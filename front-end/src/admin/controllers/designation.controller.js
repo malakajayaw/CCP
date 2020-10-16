@@ -14,7 +14,6 @@ export const addDesignation = (data) => {
     return new Promise((resolve, reject) => {
         return axios.post(`${Config.host}${Config.port}/designations/addDesignations`, { ...data })
             .then(result => {
-                console.log(result.data);
                 resolve({ code: 200, message: result.data.message })
             })
             .catch(err => {
@@ -30,7 +29,6 @@ export const get_all_designations = () => {
     return new Promise((resolve, reject) => {
         return axios.get(`${Config.host}${Config.port}/designations/getDesignations`)
             .then(result => {
-                console.log(result.data);
                 resolve({ code: 200, data: result.data })
             })
             .catch(err => {
@@ -49,7 +47,6 @@ export const get_aff_spec_designations = (id) => {
     return new Promise((resolve, reject) => {
         return axios.post(`${Config.host}${Config.port}/designations/getAffSpecDesignations`, { ...data })
             .then(result => {
-                console.log(result.data);
                 resolve({ code: 200, data: result.data })
             })
             .catch(err => {
@@ -68,7 +65,6 @@ export const get_spec_designations = (id) => {
     return new Promise((resolve, reject) => {
         return axios.post(`${Config.host}${Config.port}/designations/getSpecDesignations`, { ...data })
             .then(result => {
-                console.log(result.data);
                 resolve({ code: 200, data: result.data })
             })
             .catch(err => {
@@ -87,7 +83,6 @@ export const remove_designation = (id) => {
     return new Promise((resolve, reject) => {
         return axios.post(`${Config.host}${Config.port}/designations/deleteDesignations`, { ...data })
             .then(result => {
-                console.log(result.data);
                 resolve({ code: 200, message: result.data })
             })
             .catch(err => {
@@ -110,7 +105,6 @@ export const update_designation = (data, id) => {
     return new Promise((resolve, reject) => {
         return axios.post(`${Config.host}${Config.port}/designations/updateDesignation`, { ...data })
             .then(result => {
-                console.log(result.data);
                 resolve({ code: 200, message: result.data.message })
             })
             .catch(err => {
@@ -131,7 +125,6 @@ export const update_designation_mem = (data, id) => {
     return new Promise((resolve, reject) => {
         return axios.post(`${Config.host}${Config.port}/designations/updateDesignationMem`, { ...data })
             .then(result => {
-                console.log(result.data);
                 resolve({ code: 200, message: result.data.message })
             })
             .catch(err => {
@@ -151,7 +144,6 @@ export const remove_designation_mem = (data, id) => {
     return new Promise((resolve, reject) => {
         return axios.post(`${Config.host}${Config.port}/designations/removeDesignationMem`, { ...data })
             .then(result => {
-                console.log(result.data);
                 resolve({ code: 200, message: result.data.message })
             })
             .catch(err => {
@@ -166,7 +158,6 @@ export const get_all_members = () => {
     return new Promise((resolve, reject) => {
         return axios.get(`${Config.host}${Config.port}/designations/getAllMembers`)
             .then(result => {
-                console.log(result.data);
                 resolve({ code: 200, data: result.data })
             })
             .catch(err => {
@@ -185,7 +176,6 @@ export const get_aff_spec_members = (id) => {
     return new Promise((resolve, reject) => {
         return axios.post(`${Config.host}${Config.port}/designations/getAffSpecMembers`, { ...data })
             .then(result => {
-                console.log(result.data);
                 resolve({ code: 200, data: result.data })
             })
             .catch(err => {

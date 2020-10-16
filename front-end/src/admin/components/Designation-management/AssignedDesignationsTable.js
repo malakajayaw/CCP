@@ -1,26 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { get_aff_spec_designations, remove_designation_mem, get_all_members } from "../../controllers/designation.controller";
-import { get_all_active_members } from "../../controllers/memeber.controller";
-import { add_activity } from '../../controllers/activity.controller'
-import Config from '../../controllers/config.controller'
-//import EventReportView from './EventReportView'
 import { Link } from "react-router-dom";
-
 import useForceUpdate from 'use-force-update';
 import 'jquery/dist/jquery.min.js';
 import $ from "jquery"
-//Datatable Modules
+
+//controllers
+import { get_aff_spec_designations, remove_designation_mem, get_all_members } from "../../controllers/designation.controller";
+import { add_activity } from '../../controllers/activity.controller'
+import Config from '../../controllers/config.controller'
+
+//datatable Modules
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 
 
 const AssignedDesignationsTable = (props) => {
-    const [Designation, SetDesignation] = useState([]);
+
+    //for updating components
     const forceUpdate = useForceUpdate();
 
+    //place holders for react-select-search
     window.selectedaff = "Select affiliaion";
     window.selectedmem = "Select member";
 
+    //variable to store destinations
+    const [Designation, SetDesignation] = useState([]);
+
+    //variable to store activities
     let [activity, setActivity] = useState({
         MemNo: "To be taken from redux",
         action: "Remove assignment",
@@ -33,46 +39,52 @@ const AssignedDesignationsTable = (props) => {
         getData();
     }, []);
 
+    //get designations for a specific affiliation
     async function getData() {
         var res = await get_aff_spec_designations("5f85d2e1b708c81ce0a4de85");
         await SetDesignation(res.data.data);
         $("#AssDes").dataTable();
     }
 
+    //remove assigned member
     const delete_func = async (Designation, id, name, title) => {
         addActivity(name, title)
         const res = await remove_designation_mem(Designation, id)
         if (res.code == 200) {
             Config.setToast("Member removed")
+            //refresh page
             getData();
         } else {
             Config.setToast("Something went wrong")
+            //refresh page
             getData();
         }
     }
 
+    //add activity log about deleted member
     const addActivity = async (name, title) => {
-        console.log(name);
         const date = new Date();
+        //set parameters for activity variable
         activity.parameters = setMemData(name) + " / " + title;
+        //set date for activity variable
         activity.datetime = date.toLocaleString();
-        console.log("act: " + JSON.stringify(activity));
+        //add activity to database
         const result3 = await add_activity(activity)
-        console.log(result3);
     }
 
+    //variable to store members
     const [member, setMember] = useState([]);
     useEffect(() => {
         getMemData();
-
     }, []);
 
+    //get all the members from database
     async function getMemData() {
         var res1 = await get_all_members();
         await setMember(res1.data.data);
-        console.log("aff: " + member);
     }
 
+    //get member name relevent to a given _id
     const setMemData = (id) => {
         return member.map((member, index) => {
             if (id == member._id) {
@@ -81,6 +93,7 @@ const AssignedDesignationsTable = (props) => {
         });
     };
 
+    //get membership no relevent to a given _id
     const setMemNo = (id) => {
         return member.map((member, index) => {
             if (id == member._id) {
@@ -89,6 +102,7 @@ const AssignedDesignationsTable = (props) => {
         });
     };
 
+    //load table data
     const readydata = () => {
         return Designation.map((Designation, i) => {
             return (
@@ -112,16 +126,14 @@ const AssignedDesignationsTable = (props) => {
         });
     };
 
+    //render table
     return (
         <section className="content" style={{ display: props.display }}>
             <div className="container-fluid">
                 <div className="card">
                     <div className="card-header">
                         <Link to="/Admin/PastSpecDesignations" type="button" className="btn btn-info float-right add_btn">Past Designations</Link>
-                        {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-                        {/*<button type="button" onClick={() => { props.onClick("Pdesignations"); }} className="btn btn-success float-right add_btn" >Past Designations</button>*/}
                     </div>
-                    {/* <!-- /.card-header --> */}
                     <div className="card-body">
                         <table
                             id="AssDes"
@@ -140,7 +152,6 @@ const AssignedDesignationsTable = (props) => {
                         </table>
                     </div>
                 </div>
-                {/* <!-- /.container-fluid --> */}
             </div>
         </section>
     );
