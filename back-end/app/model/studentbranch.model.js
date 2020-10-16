@@ -12,7 +12,6 @@ let Affiliation = new Schema({
     affiliationtype: {
         type: String,
         required: true,
-       
 
     },
     affiliationname: {

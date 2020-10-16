@@ -47,7 +47,17 @@ export default function Sidebar() {
           <Link id="affiliationNav"  className="nav-link" to="/Admin/AffiliationTable">
               <i className="nav-icon fas fa-handshake"></i>
               Affiliation Management
-                <span className="badge badge-info right">2</span>
+                <span className="badge badge-info right"></span>
+            
+                    </Link>
+                    </li>
+
+
+          <li className="nav-item pointer_cursor">
+          <Link id="affiliationNav"  className="nav-link" to="/Admin/StudentBranch">
+              <i className="nav-icon fas fa-user-graduate"></i>
+              StudentBranch View
+          <span className="badge badge-info right"></span>
             
                     </Link>
                     </li>
