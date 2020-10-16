@@ -18,6 +18,9 @@ const DesignationTable = (props) => {
     const [designation, SetDesignation] = useState([]);
     const forceUpdate = useForceUpdate();
 
+    window.selectedaff = "Select affiliaion";
+    window.selectedmem = "Select member";
+
     let [activity, setActivity] = useState({
         MemNo: "To be taken from redux",
         action: "Delete designation",

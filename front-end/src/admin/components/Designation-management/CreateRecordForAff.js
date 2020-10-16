@@ -190,7 +190,7 @@ const CreateRecord = (props) => {
                             <div class="col-md-12">
                                 <div class="card card-primary">
                                     <div class="card-header">
-                                        <h3 class="card-title pb-1 mb-1" style={{ fontWeight: '600' }}>Add new Designation</h3>
+                                        <h3 class="card-title pb-1 mb-1" style={{ fontWeight: '600' }}>Add Record</h3>
 
                                     </div>
 

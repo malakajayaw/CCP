@@ -130,7 +130,7 @@ const AssignedDesignationsTable = (props) => {
                             <thead>
                                 <tr>
                                     <th>Designation Title</th>
-                                    <th>Designated Member</th>
+                                    <th>Member ID</th>
                                     <th>Member Name</th>
                                     <th>Action</th>
                                 </tr>

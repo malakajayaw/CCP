@@ -156,11 +156,7 @@ const EditPastDes = (props) => {
 
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
-            <h6>Edit Record</h6>
             <div className="card">
-                <div className="card-header">
-
-                </div>
                 <div className="card-body">
 
                     <section className="content">
@@ -168,7 +164,7 @@ const EditPastDes = (props) => {
                             <div className="col-md-6">
                                 <div className="card card-success">
                                     <div className="card-header">
-                                        <h3 className="card-title">Change Record </h3>
+                                        <h3 className="card-title">Edit Record </h3>
                                     </div>
                                     <form onSubmit={onSubmit}>
 
