@@ -34,33 +34,33 @@ export default function Sidebar() {
                     </Link>
             </li>
 
-            <li class="nav-item has-treeview">
-            <a href="/Admin/MemberRequest" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
+            <li className="nav-item has-treeview">
+            <a href="/Admin/MemberRequest" className="nav-link">
+              <i className="nav-icon fas fa-users"></i>
               <p>
               Member Management
-                <i class="right fas fa-angle-left"></i>
+                <i className="right fas fa-angle-left"></i>
               </p>
             </a>
             
-            {/* <ul class="nav nav-treeview">
+            {/* <ul className="nav nav-treeview">
 
-            <li class="nav-item">
-                <a href="/Admin/MemberList" class="nav-link">
+            <li className="nav-item">
+                <a href="/Admin/MemberList" className="nav-link">
                      &emsp; &emsp;
                   <p>Active Members</p>
                 </a>
               </li>
 
-              <li class="nav-item">
-                <a href="/Admin/MemberRequest" class="nav-link">
+              <li className="nav-item">
+                <a href="/Admin/MemberRequest" className="nav-link">
                   &emsp; &emsp;
                   <p>Requests</p>
                 </a>
               </li>
               
-              <li class="nav-item">
-                <a href="/Admin/MemberAdd" class="nav-link">
+              <li className="nav-item">
+                <a href="/Admin/MemberAdd" className="nav-link">
                 &emsp; &emsp;
                   <p>Create Profile</p>
                 </a>
