@@ -45,7 +45,7 @@ exports.addEvent = function (req, res, next) {
 }
 
 //======================================================================================================
-//================================== Get all events       =============================================
+//================================== Get all events=====================================================
 //====================================================================================================== 
 exports.get_all_events = function (req, res, next) {
     // check userdata
@@ -172,7 +172,7 @@ exports.getResponses = async function (req, res, next) {
 
     try {
         const responses = await  EventRegistration.find({
-            eventId: id })
+            eventId: id, state:false })
        return res.status(200).send({
            data: responses
        });

@@ -1,7 +1,11 @@
 //import Event Report model
 const EventReport = require("../model/eventreport.model");
+//import moment library
 const moment = require("moment");
 
+//===========================================================================================
+//================================== Add An Event Report ===================================
+//===========================================================================================
 exports.add_report_add = async function (req, res, next) {
   let newDate = new Date();
 
@@ -39,6 +43,9 @@ exports.add_report_add = async function (req, res, next) {
   return res.status(403).send("Already have");
 };
 
+//===========================================================================================
+//================================== Get All Event Reports ===================================
+//===========================================================================================
 exports.get_all_reports = async function (req, res, next) {
   //console.log("Called");
   const result = await EventReport.find();
@@ -48,6 +55,9 @@ exports.get_all_reports = async function (req, res, next) {
   });
 };
 
+//===========================================================================================
+//================================== Delete An event Report ===================================
+//===========================================================================================
 exports.delete_report = async function (req, res, next) {
   var id = req.body.id;
 
@@ -61,6 +71,9 @@ exports.delete_report = async function (req, res, next) {
   }
 };
 
+//===========================================================================================
+//================================== Get Specific Event Report Detail =======================
+//===========================================================================================
 exports.get_spec_report_del = async function (req, res, next) {
   var id = req.body.id;
 

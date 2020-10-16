@@ -76,15 +76,16 @@ function App() {
                         <Route path="/Admin/MemberList"> <MemberList /> </Route>
                         <Route path="/Admin/MemberEdit/:id"> <MemberEdit /> </Route>
                         <Route path="/Admin/EventReportTable"> <EventReportTable/> </Route>
-                        <Route path="/Admin/EventAttendanceAttended"> <EventAttendanceAttended/> </Route>
-                        <Route path="/Admin/EventAttendanceConfirmed"> <EventAttendanceConfirmed/> </Route>
+                        <Route path="/Admin/EventAttendanceAttended/:id"> <EventAttendanceAttended/> </Route>
+                        <Route path="/Admin/EventAttendanceConfirmed/:id"> <EventAttendanceConfirmed/> </Route>
                         <Route path="/Admin/EventReportForm/:val"> <EventReportForm/> </Route>
                         <Route path="/Admin/EventReportView/:id"> <EventReportView/> </Route>
                         <Route path="/Admin/ManageAffiliation"> <ManageAffiliation /> </Route>
                         <Route path="/Admin/StudentForm"> <StudentForm /> </Route>
                         <Route path="/Admin/AffiliationTable"> <AffiliationTable /> </Route>
+                        <Route path="/Admin/EventAttendanceRegistered/:m_id/:id"> <EventAttendanceRegistered/> </Route>
                         <Route path="/Admin/EventAttendanceRegistered/:id"> <EventAttendanceRegistered/> </Route>
-    
+
                     </Switch>
                 </Router> 
             </div>

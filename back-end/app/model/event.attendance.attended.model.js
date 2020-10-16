@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let EventAttendanceConfirm = new Schema({  
+let EventAttendanceAttended = new Schema({  
   eventId:{
     type: String,
   },
@@ -14,4 +14,4 @@ let EventAttendanceConfirm = new Schema({
   },
 });
 
-module.exports = mongoose.model("EventAttendanceConfirm", EventAttendanceConfirm);
+module.exports = mongoose.model("EventAttendanceAttended", EventAttendanceAttended);
