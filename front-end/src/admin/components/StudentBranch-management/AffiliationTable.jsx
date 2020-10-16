@@ -57,7 +57,7 @@ function AffiliationTable(props){
           <td>{(new Date(affiliations.date).toDateString())}</td>
           <td ><span className ={affiliations.status == "Available" ? "badge badge-success" : "badge badge-danger"  }>{affiliations.status}</span> </td>      
           <td className="project-actions text-center">       
-              <Link to="/Admin/ManageAffiliation"  className="btn btn-info btn-sm mr-1 editaffiliationbtn"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
+                      <Link to={`/Admin/ManageAffiliation/${affiliations._id}`}  className="btn btn-info btn-sm mr-1 editaffiliationbtn"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
               
               <a className="btn btn-danger btn-sm mr-1" onClick={()=> onDelete(affiliations._id)}> <i className="fas fa-trash mr-1" />Delete</a>
           </td>

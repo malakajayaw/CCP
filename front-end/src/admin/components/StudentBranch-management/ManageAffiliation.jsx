@@ -1,6 +1,6 @@
-import React,{useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Config from '../../controllers/config.controller';
-import { get_affiliation, } from '../../controllers/affiliation.controller';
+import { get_affiliation } from '../../controllers/affiliation.controller';
 import {useParams } from "react-router-dom";
 import Axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -12,19 +12,22 @@ function ManageAffiliation() {
 
   const [affiliationData,setAffiliationData] = useState({affiliationtype:'',affiliationname:'',affiliationno:'',date:'',status:'' });
 
-  let { affiID } = useParams();
+
+  var id = useParams();
 
 
     useEffect(() => {
-      getData();
+        getData(id.affiId);
   }, []); 
 
 
-    const getData = async () => {
+    const getData = async (id) => {
 
-        var affiliationResult = await get_affiliation(affiID)
+        var affiliationResult = await get_affiliation(id)
+        console.log("id: " + id);
      
         setAffiliationData(affiliationResult.data.data);
+        await console.log("affiliationData: " + JSON.stringify(affiliationData));
         
     }
 
@@ -46,8 +49,8 @@ function ManageAffiliation() {
 
   const send = async affiliation =>{
     affiliation.preventDefault();
-    const data = new FormData();
-    data.append("affiID",affiID);
+      const data = new FormData();
+      data.append("affiID", id.affiId);
     data.append("affiliationtype",affiliationData.affiliationtype);
     data.append("affiliationname",affiliationData.affiliationname);
     data.append("affiliationno",affiliationData.affiliationno);
