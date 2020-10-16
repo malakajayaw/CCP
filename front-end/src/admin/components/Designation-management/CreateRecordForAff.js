@@ -32,6 +32,7 @@ const CreateRecord = (props) => {
         console.log(today);
     }
 
+    var selectedmem = "Select member";
 
     useEffect(() => {
         let newDate = new Date()
@@ -66,6 +67,8 @@ const CreateRecord = (props) => {
     }, []);
 
     async function getMemData() {
+        window.selectedaff = "Select affiliaion";
+        window.selectedmem = "Select member";
         var res = await get_aff_spec_members(affil);
         await setMember(res.data.data);
         console.log("mem: " + member);
@@ -91,6 +94,8 @@ const CreateRecord = (props) => {
     const handleMemChange = (e) => {
         setPastDes({ ...pastdes, "MemNo": e.value });
         console.log(e);
+        window.selectedmem = setMemData(e.value);
+        mem();
     }
 
     const handleChange = (e) => {
@@ -165,6 +170,12 @@ const CreateRecord = (props) => {
         });
     };
 
+    const mem = () => {
+        return (
+            <Select required value="" className="select2" id="MemNo" name="MemNo" placeholder={window.selectedmem} style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
+        )
+    }
+
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
             <div className="card">
@@ -199,7 +210,7 @@ const CreateRecord = (props) => {
 
                                                 <div className="form-group">
                                                     <label>Member</label>
-                                                    <Select required value="" className="select2" id="MemNo" name="MemNo" data-placeholder="Select Member" style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
+                                                    { mem()}
                                                 </div>
 
                                                 <label for="inputFName">Year : </label>

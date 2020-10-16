@@ -15,6 +15,8 @@ const EditPastDes = (props) => {
     const id = useParams()
     const { register, handleSubmit } = useForm();
 
+    var selectedaff = "Select affiliaion";
+    var selectedmem = "Select member";
 
     const newId = id.Id
 
@@ -47,6 +49,8 @@ const EditPastDes = (props) => {
     }, []);
 
     async function getMemData() {
+        window.selectedaff = "Select affiliaion";
+        window.selectedmem = "Select member";
         var res = await get_all_members();
         await setMember(res.data.data);
         console.log("mem: " + member);
@@ -72,11 +76,15 @@ const EditPastDes = (props) => {
     const handleMemChange = (e) => {
         setPastDes({ ...pastdes, "MemNo": e.value });
         console.log(e);
+        window.selectedmem = setMemData(e.value);
+        mem();
     }
 
     const handleAffChange = (e) => {
         setPastDes({ ...pastdes, "affiliationNo": e.value });
         console.log(e);
+        window.selectedaff = setAffData(e.value);
+        aff();
     }
 
     const onLoadMemebrer = async (newId) => {
@@ -158,6 +166,18 @@ const EditPastDes = (props) => {
         return container;
     })
 
+    const mem = () => {
+        return (
+            <Select required value="" className="select2" id="MemNo" name="MemNo" placeholder={window.selectedmem} style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
+        )
+    }
+
+    const aff = () => {
+        return (
+            <Select required value="" className="select2" id="affiliation" name="affiliationNo" placeholder={window.selectedaff} style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+        )
+    }
+
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
             <h6>Edit Record</h6>
@@ -181,7 +201,7 @@ const EditPastDes = (props) => {
 
                                             <div className="form-group">
                                                 <label>Affiliation</label>
-                                                <Select required value={pastdes.affiliationNo} className="select2" id="affiliation" name="affiliationNo" placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+                                                { aff()}
                                             </div>
 
                                             <div className="form-group">
@@ -194,7 +214,7 @@ const EditPastDes = (props) => {
 
                                             <div className="form-group">
                                                 <label>Member</label>
-                                                <Select required value="" className="select2" id="MemNo" name="MemNo" data-placeholder="Select Member" style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
+                                                { mem()}
                                             </div>
 
                                             <div className="form-group">

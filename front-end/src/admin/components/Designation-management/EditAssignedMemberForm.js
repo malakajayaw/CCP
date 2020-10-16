@@ -15,6 +15,7 @@ const EditAssignedMemberForm = (props) => {
     const id = useParams()
     const { register, handleSubmit } = useForm();
 
+    var selectedmem = "Select member";
 
     const newId = id.AssId
     var affil = "5f85d364b708c81ce0a4de86";
@@ -55,6 +56,7 @@ const EditAssignedMemberForm = (props) => {
     }, []);
 
     async function getMemData() {
+        window.selectedmem = "Select member";
         var res = await get_aff_spec_members(affil);
         await setMember(res.data.data);
         console.log("mem: " + member);
@@ -142,6 +144,14 @@ const EditAssignedMemberForm = (props) => {
         console.log("activity" + JSON.stringify(activity));
         console.log("Designation" + JSON.stringify(Designation));
         console.log("pastdes" + JSON.stringify(pastdes));
+        window.selectedmem = setMemData(e.value);
+        mem();
+    }
+
+    const mem = () => {
+        return (
+            <Select required value="" className="select2" id="MemNo" name="MemNo" placeholder={window.selectedmem} style={{ width: "100%" }} onChange={handleChange} options={selMem} />
+        )
     }
 
     return (<section className="content" style={{ display: props.display }}>
@@ -167,7 +177,7 @@ const EditAssignedMemberForm = (props) => {
 
                                             <div className="form-group">
                                                 <label>Member</label>
-                                                <Select required value="" className="select2" id="MemNo" name="MemNo" data-placeholder="Select Member" style={{ width: "100%" }} onChange={handleChange} options={selMem} />
+                                                { mem()}
                                             </div>
 
                                             <div className="row">

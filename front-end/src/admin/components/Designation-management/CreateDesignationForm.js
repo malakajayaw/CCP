@@ -27,6 +27,7 @@ const CreateDesignationForm = (props) => {
         console.log(today);
     }
 
+    var selectedaff = "Select affiliaion";
 
     useEffect(() => {
         let newDate = new Date()
@@ -60,6 +61,8 @@ const CreateDesignationForm = (props) => {
     const handleAffChange = (e) => {
         setDesignation({ ...designation, "affiliationNo": e.value });
         console.log(e);
+        window.selectedaff = setAffData(e.value);
+        aff();
     }
 
     const onSubmit = async (e) => {
@@ -107,6 +110,7 @@ const CreateDesignationForm = (props) => {
     }, []);
 
     async function getAffData() {
+        window.selectedaff = "Select affiliaion";
         var res = await get_all_affiliations();
         await setAffiliations(res.data.data);
         console.log("aff: " + affiliations);
@@ -128,6 +132,12 @@ const CreateDesignationForm = (props) => {
         //console.log("sel: " + JSON.stringify(container));
         return container;
     })
+
+    const aff = () => {
+        return (
+            <Select required value="" className="select2" id="affiliation" name="affiliationNo" placeholder={window.selectedaff} style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+        )
+    }
 
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
@@ -158,7 +168,7 @@ const CreateDesignationForm = (props) => {
                                                 
                                                 <div className="form-group">
                                                     <label>Affiliation</label>
-                                                    <Select required value="" className="select2" id="affiliation" name="affiliationNo" placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} ></Select>
+                                                    {aff() }
                                                 </div>
 
                                                 <div className="form-group">

@@ -14,6 +14,7 @@ const EditDesignation = (props) => {
     const id = useParams()
     const { register, handleSubmit } = useForm();
 
+    var selectedaff = "Select affiliaion";
 
     const newId = id.desId
 
@@ -82,6 +83,7 @@ const EditDesignation = (props) => {
     }, []);
 
     async function getAffData() {
+        window.selectedaff = "Select affiliaion";
         var res = await get_all_affiliations();
         await setAffiliations(res.data.data);
         console.log(affiliations);
@@ -115,11 +117,19 @@ const EditDesignation = (props) => {
     const handleAffChange = (e) => {
         setDesignation({ ...designation, "affiliationNo": e.value });
         console.log(e);
+        window.selectedaff = setAffData(e.value);
+        aff();
     }
 
     const handleChange = (e) => {
         setDesignation({ ...designation, [e.target.name]: e.target.value });
         console.log(designation);
+    }
+
+    const aff = () => {
+        return (
+            <Select required value="" className="select2" id="affiliation" name="affiliationNo" placeholder={window.selectedaff} style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+        )
     }
 
     return (<section className="content" style={{ display: props.display }}>
@@ -153,7 +163,7 @@ const EditDesignation = (props) => {
 
                                             <div className="form-group">
                                                 <label>Affiliation</label>
-                                                <Select required value={designation.affiliationNo} className="select2" id="affiliation" name="affiliationNo" placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+                                                { aff()}
                                             </div>
 
                                             <div className="form-group">

@@ -42,15 +42,11 @@ const PastDesignations = (props) => {
         const res = await remove_past_designation(id)
         if (res.code == 200) {
             Config.setToast("Member removed")
-            forceUpdate();
+            await getData();
         } else {
             Config.setToast("Something went wrong")
-            forceUpdate();
+            await getData();
         }
-    }
-
-    async function refresh() {
-        getData();
     }
 
     const addActivity = async (title, mem, year, aff) => {

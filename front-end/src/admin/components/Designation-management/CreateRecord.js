@@ -20,6 +20,9 @@ const CreateRecord = (props) => {
 
     );
 
+    var selectedaff = "Select affiliaion";
+    var selectedmem = "Select member";
+
     const todayfucn = () => {
         let newDate = new Date()
 
@@ -32,7 +35,6 @@ const CreateRecord = (props) => {
 
     useEffect(() => {
         let newDate = new Date()
-
         const today = moment(newDate).format("MMM Do YY");
         setToday(today)
         todayfucn()
@@ -65,6 +67,8 @@ const CreateRecord = (props) => {
     }, []);
 
     async function getMemData() {
+        window.selectedaff = "Select affiliaion";
+        window.selectedmem = "Select member";
         var res = await get_all_members();
         await setMember(res.data.data);
         console.log("mem: " + member);
@@ -83,7 +87,6 @@ const CreateRecord = (props) => {
 
         container["value"] = item._id;
         container["label"] = item.memberShipNo + " - " + item.fname + " " + item.lname;
-        console.log("sel: " + JSON.stringify(container));
         return container;
     })
 
@@ -94,11 +97,16 @@ const CreateRecord = (props) => {
     const handleAffChange = (e) => {
         setPastDes({ ...pastdes, "affiliationNo": e.value });
         console.log(e);
+        window.selectedaff = setAffData(e.value);
+        aff();
     }
 
     const handleMemChange = (e) => {
         setPastDes({ ...pastdes, "MemNo": e.value });
-        console.log(e);
+        console.log("e:" + e.value);
+        window.selectedmem = setMemData(e.value);
+        mem();
+
     }
 
     const onSubmit = async (e) => {
@@ -173,10 +181,20 @@ const CreateRecord = (props) => {
 
         container["value"] = item._id;
         container["label"] = item.affiliationname + " - " + item.affiliationno;
-        console.log("sel: " + JSON.stringify(container));
         return container;
     })
 
+    const mem = () => {
+        return (
+            <Select required value="" className="select2" id="MemNo" name="MemNo" placeholder={window.selectedmem} style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
+        )
+    }
+
+    const aff = () => {
+        return (
+            <Select required value="" className="select2" id="affiliation" name="affiliationNo" placeholder={window.selectedaff} style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+        )
+    }
 
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
@@ -203,7 +221,7 @@ const CreateRecord = (props) => {
 
                                                 <div className="form-group">
                                                     <label>Affiliation</label>
-                                                    <Select required value="" className="select2" id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+                                                    { aff()}
                                                 </div>
 
                                                 <label for="inputFName"> Designation Title : </label>
@@ -211,7 +229,7 @@ const CreateRecord = (props) => {
 
                                                 <div className="form-group">
                                                     <label>Member</label>
-                                                    <Select required value="" className="select2" id="MemNo" name="MemNo" data-placeholder="Select Member" style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
+                                                    { mem()}
                                                 </div>
 
                                                 <label for="inputFName">Year : </label>

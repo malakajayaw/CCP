@@ -15,6 +15,7 @@ const EditPastDes = (props) => {
     const id = useParams()
     const { register, handleSubmit } = useForm();
 
+    var selectedmem = "Select member";
 
     const newId = id.Id
     var affil = "5f85d364b708c81ce0a4de86";
@@ -48,6 +49,7 @@ const EditPastDes = (props) => {
     }, []);
 
     async function getMemData() {
+        window.selectedmem = "Select member";
         var res = await get_aff_spec_members(affil);
         await setMember(res.data.data);
         console.log("mem: " + member);
@@ -73,6 +75,8 @@ const EditPastDes = (props) => {
     const handleMemChange = (e) => {
         setPastDes({ ...pastdes, "MemNo": e.value });
         console.log(e);
+        window.selectedmem = setMemData(e.value);
+        mem();
     }
 
     const onLoadMemebrer = async (newId) => {
@@ -144,6 +148,12 @@ const EditPastDes = (props) => {
         });
     };
 
+    const mem = () => {
+        return (
+            <Select required value="" className="select2" id="MemNo" name="MemNo" placeholder={window.selectedmem} style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
+        )
+    }
+
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
             <h6>Edit Record</h6>
@@ -182,7 +192,7 @@ const EditPastDes = (props) => {
 
                                             <div className="form-group">
                                                 <label>Member</label>
-                                                <Select required value="" className="select2" id="MemNo" name="MemNo" data-placeholder="Select Member" style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
+                                                { mem()}
                                             </div>
 
                                             <div className="form-group">

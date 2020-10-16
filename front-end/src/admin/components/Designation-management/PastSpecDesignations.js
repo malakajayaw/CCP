@@ -20,6 +20,9 @@ const PastSpecDesignations = (props) => {
     const [pastdes, SetPastDes] = useState([]);
     const forceUpdate = useForceUpdate();
 
+    window.selectedaff = "Select affiliaion";
+    window.selectedmem = "Select member";
+
     let [activity, setActivity] = useState({
         MemNo: "To be taken from redux",
         action: "Delete record - Chair",
