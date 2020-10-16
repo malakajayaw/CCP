@@ -3,7 +3,13 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import { useState ,useEffect} from 'react';
 import {get_all_affiliations,deleteAffiliation} from "../../controllers/affiliation.controller";
 import Config from "../../controllers/config.controller";
-import ContentHeader from '../Dashboard/ContentHeader'
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/js/bootstrap"
+import 'jquery/dist/jquery.min.js';
+import $ from "jquery"
+//Datatable Modules
+import "datatables.net-dt/js/dataTables.dataTables"
+import "datatables.net-dt/css/jquery.dataTables.min.css"
 
 function AffiliationTable(props){
 
@@ -22,6 +28,7 @@ function AffiliationTable(props){
     async function getData() {
       var res = await get_all_affiliations();
       await setAffiliations(res.data.data);
+      $("#affiliationTable").dataTable();
     }
 
     const onDelete = async (id) => {
@@ -43,7 +50,7 @@ function AffiliationTable(props){
 
           return (
            <tr key={index} >
-           <td>{affiliations.affiID}</td>
+          <td>{affiliations.affiID}</td>
           <td >{affiliations.affiliationtype}</td>
           <td >{affiliations.affiliationname}</td>
           <td >{affiliations.affiliationno}</td>
