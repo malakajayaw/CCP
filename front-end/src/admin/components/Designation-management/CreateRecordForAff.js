@@ -8,7 +8,8 @@ import useForceUpdate from 'use-force-update';
 
 import { addPastDesignation } from '../../controllers/pastdes.controller'
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
-import { get_all_active_members } from "../../controllers/memeber.controller";
+import { get_aff_spec_members } from "../../controllers/designation.controller";
+//import { get_all_active_members } from "../../controllers/memeber.controller";
 import { add_activity } from '../../controllers/activity.controller'
 
 const CreateRecord = (props) => {
@@ -21,7 +22,7 @@ const CreateRecord = (props) => {
     const [today, setToday] = useState(
 
     );
-
+    var affil = "5f85d364b708c81ce0a4de86";
     const todayfucn = () => {
         let newDate = new Date()
 
@@ -31,6 +32,7 @@ const CreateRecord = (props) => {
         console.log(today);
     }
 
+    var selectedmem = "Select member";
 
     useEffect(() => {
         let newDate = new Date()
@@ -65,16 +67,26 @@ const CreateRecord = (props) => {
     }, []);
 
     async function getMemData() {
-        var res = await get_all_active_members();
+        window.selectedaff = "Select affiliaion";
+        window.selectedmem = "Select member";
+        var res = await get_aff_spec_members(affil);
         await setMember(res.data.data);
         console.log("mem: " + member);
     }
+
+    const setMemData = (id) => {
+        return member.map((member, index) => {
+            if (id == member._id) {
+                return (member.fname + " " + member.lname + " - " + member.memberShipNo);
+            }
+        });
+    };
 
     const selMem = member.map(item => {
         const container = {};
 
         container["value"] = item._id;
-        container["label"] = item.fname + " " + item.lname + " - " + item._id;
+        container["label"] = item.memberShipNo + " - " + item.fname + " " + item.lname;
         console.log("sel: " + JSON.stringify(container));
         return container;
     })
@@ -82,6 +94,8 @@ const CreateRecord = (props) => {
     const handleMemChange = (e) => {
         setPastDes({ ...pastdes, "MemNo": e.value });
         console.log(e);
+        window.selectedmem = setMemData(e.value);
+        mem();
     }
 
     const handleChange = (e) => {
@@ -92,21 +106,25 @@ const CreateRecord = (props) => {
     const onSubmit = async (e) => {
         const date = new Date();
         e.preventDefault()
-
         console.log(pastdes);
-        const result = await addPastDesignation(pastdes)
-        console.log(result);
-        const det = pastdes.title + "/" + pastdes.MemNo + "/" + pastdes.Year + " / " + pastdes.affiliationNo
-        activity.parameters = det;
-        activity.datetime = date.toLocaleString();
-        console.log("act" + JSON.stringify(activity));
-        const result3 = await add_activity(activity)
-        console.log(result3);
-        if (result.code == 200) {
-            clear()
-            Config.setToast("Record Added Successfully")
-            forceUpdate();
+        if (pastdes.MemNo == "") {
+            Config.setToast("Select Member")
+        }
+        else {
+            const result = await addPastDesignation(pastdes)
+            console.log(result);
+            const det = pastdes.title + "/" + setMemData(pastdes.MemNo) + "/" + pastdes.Year + " / " + setAffData(pastdes.affiliationNo)
+            activity.parameters = det;
+            activity.datetime = date.toLocaleString();
+            console.log("act" + JSON.stringify(activity));
+            const result3 = await add_activity(activity)
+            console.log(result3);
+            if (result.code == 200) {
+                clear()
+                Config.setToast("Record Added Successfully")
+                forceUpdate();
 
+            }
         }
 
 
@@ -144,6 +162,19 @@ const CreateRecord = (props) => {
         });
     };
 
+    const setAffData = (id) => {
+        return affiliations.map((affiliations, index) => {
+            if (id == affiliations._id) {
+                return (affiliations.affiliationno + " - " + affiliations.affiliationname);
+            }
+        });
+    };
+
+    const mem = () => {
+        return (
+            <Select required value="" className="select2" id="MemNo" name="MemNo" placeholder={window.selectedmem} style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
+        )
+    }
 
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
@@ -159,7 +190,7 @@ const CreateRecord = (props) => {
                             <div class="col-md-12">
                                 <div class="card card-primary">
                                     <div class="card-header">
-                                        <h3 class="card-title pb-1 mb-1" style={{ fontWeight: '600' }}>Add new Designation</h3>
+                                        <h3 class="card-title pb-1 mb-1" style={{ fontWeight: '600' }}>Add Record</h3>
 
                                     </div>
 
@@ -179,7 +210,7 @@ const CreateRecord = (props) => {
 
                                                 <div className="form-group">
                                                     <label>Member</label>
-                                                    <Select required value="" className="select2" id="MemNo" name="MemNo" data-placeholder="Select Member" style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
+                                                    { mem()}
                                                 </div>
 
                                                 <label for="inputFName">Year : </label>

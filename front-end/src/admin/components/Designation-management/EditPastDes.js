@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { update_past_designation, get_spec_past_designations } from '../../controllers/pastdes.controller'
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
 import { add_activity } from '../../controllers/activity.controller'
-import { get_all_active_members } from "../../controllers/memeber.controller";
+import { get_all_members } from "../../controllers/designation.controller";
 import Config from '../../controllers/config.controller'
 
 const EditPastDes = (props) => {
@@ -15,6 +15,8 @@ const EditPastDes = (props) => {
     const id = useParams()
     const { register, handleSubmit } = useForm();
 
+    var selectedaff = "Select affiliaion";
+    var selectedmem = "Select member";
 
     const newId = id.Id
 
@@ -47,16 +49,26 @@ const EditPastDes = (props) => {
     }, []);
 
     async function getMemData() {
-        var res = await get_all_active_members();
+        window.selectedaff = "Select affiliaion";
+        window.selectedmem = "Select member";
+        var res = await get_all_members();
         await setMember(res.data.data);
         console.log("mem: " + member);
     }
+
+    const setMemData = (id) => {
+        return member.map((member, index) => {
+            if (id == member._id) {
+                return (member.fname + " " + member.lname + " - " + member.memberShipNo);
+            }
+        });
+    };
 
     const selMem = member.map(item => {
         const container = {};
 
         container["value"] = item._id;
-        container["label"] = item.fname + " " + item.lname + " - " + item._id;
+        container["label"] = item.memberShipNo + " - " + item.fname + " " + item.lname;
         console.log("sel: " + JSON.stringify(container));
         return container;
     })
@@ -64,11 +76,15 @@ const EditPastDes = (props) => {
     const handleMemChange = (e) => {
         setPastDes({ ...pastdes, "MemNo": e.value });
         console.log(e);
+        window.selectedmem = setMemData(e.value);
+        mem();
     }
 
     const handleAffChange = (e) => {
         setPastDes({ ...pastdes, "affiliationNo": e.value });
         console.log(e);
+        window.selectedaff = setAffData(e.value);
+        aff();
     }
 
     const onLoadMemebrer = async (newId) => {
@@ -90,7 +106,7 @@ const EditPastDes = (props) => {
 
 
     const onSubmit = async (e) => {
-        activity.parameters = pastdes.title + " / " + pastdes.MemNo + " / " + pastdes.Year + " / " + pastdes.affiliationNo;
+        activity.parameters = pastdes.title + " / " + setMemData(pastdes.MemNo) + " / " + pastdes.Year + " / " + setAffData(pastdes.affiliationNo);
         // alert(JSON.stringify(member))
         e.preventDefault()
         const result = await update_past_designation(pastdes, id.Id)
@@ -125,6 +141,14 @@ const EditPastDes = (props) => {
         console.log(affiliations);
     }
 
+    const setAffData = (id) => {
+        return affiliations.map((affiliations, index) => {
+            if (id == affiliations._id) {
+                return (affiliations.affiliationno + " - " + affiliations.affiliationname);
+            }
+        });
+    };
+
     const loadAffData = () => {
         return affiliations.map((affiliations, index) => {
             return (
@@ -137,18 +161,26 @@ const EditPastDes = (props) => {
         const container = {};
 
         container["value"] = item._id;
-        container["label"] = item.affiliationname + " - " + item._id;
+        container["label"] = item.affiliationname + " - " + item.affiliationno;
         console.log("sel: " + JSON.stringify(container));
         return container;
     })
 
+    const mem = () => {
+        return (
+            <Select required value="" className="select2" id="MemNo" name="MemNo" placeholder={window.selectedmem} style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
+        )
+    }
+
+    const aff = () => {
+        return (
+            <Select required value="" className="select2" id="affiliation" name="affiliationNo" placeholder={window.selectedaff} style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+        )
+    }
+
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
-            <h6>Edit Record</h6>
             <div className="card">
-                <div className="card-header">
-
-                </div>
                 <div className="card-body">
 
                     <section className="content">
@@ -156,7 +188,7 @@ const EditPastDes = (props) => {
                             <div className="col-md-6">
                                 <div className="card card-success">
                                     <div className="card-header">
-                                        <h3 className="card-title">Change Record </h3>
+                                        <h3 className="card-title">Edit Record </h3>
                                     </div>
                                     <form onSubmit={onSubmit}>
 
@@ -165,7 +197,7 @@ const EditPastDes = (props) => {
 
                                             <div className="form-group">
                                                 <label>Affiliation</label>
-                                                <Select required value={pastdes.affiliationNo} className="select2" id="affiliation" name="affiliationNo" placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+                                                { aff()}
                                             </div>
 
                                             <div className="form-group">
@@ -178,7 +210,7 @@ const EditPastDes = (props) => {
 
                                             <div className="form-group">
                                                 <label>Member</label>
-                                                <Select required value="" className="select2" id="MemNo" name="MemNo" data-placeholder="Select Member" style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
+                                                { mem()}
                                             </div>
 
                                             <div className="form-group">

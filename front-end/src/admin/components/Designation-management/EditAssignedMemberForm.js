@@ -5,10 +5,9 @@ import Select from 'react-select'
 import { useForm } from "react-hook-form";
 
 import moment from 'moment';
-import { update_designation_mem, get_spec_designations } from '../../controllers/designation.controller'
+import { update_designation_mem, get_spec_designations, get_aff_spec_members } from '../../controllers/designation.controller'
 import { addPastDesignation } from '../../controllers/pastdes.controller'
 import { add_activity } from '../../controllers/activity.controller'
-import { get_all_active_members } from "../../controllers/memeber.controller";
 import Config from '../../controllers/config.controller'
 
 const EditAssignedMemberForm = (props) => {
@@ -16,8 +15,10 @@ const EditAssignedMemberForm = (props) => {
     const id = useParams()
     const { register, handleSubmit } = useForm();
 
+    var selectedmem = "Select member";
 
     const newId = id.AssId
+    var affil = "5f85d364b708c81ce0a4de86";
 
     const [Designation, setDesignation] = useState({
         MemNo: "",
@@ -55,16 +56,28 @@ const EditAssignedMemberForm = (props) => {
     }, []);
 
     async function getMemData() {
-        var res = await get_all_active_members();
+        window.selectedmem = "Select member";
+        var res = await get_aff_spec_members(affil);
         await setMember(res.data.data);
         console.log("mem: " + member);
     }
+
+    const setMemData = (id) => {
+        return member.map((member, index) => {
+            if (id == member._id) {
+                return (member.fname + " " + member.lname + " - " + member.memberShipNo);
+            }
+            else {
+                return ("");
+            }
+        });
+    };
 
     const selMem = member.map(item => {
         const container = {};
 
         container["value"] = item._id;
-        container["label"] = item.fname + " " + item.lname + " - " + item._id;
+        container["label"] = item.memberShipNo + " - " + item.fname + " " + item.lname;
         console.log("sel: " + JSON.stringify(container));
         return container;
     })
@@ -102,6 +115,9 @@ const EditAssignedMemberForm = (props) => {
 
          //alert(JSON.stringify(member))
         e.preventDefault()
+        const det = setMemData(Designation.MemNo) + " / " + Designation.title;
+        console.log("det: " + det);
+        activity.parameters = JSON.stringify(det);
         const result = await update_designation_mem(Designation, id.AssId)
         console.log(result);
         const result2 = await addPastDesignation(pastdes)
@@ -125,8 +141,17 @@ const EditAssignedMemberForm = (props) => {
         setActivity({ ...activity, parameters: e.value});
         setPastDes({ ...pastdes, MemNo: e.value });
         setDesignation({ ...Designation, MemNo: e.value });
+        console.log("activity" + JSON.stringify(activity));
         console.log("Designation" + JSON.stringify(Designation));
         console.log("pastdes" + JSON.stringify(pastdes));
+        window.selectedmem = setMemData(e.value);
+        mem();
+    }
+
+    const mem = () => {
+        return (
+            <Select required value="" className="select2" id="MemNo" name="MemNo" placeholder={window.selectedmem} style={{ width: "100%" }} onChange={handleChange} options={selMem} />
+        )
     }
 
     return (<section className="content" style={{ display: props.display }}>
@@ -152,7 +177,7 @@ const EditAssignedMemberForm = (props) => {
 
                                             <div className="form-group">
                                                 <label>Member</label>
-                                                <Select required value="" className="select2" id="MemNo" name="MemNo" data-placeholder="Select Member" style={{ width: "100%" }} onChange={handleChange} options={selMem} />
+                                                { mem()}
                                             </div>
 
                                             <div className="row">

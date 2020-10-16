@@ -27,6 +27,7 @@ const CreateDesignationForm = (props) => {
         console.log(today);
     }
 
+    var selectedaff = "Select affiliaion";
 
     useEffect(() => {
         let newDate = new Date()
@@ -60,25 +61,32 @@ const CreateDesignationForm = (props) => {
     const handleAffChange = (e) => {
         setDesignation({ ...designation, "affiliationNo": e.value });
         console.log(e);
+        window.selectedaff = setAffData(e.value);
+        aff();
     }
 
     const onSubmit = async (e) => {
         const date = new Date();
         e.preventDefault()
-        //console.log("des" + JSON.stringify(designation.affiliationNo));
-        const result = await addDesignation(designation)
-        await console.log(result);
-        const det = designation.affiliationNo + "/" + designation.title + "/" + designation.type
-        activity.parameters = det;
-        activity.datetime = date.toLocaleString();
-        console.log("act" + JSON.stringify(activity));
-        const result3 = await add_activity(activity)
-        console.log(result3);
-        if (result.code == 200) {
-            clear()
-            Config.setToast("Designation Added Successfully")
-            forceUpdate();
+        console.log("des" + designation.affiliationNo);
+        if (designation.affiliationNo == "not set") {
+            Config.setToast("Enter affiliation")
+        }
+        else {
+            const result = await addDesignation(designation)
+            await console.log(result);
+            const det = setAffData(designation.affiliationNo) + "/" + designation.title + "/" + designation.type
+            activity.parameters = det;
+            activity.datetime = date.toLocaleString();
+            console.log("act" + JSON.stringify(activity));
+            const result3 = await add_activity(activity)
+            console.log(result3);
+            if (result.code == 200) {
+                clear()
+                Config.setToast("Designation Added Successfully")
+                forceUpdate();
 
+            }
         }
 
 
@@ -102,19 +110,34 @@ const CreateDesignationForm = (props) => {
     }, []);
 
     async function getAffData() {
+        window.selectedaff = "Select affiliaion";
         var res = await get_all_affiliations();
         await setAffiliations(res.data.data);
         console.log("aff: " + affiliations);
     }
 
+    const setAffData = (id) => {
+        return affiliations.map((affiliations, index) => {
+            if (id == affiliations._id) {
+                return (affiliations.affiliationno + " - " + affiliations.affiliationname);
+            }
+        });
+    };
+
     const sel = affiliations.map(item => {
         const container = {};
 
         container["value"] = item._id;
-        container["label"] = item.affiliationname + " - " + item._id;
-        console.log("sel: " + JSON.stringify(container));
+        container["label"] = item.affiliationname + " - " + item.affiliationno;
+        //console.log("sel: " + JSON.stringify(container));
         return container;
     })
+
+    const aff = () => {
+        return (
+            <Select required value="" className="select2" id="affiliation" name="affiliationNo" placeholder={window.selectedaff} style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+        )
+    }
 
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
@@ -130,7 +153,7 @@ const CreateDesignationForm = (props) => {
                             <div class="col-md-12">
                                 <div class="card card-primary">
                                     <div class="card-header">
-                                        <h3 class="card-title pb-1 mb-1" style={{ fontWeight: '600' }}>Add new Designation</h3>
+                                        <h3 class="card-title pb-1 mb-1" style={{ fontWeight: '600' }}>Add New Designation</h3>
 
                                     </div>
 
@@ -145,7 +168,7 @@ const CreateDesignationForm = (props) => {
                                                 
                                                 <div className="form-group">
                                                     <label>Affiliation</label>
-                                                    <Select required value = "" className="select2" id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+                                                    {aff() }
                                                 </div>
 
                                                 <div className="form-group">
