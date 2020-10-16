@@ -20,15 +20,12 @@ const DesignationTable = (props) => {
     //variable to store designations
     const [designation, SetDesignation] = useState([]);
 
-    //for updating components
-    const forceUpdate = useForceUpdate();
-
     //place holders for react-select-search
     window.selectedaff = "Select affiliaion";
     window.selectedmem = "Select member";
 
     //variable to store activities
-    let [activity, setActivity] = useState({
+    let [activity] = useState({
         MemNo: "To be taken from redux",
         action: "Delete designation",
         table: "Designations",
@@ -70,7 +67,7 @@ const DesignationTable = (props) => {
         //set date for activity variable
         activity.datetime = date.toLocaleString();
         //add activity to database
-        const result3 = await add_activity(activity)
+        await add_activity(activity)
     }
 
     //variable to store affiliations
@@ -104,11 +101,11 @@ const DesignationTable = (props) => {
                     <td>{designation.title}</td>
                     <td>{designation.type}</td>
                     <td className="project-actions text-center">
-                        <Link to={`/Admin/EditDesignation/${designation._id}`}><a className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
+                        <Link to={`/Admin/EditDesignation/${designation._id}`} className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
                             {" "}
                             <i className="fas fa-folder mr-1" />
                              Edit{" "}
-                        </a></Link>
+                        </Link>
                         <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(designation._id, designation.title, designation.affiliationNo)}>
                             {" "}
                             <i className="fas fa-trash mr-1" />Remove{" "}

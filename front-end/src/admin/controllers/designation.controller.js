@@ -4,7 +4,6 @@ import Config from "./config.controller";
 //=============================================================================== Add Designation
 
 export const addDesignation = (data) => {
-    console.log(data.DesNo);
     data = {
         title: data.title,
         affiliationNo: data.affiliationNo,
@@ -40,7 +39,6 @@ export const get_all_designations = () => {
 //=============================================================================== Get aff spec designations
 
 export const get_aff_spec_designations = (id) => {
-    console.log(id);
     var data = {
         id: id
     }
@@ -58,7 +56,6 @@ export const get_aff_spec_designations = (id) => {
 //=============================================================================== Get spec designations
 
 export const get_spec_designations = (id) => {
-    console.log(id);
     var data = {
         id: id
     }
@@ -76,7 +73,6 @@ export const get_spec_designations = (id) => {
 //=============================================================================== Delete designation
 
 export const remove_designation = (id) => {
-    console.log(id);
     var data = {
         id: id
     }
@@ -169,7 +165,6 @@ export const get_all_members = () => {
 //=============================================================================== get aff spec members
 
 export const get_aff_spec_members = (id) => {
-    console.log(id);
     var data = {
         id: id
     }

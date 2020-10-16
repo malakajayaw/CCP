@@ -111,9 +111,9 @@ const EditAssignedMemberForm = (props) => {
         //update designation
         const result = await update_designation_mem(Designation, id.AssId)
         //add past record to record
-        const result2 = await addPastDesignation(pastdes)
+        await addPastDesignation(pastdes)
         //add activity to database
-        const result3 = await add_activity(activity)
+        await add_activity(activity)
         if (result.code == 200) {
             Config.setToast("Assigned successfully")
         }

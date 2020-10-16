@@ -47,7 +47,6 @@ const EditDesignation = (props) => {
             parameters: result.data.data.MemNo,
             datetime: date.toLocaleString()
         });
-        await console.log(designation);
         //set data for designation
         setDesignation(result.data.data)
     }
@@ -60,7 +59,7 @@ const EditDesignation = (props) => {
         //update designation
         const result = await update_designation(designation, id.desId)
         //add activity to database
-        const result3 = await add_activity(activity)
+        await add_activity(activity)
         if (result.code == 200) {
             Config.setToast("Updated successfully")
         }

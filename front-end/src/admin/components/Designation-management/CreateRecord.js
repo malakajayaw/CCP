@@ -44,7 +44,7 @@ const CreateRecord = (props) => {
     });
 
     //variable to store activities
-    let [activity, setActivity] = useState({
+    let [activity] = useState({
         MemNo: "To be taken from redux",
         action: "Edit Record - Admin",
         table: "Records",
@@ -124,7 +124,7 @@ const CreateRecord = (props) => {
             //set date for activity variable
             activity.datetime = date.toLocaleString();
             //add activity to database
-            const result3 = await add_activity(activity)
+            await add_activity(activity)
             if (result.code == 200) {
                 clear()
                 Config.setToast("Record Added Successfully")

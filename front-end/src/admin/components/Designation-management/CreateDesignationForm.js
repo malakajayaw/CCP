@@ -43,7 +43,7 @@ const CreateDesignationForm = (props) => {
     });
 
     //variable to store activities
-    let [activity, setActivity] = useState({
+    let [activity] = useState({
         MemNo: "To be taken from redux",
         action: "New Designation",
         table: "Designations",
@@ -80,7 +80,7 @@ const CreateDesignationForm = (props) => {
             //set date for activity variable
             activity.datetime = date.toLocaleString();
             //add activity to database
-            const result3 = await add_activity(activity)
+            await add_activity(activity)
             if (result.code == 200) {
                 clear()
                 Config.setToast("Designation Added Successfully")
@@ -160,7 +160,7 @@ const CreateDesignationForm = (props) => {
                                             <div class="form-group">
 
 
-                                                <label for="inputFName">Designation Title : </label>
+                                                <label >Designation Title : </label>
                                                 <input required type="text" id="title" name="title" class="form-control" onChange={handleChange} />
                                                 
                                                 <div className="form-group">

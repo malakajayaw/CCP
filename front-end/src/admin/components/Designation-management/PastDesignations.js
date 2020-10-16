@@ -21,15 +21,12 @@ const PastDesignations = (props) => {
     //variable to store past designations
     const [pastdes, SetPastDes] = useState([]);
 
-    //for updating components
-    const forceUpdate = useForceUpdate();
-
     //place holders for react-select-search
     window.selectedaff = "Select affiliaion";
     window.selectedmem = "Select member";
 
     //variable to store activities
-    let [activity, setActivity] = useState({
+    let [activity] = useState({
         MemNo: "To be taken from redux",
         action: "Delete record - Admin",
         table: "Records",
@@ -71,7 +68,7 @@ const PastDesignations = (props) => {
         //set date for activity variable
         activity.datetime = date.toLocaleString();
         //add activity to database
-        const result3 = await add_activity(activity)
+        await add_activity(activity)
     }
 
     //variable to store affiliations
@@ -136,11 +133,11 @@ const PastDesignations = (props) => {
                     <td>{setMemData(pastdes.MemNo)}</td>
                     <td>{pastdes.Year}</td>
                     <td className="project-actions text-center">
-                        <Link to={`/Admin/EditPastDes/${pastdes._id}`}><a className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
+                        <Link to={`/Admin/EditPastDes/${pastdes._id}`} className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
                             {" "}
                             <i className="fas fa-folder mr-1" />
                              Update{" "}
-                        </a></Link>
+                        </Link>
                         <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(pastdes._id, pastdes.title, pastdes.MemNo, pastdes.Year, pastdes.affiliationNo)}>
                             {" "}
                             <i className="fas fa-trash mr-1" />Remove{" "}

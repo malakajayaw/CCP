@@ -98,7 +98,7 @@ const EditPastDes = (props) => {
         //update past designation
         const result = await update_past_designation(pastdes, id.Id)
         //add activity to database
-        const result3 = await add_activity(activity)
+        await add_activity(activity)
         if (result.code == 200) {
             Config.setToast("Updated successfully")
         }
