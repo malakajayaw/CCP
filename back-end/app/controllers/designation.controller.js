@@ -187,3 +187,17 @@ exports.get_aff_spec_members= async function (req, res, next) {
         return res.status(405).send("Something went wrong in get_spec_des");
     }
 };
+
+exports.get_spec_mem = async function (req, res, next) {
+    var id = req.body.id;
+    try {
+        const log = await Member.findOne({
+            _id: id,
+        });
+        return res.status(200).send({
+            data: log,
+        });
+    } catch (error) {
+        return res.status(405).send("Something went wrong in get_spec_des");
+    }
+};
