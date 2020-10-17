@@ -66,12 +66,8 @@ function EventAttendanceRegistered(props) {
           <div className="card-header">
           </div>
           <div className="card-body">
-          <Link to = {"/Admin/EventAttendanceConfirmed/"+id} type="button" className="btn btn-success btn-sm float-right add_btn mr-2 my-2">
-              Confirmed Members
-            </Link>
-            <Link to = {"/Admin/EventAttendanceAttended/"+id} type="button" className="btn btn-info btn-sm float-right add_btn mr-2 my-2">
-              Attended Members
-            </Link>
+          <Link to = {"/Admin/EventAttendanceConfirmed/"+id} type="button" className="btn btn-success btn-sm float-right add_btn mr-2 my-2">Confirmed Members</Link>
+          <Link to = {"/Admin/EventAttendanceAttended/"+id} type="button" className="btn btn-info btn-sm float-right add_btn mr-2 my-2">Attended Members</Link>
           <h5>Registered Members for the Event</h5>
             <table id="eventattTable" className="table table-bordered table-striped dataTable">
               <thead>

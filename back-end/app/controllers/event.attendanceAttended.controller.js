@@ -10,7 +10,6 @@ exports.addEventAttendanceAttended = async function (req, res, next) {
     let newCAttended = EventAttendanceAttended({
             eventId : req.body.eventId,
             responder : req.body.responder
-
     });
 
     const update_result = await EventAttendanceConfirmed.findOneAndUpdate({responder: req.body.responder}, {state:true}, {new:true})
