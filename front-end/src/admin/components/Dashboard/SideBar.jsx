@@ -54,9 +54,9 @@ export default function Sidebar() {
 
 
           <li className="nav-item pointer_cursor">
-          <Link id="affiliationNav"  className="nav-link" to="/Admin/StudentBranch">
+          <Link id="affiliationNav"  className="nav-link" to="/Admin/Affiliationview">
               <i className="nav-icon fas fa-user-graduate"></i>
-              StudentBranch View
+              Affiliation View
           <span className="badge badge-info right"></span>
             
                     </Link>

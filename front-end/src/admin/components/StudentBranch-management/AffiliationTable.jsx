@@ -49,8 +49,9 @@ function AffiliationTable(props){
      
 
           return (
-           <tr key={index} >
-          <td>{affiliations.affiID}</td>
+          <tr key={index} >
+          <td>{index +1}</td>
+          {/* <td>{affiliations.affiID }</td> */}
           <td >{affiliations.affiliationtype}</td>
           <td >{affiliations.affiliationname}</td>
           <td >{affiliations.affiliationno}</td>

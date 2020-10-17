@@ -4,3 +4,7 @@
 .vs/
 
 
+
+front-end/package-lock.json
+
+back-end/app/controllers/event.attendance.controller.js

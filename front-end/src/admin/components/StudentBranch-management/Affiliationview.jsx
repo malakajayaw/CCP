@@ -1,7 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Link } from "react-router-dom";
 import { useState ,useEffect} from 'react';
-import {get_all_affiliations,deleteAffiliation} from "../../controllers/affiliation.controller";
+import {get_all_affiliations} from "../../controllers/affiliationview.controller";
 import Config from "../../controllers/config.controller";
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap"
@@ -11,7 +10,7 @@ import $ from "jquery"
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 
-function AffiliationTable(props){
+function AffiliationView(props){
 
   const initialValue = {affiliations : ['']};
   const [size,setSize] = useState('10');
@@ -28,7 +27,7 @@ function AffiliationTable(props){
     async function getData() {
       var res = await get_all_affiliations();
       await setAffiliations(res.data.data);
-      $("#affiliationTable").dataTable();
+      $("#affiliationView").dataTable();
     }
 
     const onDelete = async (id) => {
@@ -44,13 +43,14 @@ function AffiliationTable(props){
 
     const loadData = () => {
 
-        return affiliations.map((affiliations, affiliationtype) => {
+        return affiliations.map((affiliations, index) => {
         var date = new Date(affiliations.date);
 
 
           return (
-           <tr key={affiliationtype == "Student Branch"} >
-          <td>{affiliations.affiID}</td>
+            <tr key={index} >
+          <td>{index +1}</td>
+          {/* <td>{affiliations.affiID}</td> */}
           { <td >{affiliations.affiliationtype }</td> }
           <td >{affiliations.affiliationname}</td>
           <td >{affiliations.affiliationno}</td>
@@ -74,7 +74,7 @@ function AffiliationTable(props){
         {/* <!-- /.card-header --> */}
         <div className="card-body">
 
-        <table id="affiliationTable" className="table table-bordered table-striped dataTable" >
+        <table id="affiliationView" className="table table-bordered table-striped dataTable" >
             <thead>
             <tr>
               <th>Affiliation ID</th>
@@ -113,7 +113,7 @@ function AffiliationTable(props){
 
 }
 
-export default AffiliationTable;
+export default AffiliationView;
 
 
 

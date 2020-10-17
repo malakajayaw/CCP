@@ -89,10 +89,22 @@ function ManageAffiliation() {
   <form id="affiliationUpdate"  method="post" onSubmit={send}>
     <div className="card-body">
 
-      <div className="form-group">
+
+    <div className="form-group">
+      <label htmlFor="affiliationtype">Affiliation Type</label>
+      <select className="select"  name="affiliationtype"   style={{ width: "100%" }} value={affiliationData.affiliationtype} onChange={handleChange}  className="form-control" id="affiliationtype" placeholder="Enter Affiliation Type" required>
+                <option>Student Branch</option>
+                <option>Women In Enginerring Affiliation</option>
+                <option>Young Professionals Affiliation</option>
+                <option>Technical Chapter</option>
+                
+              </select>
+      </div>
+
+      {/* <div className="form-group">
         <label htmlFor="affiliationtype">Affiliation Type</label>
         <input type="text" value={affiliationData.affiliationtype} onChange={handleChange}  className="form-control" id="affiliationtype" placeholder="Enter Affiliation Type" required/>
-      </div>
+      </div> */}
 
 
       <div className="form-group">
@@ -111,9 +123,18 @@ function ManageAffiliation() {
       </div>
 
       
-      <div className="form-group">
+      {/* <div className="form-group">
         <label htmlFor="status">Status</label>
         <input type="text" value={affiliationData.status} onChange={handleChange}  className="form-control" id="status" placeholder="Enter the status" required/>
+      </div> */}
+
+      <div className="form-group">
+      <label htmlFor="status">Status</label>
+      <select className="select"  name="status"   style={{ width: "100%" }} value={affiliationData.status} onChange={handleChange}  className="form-control" id="status" placeholder="Enter the status" required>
+                <option>Available</option>
+                <option>Not Available</option>
+                
+              </select>
       </div>
 
       
