@@ -178,3 +178,20 @@ export const get_aff_spec_members = (id) => {
             })
     })
 }
+
+//=============================================================================== Get spec member
+
+export const get_spec_member = (id) => {
+    var data = {
+        id: id
+    }
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/designations/getSpecMember`, { ...data })
+            .then(result => {
+                resolve({ code: 200, data: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}

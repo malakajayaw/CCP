@@ -15,7 +15,7 @@ import Config from '../../controllers/config.controller'
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 
-const aff = "5f85d2e1b708c81ce0a4de85";
+const aff = "5f8a5863c17b4b17dc919a91";
 
 const PastSpecDesignations = (props) => {
 

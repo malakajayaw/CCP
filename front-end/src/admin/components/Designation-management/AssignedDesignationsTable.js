@@ -16,6 +16,8 @@ import "datatables.net-dt/css/jquery.dataTables.min.css"
 
 const AssignedDesignationsTable = (props) => {
 
+    const aff = "5f8a5863c17b4b17dc919a91";
+
     //place holders for react-select-search
     window.selectedaff = "Select affiliaion";
     window.selectedmem = "Select member";
@@ -38,7 +40,7 @@ const AssignedDesignationsTable = (props) => {
 
     //get designations for a specific affiliation
     async function getData() {
-        var res = await get_aff_spec_designations("5f85d2e1b708c81ce0a4de85");
+        var res = await get_aff_spec_designations(aff);
         await SetDesignation(res.data.data);
         $("#AssDes").dataTable();
     }

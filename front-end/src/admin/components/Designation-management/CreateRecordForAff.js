@@ -21,7 +21,7 @@ const CreateRecord = (props) => {
     const aff = id.aff
 
     //affiliation id of logged in user
-    var affil = "5f85d364b708c81ce0a4de86";
+    var affil = "5f8a5863c17b4b17dc919a91";
 
     //for getting date
     const [today, setToday] = useState(

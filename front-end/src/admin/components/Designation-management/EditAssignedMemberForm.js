@@ -4,7 +4,7 @@ import Select from 'react-select'
 import { useForm } from "react-hook-form";
 
 //controllers
-import { update_designation_mem, get_spec_designations, get_aff_spec_members } from '../../controllers/designation.controller'
+import { update_designation_mem, get_spec_designations, get_aff_spec_members, get_spec_member } from '../../controllers/designation.controller'
 import { addPastDesignation } from '../../controllers/pastdes.controller'
 import { add_activity } from '../../controllers/activity.controller'
 import Config from '../../controllers/config.controller'
@@ -14,7 +14,7 @@ const EditAssignedMemberForm = (props) => {
     //get passed parameters
     const id = useParams()
     const newId = id.AssId
-    var affil = "5f85d364b708c81ce0a4de86";
+    var affil = "5f8a5863c17b4b17dc919a91";
 
     //variable to store Designations
     const [Designation, setDesignation] = useState({
@@ -52,9 +52,19 @@ const EditAssignedMemberForm = (props) => {
 
     //get members specific to logged users affiliation from data base
     async function getMemData() {
-        window.selectedmem = "Select member";
         var res = await get_aff_spec_members(affil);
         await setMember(res.data.data);
+    }
+
+    //get members details from database
+    async function getMemDet(id) {
+        if (id == "") {
+            window.selectedmem = "Select new member";
+        }
+        else {
+            var res = await get_spec_member(id);
+            window.selectedmem = res.data.data.memberShipNo + " - " + res.data.data.fname + " " + res.data.data.lname;
+        }
     }
 
     //get member data for a given _id
@@ -86,6 +96,7 @@ const EditAssignedMemberForm = (props) => {
         const result = await get_spec_designations(newId)
         //set data for designations
         setDesignation(result.data.data)
+        await getMemDet(result.data.data.MemNo)
         //set data for past records
         setPastDes({
             ...pastdes,

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 
 //controllers
 import { update_designation, get_spec_designations } from '../../controllers/designation.controller'
-import { get_all_affiliations } from "../../controllers/affiliation.controller";
+import { get_all_affiliations, get_affiliation } from "../../controllers/affiliation.controller";
 import { add_activity } from '../../controllers/activity.controller'
 import Config from '../../controllers/config.controller'
 
@@ -35,12 +35,19 @@ const EditDesignation = (props) => {
         onLoadMemebrer(newId);
     }, []);
 
+    //get affiliation details from database
+    async function getAffDet(id) {
+        var res = await get_affiliation(id);
+        window.selectedaff = res.data.data.affiliationno + " - " + res.data.data.affiliationname;
+    }
+
     //runs when loading the form
     const onLoadMemebrer = async (newId) => {
         //get date info
         const date = new Date();
         //get designation data for a specific affiliation from database
         const result = await get_spec_designations(newId)
+        await getAffDet(result.data.data.affiliationNo)
         //set data for activity log
         setActivity({
             ...activity,

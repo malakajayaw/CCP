@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 //controllers
 import { update_past_designation, get_spec_past_designations } from '../../controllers/pastdes.controller'
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
-import { get_aff_spec_members } from "../../controllers/designation.controller";
+import { get_aff_spec_members, get_spec_member } from "../../controllers/designation.controller";
 import { add_activity } from '../../controllers/activity.controller'
 import Config from '../../controllers/config.controller'
 
@@ -15,7 +15,7 @@ const EditPastDes = (props) => {
     //get passed parameters
     const id = useParams()
     const newId = id.Id
-    var affil = "5f85d364b708c81ce0a4de86";
+    var affil = "5f8a5863c17b4b17dc919a91";
 
     //variable to store past designations
     const [pastdes, setPastDes] = useState({
@@ -75,12 +75,19 @@ const EditPastDes = (props) => {
         mem();
     }
 
+    //get members details from database
+    async function getMemDet(id) {
+        var res = await get_spec_member(id);
+        window.selectedmem = res.data.data.memberShipNo + " - " + res.data.data.fname + " " + res.data.data.lname;
+    }
+
     //runs when loading the form
     const onLoadMemebrer = async (newId) => {
         //get date info
         const date = new Date();
         //get specific past designation data
         const result = await get_spec_past_designations(newId)
+        await getMemDet(result.data.data.MemNo)
         //set data for activity log
         setActivity({
             ...activity,

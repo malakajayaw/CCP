@@ -12,5 +12,6 @@ router.post('/updateDesignationMem', DesignationController.update_designation_me
 router.post('/removeDesignationMem', DesignationController.remove_designation_mem);
 router.get('/getAllMembers', DesignationController.get_all_members);
 router.post('/getAffSpecMembers', DesignationController.get_aff_spec_members);
+router.post('/getSpecMember', DesignationController.get_spec_mem);
 
 module.exports = router;
