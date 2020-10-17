@@ -45,28 +45,3 @@ exports.getAttendedMembersForAnEvent = async function (req, res, next) {
     }
  
  }
-
-//===========================================================================================
-//================================== Delete A Attended Member ==============================
-//=========================================================================================== 
-
-exports.deleteAttendedMemebr = async  function (req, res, next) {
-
-    var id = req.body.id
-
-        try {
-            const search  = await EventAttendanceAttended.findOne({ _id: id})
-            if(!search){
-                return  res.status(402).send("No exsisting event");
-            }
-            const log = await  EventAttendanceAttended.findOneAndDelete({
-                _id: id
-            })
-    
-          return  res.status(200).send({
-            message : "Attended Member Deleted!"
-          });
-        } catch (error) {
-            return  res.status(403).send("Something went wrong");
-        }
-}
