@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 
 //controllers
 import { get_spec_aff_past_designations, remove_past_designation } from "../../controllers/pastdes.controller";
-import { get_all_members } from "../../controllers/designation.controller";
-import { get_all_affiliations } from "../../controllers/affiliation.controller";
+import { get_all_members, get_spec_member } from "../../controllers/designation.controller";
+import { get_all_affiliations, get_affiliation } from "../../controllers/affiliation.controller";
 import { add_activity } from '../../controllers/activity.controller';
 import Config from '../../controllers/config.controller'
 
@@ -61,11 +61,25 @@ const PastSpecDesignations = (props) => {
         }
     }
 
+    //get member name relevent to a given _id
+    async function setMemDetails(id) {
+        var result = await get_spec_member(id)
+        return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+    }
+
+    //get affiliation name relevent to a given _id
+    async function setAffDetails(id) {
+        var result = await get_affiliation(id)
+        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+    }
+
     //add activity log about deleted past designation
     const addActivity = async (title, mem, year, aff) => {
         const date = new Date();
         //set parameters for activity variable
-        activity.parameters = title + " / " + setMemData(mem) + " / " + year + " / " + setAffData(aff);
+        var detAff = await setAffDetails(aff)
+        var detMem = await setMemDetails(mem)
+        activity.parameters = title + " / " + detMem + " / " + year + " / " + detAff;
         //set date for activity variable
         activity.datetime = date.toLocaleString();
         //add activity to database

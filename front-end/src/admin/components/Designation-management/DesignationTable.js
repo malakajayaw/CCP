@@ -6,7 +6,7 @@ import $ from "jquery"
 
 //controllers
 import { get_all_designations, remove_designation } from "../../controllers/designation.controller";
-import { get_all_affiliations } from "../../controllers/affiliation.controller";
+import { get_all_affiliations, get_affiliation } from "../../controllers/affiliation.controller";
 import { add_activity } from '../../controllers/activity.controller';
 import Config from '../../controllers/config.controller'
 
@@ -59,11 +59,18 @@ const DesignationTable = (props) => {
         }
     }
 
+    //get affiliation name relevent to a given _id
+    async function setAffDetails(id) {
+        var result = await get_affiliation(id)
+        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+    }
+
     //add activity log about deleted designation
     const addActivity = async (name, aff) => {
         const date = new Date();
         //set parameters for activity variable
-        activity.parameters = name + " / " + setAffData(aff);
+        var detAff = await setAffDetails(aff)
+        activity.parameters = name + " / " + detAff;
         //set date for activity variable
         activity.datetime = date.toLocaleString();
         //add activity to database

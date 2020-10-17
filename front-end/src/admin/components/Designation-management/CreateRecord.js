@@ -6,8 +6,8 @@ import useForceUpdate from 'use-force-update';
 
 //controllers
 import { addPastDesignation } from '../../controllers/pastdes.controller'
-import { get_all_affiliations } from "../../controllers/affiliation.controller";
-import { get_all_members } from "../../controllers/designation.controller";
+import { get_all_affiliations, get_affiliation } from "../../controllers/affiliation.controller";
+import { get_all_members, get_spec_member } from "../../controllers/designation.controller";
 import { add_activity } from '../../controllers/activity.controller'
 
 const CreateRecord = (props) => {
@@ -46,7 +46,7 @@ const CreateRecord = (props) => {
     //variable to store activities
     let [activity] = useState({
         MemNo: "To be taken from redux",
-        action: "Edit Record - Admin",
+        action: "Create Record - Admin",
         table: "Records",
         parameters: "not set",
         datetime: ""
@@ -104,6 +104,18 @@ const CreateRecord = (props) => {
 
     }
 
+    //get member name relevent to a given _id
+    async function setMemDetails(id) {
+        var result = await get_spec_member(id)
+        return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+    }
+
+    //get affiliation name relevent to a given _id
+    async function setAffDetails(id) {
+        var result = await get_affiliation(id)
+        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+    }
+
     //runs on submit
     const onSubmit = async (e) => {
         const date = new Date();
@@ -119,7 +131,9 @@ const CreateRecord = (props) => {
             //add past designation to database
             const result = await addPastDesignation(pastdes)
             //set parameters for activity variable
-            const det = pastdes.title + "/" + setMemData(pastdes.MemNo) + "/" + pastdes.Year + " / " + setAffData(pastdes.affiliationNo)
+            var detAff = await setAffDetails(pastdes.affiliationNo)
+            var detMem = await setMemDetails(pastdes.MemNo)
+            const det = pastdes.title + "/" + detMem + "/" + pastdes.Year + " / " + detAff
             activity.parameters = det;
             //set date for activity variable
             activity.datetime = date.toLocaleString();

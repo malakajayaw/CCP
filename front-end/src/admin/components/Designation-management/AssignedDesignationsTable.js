@@ -5,7 +5,7 @@ import 'jquery/dist/jquery.min.js';
 import $ from "jquery"
 
 //controllers
-import { get_aff_spec_designations, remove_designation_mem, get_all_members } from "../../controllers/designation.controller";
+import { get_aff_spec_designations, remove_designation_mem, get_all_members, get_spec_member } from "../../controllers/designation.controller";
 import { add_activity } from '../../controllers/activity.controller'
 import Config from '../../controllers/config.controller'
 
@@ -64,7 +64,8 @@ const AssignedDesignationsTable = (props) => {
     const addActivity = async (name, title) => {
         const date = new Date();
         //set parameters for activity variable
-        activity.parameters = setMemData(name) + " / " + title;
+        var para = await setMemDetails(name)
+        activity.parameters = para + " / " + title;
         //set date for activity variable
         activity.datetime = date.toLocaleString();
         //add activity to database
@@ -91,6 +92,12 @@ const AssignedDesignationsTable = (props) => {
             }
         });
     };
+
+    //get member name relevent to a given _id
+    async function setMemDetails(id){
+        var result = await get_spec_member(id)
+        return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+    }
 
     //get membership no relevent to a given _id
     const setMemNo = (id) => {

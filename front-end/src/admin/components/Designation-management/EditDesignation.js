@@ -58,11 +58,18 @@ const EditDesignation = (props) => {
         setDesignation(result.data.data)
     }
 
+    //get affiliation name relevent to a given _id
+    async function setAffDetails(id) {
+        var result = await get_affiliation(id)
+        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+    }
+
     //runs on submit
     const onSubmit = async (e) => {
-        //set parameters for activity variable
-        activity.parameters = setAffData(designation.affiliationNo) + " / " + designation.title + " / " + designation.type;
         e.preventDefault()
+        //set parameters for activity variable
+        var detAff = await setAffDetails(designation.affiliationNo)
+        activity.parameters = detAff + " / " + designation.title + " / " + designation.type;
         //update designation
         const result = await update_designation(designation, id.desId)
         //add activity to database

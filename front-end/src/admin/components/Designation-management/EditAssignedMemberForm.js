@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { update_designation_mem, get_spec_designations, get_aff_spec_members, get_spec_member } from '../../controllers/designation.controller'
 import { addPastDesignation } from '../../controllers/pastdes.controller'
 import { add_activity } from '../../controllers/activity.controller'
+import { get_affiliation } from '../../controllers/affiliation.controller'
 import Config from '../../controllers/config.controller'
 
 const EditAssignedMemberForm = (props) => {
@@ -113,12 +114,26 @@ const EditAssignedMemberForm = (props) => {
         });
     }
 
+    //get member name relevent to a given _id
+    async function setMemDetails(id) {
+        var result = await get_spec_member(id)
+        return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+    }
+
+    //get affiliation name relevent to a given _id
+    async function setAffDetails(id) {
+        var result = await get_affiliation(id)
+        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+    }
+
     //runs on submit
     const onSubmit = async (e) => {
         e.preventDefault()
         //set parameters for activity variable
-        const det = setMemData(Designation.MemNo) + " / " + Designation.title;
-        activity.parameters = JSON.stringify(det);
+        var detAff = await setAffDetails(Designation.affiliationNo)
+        var detMem = await setMemDetails(Designation.MemNo)
+        const det = detMem + " / " + Designation.title + " / " + detAff;
+        activity.parameters = det;
         //update designation
         const result = await update_designation_mem(Designation, id.AssId)
         //add past record to record

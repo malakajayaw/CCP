@@ -5,7 +5,7 @@ import useForceUpdate from 'use-force-update';
 
 //controllers
 import { addDesignation } from '../../controllers/designation.controller'
-import { get_all_affiliations } from "../../controllers/affiliation.controller";
+import { get_all_affiliations, get_affiliation } from "../../controllers/affiliation.controller";
 import { add_activity } from '../../controllers/activity.controller'
 
 const CreateDesignationForm = (props) => {
@@ -63,6 +63,12 @@ const CreateDesignationForm = (props) => {
         aff();
     }
 
+    //get affiliation name relevent to a given _id
+    async function setAffDetails(id) {
+        var result = await get_affiliation(id)
+        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+    }
+
     //runs on submit
     const onSubmit = async (e) => {
         const date = new Date();
@@ -75,7 +81,8 @@ const CreateDesignationForm = (props) => {
             //add designation to database
             const result = await addDesignation(designation)
             //set parameters for activity variable
-            const det = setAffData(designation.affiliationNo) + "/" + designation.title + "/" + designation.type
+            var detAff = await setAffDetails(designation.affiliationNo)
+            const det = detAff + "/" + designation.title + "/" + designation.type
             activity.parameters = det;
             //set date for activity variable
             activity.datetime = date.toLocaleString();

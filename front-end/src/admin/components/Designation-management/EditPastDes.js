@@ -94,6 +94,18 @@ const EditPastDes = (props) => {
         window.selectedmem = res.data.data.memberShipNo + " - " + res.data.data.fname + " " + res.data.data.lname;
     }
 
+    //get member name relevent to a given _id
+    async function setMemDetails(id) {
+        var result = await get_spec_member(id)
+        return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+    }
+
+    //get affiliation name relevent to a given _id
+    async function setAffDetails(id) {
+        var result = await get_affiliation(id)
+        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+    }
+
     //runs when loading the form
     const onLoadMemebrer = async (newId) => {
         //get date info
@@ -113,9 +125,11 @@ const EditPastDes = (props) => {
 
     //runs on submit
     const onSubmit = async (e) => {
-        //set parameters for activity variable
-        activity.parameters = pastdes.title + " / " + setMemData(pastdes.MemNo) + " / " + pastdes.Year + " / " + setAffData(pastdes.affiliationNo);
         e.preventDefault()
+        //set parameters for activity variable
+        var detAff = await setAffDetails(pastdes.affiliationNo)
+        var detMem = await setMemDetails(pastdes.MemNo)
+        activity.parameters = pastdes.title + " / " + detMem + " / " + pastdes.Year + " / " + detAff;
         //update past designation
         const result = await update_past_designation(pastdes, id.Id)
         //add activity to database
