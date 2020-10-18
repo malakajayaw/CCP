@@ -251,6 +251,20 @@ exports.login = async function (req, res) {
 
 
 
+// var fileName = '';
+
+// if(req.files !== null)
+// {
+//     const file = req.files.banner;
+//     fileName =  Math.random().toString(36).substring(2, 15) + file.name;
+//     file.mv(`${__dirname}/../../../front-end/public/images/events/${fileName}`,err => {
+//             if(err){
+//                 return res.status(500).send(err)
+//             }  
+//         });
+// }
+
+
 
 //======================================================================================================
 //===================================  Profile Picture     ==============================================
@@ -260,10 +274,10 @@ exports.login = async function (req, res) {
 exports.upload_image = function (req, res, next) {
 
     console.log(req.body.membershipnumber);
-
+    console.log(req.file);
     let updateProfilePic = {
         "membershipnumber": req.body.membershipnumber,
-        "profilepic": req.files.path
+        "profilepic": req.file.path
     }
     console.log(updateProfilePic);
 

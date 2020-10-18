@@ -4,8 +4,8 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
-// const multer = require("multer");
-// const upload = multer({ dest: "uploads/profilepic/" });
+const multer = require("multer");
+const upload = multer({ dest: "uploads/profilepic/" });
 const fileUpload = require('express-fileupload');
 
 
@@ -32,11 +32,10 @@ const admin = require("./app/routes/admin.route");
 const dbConfig = require("./app/config/db.config");
 app.use(cors());
 app.use(express.json());
-app.use(fileUpload());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan("dev"));
-// app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static("uploads"));
 mongoose.set("useCreateIndex", true);
 
 
@@ -46,6 +45,7 @@ mongoose.set("useCreateIndex", true);
 
 //user routes
 app.use("/member", memberRoutes);
+app.use(fileUpload());
 app.use("/event", eventRoutes);
 app.use("/eventReport", eventReport);
 app.use("/activity", activity);
@@ -56,7 +56,7 @@ app.use("/pastdes", pastdes);
 app.use("/admin", admin);
 
 //======================================================================================================
-//================================== Handlle Error     ===========================================
+//================================== Handlle Error           ===========================================
 //======================================================================================================
 
 app.use((req, res, next) => {

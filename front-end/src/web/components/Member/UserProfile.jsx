@@ -104,6 +104,7 @@ class UserProfile extends Component {
     console.log(this.state.picsrc);
     const user = this.props.auth.user;
     console.log(user);
+
     return (
       <section className="content">
         <NavBar />
@@ -368,7 +369,6 @@ class UserProfile extends Component {
                               <button
                                 className="btn btn-success"
                                 onClick={(e) => this.handleProfilePic(e)}
-                                enctype = "multipart/form-data"
                               >
                                 Set as Profile Picture
                               </button>
