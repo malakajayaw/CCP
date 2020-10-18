@@ -13,6 +13,7 @@ import "datatables.net-dt/css/jquery.dataTables.min.css"
 import Config from "../../controllers/config.controller";
 import {get_responses} from "../../controllers/event.controller";
 import {addEventAttendanceConfirmed} from "../../controllers/event.attendance.confirmed.controller";
+import {get_specific_mem} from '../../controllers/memeber.controller'
 
  
 function EventAttendanceRegistered(props) {
@@ -33,9 +34,20 @@ function EventAttendanceRegistered(props) {
     })
   };
   
+  const [member, setMember] = useState({ 
+
+    memberShipNo : "",
+    fname : "" ,
+    lname : "" ,
+    email : "" ,
+    contactNo : "" ,
+    
+  });
+
   const [responses, setResponses] = useState([]);
   useEffect(() => {
     getData(id);
+    onLoadMemebrer("20204646");
   }, []);
 
   //getData function is used to get the registered members from the db
@@ -44,6 +56,16 @@ function EventAttendanceRegistered(props) {
     await setResponses(res.data.data);
     $("#eventattTable").dataTable();
   }
+
+  const onLoadMemebrer = async (newId) => {
+    const result = await get_specific_mem(newId)
+    console.log(result.data.data);
+    // const newD = result.data.data
+  
+   await console.log(member);
+   setMember(result.data.data)
+  }
+
 
   //loadData function is used to load the data into the table
   const loadData = () => {

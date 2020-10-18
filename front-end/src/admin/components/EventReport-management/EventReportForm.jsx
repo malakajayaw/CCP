@@ -42,7 +42,6 @@ const EventReportAdd = (props) => {
     date: moment(new Date()).format("MMM Do YY"),
     submissioncomment: "",
   });
-  console.log(event.hostingAffiliation);
 
   const handleChange = (e) => {
     setEvent({ ...event, [e.target.name]: e.target.value });

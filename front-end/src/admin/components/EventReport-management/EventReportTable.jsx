@@ -15,7 +15,6 @@ import useForceUpdate from "use-force-update";
 const EventReportTable = (props) => {
   const [eventsReports, SetEventReports] = useState([]);
 
-
   useEffect(() => {
     
     getData();
