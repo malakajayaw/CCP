@@ -15,7 +15,16 @@ let EventRegistration = new Schema({
     state:{
         type:Boolean,
         default:false
-    }
+    },
+    name:{
+        type: String,
+    },
+    email:{
+        type: String,
+    },
+    contactNo:{
+        type: String,
+    },
 
 });
 

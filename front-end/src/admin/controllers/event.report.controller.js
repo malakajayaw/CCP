@@ -6,9 +6,9 @@ export const add_event_report = (data) => {
   console.log(data);
   const formData = new FormData();
   formData.append("eventId", data.eventId);
-  formData.append("pdf", data.file);
-  formData.append("hostingAffiliation", data.hostingAffiliation);
   formData.set("eventname", data.eventname);
+  formData.append("hostingAffiliation", data.hostingAffiliation);
+  formData.append("pdf", data.file);
   formData.set("created_at", data.date);
   formData.set("submssionState", 'Submitted');
   formData.set("submissionComment", data.submissioncomment);
