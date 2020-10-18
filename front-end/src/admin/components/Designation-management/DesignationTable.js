@@ -1,31 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { get_all_designations, remove_designation } from "../../controllers/designation.controller";
+import { get_affiliation } from "../../controllers/affiliation.controller";
+import { add_activity } from '../../controllers/activity.controller';
+import Config from '../../controllers/config.controller'
+//import EventReportView from './EventReportView'
 import { Link } from "react-router-dom";
+
 import useForceUpdate from 'use-force-update';
 import 'jquery/dist/jquery.min.js';
 import $ from "jquery"
-
-//controllers
-import { get_all_designations, remove_designation } from "../../controllers/designation.controller";
-import { get_all_affiliations, get_affiliation } from "../../controllers/affiliation.controller";
-import { add_activity } from '../../controllers/activity.controller';
-import Config from '../../controllers/config.controller'
-
 //Datatable Modules
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 
 
 const DesignationTable = (props) => {
-
-    //variable to store designations
     const [designation, SetDesignation] = useState([]);
+    const forceUpdate = useForceUpdate();
 
-    //place holders for react-select-search
-    window.selectedaff = "Select affiliaion";
-    window.selectedmem = "Select member";
-
-    //variable to store activities
-    let [activity] = useState({
+    let [activity, setActivity] = useState({
         MemNo: "To be taken from redux",
         action: "Delete designation",
         table: "Designations",
@@ -37,82 +30,50 @@ const DesignationTable = (props) => {
         getData();
     }, []);
 
-    //get all designations
     async function getData() {
+        //$.noConflict();
         var res = await get_all_designations();
         await SetDesignation(res.data.data);
         $("#DesTable").dataTable();
     }
 
-    //remove assigned designation
-    const delete_func = async (id, name, aff) => {
-        addActivity(name, aff)
+
+    const delete_func = async (id, name,aff) => {
+        addActivity(name,aff)
         const res = await remove_designation(id)
         if (res.code == 200) {
             Config.setToast("Designation removed")
-            //refresh page
-            getData();
+            forceUpdate();
         } else {
             Config.setToast("Something went wrong")
-            //refresh page
-            getData();
+            forceUpdate();
         }
     }
 
-    //get affiliation name relevent to a given _id
-    async function setAffDetails(id) {
-        var result = await get_affiliation(id)
-        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
-    }
-
-    //add activity log about deleted designation
     const addActivity = async (name, aff) => {
+        console.log(name);
         const date = new Date();
-        //set parameters for activity variable
-        var detAff = await setAffDetails(aff)
-        activity.parameters = name + " / " + detAff;
-        //set date for activity variable
+        activity.parameters = name + " / " +aff;
         activity.datetime = date.toLocaleString();
-        //add activity to database
-        await add_activity(activity)
+        console.log("act: " + JSON.stringify(activity));
+        const result3 = await add_activity(activity)
+        console.log(result3);
     }
 
-    //variable to store affiliations
-    const [affiliations, setAffiliations] = useState([]);
-    useEffect(() => {
-        getAffData();
-
-    }, []);
-
-    //get all the affiliations from the database
-    async function getAffData() {
-        var res1 = await get_all_affiliations();
-        await setAffiliations(res1.data.data);
-    }
-
-    //get affiliation data for a given _id
-    const setAffData = (id) => {
-        return affiliations.map((affiliations, index) => {
-            if (id == affiliations._id) {
-                return (affiliations.affiliationname);
-            }
-        });
-    };
-
-    //load table data
     const readydata = () => {
         return designation.map((designation, i) => {
             return (
                 <tr key={i}>
-                    <td>{setAffData(designation.affiliationNo)}</td>
+                    <td>{designation.affiliationNo}</td>
+                    {/*loadAffData(designation.affiliationNo)*/}
                     <td>{designation.title}</td>
                     <td>{designation.type}</td>
                     <td className="project-actions text-center">
-                        <Link to={`/Admin/EditDesignation/${designation._id}`} className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
+                        <Link to={`/Admin/EditDesignation/${designation._id}`}><a className="btn btn-primary btn-sm mr-1" style={{ color: 'black' }}>
                             {" "}
                             <i className="fas fa-folder mr-1" />
                              Edit{" "}
-                        </Link>
+                        </a></Link>
                         <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(designation._id, designation.title, designation.affiliationNo)}>
                             {" "}
                             <i className="fas fa-trash mr-1" />Remove{" "}
@@ -123,7 +84,24 @@ const DesignationTable = (props) => {
         });
     };
 
-    //render table
+    const [affiliations, setAffiliations] = useState({
+
+        affiliationname: "",
+    });
+
+    async function getAffData(affid) {
+        var res = await get_affiliation(affid);
+        await setAffiliations(res.data.data);
+        console.log(affiliations);
+    }
+
+    const loadAffData = (afffid) => {
+        getAffData(afffid);
+        return (
+            <td>{affiliations.affiliationname}</td>
+            );
+    };
+
     return (
         <section className="content" style={{ display: props.display }}>
             <div className="container-fluid">
@@ -132,6 +110,7 @@ const DesignationTable = (props) => {
                         <Link to="/Admin/AddDesignation" type="button" className="btn btn-info float-right add_btn">Add Designation</Link>
                         <Link to="/Admin/PastDesignations" type="button" className="btn btn-info float-right add_btn">Past Designations</Link>
                     </div>
+                    {/* <!-- /.card-header --> */}
                     <div className="card-body">
                         <table
                             id="DesTable"
@@ -150,6 +129,7 @@ const DesignationTable = (props) => {
                         </table>
                     </div>
                 </div>
+                {/* <!-- /.container-fluid --> */}
             </div>
         </section>
     );

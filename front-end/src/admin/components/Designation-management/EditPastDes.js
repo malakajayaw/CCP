@@ -1,30 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation } from "react-router-dom";
 import Select from 'react-select'
+
 import { useForm } from "react-hook-form";
 
-//controllers
 import { update_past_designation, get_spec_past_designations } from '../../controllers/pastdes.controller'
-import { get_all_affiliations, get_affiliation } from "../../controllers/affiliation.controller";
+import { get_all_affiliations } from "../../controllers/affiliation.controller";
 import { add_activity } from '../../controllers/activity.controller'
-import { get_all_members, get_spec_member } from "../../controllers/designation.controller";
+import { get_all_active_members } from "../../controllers/memeber.controller";
 import Config from '../../controllers/config.controller'
 
 const EditPastDes = (props) => {
 
-    //get passed parameters
     const id = useParams()
+    const { register, handleSubmit } = useForm();
+
+
     const newId = id.Id
 
-    //variable to store past designations
     const [pastdes, setPastDes] = useState({
         affiliationNo:"",
         title: "",
         MemNo: "",
         Year: "",
+
     });
 
-    //variable to store activities
     let [activity, setActivity] = useState({
         MemNo: "To be taken from redux",
         action: "Edit record - Admin",
@@ -34,163 +35,120 @@ const EditPastDes = (props) => {
     });
 
     useEffect(() => {
+        //console.log("id: " + JSON.stringify(id));
+        //console.log("id: " + id.desId);
         onLoadMemebrer(newId);
     }, []);
 
-    //variable to store members
     const [member, setMember] = useState([]);
     useEffect(() => {
         getMemData();
+
     }, []);
-    
-    //get all members from data base
+
     async function getMemData() {
-        window.selectedaff = "Select affiliaion";
-        window.selectedmem = "Select member";
-        var res = await get_all_members();
+        var res = await get_all_active_members();
         await setMember(res.data.data);
+        console.log("mem: " + member);
     }
 
-    //get member data for a given _id
-    const setMemData = (id) => {
-        return member.map((member, index) => {
-            if (id == member._id) {
-                return (member.fname + " " + member.lname + " - " + member.memberShipNo);
-            }
-        });
-    };
-
-    //set options for select to show members
     const selMem = member.map(item => {
         const container = {};
+
         container["value"] = item._id;
-        container["label"] = item.memberShipNo + " - " + item.fname + " " + item.lname;
+        container["label"] = item.fname + " " + item.lname + " - " + item._id;
+        console.log("sel: " + JSON.stringify(container));
         return container;
     })
 
-    //handle form changes - for members select
     const handleMemChange = (e) => {
         setPastDes({ ...pastdes, "MemNo": e.value });
-        window.selectedmem = setMemData(e.value);
-        mem();
+        console.log(e);
     }
 
-    //handle form changes - for affiliations select
     const handleAffChange = (e) => {
         setPastDes({ ...pastdes, "affiliationNo": e.value });
-        window.selectedaff = setAffData(e.value);
-        aff();
+        console.log(e);
     }
 
-    //get affiliation details from database
-    async function getAffDet(id) {
-        var res = await get_affiliation(id);
-        window.selectedaff = res.data.data.affiliationno + " - " + res.data.data.affiliationname;
-    }
-
-    //get members details from database
-    async function getMemDet(id) {
-        var res = await get_spec_member(id);
-        window.selectedmem = res.data.data.memberShipNo + " - " + res.data.data.fname + " " + res.data.data.lname;
-    }
-
-    //get member name relevent to a given _id
-    async function setMemDetails(id) {
-        var result = await get_spec_member(id)
-        return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
-    }
-
-    //get affiliation name relevent to a given _id
-    async function setAffDetails(id) {
-        var result = await get_affiliation(id)
-        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
-    }
-
-    //runs when loading the form
     const onLoadMemebrer = async (newId) => {
-        //get date info
         const date = new Date();
-        //get specific past designation data
         const result = await get_spec_past_designations(newId)
-        await getAffDet(result.data.data.affiliationNo)
-        await getMemDet(result.data.data.MemNo)
-        //set data for activity log
+        console.log("reult: " + result.data.data);
+        // const newD = result.data.data
         setActivity({
             ...activity,
             datetime: date.toLocaleString()
         });
-        //set data for past designation
+
+
+        await console.log(pastdes);
         setPastDes(result.data.data)
     }
 
-    //runs on submit
+
+
+
     const onSubmit = async (e) => {
+        activity.parameters = pastdes.title + " / " + pastdes.MemNo + " / " + pastdes.Year + " / " + pastdes.affiliationNo;
+        // alert(JSON.stringify(member))
         e.preventDefault()
-        //set parameters for activity variable
-        var detAff = await setAffDetails(pastdes.affiliationNo)
-        var detMem = await setMemDetails(pastdes.MemNo)
-        activity.parameters = pastdes.title + " / " + detMem + " / " + pastdes.Year + " / " + detAff;
-        //update past designation
         const result = await update_past_designation(pastdes, id.Id)
-        //add activity to database
-        await add_activity(activity)
+        console.log(result);
+        const result3 = await add_activity(activity)
+        console.log(result3);
         if (result.code == 200) {
-            Config.setToast("Updated successfully")
+            Config.setToast("Update  successfully")
         }
+
+
+
     }
 
-    //handle form changes - general
+    //  const getData = async  (id) =>{
+    //       const result = await
+    //  }
+
     const handleChange = (e) => {
         setPastDes({ ...pastdes, [e.target.name]: e.target.value });
+        console.log(pastdes);
     }
 
-    //variable to store affiliations
     const [affiliations, setAffiliations] = useState([]);
     useEffect(() => {
         getAffData();
     }, []);
 
-    //get all the affiliations from the database
     async function getAffData() {
         var res = await get_all_affiliations();
         await setAffiliations(res.data.data);
+        console.log(affiliations);
     }
 
-    //get affiliation data for a given _id
-    const setAffData = (id) => {
+    const loadAffData = () => {
         return affiliations.map((affiliations, index) => {
-            if (id == affiliations._id) {
-                return (affiliations.affiliationno + " - " + affiliations.affiliationname);
-            }
+            return (
+                <option value={affiliations._id}>{affiliations.affiliationname}</option>
+            );
         });
     };
 
-    //set options for select to show affiliations
     const sel = affiliations.map(item => {
         const container = {};
+
         container["value"] = item._id;
-        container["label"] = item.affiliationname + " - " + item.affiliationno;
+        container["label"] = item.affiliationname + " - " + item._id;
+        console.log("sel: " + JSON.stringify(container));
         return container;
     })
 
-    //select for members
-    const mem = () => {
-        return (
-            <Select required value="" className="select2" id="MemNo" name="MemNo" placeholder={window.selectedmem} style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
-        )
-    }
-
-    //select for affiliations
-    const aff = () => {
-        return (
-            <Select required value="" className="select2" id="affiliation" name="affiliationNo" placeholder={window.selectedaff} style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
-        )
-    }
-
-    //render form
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
+            <h6>Edit Record</h6>
             <div className="card">
+                <div className="card-header">
+
+                </div>
                 <div className="card-body">
 
                     <section className="content">
@@ -198,7 +156,7 @@ const EditPastDes = (props) => {
                             <div className="col-md-6">
                                 <div className="card card-success">
                                     <div className="card-header">
-                                        <h3 className="card-title">Edit Record </h3>
+                                        <h3 className="card-title">Change Record </h3>
                                     </div>
                                     <form onSubmit={onSubmit}>
 
@@ -207,7 +165,7 @@ const EditPastDes = (props) => {
 
                                             <div className="form-group">
                                                 <label>Affiliation</label>
-                                                { aff()}
+                                                <Select required value={pastdes.affiliationNo} className="select2" id="affiliation" name="affiliationNo" placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
                                             </div>
 
                                             <div className="form-group">
@@ -220,7 +178,7 @@ const EditPastDes = (props) => {
 
                                             <div className="form-group">
                                                 <label>Member</label>
-                                                { mem()}
+                                                <Select required value="" className="select2" id="MemNo" name="MemNo" data-placeholder="Select Member" style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
                                             </div>
 
                                             <div className="form-group">
@@ -233,6 +191,7 @@ const EditPastDes = (props) => {
 
                                             <div className="row">
                                                 <div className="col-12">
+                                                    {/* <button type="button" className="btn btn-secondary" onClick={clear}>Cancel</button> */}
                                                     <button type="submit" className="btn btn-success float-right" >Update Designation </button>
                                                 </div>
                                             </div>

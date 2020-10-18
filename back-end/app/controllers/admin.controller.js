@@ -4,7 +4,6 @@ const Admin = require('../model/admin.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-
 //======================================================================================================
 //================================== Request sent Memeber      =============================================
 //====================================================================================================== 
@@ -100,6 +99,54 @@ exports.get_specific_admin = async function (req, res, next) {
         });
     } catch (error) {
         return res.status(403).send("Something went wrong");
+    }
+
+}
+exports.login = async function (req, res) {
+
+    console.log(req.body);
+    const user_details = await Admin.findOne({
+        memberShipNo: req.body.memberShipNo
+    });
+    if (user_details === null) {
+        return res.status(406).send({
+            data: null,
+            success: false,
+            message: 'No user found',
+        });
+    } else {
+
+        console.log(user_details.password);
+        console.log(req.body.uPass);
+     
+        const isEqual = await user_details.password.localeCompare(req.body.uPass)
+        if (isEqual == 1 || isEqual == -1) {
+            return res.status(406).send({
+                data: null,
+                success: false,
+                message: 'Password is incorrect',
+            });
+        } else {
+            const token = jwt.sign({
+                memberShipNo: user_details.memberShipNo,
+                email: user_details.email,
+                nic: user_details.nic,
+                role: user_details.role,
+               
+            }, "thisistokenforieee2019", {
+                expiresIn: '240h'
+            });
+            console.log(user_details);
+            return res.status(200).send({
+                data: {
+                    "token": token,
+                    "role": user_details.role,
+                    "details": user_details
+                },
+                success: true,
+                message: 'Successfully login',
+            });
+        }
     }
 
 }

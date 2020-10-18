@@ -218,7 +218,7 @@ exports.login = async function (req, res) {
         console.log(req.body.uPass);
         // const isEqual = await bcrypt.compare(req.body.uPass, user_details.password)
         const isEqual = await user_details.password.localeCompare(req.body.uPass)
-        if (isEqual == 1 || isEqual== -1) {
+        if (isEqual == 1 || isEqual == -1) {
             return res.status(406).send({
                 data: null,
                 success: false,
@@ -229,8 +229,9 @@ exports.login = async function (req, res) {
                 memberShipNo: user_details.memberShipNo,
                 email: user_details.email,
                 nic: user_details.nic,
-                role: user_details.role
-            },"thisistokenforieee2019", {
+                role: user_details.role,
+               
+            }, "thisistokenforieee2019", {
                 expiresIn: '240h'
             });
             console.log(user_details);
@@ -238,12 +239,65 @@ exports.login = async function (req, res) {
                 data: {
                     "token": token,
                     "role": user_details.role,
-                    "details":user_details
+                    "details": user_details
                 },
                 success: true,
                 message: 'Successfully login',
             });
         }
     }
+
+}
+
+
+//======================================================================================================
+//===================================  Profile Picture     ==============================================
+//======================================================================================================
+
+
+exports.upload_image = function (req, res, next) {
+
+    console.log(req.body.membershipnumber);
+
+    let updateProfilePic = {
+        "membershipnumber": req.body.membershipnumber,
+        "profilepic": req.file.path
+    }
+    console.log(updateProfilePic);
+    Member.find({ memberShipNo: req.body.membershipnumber }).exec().then(user => {
+        if (user.length < 1) {
+            return res.status(401).json({
+                message: 'No user find , No user data availble in this email'
+            });
+        } else if (user.length == 1) {
+            if (updateProfilePic.membershipnumber == null || updateProfilePic.membershipnumber == undefined || updateProfilePic.profilepic == null || updateProfilePic.profilepic == undefined) {
+                return res.status(402).json({
+                    message: 'No images'
+                })
+            }
+            Member.update({ memberShipNo: req.body.membershipnumber }, {
+                $set: {
+                    "profilepic": updateProfilePic.profilepic,
+
+                }
+            }, function (err) {
+                if (err) return next(err);
+                res.status(200).json({
+                    message: 'Image Added sucessfully'
+                })
+            })
+        }
+        else {
+            return res.status(401).json({
+                message: 'No user find'
+            })
+        }
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+
+    })
 
 }
