@@ -132,12 +132,12 @@ export const sign_controller = (mem, pass) => {
 }
 
 
-export const uploadProfilePic = async (file, membershipnumber) => {
+export const uploadProfilePic = async (files, membershipnumber) => {
 
     var requestData = new FormData();
 
     requestData.set("membershipnumber", membershipnumber)
-    requestData.append("photos", file)
+    requestData.append("photos", files)
     console.log(requestData.get('photos'));
     console.log(requestData.get('membershipnumber'));
     var resp = 500;

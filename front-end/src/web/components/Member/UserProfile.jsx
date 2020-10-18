@@ -368,6 +368,7 @@ class UserProfile extends Component {
                               <button
                                 className="btn btn-success"
                                 onClick={(e) => this.handleProfilePic(e)}
+                                enctype = "multipart/form-data"
                               >
                                 Set as Profile Picture
                               </button>

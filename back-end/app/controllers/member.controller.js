@@ -250,6 +250,8 @@ exports.login = async function (req, res) {
 }
 
 
+
+
 //======================================================================================================
 //===================================  Profile Picture     ==============================================
 //======================================================================================================
@@ -261,9 +263,11 @@ exports.upload_image = function (req, res, next) {
 
     let updateProfilePic = {
         "membershipnumber": req.body.membershipnumber,
-        "profilepic": req.file.path
+        "profilepic": req.files.path
     }
     console.log(updateProfilePic);
+
+
     Member.find({ memberShipNo: req.body.membershipnumber }).exec().then(user => {
         if (user.length < 1) {
             return res.status(401).json({
@@ -275,6 +279,7 @@ exports.upload_image = function (req, res, next) {
                     message: 'No images'
                 })
             }
+            
             Member.update({ memberShipNo: req.body.membershipnumber }, {
                 $set: {
                     "profilepic": updateProfilePic.profilepic,
