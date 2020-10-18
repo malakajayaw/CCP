@@ -25,12 +25,6 @@ let Member = new Schema({
         type: String,
         required: true,
     },
-
-    affiID: {
-        type: String,
-        required: true,
-    },
-    
     email: {
         type: String,
         required: true,

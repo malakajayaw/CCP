@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const EventAttendanceConfirmedController = require('../controllers/event.attendanceConfirmed.controller')
-const EventAttendanceAttendedController = require('../controllers/event.attendanceAttended.controller')
-
-router.post('/attendance/add_confirmed_mem',  EventAttendanceConfirmedController.addEventAttendanceConfirmed);
-router.post('/attendance/get_confirm_mem',  EventAttendanceConfirmedController.getConfirmedMembersForAnEvent);
-router.post('/attendance/delete_confirmed_mem',  EventAttendanceConfirmedController.removeEventAttendanceConfirmed);
-router.post('/attendance/add_attended_mem',  EventAttendanceAttendedController.addEventAttendanceAttended);
-router.post('/attendance/get_attended_mem',  EventAttendanceAttendedController.getAttendedMembersForAnEvent);
+const EventAttendanceController = require('../controllers/event.report.controller')
+// add member
+router.post('/attendance/reg_members',  EventAttendanceController.get_all_registered_members);
+router.post('/attendance/confirm_members',  EventAttendanceController.get_all_confirmed_members);
+router.post('/attendance/attended_members',  EventAttendanceController.get_all_attended_members);
 
 module.exports = router;

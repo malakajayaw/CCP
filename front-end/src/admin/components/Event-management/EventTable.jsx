@@ -37,7 +37,7 @@ function EventTable(props){
         const result = await deleteEvent(id)
         if(result.code == 200){
           Config.setToast(result.message)
-          getData()//ayemath refresh 
+          getData()
         }
       }
 
