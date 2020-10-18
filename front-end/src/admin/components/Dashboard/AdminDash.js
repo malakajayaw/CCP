@@ -135,17 +135,17 @@ const AdminDash = (props) => {
                 <div class="card-header">
                     <h3 class="card-title">Member Details</h3>
                 </div>
-                <div class="row">
+                <div class="row">{ /*
                     <div class="col-md-3 col-sm-6 col-12">
                         <div class="info-box">
                             <span class="info-box-icon bg-info"><i class="far fa fa-users"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">All Members</span>
-                                <span class="info-box-number">{getalmem() }</span>
+                                <span class="info-box-number">{getalmem()}</span>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <div class="col-md-3 col-sm-6 col-12">
                         <div class="info-box">
                             <span class="info-box-icon bg-success"><i class="far fa fa-user"></i></span>

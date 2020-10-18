@@ -231,6 +231,7 @@ exports.get_active_members_count = async function (req, res, next) {
     try {
         const log = await Member.count({
             state: true,
+            newrequest: false,
         });
         return res.status(200).send({
             data: log,
