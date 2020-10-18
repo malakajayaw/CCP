@@ -4,15 +4,14 @@ import Select from 'react-select'
 
 import { useForm } from "react-hook-form";
 
-import { add_member_requset} from '../../controllers/memeber.controller';
-import { get_all_affiliations } from "../../controllers/affiliation.controller";
+import { add_admin} from '../../controllers/admin.controller';
 import Config from '../../controllers/config.controller'
 const AdminAdd = (props) => {
   const { register, handleSubmit } = useForm();
 
 
  
-  let [member, setMember] = useState({ 
+  let [admin, setMember] = useState({ 
     fname : '' , 
     lname : '' ,
     addmnumber : '' ,
@@ -26,14 +25,14 @@ const AdminAdd = (props) => {
 
   const onSubmit =  async (e) => {
 
-    // alert(JSON.stringify(member))
+    // alert(JSON.stringify(admin))
     e.preventDefault()
-    const result = await add_member_requset (member)
+    const result = await add_admin (admin)
     console.log(result);
     if(result.code == 200)
     {
       clear()
-      Config.setToast("Request sent successfully")
+      Config.setToast("Admin Created successfully")
     }
 
 
@@ -69,35 +68,8 @@ const AdminAdd = (props) => {
   }
 
   const handleChange =  (e) =>  {
-     setMember({...member, [e.target.name]: e.target.value });
+     setMember({...admin, [e.target.name]: e.target.value });
   }
-
-//Affiliation--------------------------------------
-  const handleAffChange = (e) => {
-    setMember({...member, "selectaffiID": e.value });
-    console.log(e);
-}
-
-const [affiliations, setAffiliations] = useState([]);
-useEffect(() => {
-    getAffData();
-}, []);
-
-async function getAffData() {
-  var res = await get_all_affiliations();
-  await setAffiliations(res.data.data);
-  console.log("aff: " + affiliations);
-}
-
-const sel = affiliations.map(item => {
-  const container = {};
-
-  container["value"] = item.affiID;
-  container["label"] = item.affiliationname;
-  console.log("sel: " + JSON.stringify(container));
-  return container;
-})
-
 
   return (<section className="content" style={{ display: props.display }}>
     <div className="container-fluid">
@@ -124,7 +96,7 @@ const sel = affiliations.map(item => {
                     id="fname"
                     name="addfname"
                     placeholder="First Name"
-                    value={member.addfname}
+                    value={admin.addfname}
                     onChange={handleChange}
                   />
                 </div>
@@ -136,7 +108,7 @@ const sel = affiliations.map(item => {
                     id="lname"
                     name="addlname"
                     placeholder="Last Name"
-                    value={member.addlname}
+                    value={admin.addlname}
                     onChange={handleChange}
                   />
                 </div>
@@ -150,7 +122,7 @@ const sel = affiliations.map(item => {
                   id="pemail"
                   name="addpemail"
                   placeholder="Email"
-                  value={member.addpemail}
+                  value={admin.addpemail}
                   onChange={handleChange}
                 />
               </div>
@@ -164,7 +136,7 @@ const sel = affiliations.map(item => {
                     id="mnumber"
                     name="addmnumber"
                     placeholder="Membership Number"
-                    value={member.addmnumber}
+                    value={admin.addmnumber}
                     onChange={handleChange}
                   />
                 </div>
@@ -178,7 +150,7 @@ const sel = affiliations.map(item => {
                   name="addphone"
                   placeholder="Contact Number"
                   onChange={handleChange}
-                  value={member.addphone}
+                  value={admin.addphone}
                 />
                 </div>
               </div>
@@ -194,7 +166,7 @@ const sel = affiliations.map(item => {
                     name="addpassword"
                     placeholder="Password"
                     onChange={handleChange}
-                    value={member.addpassword}
+                    value={admin.addpassword}
                   />
                 </div>
 
@@ -206,7 +178,7 @@ const sel = affiliations.map(item => {
                     id="cpassword"
                     placeholder="Confirm Password"
                     onChange={handleChange}
-                    value={member.addcpassword}
+                    value={admin.addcpassword}
                   />
                 </div>
               </div>

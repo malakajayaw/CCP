@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
   get_all_active_members,
   accept_or_reject,
-} from "../../controllers/memeber.controller";
+  get_all_admin,
+} from "../../controllers/admin.controller";
 import Config from "../../controllers/config.controller";
 
 import "jquery/dist/jquery";
@@ -11,8 +12,8 @@ import $ from "jquery";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 
-const MemberRequest = (props) => {
-  const [selectMember, setSelectMember] = useState({
+const AdminAdd = (props) => {
+  const [selectAdmin, setSelectAdmin] = useState({
     addfname: "",
     addlname: "",
     addmname: "",
@@ -25,34 +26,34 @@ const MemberRequest = (props) => {
 
   });
 
-  const [members, Setmembers] = useState([]);
+  const [admins, Setadmins] = useState([]);
 
   useEffect(() => {
     getData();
   }, []);
 
   async function getData() {
-    var res = await get_all_active_members();
-    await Setmembers(res.data.data);
-    $("#memberTable").dataTable();
+    var res = await get_all_admin();
+    await Setadmins(res.data.data);
+    $("#adminTable").dataTable();
   }
 
 
   const readydata = () => {
-    return members.map((member, i) => {
+    return admins.map((admin, i) => {
       return (
         <tr key={i}>
           <td>{i + 1}</td>
-          <td>{member.memberShipNo}</td>
+          <td>{admin.memberShipNo}</td>
           <td>
-            {member.fname}&nbsp;{member.lname}
+            {admin.fname}&nbsp;{admin.lname}
           </td>
 
-          <td>{member.contactNo}</td>
-          <td>{member.email}</td>
+          <td>{admin.contactNo}</td>
+          <td>{admin.email}</td>
           <td className="project-actions text-center">
             <Link
-              to={`/Admin/MemberEdit/${member._id}`}
+              to={`/Admin/MemberEdit/${admin._id}`}
               type="button"
               className="btn btn-success btn-sm mr-1 my-2"
             >
@@ -76,24 +77,24 @@ const MemberRequest = (props) => {
   return (
     <section className="content" style={{ display: props.display }}>
       <div className="container-fluid">
-        <h6>Active Members</h6>
+        <h6>Active Admins</h6>
 
         <div className="card">
           <div className="card-header">
             {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
 
             <Link
-              to="/Admin/MemberRequest"
+              to="/Admin/Admin"
               type="button"
               className="btn btn-success btn-sm float-right add_btn"
             >
-              Requests
+              Add Admin
             </Link>
           </div>
           {/* <!-- /.card-header --> */}
           <div className="card-body">
             <table
-              id="memberTable"
+              id="adminTable"
               className="table table-bordered table-striped dataTable"
             >
               <thead>
@@ -117,4 +118,4 @@ const MemberRequest = (props) => {
   );
 };
 
-export default MemberRequest;
+export default AdminAdd;
