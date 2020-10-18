@@ -3,6 +3,11 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import NavBar from "../Common/NavBar";
 import Footer from "../Common/Footer";
 
+// Import FilePond styles
+import 'filepond/dist/filepond.min.css';
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
