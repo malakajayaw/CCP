@@ -1,18 +1,17 @@
 //import Event model
 const Event = require('../model/event.model');
-//import Event registration model
 const EventRegistration = require('../model/eventRegistration.model');
 
+//======================================================================================================
 //================================== Add event  =============================================
+//====================================================================================================== 
 exports.addEvent = function (req, res, next) {
 
     var fileName = '';
 
-    //check if the event banner is added
     if(req.files !== null)
     {
         const file = req.files.banner;
-        //genarate a random file name
         fileName =  Math.random().toString(36).substring(2, 15) + file.name;
         file.mv(`${__dirname}/../../../front-end/public/images/events/${fileName}`,err => {
                 if(err){
@@ -40,12 +39,14 @@ exports.addEvent = function (req, res, next) {
         if (err) {
             return next(err);
         }
-        res.status(200).send('Event added Successfully');
+        res.status(201).send('Event added Successfully');
     })
     
 }
 
-//================================== Get all events=====================================================
+//======================================================================================================
+//================================== Get all events       =============================================
+//====================================================================================================== 
 exports.get_all_events = function (req, res, next) {
     // check userdata
     Event.find( function (err, docs) {
@@ -59,7 +60,9 @@ exports.get_all_events = function (req, res, next) {
     })
 }
 
+//======================================================================================================
 //================================== Get a specific event  =============================================
+//====================================================================================================== 
 exports.get_event = async function (req, res, next) {
 
     var id = req.body.id;
@@ -75,7 +78,7 @@ exports.get_event = async function (req, res, next) {
 
 }
 
-//================================== delete event  =============================================
+
 exports.deleteEvent = async  function (req, res, next) {
 
     var id = req.body.id
@@ -97,7 +100,6 @@ exports.deleteEvent = async  function (req, res, next) {
         }
 }
 
-//================================== delete form  =============================================
 exports.deleteForm = async  function (req, res, next) {
 
     try {
@@ -125,7 +127,6 @@ exports.deleteForm = async  function (req, res, next) {
     }
 }
 
-//================================== add registration form =============================================
 exports.addRegistrationForm = async function (req, res, next) {
     
     try {
@@ -145,10 +146,8 @@ exports.addRegistrationForm = async function (req, res, next) {
 
 }
 
-//================================== event registration  =============================================
 exports.register = async function (req, res, next) {
    
-    //convert the string into an array
    var dataArr = req.body.formData.split(',')
 
    let new_registration = EventRegistration({
@@ -167,14 +166,13 @@ exports.register = async function (req, res, next) {
 
 }
 
-//================================== get responses  =============================================
 exports.getResponses = async function (req, res, next) {
 
     var id = req.body.id;
 
     try {
         const responses = await  EventRegistration.find({
-            eventId: id, state:false })
+            eventId: id })
        return res.status(200).send({
            data: responses
        });
@@ -184,7 +182,6 @@ exports.getResponses = async function (req, res, next) {
  
  }
 
- //================================== update event  =============================================
  exports.updateEvent = async function (req, res, next) {
 
     var fileName = '';
@@ -192,9 +189,9 @@ exports.getResponses = async function (req, res, next) {
     if(req.files !== null)
     {
         const file = req.files.banner;
-        //genarate a random file name
         fileName =  Math.random().toString(36).substring(2, 15) + file.name;
         file.mv(`${__dirname}/../../../front-end/public/images/events/${fileName}`,err => {
+        //file.mv(`${__dirname}/../public/images/events/${fileName}`,err => {
                 if(err){
                     console.log(res.status(500).send(err));
                 }  

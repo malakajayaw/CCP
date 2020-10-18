@@ -103,7 +103,7 @@ class UserProfile extends Component {
                         <input
                           disabled
                           className="form-control"
-                          value={"SLIIT Student Branch"}
+                          value={user.fname + user.lname}
                           type="text"
                         />
                       </p>
@@ -112,7 +112,7 @@ class UserProfile extends Component {
                         <input
                           disabled
                           className="form-control"
-                          value={user.email}
+                          value={user.ieeeMail}
                           type="text"
                         />
                       </p>
@@ -142,14 +142,8 @@ class UserProfile extends Component {
                         <tbody>
                           <tr>
                             <td>
-                              <strong>{user.fname}</strong> was the President of{" "}
-                              <strong>SLIIT Student Branch</strong>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <strong>{user.fname}</strong> volunteered in the event{" "}
-                              <strong>IEEE Annual Gathering</strong>
+                              <strong>Abby</strong> joined ACME Project Team in{" "}
+                              <strong>`Collaboration`</strong>
                             </td>
                           </tr>
                         </tbody>

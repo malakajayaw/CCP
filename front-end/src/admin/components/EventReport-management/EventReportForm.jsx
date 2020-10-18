@@ -7,11 +7,6 @@ import { add_event_report } from "../../controllers/event.report.controller";
 
 const EventReportAdd = (props) => {
   let { val } = useParams();
-  let { id } = useParams();
-  let { aff } = useParams();
-  console.log(val);
-  console.log(id);
-  console.log(aff);
   const forceUpdate = useForceUpdate();
 
   const [submit, setSubmit] = useState({
@@ -35,9 +30,7 @@ const EventReportAdd = (props) => {
   });
 
   let [event, setEvent] = useState({
-    eventId: id,
     eventname: val,
-    hostingAffiliation: aff,
     submissionstate: "Not Submitted",
     date: moment(new Date()).format("MMM Do YY"),
     submissioncomment: "",
@@ -50,19 +43,18 @@ const EventReportAdd = (props) => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await add_event_report(event);
-      console.log(result);
-      if (result.code == 200) {
-        clear();
-        Config.setToast("Report Added Successfully");
-        forceUpdate();
-      }
+  const result = await add_event_report(event);
+    console.log(result);
+    if (result.code == 200) {
+      clear();
+      Config.setToast("Report Added Successfully");
+      forceUpdate();
+    }
   };
 
   const clear = () => {
     console.log("Clear call");
     setEvent({
-      eventId: id,
       eventname: val,
       submissionstate: "Not Submitted",
       date: today,
@@ -77,7 +69,6 @@ const EventReportAdd = (props) => {
   };
 
   console.log(event.eventname);
-  console.log(event.eventId);
 
   return (
     <section className="content" style={{ display: props.display }}>

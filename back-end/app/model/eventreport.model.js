@@ -2,12 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let EventReport = new Schema({
-  eventId:{
-    type: String,
-  },
-  hostingAffiliation:{
-    type:String,
-  },
   eventName: {
      type: String,
      required: true,
