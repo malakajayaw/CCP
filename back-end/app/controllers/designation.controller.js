@@ -1,5 +1,6 @@
 const Designation = require('../model/designations.model');
 const Member = require('../model/member.model');
+const Affiliation = require('../model/affiliation.model');
 
 //=============================================================================== Add Designation
 
@@ -188,6 +189,8 @@ exports.get_aff_spec_members= async function (req, res, next) {
     }
 };
 
+//=============================================================================== get spec member
+
 exports.get_spec_mem = async function (req, res, next) {
     var id = req.body.id;
     try {
@@ -199,5 +202,74 @@ exports.get_spec_mem = async function (req, res, next) {
         });
     } catch (error) {
         return res.status(405).send("Something went wrong in get_spec_des");
+    }
+};
+
+//=============================================================================== Get spec number of affs
+
+exports.get_no_aff_type = async function (req, res, next) {
+    var id = req.body.id;
+
+    try {
+        const log = await Affiliation.count({
+            affiliationtype: id,
+            status: "Available"
+        });
+        return res.status(200).send({
+            data: log,
+        });
+    } catch (error) {
+        return res.status(405).send("Something went wrong in get_spec_des");
+    }
+};
+
+//=============================================================================== get active members count
+
+exports.get_active_members_count = async function (req, res, next) {
+    var id = req.body.id;
+
+    try {
+        const log = await Member.count({
+            state: true,
+        });
+        return res.status(200).send({
+            data: log,
+        });
+    } catch (error) {
+        return res.status(405).send("Something went wrong");
+    }
+};
+
+//=============================================================================== get all members count
+
+exports.get_all_members_count = async function (req, res, next) {
+    var id = req.body.id;
+
+    try {
+        const log = await Member.count({
+            
+        });
+        return res.status(200).send({
+            data: log,
+        });
+    } catch (error) {
+        return res.status(405).send("Something went wrong");
+    }
+};
+
+//=============================================================================== get pending member request count
+
+exports.get_request_members_count = async function (req, res, next) {
+    var id = req.body.id;
+
+    try {
+        const log = await Member.count({
+            newrequest: true,
+        });
+        return res.status(200).send({
+            data: log,
+        });
+    } catch (error) {
+        return res.status(405).send("Something went wrong");
     }
 };
