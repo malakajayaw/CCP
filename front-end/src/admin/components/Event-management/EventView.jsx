@@ -23,7 +23,7 @@ function EventView() {
   
     //fetch event data and set state
     const onLoadEvent = async (eventId) => {
-      const result = await get_event(eventId);
+      const result = await get_event(eventId);//1
       await  setEvent(result.data.data);
     }
 
@@ -100,7 +100,9 @@ function EventView() {
             console.log(err.response.data);
       }
     }
-
+    console.log(event.hostingAffiliation);
+    console.log(event.eventName);
+    // const id = event.eventName;
   return (  <div>
     {/* <ContentHeader pageName={props.page}/> */}
     <section className="content" >
@@ -112,13 +114,7 @@ function EventView() {
       </div>
       <div className="col-6">
         
-                <Link
-                  to= {`/Admin/EventReportForm/${event.eventName}`}
-                  type="button"
-                  className="btn btn-info float-right add_btn ml-2"
-                >
-                  Add Report
-                </Link>
+      <Link to= {`/Admin/EventReportForm/${event.eventName}/${eventId}/${event.hostingAffiliation}`}type="button" className="btn btn-info float-right add_btn ml-2">Add Report</Link>
       <Link to={"/Admin/EventAttendanceRegistered/"+eventId} type="button" className="btn btn-success float-right add_btn">Add Attendance</Link>
       </div>
     </div>

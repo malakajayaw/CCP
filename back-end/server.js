@@ -39,6 +39,7 @@ mongoose.set("useCreateIndex", true);
 //=================================== defines routes     ===============================================
 //======================================================================================================
 
+app.use("/assets", express.static("app/public"));
 //user routes
 app.use("/member", memberRoutes);
 app.use("/event", eventRoutes);
