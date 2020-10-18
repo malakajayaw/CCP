@@ -1,15 +1,17 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let EventAttendanceC = new Schema({
-    membershipNo: {
-        type: String,
-      },
-      confirmed_status: {
-        type: String,
-        enum: ['value1', 'value2'],
-      },
-
+let EventAttendanceConfirm = new Schema({  
+  eventId:{
+    type: String,
+  },
+  responder: {
+    type: String,
+  },
+  state: {
+    type: Boolean,
+    default: false
+  },
 });
 
-module.exports = mongoose.model("eventattendance", EventAttendanceC);
+module.exports = mongoose.model("EventAttendanceConfirm", EventAttendanceConfirm);

@@ -11,7 +11,20 @@ let EventRegistration = new Schema({
     },
     responder: {
         type: String,
-    }
+    },
+    state:{
+        type:Boolean,
+        default:false
+    },
+    name:{
+        type: String,
+    },
+    email:{
+        type: String,
+    },
+    contactNo:{
+        type: String,
+    },
 
 });
 
