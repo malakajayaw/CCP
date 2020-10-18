@@ -8,7 +8,9 @@ export const add_member_requset = (data) => {
         lname : data.addlname  ,
         nameAsMemberShip : data.addmname  ,
         memberShipNo : data.addmnumber ,
-        email : data.addpemail ,
+        affiID: data.selectaffiID,
+        affiliationname: data.selectaffiliationname,
+        email : data.addpemail,
         ieeeMail : data.addoemail ,
         contactNo : data.addphone ,
         password : data.addpassword ,
@@ -84,6 +86,8 @@ export const get_all_requsests = () => {
             })
     })
 }
+
+
 export const get_all_active_members = () => {
 
     return new Promise( (resolve,reject) => {

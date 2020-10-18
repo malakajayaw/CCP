@@ -10,5 +10,8 @@ router.post('/getSpecDesignations', DesignationController.get_spec_des);
 router.post('/getAffSpecDesignations', DesignationController.get_aff_spec_des);
 router.post('/updateDesignationMem', DesignationController.update_designation_mem);
 router.post('/removeDesignationMem', DesignationController.remove_designation_mem);
+router.get('/getAllMembers', DesignationController.get_all_members);
+router.post('/getAffSpecMembers', DesignationController.get_aff_spec_members);
+router.post('/getSpecMember', DesignationController.get_spec_mem);
 
 module.exports = router;
