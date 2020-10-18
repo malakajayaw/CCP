@@ -103,6 +103,14 @@ export default function Sidebar() {
                         </Link>
                     </li>
 
+                    <li className="nav-item pointer_cursor">
+                        <Link id="eventNav" className="nav-link" to="/Admin/Admin">
+                            <i className="nav-icon fa fa-address-card"></i>
+                            Admin
+                    <span className="badge badge-info right"></span>
+                        </Link>
+                    </li>
+
                 </ul>
 
             </nav>

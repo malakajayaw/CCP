@@ -36,6 +36,8 @@ import EventReportView from './components/EventReport-management/EventReportView
 import ManageAffiliation from './components/StudentBranch-management/ManageAffiliation'
 import StudentForm from './components/StudentBranch-management/StudentForm'
 import AffiliationTable from './components/StudentBranch-management/AffiliationTable';
+import AdminAdd from './components/Member-management/AdminAdd'
+import AdminList from './components/Member-management/AdminList'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -84,6 +86,9 @@ function App() {
                         <Route path="/Admin/StudentForm"> <StudentForm /> </Route>
                         <Route path="/Admin/AffiliationTable"> <AffiliationTable /> </Route>
                         <Route path="/Admin/EventAttendanceRegistered/:id"> <EventAttendanceRegistered/> </Route>
+                        <Route path="/Admin/Admin"> <AdminAdd /> </Route>
+                        <Route path="/Admin/AdminList"> <AdminList /> </Route>
+    
     
                     </Switch>
                 </Router> 
