@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { get_no_aff_type, get_active_mem_count, get_all_mem_count, get_pending_mem_count } from '../../controllers/designation.controller'
+import { get_all_events } from "../../controllers/event.controller";
 
 
 const AdminDash = (props) => {
 
+    let [open, SetOpen] = useState([]);
+    let [close, SetClose] = useState([]);
     let [affwie, SetAffwie] = useState([]);
     let [affsb, SetAffsb] = useState([]);
     let [affyp, SetAffyp] = useState([]);
@@ -13,6 +16,22 @@ const AdminDash = (props) => {
     let [acmem, SetAcmem] = useState([]);
     let [allmem, SetAllmem] = useState([]);
     let [pendingmem, SetPendingmem] = useState([]);
+    const [eventso, setEventso] = useState([]);
+    const [eventsc, setEventsc] = useState([]);
+    useEffect(() => {
+        getDatao();
+        getDatac();
+    }, []);
+
+    async function getDatao() {
+        var res = await get_all_events();
+        await setEventso(res.data.data);
+    }
+
+    async function getDatac() {
+        var res = await get_all_events();
+        await setEventsc(res.data.data);
+    }
 
     async function getactivemem() {
         var result = await get_active_mem_count("1")
@@ -84,6 +103,41 @@ const AdminDash = (props) => {
         return (afftc);
     }
 
+    async function loadOpenEvents() {
+        var today = new Date();
+        var o = 0;
+        await eventso.map((eventso, index) => {
+            var eventDate = new Date(eventso.eventDate);
+            if (today <= eventDate) {
+                o = o + 1;
+            }
+        });
+        await SetOpen(o);
+        await console.log(open)
+    };
+
+    async function loadCloseEvents() {
+        var today = new Date();
+        var c = 0;
+        await eventsc.map((eventsc, index) => {
+            var eventDate = new Date(eventsc.eventDate);
+            if (today > eventDate) {
+                c = c + 1;
+            }
+        });
+        await SetClose(c);
+    };
+
+    const getopen = () => {
+        loadOpenEvents()
+        return (open);
+    }
+
+    const getclose = () => {
+        loadCloseEvents()
+        return (close);
+    }
+
     return (
         <section className="content" >
             <div class="container-fluid">
@@ -152,7 +206,7 @@ const AdminDash = (props) => {
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Active Members</span>
-                                <span class="info-box-number">{getaccmem() }</span>
+                                <span class="info-box-number">{getaccmem()}</span>
                             </div>
                         </div>
                     </div>
@@ -162,7 +216,27 @@ const AdminDash = (props) => {
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Requests</span>
-                                <span class="info-box-number">{getrmem() }</span>
+                                <span class="info-box-number">{getrmem()}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-success"><i class="far fa fa-calendar-o"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Upcomming Events</span>
+                                <span class="info-box-number">{getopen()}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-danger"><i class="far fa fa-calendar-o"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Closed Events</span>
+                                <span class="info-box-number">{getclose()}</span>
                             </div>
                         </div>
                     </div>
