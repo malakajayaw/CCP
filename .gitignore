@@ -36,3 +36,5 @@ back-end/app/routes/affiliationview.route.js
 front-end/src/admin/components/StudentBranch-management/Affiliationview.jsx
 
 back-end/app/controllers/affiliationview.controller.js
+
+front-end/src/admin/components/StudentBranch-management/ViewMembers.jsx
