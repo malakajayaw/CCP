@@ -28,3 +28,11 @@ front-end/src/admin/components/Dashboard/DashboardApp.jsx
 front-end/src/admin/components/Designation-management/DesignationApp.js
 
 front-end/src/admin/components/EventAttendance-management/EventAttendance.jsx
+
+back-end/app/model/affiliationview.model.js
+
+back-end/app/routes/affiliationview.route.js
+
+front-end/src/admin/components/StudentBranch-management/Affiliationview.jsx
+
+back-end/app/controllers/affiliationview.controller.js
