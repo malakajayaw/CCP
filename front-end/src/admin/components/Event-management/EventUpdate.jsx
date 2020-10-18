@@ -8,10 +8,12 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap"
 import 'jquery/dist/jquery.min.js';
 import { Multiselect } from 'multiselect-react-dropdown';
+import { add_activity } from '../../controllers/activity.controller'
 
 function EventUpdate() {
 
   const [eventData,setEventData] = useState({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',banner:null });
+  const [activity, setActivity] = useState({MemNo: "To be taken from redux", action: "Updated an event",table: "Events",parameters: "not set",  datetime: ""});
   const [vols,setVols] = useState([]);
   const [members, Setmembers] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState();
@@ -26,19 +28,22 @@ function EventUpdate() {
 
     const getData = async () => {
 
+        //fetch event and members data
         var eventResult = await get_event(eventId)
         var memberIdResult = await get_all_active_members()
-
+        
+        //set state of events and memeber
         setEventData(eventResult.data.data);
         Setmembers( setMemeberIds(memberIdResult.data.data))
 
+        //turn the member names string into an array
         var selectedVolArr = eventResult.data.data.volunteers[0].split(',')
       
         setVols(selectedVolArr);
         setSelectedMembers(selectedVolArr);
-        console.log(selectedMembers);
     }
 
+    //set member ids of fetched members
   function setMemeberIds(members){
     var i = 0;
     members.forEach(member => {
@@ -48,28 +53,31 @@ function EventUpdate() {
     return memberIds;
   }
 
+  //handle change of a form field
   const handleChange = event =>
   { 
     setEventData({...eventData, [event.target.id] :event.target.value});
   };
     
-
+  //set state when a member is selected
   function onSelect(selectedList, selectedMember) {
     vols.push(selectedMember);
     setSelectedMembers(vols);
   }
 
+    //set state when a member is removed
   function onRemove(selectedList, selectedMember) {
     for( var i = 0; i < vols.length; i++)
     { if ( vols[i] === selectedMember) { vols.splice(i, 1); }}
     setVols(vols);
     setSelectedMembers(vols);
-    console.log(selectedMembers);
 }
 
+    //set state of banner
   const handleBanner = event =>
   {  setEventData({...eventData, banner : event.target.files[0] }); setBannerChange(true)};
 
+  //clear state data when submitted
   const clear = () => {
   setEventData({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',formLink:'',banner:null  })
   setVols([]);
@@ -95,6 +103,11 @@ function EventUpdate() {
           'Content-Type' : 'multipart/form-data'
         }
       });
+
+      const date = new Date();
+      activity.parameters = eventData.eventName;
+      activity.datetime = date.toLocaleString();
+      await add_activity(activity)
 
       if(res.status === 200)
       {
