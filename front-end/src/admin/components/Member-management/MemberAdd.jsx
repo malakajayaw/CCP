@@ -1,15 +1,12 @@
 import React , {useState, useEffect}from 'react';
 import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import Select from 'react-select'
 
 import { useForm } from "react-hook-form";
 
-import { add_member_requset} from '../../controllers/memeber.controller';
-import { get_all_affiliations } from "../../controllers/affiliation.controller";
+import { add_member_requset} from '../../controllers/memeber.controller'
 import Config from '../../controllers/config.controller'
 const MemberAdd = (props) => {
   const { register, handleSubmit } = useForm();
-
 
  
   let [member, setMember] = useState({ 
@@ -17,7 +14,6 @@ const MemberAdd = (props) => {
     addlname : '' ,
     addmname : '' ,
     addmnumber : '' ,
-    selectaffiID: '',
     addpemail : '' ,
     addoemail : '' ,
     addphone : '' ,
@@ -83,35 +79,6 @@ const MemberAdd = (props) => {
      setMember({...member, [e.target.name]: e.target.value });
   }
 
-//Affiliation--------------------------------------
-  const handleAffChange = (e) => {
-    setMember({...member, "selectaffiID": e.value });
-    console.log(e);
-}
-
-const [affiliations, setAffiliations] = useState([]);
-useEffect(() => {
-    getAffData();
-}, []);
-
-async function getAffData() {
-  var res = await get_all_affiliations();
-  await setAffiliations(res.data.data);
-  console.log("aff: " + affiliations);
-}
-
-const sel = affiliations.map(item => {
-  const container = {};
-
-  container["value"] = item.affiID;
-  container["label"] = item.affiliationname;
-  console.log("sel: " + JSON.stringify(container));
-  return container;
-})
-
-
-
-
   return (<section className="content" style={{ display: props.display }}>
     <div className="container-fluid">
     <h6>Add New Member</h6>
@@ -164,19 +131,6 @@ const sel = affiliations.map(item => {
                       <input type="text" id="inputMNumber" className="form-control" required name="addmnumber"
                       onChange={handleChange}
                       value={member.addmnumber}/>
-                    </div>
-
-                    {/* <div className="form-group">
-                      <label for="inputMNumber">Affiliation</label>
-                      <input type="text" id="inputaffID" className="form-control" required name={"selectaffiID","selectaffiliationname"}
-                      onChange={handleChange}
-                      value={member.selectaffiID, member.selectaffiliationname}/>
-                    </div> */}
-
-                    <div className="form-group">
-                        <label>Affiliation</label>
-                        <Select required className="select2" id="affiliation" name="selectaffiID" data-placeholder="Select affiliation" onChange={handleAffChange} options={sel} 
-                        value=""/>
                     </div>
 
                     <div className="form-group">
