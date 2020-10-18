@@ -30,13 +30,7 @@ function AffiliationView(props){
       $("#affiliationView").dataTable();
     }
 
-    const onDelete = async (id) => {
-        const result = await deleteAffiliation(id)
-        if(result.code == 200){
-          Config.setToast(result.message)
-          getData()
-        }
-      }
+    
 
     var today = new Date();
     var status = null;

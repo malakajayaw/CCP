@@ -1,15 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const AffiliationViewController = require('../controllers/affiliationview.controller');
+const AffiliationController = require('../controllers/affiliation.controller');
 
-
+// add affiliation
+router.post('/addAffiliation',  AffiliationController.addAffiliation);
 
 //get all affiliation
-router.get('/all/affiliationview',  AffiliationViewController.get_all_affiliationview);
+router.get('/all/affiliations',  AffiliationController.get_all_affiliations);
 
 //get one affiliation
-router.post('/specificAffiliationView',  AffiliationViewController.get_affiliation);
+router.post('/specificAffiliation',  AffiliationController.get_affiliation);
 
+//delete affiliation
+router.post('/delete',  AffiliationController.deleteAffiliation);
 
+//update affiliation
+router.post('/update',  AffiliationController.updateAffiliation);
 
 module.exports = router;
