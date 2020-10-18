@@ -1,7 +1,6 @@
 import React,{useState, useEffect} from 'react';
 import Config from '../../controllers/config.controller';
 import { get_all_active_members} from '../../controllers/memeber.controller'
-import { add_activity } from '../../controllers/activity.controller'
 import Axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap"
@@ -11,25 +10,23 @@ import { Multiselect } from 'multiselect-react-dropdown';
 function EventForm(props) {
 
   const [eventData,setEventData] = useState({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',banner:null });
-  const [activity, setActivity] = useState({MemNo: "To be taken from redux", action: "Added an event",table: "Events",parameters: "not set",  datetime: ""});
   const [vols,setVols] = useState([]);
   const [members, Setmembers] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState();
   var memberIds = [];
+  //const vols = [];
 
     useEffect(() => {
       getData();
   }, []); 
 
 
-  //fetch memebers for the volunteers form field
   async function getData() {
     var memberRes = await get_all_active_members()
     await   Setmembers( setMemeberIds(memberRes.data.data));
     
   }
 
-  //setting the member id from the fetched members
   function setMemeberIds(members){
     var i = 0;
     members.forEach(member => {
@@ -39,30 +36,26 @@ function EventForm(props) {
     return memberIds;
   }
 
-  //handle change of a form field and set the state
   const handleChange = event =>
   { 
     setEventData({...eventData, [event.target.id] :event.target.value});
   };
     
-  //set the state when a memember is selected from volunteers
+
   function onSelect(selectedList, selectedMember) {
     vols.push(selectedMember);
     setSelectedMembers(vols);
   }
 
-    //set the state when a memember is removed from volunteers
   function onRemove(selectedList, selectedMember) {
      for( var i = 0; i < selectedMembers.length; i++)
      { if ( selectedMembers[i] === selectedMember) { selectedMembers.splice(i, 1); }}
     setSelectedMembers(selectedMembers);
 }
 
-  //handle the change of event banner and set the state
   const handleBanner = event =>
   {  setEventData({...eventData, banner : event.target.files[0] })};
 
-  //clear the state when form is submited
   const clear = () => {
   setEventData({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',formLink:'',banner:null  })
   setVols([]);
@@ -82,16 +75,11 @@ function EventForm(props) {
     data.append("formLink",eventData.formLink);
     data.append("banner",eventData.banner);
     try{
-       const res = await Axios.post('/event/addEvent',data, {
+      const res = await Axios.post('/event/addEvent',data, {
         headers : {
           'Content-Type' : 'multipart/form-data'
         }
       });
-
-      const date = new Date();
-      activity.parameters = eventData.eventName;
-      activity.datetime = date.toLocaleString();
-      await add_activity(activity)
 
       if(res.status === 200)
       {
@@ -157,9 +145,9 @@ function EventForm(props) {
         <Multiselect options={members} isObject={false} onSelect={onSelect} onRemove={onRemove}  displayValue="name"  />
       </div>
 
-    <div className="form-group">
-      <label htmlFor="banner">Event Banner</label>
-      <input type="file" className="form-control-file" id="banner" accept="image/*" onChange={handleBanner}/>
+    <div class="form-group">
+      <label for="banner">Event Banner</label>
+      <input type="file" class="form-control-file" id="banner" accept="image/*" onChange={handleBanner}/>
     </div>
 
     </div>

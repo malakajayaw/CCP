@@ -1,51 +1,35 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+let Assignments = new Schema({
 
-let Member = new Schema({
 
-
-    memberShipNo: {
+    AssNo: {
         type: String,
         required: true,
         unique: true
 
     },
 
-    fname: {
+    DesNo: {
         type: String,
         required: true,
 
     },
-    lname: {
+    title: {
         type: String,
         required: true,
     },
-    nameAsMemberShip: {
+    MemNo: {
         type: String,
         required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-    },
-    ieeeMail: {
-        type: String,
-        required: true,
-    },
-    profilepic: {
-        type: String,
 
     },
-    lastlogin: {
-        type: String,
-
-    },
-    contactNo: {
+    forYear: {
         type: String,
         required: true,
     },
-    password: {
+    AssBy: {
         type: String,
         required: true,
     },
@@ -59,17 +43,9 @@ let Member = new Schema({
     },
     state: {
         type: Boolean,
-        default: false
-    },
-    newrequest : {
-        type: Boolean,
         default: true
     },
-    type: {
-        type: String,
-        default: "member"
-    }
 });
 
 
-module.exports = mongoose.model('member', Member);
+module.exports = mongoose.model('assignments', Assignments);

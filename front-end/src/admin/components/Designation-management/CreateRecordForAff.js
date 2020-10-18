@@ -1,38 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation } from "react-router-dom";
 import Select from 'react-select'
+
 import moment from 'moment';
 import Config from '../../controllers/config.controller'
 import useForceUpdate from 'use-force-update';
 
-//controllers
 import { addPastDesignation } from '../../controllers/pastdes.controller'
-import { get_all_affiliations, get_affiliation } from "../../controllers/affiliation.controller";
-import { get_aff_spec_members, get_spec_member } from "../../controllers/designation.controller";
+import { get_all_affiliations } from "../../controllers/affiliation.controller";
+import { get_all_active_members } from "../../controllers/memeber.controller";
 import { add_activity } from '../../controllers/activity.controller'
 
 const CreateRecord = (props) => {
-
-    //for updating components
     const forceUpdate = useForceUpdate();
-
-    //get passed parameters
     const id = useParams()
     const aff = id.aff
-
-    //affiliation id of logged in user
-    var affil = "5f8a5863c17b4b17dc919a91";
-
-    //for getting date
+    const [submit, setSubmit] = useState({
+        value1: "Not Submitted"
+    });
     const [today, setToday] = useState(
 
     );
+
     const todayfucn = () => {
         let newDate = new Date()
 
         const today = moment(newDate).format("MMM Do YY");
         setToday(today)
+
+        console.log(today);
     }
+
 
     useEffect(() => {
         let newDate = new Date()
@@ -42,8 +40,7 @@ const CreateRecord = (props) => {
         todayfucn()
     });
 
-    //variable to store activities
-    let [activity] = useState({
+    let [activity, setActivity] = useState({
         MemNo: "To be taken from redux",
         action: "New Record - Chair",
         table: "Records",
@@ -51,7 +48,6 @@ const CreateRecord = (props) => {
         datetime: ""
     });
 
-    //variable to store past destinations
     let [pastdes, setPastDes] = useState({
         title: "",
         affiliationNo: "",
@@ -62,92 +58,64 @@ const CreateRecord = (props) => {
 
     });
 
-    //variable to store members
     const [member, setMember] = useState([]);
     useEffect(() => {
         getMemData();
 
     }, []);
 
-    //get members specific to the logged users affiliation from data base
     async function getMemData() {
-        window.selectedaff = "Select affiliaion";
-        window.selectedmem = "Select member";
-        var res = await get_aff_spec_members(affil);
+        var res = await get_all_active_members();
         await setMember(res.data.data);
+        console.log("mem: " + member);
     }
 
-    //get member data for a given _id
-    const setMemData = (id) => {
-        return member.map((member, index) => {
-            if (id == member._id) {
-                return (member.fname + " " + member.lname + " - " + member.memberShipNo);
-            }
-        });
-    };
-
-    //set options for select to show members
     const selMem = member.map(item => {
         const container = {};
+
         container["value"] = item._id;
-        container["label"] = item.memberShipNo + " - " + item.fname + " " + item.lname;
+        container["label"] = item.fname + " " + item.lname + " - " + item._id;
+        console.log("sel: " + JSON.stringify(container));
         return container;
     })
 
-    //handle form changes - for member select
     const handleMemChange = (e) => {
         setPastDes({ ...pastdes, "MemNo": e.value });
-        window.selectedmem = setMemData(e.value);
-        mem();
+        console.log(e);
     }
 
-    //handle form changes - general
     const handleChange = (e) => {
         setPastDes({ ...pastdes, [e.target.name]: e.target.value, affiliationNo: aff });
     }
 
-    //get member name relevent to a given _id
-    async function setMemDetails(id) {
-        var result = await get_spec_member(id)
-        return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
-    }
 
-    //get affiliation name relevent to a given _id
-    async function setAffDetails(id) {
-        var result = await get_affiliation(id)
-        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
-    }
-
-    //runs on submit
     const onSubmit = async (e) => {
         const date = new Date();
         e.preventDefault()
-        //validation
-        if (pastdes.MemNo == "") {
-            Config.setToast("Select Member")
+
+        console.log(pastdes);
+        const result = await addPastDesignation(pastdes)
+        console.log(result);
+        const det = pastdes.title + "/" + pastdes.MemNo + "/" + pastdes.Year + " / " + pastdes.affiliationNo
+        activity.parameters = det;
+        activity.datetime = date.toLocaleString();
+        console.log("act" + JSON.stringify(activity));
+        const result3 = await add_activity(activity)
+        console.log(result3);
+        if (result.code == 200) {
+            clear()
+            Config.setToast("Record Added Successfully")
+            forceUpdate();
+
         }
-        else {
-            //add past designation to database
-            const result = await addPastDesignation(pastdes)
-            //set parameters for activity variable
-            var detMem = await setMemDetails(pastdes.MemNo)
-            var detAff = await setAffDetails(pastdes.affiliationNo)
-            const det = pastdes.title + "/" + detMem + "/" + pastdes.Year + " / " + detAff
-            activity.parameters = det;
-            //set date for activity variable
-            activity.datetime = date.toLocaleString();
-            //add activity to database
-            await add_activity(activity)
-            if (result.code == 200) {
-                clear()
-                Config.setToast("Record Added Successfully")
-                forceUpdate();
-            }
-        }
+
+
+
     }
 
-    //clears the form after inserting data to database
+
     const clear = () => {
+        console.log("Clear call");
         setPastDes({
             title: "",
             affiliationNo: "",
@@ -157,19 +125,17 @@ const CreateRecord = (props) => {
         })
     }
 
-    //variable to store affiliations
     const [affiliations, setAffiliations] = useState([]);
     useEffect(() => {
         getAffData();
     }, []);
 
-    //get all the affiliations from the database
     async function getAffData() {
         var res = await get_all_affiliations();
         await setAffiliations(res.data.data);
+        console.log(affiliations);
     }
 
-    //set options for select to show affiliations
     const loadAffData = () => {
         return affiliations.map((affiliations, index) => {
             return (
@@ -178,28 +144,14 @@ const CreateRecord = (props) => {
         });
     };
 
-    //get affiliation data for a given _id
-    const setAffData = (id) => {
-        return affiliations.map((affiliations, index) => {
-            if (id == affiliations._id) {
-                return (affiliations.affiliationno + " - " + affiliations.affiliationname);
-            }
-        });
-    };
 
-    //select for members
-    const mem = () => {
-        return (
-            <Select required value="" className="select2" id="MemNo" name="MemNo" placeholder={window.selectedmem} style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
-        )
-    }
-
-    //render form
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
             <div className="card">
                 <div className="card-header">
+                    {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
                 </div>
+                {/* <!-- /.card-header --> */}
                 <div className="card-body">
 
                     <section class="content">
@@ -207,7 +159,7 @@ const CreateRecord = (props) => {
                             <div class="col-md-12">
                                 <div class="card card-primary">
                                     <div class="card-header">
-                                        <h3 class="card-title pb-1 mb-1" style={{ fontWeight: '600' }}>Add Record</h3>
+                                        <h3 class="card-title pb-1 mb-1" style={{ fontWeight: '600' }}>Add new Designation</h3>
 
                                     </div>
 
@@ -227,13 +179,14 @@ const CreateRecord = (props) => {
 
                                                 <div className="form-group">
                                                     <label>Member</label>
-                                                    { mem()}
+                                                    <Select required value="" className="select2" id="MemNo" name="MemNo" data-placeholder="Select Member" style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
                                                 </div>
 
                                                 <label for="inputFName">Year : </label>
                                                 <input required type="text" id="Year" name="Year" class="form-control" onChange={handleChange} />
 
                                                 <div class="card-footer" style={{ padding: '0px ' }}>
+                                                    {/* <button type="button" class="btn btn-default float-right">Clear</button> */}
                                                     <button type="submit" class="btn btn-info">Add Record</button>
                                                 </div>
                                             </div>
@@ -251,6 +204,7 @@ const CreateRecord = (props) => {
 
                 </div>
             </div>
+            {/* <!-- /.container-fluid --> */}
         </div>
         {console.log("bye")}
     </section>);

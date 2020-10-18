@@ -1,5 +1,4 @@
 const Designation = require('../model/designations.model');
-const Member = require('../model/member.model');
 
 //=============================================================================== Add Designation
 
@@ -154,50 +153,3 @@ exports.remove_designation_mem = async function (req, res, next) {
     }
 
 }
-
-//=============================================================================== get all members
-
-
-exports.get_all_members = function (req, res, next) {
-    // check userdata
-    Member.find(function (err, docs) {
-        if (docs.length != 0) {
-            res.status(200).send({
-                data: docs
-            });
-        } else {
-            res.status(403).send('No members found')
-        }
-    })
-}
-
-//=============================================================================== get members for aff
-
-exports.get_aff_spec_members= async function (req, res, next) {
-    var id = req.body.id;
-
-    try {
-        const log = await Member.find({
-            affiID: id,
-        });
-        return res.status(200).send({
-            data: log,
-        });
-    } catch (error) {
-        return res.status(405).send("Something went wrong in get_spec_des");
-    }
-};
-
-exports.get_spec_mem = async function (req, res, next) {
-    var id = req.body.id;
-    try {
-        const log = await Member.findOne({
-            _id: id,
-        });
-        return res.status(200).send({
-            data: log,
-        });
-    } catch (error) {
-        return res.status(405).send("Something went wrong in get_spec_des");
-    }
-};
