@@ -2,16 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let EventReport = new Schema({
-  // eventId: {
-  //     type: Schema.ObjectId,
-  //     ref: 'events',
-
-  // },
-
-  // reportname: {
-  //   type: String,
-  //   required: true,
-  // },
+  eventName: {
+     type: String,
+     required: true,
+   },
 
   submssionState: {
     type: String,
@@ -31,6 +25,10 @@ let EventReport = new Schema({
     type: String,
    
   },
+  file_path: {
+    type: String,
+  },
+
 });
 
 module.exports = mongoose.model("eventreports", EventReport);

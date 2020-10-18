@@ -40,9 +40,22 @@ function ViewMembers(props) {
       })
     }
 
+    const loadMemberName = () => {
+      return   members.map((member, index) => {
+        return(  
+        <tr><option value={member.fname} key={index}> {member.fname}</option>   </tr>
+        
+        )
+      })
+    }
+
+
+    
+
+
 
   return (  <div>
-    {/* <ContentHeader pageName={props.page}/> */}
+    
     <section className="content" >
   <div className="card">
     <div className="card-header">
@@ -56,41 +69,40 @@ function ViewMembers(props) {
       </div>
     </div>
     <div className="card-body">
-      <div className="row">
-        <div className="col-12 col-md-12 col-lg-8 order-1 order-md-1">
-          <div className="row">
-      
-        </div>
-          
-        <div className="row">
-            <div className="col-12 col-sm-12">
-                    <div className="info-box bg-light">
-                
-                      </div>
+    
+        <h3 className="text-primary mt-3 mb-3">{affiliation.affiliationname} </h3>
+      <div className="col-12 px-4">
+         
+              
+                    <div className="text-muted">
+                      <p className="text-md"><i className="fas fa-id-badge"></i> <b>{affiliation.affiliationno}</b></p>
                     </div>
               </div>
-              <div className="row info-box bg-light">
-            <div className="col-12 px-4">
-         
-            <h3 className="text-primary mt-3 mb-3">{affiliation.affiliationname} </h3>
-          <div className="text-muted">
-          <p className="text-md"><i className="fas fa-id-badge"></i> <b>{affiliation.affiliationno}</b>
 
-          
-            </p>
-          </div>
-              <p className="text-muted">{loadMembers()}</p>
-              
+      <table id="viewmembers" className="table table-bordered table-striped dataTable" >
+            <thead>
+            <tr>
+              <th>Membership number</th>
+              <th>Member Name</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{loadMembers()}</td>
+                <td>{loadMemberName()}</td>
+                
+              </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+              <th>Membership number</th>
+              <th>Member Name</th>
+            </tr>
+            </tfoot>
+          </table>
 
-          </div>
-          </div>
-        </div>
 
-        <div className="col-12 col-md-12 col-lg-4 order-2 order-md-2">
-         {/* <iframe src={event.formLink} title="registrationForm" width="100%"  height="100%" frameBorder="0" marginHeight="0" marginWidth="0">Loading…</iframe> */}
-        </div>
-      </div>
-    </div>
+    </div>   
     {/* <!-- /.card-body --> */}
   </div>
   {/* <!-- /.card --> */}

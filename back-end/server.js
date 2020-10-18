@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const fileUpload = require('express-fileupload');
-const multer = require("multer");
 
 
 const MongoClient = require("mongodb").MongoClient;
@@ -13,11 +12,12 @@ const port = process.env.PORT || 5000;
 
 const memberRoutes = require("./app/routes/member.route");
 const eventRoutes = require("./app/routes/event.route");
+const eventAttendanceRoutes = require("./app/routes/event.attendance.route");
 const eventReport = require("./app/routes/event.report.route");
 const activity = require("./app/routes/activity.route");
 const designations = require("./app/routes/designations.route");
-const assignments = require("./app/routes/designationsAss.route");
 const affiliation = require("./app/routes/affiliation.route");
+const pastdes = require("./app/routes/pastdes.route");
 
 
 
@@ -43,10 +43,11 @@ mongoose.set("useCreateIndex", true);
 app.use("/member", memberRoutes);
 app.use("/event", eventRoutes);
 app.use("/eventReport", eventReport);
+app.use("/eventattendance", eventAttendanceRoutes);
 app.use("/activity", activity);
 app.use("/designations", designations);
-app.use("/assignments", assignments);
 app.use("/affiliation", affiliation)
+app.use("/pastdes", pastdes)
 
 //======================================================================================================
 //================================== Handlle Error     ===========================================

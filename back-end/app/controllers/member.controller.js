@@ -14,6 +14,7 @@ exports.requsetMemberShip = function (req, res, next) {
         fname: req.body.fname,
         lname: req.body.lname,
         nameAsMemberShip: req.body.nameAsMemberShip,
+        affiID: req.body.affiID,
         email: req.body.email,
         ieeeMail: req.body.ieeeMail,
         profilepic: req.body.profilepic,
@@ -62,6 +63,7 @@ exports.get_all_requsts = function (req, res, next) {
         }
     })
 }
+
 
 
 //======================================================================================================
@@ -231,10 +233,12 @@ exports.login = async function (req, res) {
             },"thisistokenforieee2019", {
                 expiresIn: '240h'
             });
+            console.log(user_details);
             return res.status(200).send({
                 data: {
                     "token": token,
-                    "role": user_details.role
+                    "role": user_details.role,
+                    "details":user_details
                 },
                 success: true,
                 message: 'Successfully login',
