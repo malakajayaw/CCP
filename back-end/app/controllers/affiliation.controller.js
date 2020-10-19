@@ -55,10 +55,10 @@ exports.get_affiliation = async function (req, res, next) {
 
     var id = req.body.id;
     try {
-        const affiliation = await  Affiliation.findOne({
+        const update = await  Affiliation.findOne({
             _id: id })
        return res.status(200).send({
-           data: affiliation
+           data: update
        });
     } catch (error) {
         return res.status(403).send("Something went wrong");
@@ -86,31 +86,4 @@ exports.deleteAffiliation = async  function (req, res, next) {
         } catch (error) {
             return  res.status(403).send("Something went wrong");
         }
-}
-
-
-
-
-
-exports.updateAffiliation = async function (req, res, next) {
-
-    
-    try {
-        const update = await Affiliation.findOneAndUpdate({
-            _id: req.body.affiID
-        }, {
-            affiliationtype: req.body.affiliationtype,
-            affiliationname: req.body.affiliationname,
-            affiliationno: req.body.affiliationno,
-            date: req.body.date,
-            status: req.body.status,
-        }, {
-            new: true
-        })
-
-        return res.status(200).send("Affiliation Updated");
-    } catch (error) {
-        return res.status(403).send("Something went wrong");
-    }
-    
 }
