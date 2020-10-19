@@ -95,7 +95,7 @@ function EventAttendanceConfirmed(props) {
               <thead>
               <tr>
               <th>No :</th>
-                <th>Membership No</th>
+                <th>Membership No/Email</th>
                 <th>Manage</th>
               </tr>
               </thead>
@@ -106,7 +106,7 @@ function EventAttendanceConfirmed(props) {
               <tfoot>
               <tr>
                 <th>No :</th>
-                <th>Membership No</th>
+                <th>Membership No/Email</th>
                 <th>Manage</th>
               </tr>
               </tfoot>

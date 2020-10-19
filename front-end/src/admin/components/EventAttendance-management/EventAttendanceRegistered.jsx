@@ -29,10 +29,11 @@ function EventAttendanceRegistered(props) {
     //calling the method in the controller
     addEventAttendanceConfirmed(data2).then(response =>{
      if (response.code == 200) {
+      //loading the table again
+      getData(id);
+      loadData();
+      Config.setToast("Confirmation email sent Successfully");
       Config.setToast("Confirmed Member Added Successfully");
-       //loading the table again
-       getData(id);
-       loadData();
      }
     })
   };
@@ -78,7 +79,7 @@ function EventAttendanceRegistered(props) {
               <thead>
               <tr>
                 <th>No : </th>
-                <th>Membership Number</th>
+                <th>Membership Number/ Email</th>
                 <th>Manage</th>
               </tr>
               </thead>
@@ -89,7 +90,7 @@ function EventAttendanceRegistered(props) {
               <tfoot>
               <tr>
                 <th>No : </th>
-                <th>Membership Number</th>
+                <th>Membership Number / Email</th>
                 <th>Manage</th>
               </tr>
             </tfoot>
