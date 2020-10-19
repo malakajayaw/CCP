@@ -52,7 +52,10 @@ function EventAttendanceConfirmed(props) {
     })
   };
   
-const loadMembershipNumbers = () => {
+  const [responses, setResponses] = useState([]);
+  useEffect(() => {
+    getData(id);
+  }, []);
 
   //getData function is used to get the confirmed members from the db
   async function getData(id) {
@@ -82,18 +85,13 @@ const loadMembershipNumbers = () => {
       <div className="container-fluid">
         <div className="card">
           <div className="card-header">
-            {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
           </div>
-          {/* <!-- /.card-header --> */}
           <div className="card-body">
-          <Link to = "/Admin/EventAttendanceRegistered" type="button" className="btn btn-success btn-sm float-right add_btn mr-2 my-2">
-              Registered Members
-            </Link>
-            <Link to = "/Admin/EventAttendanceAttended" type="button" className="btn btn-info btn-sm float-right add_btn mr-2 my-2">
-              Attended Members
-            </Link>
+          <Link to = {"/Admin/EventAttendanceRegistered/"+id} type="button" className="btn btn-success btn-sm float-right add_btn mr-2 my-2">Registered Members</Link>
+          <Link to = {"/Admin/EventAttendanceAttended/"+id} type="button" className="btn btn-info btn-sm float-right add_btn mr-2 my-2">Attended Members</Link>
+
           <h5>Confirmed Members for the Event</h5>
-            <table id="eventReportTable" className="table table-bordered table-striped dataTable">
+            <table id="eventattCTable" className="table table-bordered table-striped dataTable">
               <thead>
               <tr>
               <th>No :</th>
@@ -114,10 +112,7 @@ const loadMembershipNumbers = () => {
               </tfoot>
             </table>
           </div>
-          
       </div>
-      <button type="button" onClick={() => {props.onClick("EventView"); }} className="btn btn-success float-right add_btn" >Save Changes</button>
-      {/* <!-- /.container-fluid --> */}
       </div>   
     </section>
     );

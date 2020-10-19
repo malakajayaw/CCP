@@ -13,7 +13,6 @@ import {
 
 const EventReportTable = (props) => {
   const [eventsReports, SetEventReports] = useState([]);
-  const forceUpdate = useForceUpdate();
 
   useEffect(() => {
     //calling the  method to get the data into the table
@@ -31,11 +30,11 @@ const EventReportTable = (props) => {
   const delete_func = async (id) => {
     const res = await delete_report(id);
     if (res.code == 200) {
-      Config.setToast("Report Delete");
-      forceUpdate();
+      Config.setToast("Report Deleted");
+      getData();
+      readydata();
     } else {
       Config.setToast("Something went wrong");
-      forceUpdate();
     }
   };
 
@@ -48,12 +47,12 @@ const EventReportTable = (props) => {
   //loading the data into the table
   const readydata = () => {
     return eventsReports.map((eventreport, i) => {
-      //console.log(eventreport)
-      return (
+      return (   
         <tr key={i}>
           <td>{eventreport.eventName}</td>
           <td>{getFileName(eventreport.file_path)}</td>
-          <td>Submited</td>
+          <td>{eventreport.hostingAffiliation}</td>
+          {/* <td>{"Affiliation"}</td> */}
           <td className="project-actions text-center">
             <Link to={`/Admin/EventReportView/${eventreport._id}`} className="btn btn-primary btn-sm mr-1" style={{ color: "black" }}><i className="fas fa-folder mr-1" />View</Link>
             <a className="btn btn-danger btn-sm mr-1" onClick={() => delete_func(eventreport._id)}><i className="fas fa-trash mr-1" />Delete</a>
@@ -75,7 +74,7 @@ const EventReportTable = (props) => {
                 <tr>
                   <th>Event Name</th>
                   <th>Report Name</th>
-                  <th>Submission Status</th>
+                  <th>Affiliation</th>
                   <th style={{width: "25%"}}>Manage</th>
                 </tr>
               </thead>
@@ -86,7 +85,7 @@ const EventReportTable = (props) => {
                 <tr>
                   <th>Event Name</th>
                   <th>Report Name</th>
-                  <th>Submission Status</th>
+                  <th>Affiliation</th>
                   <th style={{width: "25%"}}>Manage</th>
                 </tr>
               </tfoot>
