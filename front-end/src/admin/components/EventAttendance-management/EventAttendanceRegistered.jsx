@@ -29,10 +29,10 @@ function EventAttendanceRegistered(props) {
     //calling the method in the controller
     addEventAttendanceConfirmed(data2).then(response =>{
      if (response.code == 200) {
-       //loading the table again
-      getData(id);
-      loadData();
       Config.setToast("Confirmed Member Added Successfully");
+       //loading the table again
+       getData(id);
+       loadData();
      }
     })
   };
