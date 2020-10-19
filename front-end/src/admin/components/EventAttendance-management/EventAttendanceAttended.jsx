@@ -66,19 +66,13 @@ function EventAttendanceAttended(props) {
       <div className="container-fluid">
         <div className="card">
           <div className="card-header">
-            {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
           </div>
-          {/* <!-- /.card-header --> */}
           <div className="card-body">
-          <Link to = "/Admin/EventAttendanceRegistered" type="button" className="btn btn-success btn-sm float-right add_btn mr-2 my-2">
-              Registered Members
-            </Link>
-            
-            <Link to = "/Admin/EventAttendanceConfirmed" type="button" className="btn btn-info btn-sm float-right add_btn mr-2 my-2">
-              Confirmed Members
-            </Link>
+          <Link to = {"/Admin/EventAttendanceRegistered/"+id} type="button" className="btn btn-success btn-sm float-right add_btn mr-2 my-2">Registered Members</Link>
+          <Link to = {"/Admin/EventAttendanceConfirmed/"+id} type="button" className="btn btn-info btn-sm float-right add_btn mr-2 my-2">Confirmed Members</Link>
+
           <h5>Attended Members for the Event</h5>
-            <table id="eventReportTable" className="table table-bordered table-striped dataTable">
+            <table id="eventATable" className="table table-bordered table-striped dataTable">
               <thead>
               <tr>
                 <th>No :</th>
@@ -96,14 +90,10 @@ function EventAttendanceAttended(props) {
                 <th>Membership No / Email</th>
                 <th>Manage</th>
               </tr>
-            </tfoot>
-          
+              </tfoot>
             </table>
           </div>
-          
       </div>
-      <button type="button"  className="btn btn-success float-right add_btn" >Save Changes</button>
-      {/* <!-- /.container-fluid --> */}
       </div>   
     </section>
     );

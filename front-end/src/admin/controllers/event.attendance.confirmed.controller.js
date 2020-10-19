@@ -1,6 +1,9 @@
 import axios from "axios";
 import Config from "./config.controller";
 
+//======================================================================================================
+//================================== Add confirmed members==============================================
+//====================================================================================================== 
 
 export const addEventAttendanceConfirmed = (data) => {
     return new Promise((resolve, reject) => {

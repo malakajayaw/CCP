@@ -50,8 +50,6 @@ function App() {
   const [page, setPage] = useState("Event");
 
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
         <div className="wrapper">
           <NavBar />
           <div className="content-wrapper">

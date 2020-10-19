@@ -37,7 +37,9 @@ const EventReportAdd = (props) => {
 
   //setting the event report details
   let [event, setEvent] = useState({
+    eventId: id,
     eventname: val,
+    hostingAffiliation: aff,
     submissionstate: "Not Submitted",
     date: moment(new Date()).format("MMM Do YY"),
     submissioncomment: "",
@@ -61,6 +63,7 @@ const EventReportAdd = (props) => {
 
   const clear = () => {
     setEvent({
+      eventId: id,
       eventname: val,
       submissionstate: "Not Submitted",
       date: today,

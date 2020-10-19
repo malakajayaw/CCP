@@ -4,35 +4,44 @@ import { useState,useEffect } from 'react';
 import Config from '../../controllers/config.controller';
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { get_event, deleteForm} from '../../controllers/event.controller';
+import { add_activity } from '../../controllers/activity.controller'
 import $ from "jquery";
 import Axios from 'axios';
 
 function EventView() {
 
     const [event, setEvent] = useState({event:['']});
+    const [activity, setActivity] = useState({MemNo: "To be taken from redux", action: "Deleted an event form",table: "Events",parameters: "not set",  datetime: ""});
     const [formData, setFormData] = useState([]);
     let { eventId } = useParams();
     var i = 0,k=0;
     var responder;
-
   
     useEffect(() => {
       onLoadEvent(eventId);
   }, []); 
   
+    //fetch event data and set state
     const onLoadEvent = async (eventId) => {
-      const result = await get_event(eventId);
+      const result = await get_event(eventId);//1
       await  setEvent(result.data.data);
     }
 
-    const onDelete = async (id) => {
+    //delete event form and fetch event data
+    const onDelete = async (id,eName) => {
       const result = await deleteForm(id)
+      const date = new Date();
+      activity.parameters = eName;
+      activity.datetime = date.toLocaleString();
+      await add_activity(activity)
       if(result.code == 200){
         Config.setToast(result.message)
       }
       onLoadEvent(eventId)
     }
 
+    //check if there is an registration form created for the event.
+    //if not created show create form button eles append the form fields in the html
     const loadRegForm = () => {
       if(event.registrationForm == null)  
         return ( <div className="d-flex justify-content-center"><Link to={"/Admin/RegistrationForm/"+eventId} type="button" className="btn btn-outline-warning btn-block">Create Form</Link></div>);
@@ -53,8 +62,10 @@ function EventView() {
 
       data.append("eventId", eventId);
 
+
       while(k < event.registrationForm.length){
 
+        //if there is a selection field in the form add the selected option
         if(e.target[k].tagName === "SELECT")
           formData.push(e.target[k].options[e.target[k].selectedIndex].value);
         else
@@ -62,6 +73,7 @@ function EventView() {
       
         setFormData(formData)
 
+        //MemberIDField & PublicField are predefined ids
         if(e.target[k].id ===  "MemberIDField" || e.target[k].id === "PublicField")
           responder = e.target[k].value;
 
@@ -88,6 +100,8 @@ function EventView() {
             console.log(err.response.data);
       }
     }
+    console.log(event.hostingAffiliation);
+    console.log(event.eventName);
     // const id = event.eventName;
   return (  <div>
     {/* <ContentHeader pageName={props.page}/> */}
@@ -100,13 +114,7 @@ function EventView() {
       </div>
       <div className="col-6">
         
-                <Link
-                  to= {`/Admin/EventReportForm/${event.eventName}`}
-                  type="button"
-                  className="btn btn-info float-right add_btn ml-2"
-                >
-                  Add Report
-                </Link>
+      <Link to= {`/Admin/EventReportForm/${event.eventName}/${eventId}/${event.hostingAffiliation}`}type="button" className="btn btn-info float-right add_btn ml-2">Add Report</Link>
       <Link to={"/Admin/EventAttendanceRegistered/"+eventId} type="button" className="btn btn-success float-right add_btn">Add Attendance</Link>
       </div>
     </div>
@@ -176,7 +184,7 @@ function EventView() {
                   <Link to={"/Admin/Responses/"+eventId} type="button" className="btn btn-warning float-right btn-block text-white" style={{display : event.registrationForm == null && "none" }} id="responsesButton">View Responses</Link>
                 </div>
                 <div className="col">
-                  <a className="btn btn-danger float-right btn-block text-white" id="deleteFormButton" onClick={()=> onDelete(eventId)} style={{display : event.registrationForm == null && "none" }}>Delete Form</a>
+                  <a className="btn btn-danger float-right btn-block text-white" id="deleteFormButton" onClick={()=> onDelete(eventId,event.eventName)} style={{display : event.registrationForm == null && "none" }}>Delete Form</a>
                 </div>
               </div>
             </div>

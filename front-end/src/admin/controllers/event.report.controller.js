@@ -40,7 +40,6 @@ export const delete_report = (id) => {
         ...data,
       })
       .then((result) => {
-        //console.log(result.data);
         resolve({ code: 200, message: result.data });
       })
       .catch((err) => {
@@ -48,8 +47,8 @@ export const delete_report = (id) => {
       });
   });
 };
+
 export const get_spec_report = (id) => {
-  //console.log(id);
   var data = {
     id: id,
   };
@@ -57,7 +56,6 @@ export const get_spec_report = (id) => {
     return axios
       .post(`${Config.host}${Config.port}/eventReport/report/spec`, { ...data })
       .then((result) => {
-        //console.log(result.data);
         resolve({ code: 200, message: result.data });
       })
       .catch((err) => {
@@ -71,7 +69,23 @@ export const get_all_reports = () => {
     return axios
       .get(`${Config.host}${Config.port}/eventReport/report/all`)
       .then((result) => {
-        //console.log(result.data);
+        resolve({ code: 200, data: result.data });
+      })
+      .catch((err) => {
+        reject({ code: 0, error: err });
+      });
+  });
+};
+
+export const get_affiliation_by_event_name = (id) => {
+  console.log(data);
+  var data = {
+    id: id,
+  };
+  return new Promise((resolve, reject) => {
+    return axios
+      .get(`${Config.host}${Config.port}/eventReport/report/getEventName`)
+      .then((result) => {
         resolve({ code: 200, data: result.data });
       })
       .catch((err) => {
