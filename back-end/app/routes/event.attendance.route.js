@@ -19,4 +19,7 @@ router.post('/attendance/add_attended_mem',  EventAttendanceAttendedController.a
 //getting attended mambers for an event
 router.post('/attendance/get_attended_mem',  EventAttendanceAttendedController.getAttendedMembersForAnEvent);
 
+//delete attended mamber for an event
+router.post('/attendance/delete_attended_mem', EventAttendanceAttendedController.removeEventAttendanceAttended);
+
 module.exports = router;

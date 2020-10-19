@@ -6,8 +6,6 @@ import Config from "./config.controller";
 //====================================================================================================== 
 
 export const addEventAttendanceConfirmed = (data) => {
-    console.log(data);
-  
     return new Promise((resolve, reject) => {
       return axios
      
@@ -17,7 +15,6 @@ export const addEventAttendanceConfirmed = (data) => {
           resolve({ code: 200, message: result.data });
         })
         .catch((err) => {
-            console.log("db aulk");
           reject({ code: 0, error: err });
         });
     });
@@ -45,7 +42,7 @@ export const getConfirmedMembersForAnEvent = (id) => {
 }
 
 //======================================================================================================
-//================================== Delete a confirmed member==============================================
+//================================== Decline a confirmed member==============================================
 //====================================================================================================== 
 
 export const removeEventAttendanceConfirmed = (data) => {

@@ -12,7 +12,7 @@ import "datatables.net-dt/css/jquery.dataTables.min.css"
 import useForceUpdate from "use-force-update";
 import { useState ,useEffect} from 'react';
 //importing the controller and the methods
-import {getAttendedMembersForAnEvent} from "../../controllers/event.attendance.attended.controller";
+import {removeEventAttendanceAttended, getAttendedMembersForAnEvent} from "../../controllers/event.attendance.attended.controller";
 
   
 function EventAttendanceAttended(props) {
@@ -32,6 +32,23 @@ function EventAttendanceAttended(props) {
     $("#eventATable").dataTable();
   }
 
+  //OnRemove function used by the decline button in the table
+  async function OnRemove (r)  {
+    let data2 = {
+      eventId:id, 
+      responder:r,
+    }
+    //calling the method in the controller
+    removeEventAttendanceAttended(data2).then(response =>{
+     if (response.code == 200) {
+      //loading the table again
+      getData(id);
+      loadData();
+      Config.setToast("Attended Member Removed Successfully");
+     }
+    })
+  };
+  
   //loadData function is used to load the data into the table
   const loadData = () => {
     return responses.map((responses, index) => {
@@ -39,6 +56,7 @@ function EventAttendanceAttended(props) {
          <tr key={index} >
           <td>{index+1}</td>
           <td name = {"responderT"+index}>{responses.responder}</td>
+          <td><a className="btn btn-danger btn-sm mr-1" onClick={(r) => OnRemove(responses.responder)}> <i className="fas fa-trash mr-1"/>Remove</a></td>
         </tr>
       );
     }); 
@@ -58,7 +76,8 @@ function EventAttendanceAttended(props) {
               <thead>
               <tr>
                 <th>No :</th>
-                <th>Membership No</th>
+                <th>Membership No/ Email</th>
+                <th>Manage</th>
               </tr>
               </thead>
               <tbody>
@@ -68,7 +87,8 @@ function EventAttendanceAttended(props) {
               <tfoot>
               <tr>
                 <th>No :</th>
-                <th>Membership No</th>
+                <th>Membership No / Email</th>
+                <th>Manage</th>
               </tr>
               </tfoot>
             </table>
