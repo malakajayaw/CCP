@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import Config from "../../controllers/config.controller";
-import { get_spec_report } from "../../controllers/event.report.controller";
 import { useLocation, useParams } from "react-router-dom";
+//importing the methods and the controllers
+import { get_spec_report } from "../../controllers/event.report.controller";
 
 const EventReportView = (props) => {
-  console.log(props.location);
+  //getting the parameters
   const params = useParams();
   const id = params.id;
 
-  console.log(id);
-
+  //setting the event report details
   const [eventsReports, SetEventReports] = useState({
     eventName: "",
     created_at: "",
@@ -20,17 +20,18 @@ const EventReportView = (props) => {
   });
 
   useEffect(() => {
-    console.log(id);
+    //calling the method to get the data from the db
     eventReportDetails(id);
   }, []);
 
+  //method to get the data from the db
   const eventReportDetails = async (id) => {
+    //calling the method from the controller
     const result = await get_spec_report(id);
-    console.log(result.message.data);
     SetEventReports(result.message.data);
-    console.log(eventsReports.submssionState);
   };
 
+  //getting the file name
   const getFileName = (URL) => {
     let parts = URL.split("/");
     return parts.pop() || parts.pop();

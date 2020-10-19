@@ -17,6 +17,7 @@ import {get_specific_mem} from '../../controllers/memeber.controller'
 
  
 function EventAttendanceRegistered(props) {
+  //getting the parameters
   var { id } = useParams();
   
   //Onsubmit function used by the accept button in the table
@@ -25,29 +26,21 @@ function EventAttendanceRegistered(props) {
       eventId:id, 
       responder:r,
     }
+    //calling the method in the controller
     addEventAttendanceConfirmed(data2).then(response =>{
      if (response.code == 200) {
+       //loading the table again
       getData(id);
       loadData();
       Config.setToast("Confirmed Member Added Successfully");
      }
     })
   };
-  
-  const [member, setMember] = useState({ 
 
-    memberShipNo : "",
-    fname : "" ,
-    lname : "" ,
-    email : "" ,
-    contactNo : "" ,
-    
-  });
-
+  //setting the responses
   const [responses, setResponses] = useState([]);
   useEffect(() => {
     getData(id);
-    onLoadMemebrer("20204646");
   }, []);
 
   //getData function is used to get the registered members from the db
@@ -56,16 +49,6 @@ function EventAttendanceRegistered(props) {
     await setResponses(res.data.data);
     $("#eventattTable").dataTable();
   }
-
-  const onLoadMemebrer = async (newId) => {
-    const result = await get_specific_mem(newId)
-    console.log(result.data.data);
-    // const newD = result.data.data
-  
-   await console.log(member);
-   setMember(result.data.data)
-  }
-
 
   //loadData function is used to load the data into the table
   const loadData = () => {
@@ -100,10 +83,11 @@ function EventAttendanceRegistered(props) {
               </tr>
               </thead>
               <tbody>
-            {loadData()}
-          </tbody>
-          <tfoot>
-          <tr>
+                {/* calling the method to get the data in to the table view */}
+                {loadData()}
+              </tbody>
+              <tfoot>
+              <tr>
                 <th>No : </th>
                 <th>Membership Number</th>
                 <th>Manage</th>

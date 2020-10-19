@@ -21,11 +21,11 @@ exports.addEventAttendanceAttended = async function (req, res, next) {
         if (err) {
             return next(err);
         }
+        //Sending the verificataion email
         const member = await Member.findOne({memberShipNo: newCAttended.responder});
-        if(member == null)
+        if(member != null)
         {
-            //email 
-            //const member = await Member.findOne({memberShipNo: newCAttended.responder});
+            
             var transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
@@ -48,29 +48,29 @@ exports.addEventAttendanceAttended = async function (req, res, next) {
     
         }
         else{
-        var transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: "Cpp.sd03.2020@gmail.com",
-                pass: "cpp@sd032020"
-            },
-            tls: { rejectUnauthorized: false }
-        });
+            //need to change as the registration form
+            //email 
+            //const member = await Member.findOne({memberShipNo: newCAttended.responder});
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: "Cpp.sd03.2020@gmail.com",
+                    pass: "cpp@sd032020"
+                },
+                tls: { rejectUnauthorized: false }
+            });
 
  
-        var mailOptions = {
-            from: '"IEEE Sri Lanka" <Cpp.sd03.2020@gmail.com>',
-            // to: newCAttended.email,
-            to:"maneesharajapaksha1@gmail.com",
-            subject: 'IEEE Sri Lanka',
-            text: 'Your registration for the event has been confirmed.',
-            html: `<b>Welcome to IEEE Sri Lanka! </b><br/><br/><br/>Your registration for the event has been confirmed.<br/><br/>`,
-        };
-
- 
-        transporter.sendMail(mailOptions).then(res => console.log(res)).catch(err => console.log(err));
-    }
-
+            var mailOptions = {
+                from: '"IEEE Sri Lanka" <Cpp.sd03.2020@gmail.com>',
+                // to: newCAttended.email,
+                to:"",
+                subject: 'IEEE Sri Lanka',
+                text: 'Your registration for the event has been confirmed.',
+                html: `<b>Welcome to IEEE Sri Lanka! </b><br/><br/><br/>Your registration for the event has been confirmed.<br/><br/>`,
+            };
+            transporter.sendMail(mailOptions).then(res => console.log(res)).catch(err => console.log(err));
+        }
         res.status(201).send('Attended member added Successfully');
     })
     
