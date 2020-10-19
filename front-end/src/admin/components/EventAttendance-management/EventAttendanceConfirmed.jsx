@@ -30,6 +30,7 @@ function EventAttendanceConfirmed(props) {
 
      console.log(response);
      if (response.code == 200) {
+      getData(id);
         loadData()
        Config.setToast("Attended Member Added Successfully");
        forceUpdate();
