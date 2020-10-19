@@ -55,84 +55,84 @@ class NavBar extends Component {
         >
           <ul className="navbar-nav ml-auto">
             {/* <li className="nav-item active">
-  <a className="nav-link" href="#">Home
+  <Link className="nav-link" to="#">Home
     <span className="sr-only">(current)</span>
-  </a>
+ </Link>
 </li>
 
 <li className="nav-item dropdown multi-level-dropdown">
-  <a href="#" id="menu" data-toggle="dropdown"
+  <Link to="#" id="menu" data-toggle="dropdown"
     className="nav-link dropdown-toggle">About Us</a>
 
   <ul className="dropdown-menu mt-2 rounded-0  darken-4 border-0 z-depth-1">
-  <a className="dropdown-item" href="#">History</a>
-    <a className="dropdown-item" href="#">ExCom 2020/21</a>
+  <Link className="dropdown-item" to="#">History</a>
+    <Link className="dropdown-item" to="#">ExCom 2020/21</a>
     
     <li className="dropdown-item dropdown-submenu pl-0 pr-0">
-      <a href="#" data-toggle="dropdown" className="dropdown-toggle dropdown-item">Past Ex Coms </a>
+      <Link to="#" data-toggle="dropdown" className="dropdown-toggle dropdown-item">Past Ex Coms</Link>
       <ul className="dropdown-menu ml-0 rounded-0  darken-4 border-0 z-depth-1">
         <li className="dropdown-item p-0">
-          <a href="#" className="dropdown-item">ExCom 2019/20</a>
+          <Link to="#" className="dropdown-item">ExCom 2019/20</a>
         </li>
         <li className="dropdown-item p-0">
-          <a href="#" className="dropdown-item">ExCom 2018/19</a>
+          <Link to="#" className="dropdown-item">ExCom 2018/19</a>
         </li>
         <li className="dropdown-item p-0">
-          <a href="#" className="dropdown-item">ExCom 2017/18</a>
+          <Link to="#" className="dropdown-item">ExCom 2017/18</a>
         </li>
         <li className="dropdown-item p-0">
-          <a href="#" className="dropdown-item">ExCom 2016/17</a>
+          <Link to="#" className="dropdown-item">ExCom 2016/17</a>
         </li>
       </ul>
     </li>
    
-    <a className="dropdown-item" href="#">IEEE</a>
-    <a className="dropdown-item" href="#">Benefits</a>
+    <Link className="dropdown-item" to="#">IEEE</a>
+    <Link className="dropdown-item" to="#">Benefits</a>
     </ul>
 </li>
 
 <li className="nav-item dropdown" style={{color:"#007bff"}}>
-  <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+  <Link className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
     aria-haspopup="true" aria-expanded="false">News
-  </a>
+ </Link>
   <div className="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-    <a className="dropdown-item" href="#">Announcements</a>
-    <a className="dropdown-item" href="#">Achievements</a>
+    <Link className="dropdown-item" to="#">Announcements</a>
+    <Link className="dropdown-item" to="#">Achievements</a>
   </div>
 </li>
 <li className="nav-item">
-  <a className="nav-link" href="#">Events</a>
+  <Link className="nav-link" to="#">Events</a>
 </li>
 <li className="nav-item">
-  <a className="nav-link" href="#">Galleries</a>
+  <Link className="nav-link" to="#">Galleries</a>
 </li>
 <li className="nav-item dropdown" style={{color:"#007bff"}}>
-  <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+  <Link className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
     aria-haspopup="true" aria-expanded="false">Community
-  </a>
+ </Link>
   <div className="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-    <a className="dropdown-item" href="#">Awards</a>
-    <a className="dropdown-item" href="#">Chapters</a>
-    <a className="dropdown-item" href="#">Student Branches</a>
-    <a className="dropdown-item" href="#">YP</a>
-    <a className="dropdown-item" href="#">WIE</a>
+    <Link className="dropdown-item" to="#">Awards</a>
+    <Link className="dropdown-item" to="#">Chapters</a>
+    <Link className="dropdown-item" to="#">Student Branches</a>
+    <Link className="dropdown-item" to="#">YP</a>
+    <Link className="dropdown-item" to="#">WIE</a>
   </div>
 </li>
 <li className="nav-item dropdown" style={{color:"#007bff"}}>
-  <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+  <Link className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
     aria-haspopup="true" aria-expanded="false">Downloads
-  </a>
+ </Link>
   <div className="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-    <a className="dropdown-item" href="#">By-Laws</a>
-    <a className="dropdown-item" href="#">Guidelines</a>
-    <a className="dropdown-item" href="#">Newsletters</a>
+    <Link className="dropdown-item" to="#">By-Laws</a>
+    <Link className="dropdown-item" to="#">Guidelines</a>
+    <Link className="dropdown-item" to="#">Newsletters</a>
   </div>
 </li>
 <li className="nav-item">
-  <a className="nav-link" href="#">Contact Us</a>
+  <Link className="nav-link" to="#">Contact Us</a>
 </li> */}
             <li className="nav-item dropdown">
-              <a
+              <Link
                 className="nav-link dropdown-toggle"
                 id="navbarDropdownMenuLink-333"
                 data-toggle="dropdown"
@@ -140,34 +140,36 @@ class NavBar extends Component {
                 aria-expanded="false"
               >
                 <i className="fas fa-user"></i>
-              </a>
+             </Link>
               <div
                 className="dropdown-menu dropdown-menu-right dropdown-default"
                 aria-labelledby="navbarDropdownMenuLink-333"
               >
                 {this.state.loginState == true ? (
-                  <a
+                  <Link
                     className="dropdown-item"
                     onClick={() => this.signoutuser()}
                   >
                     Logout
-                  </a>
+                 </Link>
                 ) : (
-                  <a className="dropdown-item" href="/MemberLogin">
+                  <Link className="dropdown-item" to="/MemberLogin">
                     Login
-                  </a>
+                 </Link>
                 )}
                 {this.state.loginState == true ? (
-                  <a className="dropdown-item" href="/UserProfile">
+                  <Link className="dropdown-item" to="/UserProfile">
                     My Account
-                  </a>
+                 </Link>
                 ) : (
-                  ""
+                  <Link className="dropdown-item" to="/Registration">
+                  Register
+               </Link>
                 )}
                 {this.state.loginState == true ? (
-                  <a className="dropdown-item" href="#">
+                  <Link className="dropdown-item" to="#">
                     Something else here
-                  </a>
+                 </Link>
                 ) : (
                   ""
                 )}

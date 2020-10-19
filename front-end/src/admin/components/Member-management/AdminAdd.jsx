@@ -73,15 +73,11 @@ const AdminAdd = (props) => {
 
   return (<section className="content" style={{ display: props.display }}>
     <div className="container-fluid">
-    <h6>Create Admin</h6>
+   
       <div className="card">
-        <div className="card-header">
-
-       
-          <Link to="/Admin/AdminList" type="button" className="btn btn-success btn-sm float-right add_btn">Active Admins</Link>
-        
-
-        </div>
+      <div className="card-header bg-dark">
+          <h6>Create Admin</h6>
+          </div>
         <div className="card-body">
 
     
@@ -183,24 +179,28 @@ const AdminAdd = (props) => {
                 </div>
               </div>
 
+              <div className="float-right">
               <div className="form-row">
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn btn-secondary  mr-1 my-2"
                   onClick={clear}
                 >
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary float-right">
-                  Submit
-                </button>
+                
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn btn-secondary  mr-1 my-2"
                   onClick={add}
                 >
                   Demo
                 </button>
+
+                <button type="submit" className="btn btn-primary  mr-1 my-2">
+                  Submit
+                </button>
+              </div>
               </div>
             </form>
 

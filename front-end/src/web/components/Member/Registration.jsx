@@ -121,28 +121,19 @@ const sel = affiliations.map((item) => {
     <NavBar/>
     <div >
     <div className="container-fluid" >
-
-      <div className="card" style={{
-              background: `url(${Background})`,
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-            }}>
-        <div className="card-header">
-
+      
+ 
+        <div className="card-header bg-dark">
 
           <b>Member Registration</b>
 
-          <Link to="/MemberLogin" type="button" className="btn btn-info btn-sm float-right add_btn">Login</Link>
-        
-
         </div>
+        <div className="card">
         <div className="card-body">
 
         <section className="content" style={{ display: props.display }}>
-      <div className="container-fluid">
-        <div className="card">
-          <div className="card-body">
+      <div className="container">
+  
             <form onSubmit={onSubmit}>
               <div className="form-row">
                 <div className="form-group col-md-6">
@@ -299,13 +290,13 @@ const sel = affiliations.map((item) => {
                 </button>
               </div>
             </form>
-          </div>
-        </div>
+      
       </div>
     </section>
 
 
-        </div>
+
+      </div>
       </div>
     </div>
     </div>

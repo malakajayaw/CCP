@@ -52,22 +52,32 @@ const AdminAdd = (props) => {
           <td>{admin.contactNo}</td>
           <td>{admin.email}</td>
           <td className="project-actions text-center">
+          <Link
+              className="btn btn-warning btn-sm mr-1 my-2"
+              onClick=""
+            >
+              {" "}
+              <i className="fas fa-trash mr-1" />
+              View
+            </Link>
             <Link
               to={`/Admin/MemberEdit/${admin._id}`}
               type="button"
-              className="btn btn-success btn-sm mr-1 my-2"
+              className="btn btn-info btn-sm mr-1 my-2"
             >
               <i className="fas fa-pencil-alt mr-1" />
               Update
             </Link>
-            <a
-              className="btn btn-danger btn-sm mr-1 my-2"
+            
+            <Link
+              className="btn btn-secondary btn-sm mr-1 my-2"
               onClick=""
             >
               {" "}
               <i className="fas fa-trash mr-1" />
               Remove
-            </a>
+            </Link>
+            
           </td>
         </tr>
       );
@@ -77,19 +87,11 @@ const AdminAdd = (props) => {
   return (
     <section className="content" style={{ display: props.display }}>
       <div className="container-fluid">
-        <h6>Active Admins</h6>
+  
 
         <div className="card">
-          <div className="card-header">
-            {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-
-            <Link
-              to="/Admin/Admin"
-              type="button"
-              className="btn btn-success btn-sm float-right add_btn"
-            >
-              Add Admin
-            </Link>
+        <div className="card-header bg-dark">
+          <h6>Active Admins</h6>
           </div>
           {/* <!-- /.card-header --> */}
           <div className="card-body">
@@ -104,7 +106,7 @@ const AdminAdd = (props) => {
                   <th>Name</th>
                   <th>Phone</th>
                   <th>Email</th>
-                  <th>Action</th>
+                  <th style={{width: "25%"}}>Action</th>
                 </tr>
               </thead>
               <tbody>{readydata()}</tbody>
