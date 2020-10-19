@@ -1,31 +1,32 @@
 import React, { useState, useEffect } from "react";
-import {
-  get_all_reports,
-  delete_report,
-} from "../../controllers/event.report.controller";
 import Config from "../../controllers/config.controller";
-import EventReportView from "./EventReportView";
 import { Link } from "react-router-dom";
 import "jquery/dist/jquery"
 import $ from "jquery";
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
-import useForceUpdate from "use-force-update";
+//importing the methods and the controllers
+import {
+  get_all_reports,
+  delete_report,
+} from "../../controllers/event.report.controller";
 
 const EventReportTable = (props) => {
   const [eventsReports, SetEventReports] = useState([]);
 
   useEffect(() => {
-    
+    //calling the  method to get the data into the table
     getData();
   }, []);
 
+  //getData function is used to get the reports from the db
   async function getData() {
     var res = await get_all_reports();
     await SetEventReports(res.data.data);
     $("#eventReportTable").dataTable();
   }
 
+  //delete an event report
   const delete_func = async (id) => {
     const res = await delete_report(id);
     if (res.code == 200) {
@@ -37,11 +38,13 @@ const EventReportTable = (props) => {
     }
   };
 
+  //getting the file name
   const getFileName = (URL) => {
     let parts = URL.split("/");
     return parts.pop() || parts.pop();
   };
 
+  //loading the data into the table
   const readydata = () => {
     return eventsReports.map((eventreport, i) => {
       return (   
@@ -75,9 +78,9 @@ const EventReportTable = (props) => {
                   <th style={{width: "25%"}}>Manage</th>
                 </tr>
               </thead>
-
-              <tbody>{readydata()}</tbody>
-
+              <tbody>
+                {readydata()}
+              </tbody>
               <tfoot>
                 <tr>
                   <th>Event Name</th>
@@ -86,7 +89,6 @@ const EventReportTable = (props) => {
                   <th style={{width: "25%"}}>Manage</th>
                 </tr>
               </tfoot>
-              
             </table>
           </div>
         </div>

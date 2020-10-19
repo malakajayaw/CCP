@@ -9,42 +9,42 @@ import "jquery/dist/jquery"
 import $ from "jquery";
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
-import useForceUpdate from "use-force-update";
 import { useState ,useEffect} from 'react';
+//importing the controller and the methods
 import {addEventAttendanceAttended} from "../../controllers/event.attendance.attended.controller";
 import {removeEventAttendanceConfirmed, getConfirmedMembersForAnEvent} from "../../controllers/event.attendance.confirmed.controller";
 
 function EventAttendanceConfirmed(props) {
+  //getting the parameters
   var { id } = useParams();
-  console.log(id);
 
-  const forceUpdate = useForceUpdate();
-
+  //Onsubmit function used by the mark attendance button in the table
   async function Onsubmit (r)  {
     let data2 = {
       eventId:id, 
       responder:r,
     }
-    console.log(data2);
-   addEventAttendanceAttended(data2).then(response =>{
-
-     console.log(response);
+    //calling the method in the controller
+    addEventAttendanceAttended(data2).then(response =>{
      if (response.code == 200) {
+        //loading the table again
+        getData(id);
         loadData()
        Config.setToast("Attended Member Added Successfully");
-       forceUpdate();
      }
    })
   };
 
+  //OnRemove function used by the decline button in the table
   async function OnRemove (r)  {
-    console.log(r);
     let data2 = {
       eventId:id, 
       responder:r,
     }
+    //calling the method in the controller
     removeEventAttendanceConfirmed(data2).then(response =>{
      if (response.code == 200) {
+      //loading the table again
       getData(id);
       loadData();
       Config.setToast("Confirmed Member Removed Successfully");
@@ -57,6 +57,7 @@ function EventAttendanceConfirmed(props) {
     getData(id);
   }, []);
 
+  //getData function is used to get the confirmed members from the db
   async function getData(id) {
     var res = await getConfirmedMembersForAnEvent(id);
     await setResponses(res.data.data);
@@ -64,7 +65,7 @@ function EventAttendanceConfirmed(props) {
   }
 
 
- 
+  //loadData function is used to load the data into the table
   const loadData = () => {
     return responses.map((responses, index) => {
         return (
@@ -99,15 +100,16 @@ function EventAttendanceConfirmed(props) {
               </tr>
               </thead>
               <tbody>
-              {loadData()}
-          </tbody>
-          <tfoot>
-          <tr>
+                {/* calling the method to load the data to the table */}
+                {loadData()}
+              </tbody>
+              <tfoot>
+              <tr>
                 <th>No :</th>
                 <th>Membership No</th>
                 <th>Manage</th>
               </tr>
-            </tfoot>
+              </tfoot>
             </table>
           </div>
       </div>
