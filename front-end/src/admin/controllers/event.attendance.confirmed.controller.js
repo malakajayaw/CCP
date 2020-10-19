@@ -6,8 +6,6 @@ import Config from "./config.controller";
 //====================================================================================================== 
 
 export const addEventAttendanceConfirmed = (data) => {
-    console.log(data);
-  
     return new Promise((resolve, reject) => {
       return axios
      
@@ -17,7 +15,6 @@ export const addEventAttendanceConfirmed = (data) => {
           resolve({ code: 200, message: result.data });
         })
         .catch((err) => {
-            console.log("db aulk");
           reject({ code: 0, error: err });
         });
     });
@@ -45,26 +42,23 @@ export const getConfirmedMembersForAnEvent = (id) => {
 }
 
 //======================================================================================================
-//================================== Delete a confirmed member==============================================
+//================================== Decline a confirmed member==============================================
 //====================================================================================================== 
 
-export const deleteConfirmedMemebr = (id) => {
-
-    var  datanew = {
-         id :id
-     }
-  
-     return new Promise( (resolve,reject) => {
-         return axios.post(`${Config.host}${Config.port}/eventattendance/attendance/delete_confirmed_mem` , { ...datanew })
-             .then( result => {
-                //  console.log(result.data);
-                     resolve({code : 200 , message : result.data.message })
-             })
-             .catch( err => {
-                 reject({ code : 0 , error : err})
-             })
-     })
- }
+export const removeEventAttendanceConfirmed = (data) => {
+    console.log(data);
+    return new Promise((resolve, reject) => {
+      return axios
+        .post(`${Config.host}${Config.port}/eventattendance/attendance/delete_confirmed_mem`, data)
+        .then((result) => {
+          console.log(result.data);
+          resolve({ code: 200, message: result.data });
+        })
+        .catch((err) => {
+          reject({ code: 0, error: err });
+        });
+    });
+  };
 
  //======================================================================================================
 //================================== Delete a confirmed member==============================================

@@ -1,37 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select'
-
 import moment from 'moment';
 import Config from '../../controllers/config.controller'
 import useForceUpdate from 'use-force-update';
 
+//controllers
 import { addPastDesignation } from '../../controllers/pastdes.controller'
-import { get_all_affiliations } from "../../controllers/affiliation.controller";
-import { get_all_members } from "../../controllers/designation.controller";
+import { get_all_affiliations, get_affiliation } from "../../controllers/affiliation.controller";
+import { get_all_members, get_spec_member } from "../../controllers/designation.controller";
 import { add_activity } from '../../controllers/activity.controller'
 
 const CreateRecord = (props) => {
+
+    //for updating components
     const forceUpdate = useForceUpdate();
 
-    const [submit, setSubmit] = useState({
-        value1: "Not Submitted"
-    });
+    //for getting date
     const [today, setToday] = useState(
 
     );
-
-    var selectedaff = "Select affiliaion";
-    var selectedmem = "Select member";
 
     const todayfucn = () => {
         let newDate = new Date()
 
         const today = moment(newDate).format("MMM Do YY");
         setToday(today)
-
-        console.log(today);
     }
-
 
     useEffect(() => {
         let newDate = new Date()
@@ -40,40 +34,40 @@ const CreateRecord = (props) => {
         todayfucn()
     });
 
-
-
+    //variable to store past destinations
     let [pastdes, setPastDes] = useState({
         title: "",
         affiliationNo: "",
         MemNo: "",
         Year: "",
         created_at: today,
-
-
     });
 
-    let [activity, setActivity] = useState({
+    //variable to store activities
+    let [activity] = useState({
         MemNo: "To be taken from redux",
-        action: "Edit Record - Admin",
+        action: "Create Record - Admin",
         table: "Records",
         parameters: "not set",
         datetime: ""
     });
 
+    //variable to store members
     const [member, setMember] = useState([]);
     useEffect(() => {
         getMemData();
 
     }, []);
 
+    //get all members from data base
     async function getMemData() {
         window.selectedaff = "Select affiliaion";
         window.selectedmem = "Select member";
         var res = await get_all_members();
         await setMember(res.data.data);
-        console.log("mem: " + member);
     }
-    
+
+    //get member data for a given _id
     const setMemData = (id) => {
         return member.map((member, index) => {
             if (id == member._id) {
@@ -82,37 +76,51 @@ const CreateRecord = (props) => {
         });
     };
 
+    //set options for select to show members
     const selMem = member.map(item => {
         const container = {};
-
         container["value"] = item._id;
         container["label"] = item.memberShipNo + " - " + item.fname + " " + item.lname;
         return container;
     })
 
+    //handle form changes - general
     const handleChange = (e) => {
         setPastDes({ ...pastdes, [e.target.name]: e.target.value });
     }
 
+    //handle form changes - for affiliations select
     const handleAffChange = (e) => {
         setPastDes({ ...pastdes, "affiliationNo": e.value });
-        console.log(e);
         window.selectedaff = setAffData(e.value);
         aff();
     }
 
+    //handle form changes - for member select
     const handleMemChange = (e) => {
         setPastDes({ ...pastdes, "MemNo": e.value });
-        console.log("e:" + e.value);
         window.selectedmem = setMemData(e.value);
         mem();
 
     }
 
+    //get member name relevent to a given _id
+    async function setMemDetails(id) {
+        var result = await get_spec_member(id)
+        return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+    }
+
+    //get affiliation name relevent to a given _id
+    async function setAffDetails(id) {
+        var result = await get_affiliation(id)
+        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+    }
+
+    //runs on submit
     const onSubmit = async (e) => {
         const date = new Date();
         e.preventDefault()
-        console.log(pastdes);
+        //validation
         if (pastdes.affiliationNo == "") {
             Config.setToast("Select affiliation")
         }
@@ -120,26 +128,27 @@ const CreateRecord = (props) => {
             Config.setToast("Select Member")
         }
         else {
+            //add past designation to database
             const result = await addPastDesignation(pastdes)
-            console.log(result);
-            const det = pastdes.title + "/" + setMemData(pastdes.MemNo) + "/" + pastdes.Year + " / " + setAffData(pastdes.affiliationNo)
+            //set parameters for activity variable
+            var detAff = await setAffDetails(pastdes.affiliationNo)
+            var detMem = await setMemDetails(pastdes.MemNo)
+            const det = pastdes.title + "/" + detMem + "/" + pastdes.Year + " / " + detAff
             activity.parameters = det;
+            //set date for activity variable
             activity.datetime = date.toLocaleString();
-            console.log("act" + JSON.stringify(activity));
-            const result3 = await add_activity(activity)
-            console.log(result3);
+            //add activity to database
+            await add_activity(activity)
             if (result.code == 200) {
                 clear()
                 Config.setToast("Record Added Successfully")
                 forceUpdate();
-
             }
         }
-
     }
 
+    //clears the form after inserting data to database
     const clear = () => {
-        console.log("Clear call");
         setPastDes({
             title: "",
             affiliationNo: "",
@@ -149,25 +158,20 @@ const CreateRecord = (props) => {
         })
     }
 
+    //variable to store affiliations
     const [affiliations, setAffiliations] = useState([]);
     useEffect(() => {
         getAffData();
     }, []);
 
+    //get all the affiliations from the database
     async function getAffData() {
         var res = await get_all_affiliations();
         await setAffiliations(res.data.data);
         console.log(affiliations);
     }
 
-    const loadAffData = () => {
-        return affiliations.map((affiliations, index) => {
-            return (
-                <option value={affiliations._id }>{affiliations.affiliationname}</option>
-            );
-        });
-    };
-
+    //get affiliation data for a given _id
     const setAffData = (id) => {
         return affiliations.map((affiliations, index) => {
             if (id == affiliations._id) {
@@ -176,33 +180,34 @@ const CreateRecord = (props) => {
         });
     };
 
+    //set options for select to show affiliations
     const sel = affiliations.map(item => {
         const container = {};
-
         container["value"] = item._id;
         container["label"] = item.affiliationname + " - " + item.affiliationno;
         return container;
     })
 
+    //select for members
     const mem = () => {
         return (
             <Select required value="" className="select2" id="MemNo" name="MemNo" placeholder={window.selectedmem} style={{ width: "100%" }} onChange={handleMemChange} options={selMem} />
         )
     }
 
+    //select for affiliations
     const aff = () => {
         return (
             <Select required value="" className="select2" id="affiliation" name="affiliationNo" placeholder={window.selectedaff} style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
         )
     }
 
+    //render form
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
             <div className="card">
                 <div className="card-header">
-                    {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
                 </div>
-                {/* <!-- /.card-header --> */}
                 <div className="card-body">
 
                     <section class="content">
@@ -236,7 +241,6 @@ const CreateRecord = (props) => {
                                                 <input required type="text" id="Year" name="Year" class="form-control" onChange={handleChange} />
 
                                                 <div class="card-footer" style={{ padding: '0px ' }}>
-                                                    {/* <button type="button" class="btn btn-default float-right">Clear</button> */}
                                                     <button type="submit" class="btn btn-info">Add Submission</button>
                                                 </div>
                                             </div>
@@ -254,7 +258,6 @@ const CreateRecord = (props) => {
 
                 </div>
             </div>
-            {/* <!-- /.container-fluid --> */}
         </div>
         {console.log("bye")}
     </section>);

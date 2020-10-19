@@ -2,18 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import Config from "../../controllers/config.controller";
-import useForceUpdate from "use-force-update";
+//importing the controller and the methods
 import { add_event_report } from "../../controllers/event.report.controller";
 
 const EventReportAdd = (props) => {
+  //getting the parameters
   let { val } = useParams();
-  const forceUpdate = useForceUpdate();
+  let { id } = useParams();
+  let { aff } = useParams();
 
+  //seeting the report submission status
   const [submit, setSubmit] = useState({
     value1: "Not Submitted",
   });
+
+  //setting the today date
   const [today, setToday] = useState();
 
+  //function to get the today date
   const todayfucn = () => {
     let newDate = new Date();
     const today = moment(newDate).format("MMM Do YY");
@@ -21,16 +27,19 @@ const EventReportAdd = (props) => {
     console.log(today);
   };
 
+
   useEffect(() => {
     let newDate = new Date();
-
     const today = moment(newDate).format("MMM Do YY");
     setToday(today);
     todayfucn();
   });
 
+  //setting the event report details
   let [event, setEvent] = useState({
+    eventId: id,
     eventname: val,
+    hostingAffiliation: aff,
     submissionstate: "Not Submitted",
     date: moment(new Date()).format("MMM Do YY"),
     submissioncomment: "",
@@ -40,21 +49,21 @@ const EventReportAdd = (props) => {
     setEvent({ ...event, [e.target.name]: e.target.value });
   };
 
+  //method to event report adding
   const onSubmit = async (e) => {
     e.preventDefault();
-
-  const result = await add_event_report(event);
-    console.log(result);
-    if (result.code == 200) {
-      clear();
-      Config.setToast("Report Added Successfully");
-      forceUpdate();
-    }
+    //calling the method from the controller
+    const result = await add_event_report(event);
+      console.log(result);
+      if (result.code == 200) {
+        clear();
+        Config.setToast("Report Added Successfully");
+      }
   };
 
   const clear = () => {
-    console.log("Clear call");
     setEvent({
+      eventId: id,
       eventname: val,
       submissionstate: "Not Submitted",
       date: today,
@@ -67,8 +76,6 @@ const EventReportAdd = (props) => {
       setEvent({ ...event, file: e.target.files[0] });
     }
   };
-
-  console.log(event.eventname);
 
   return (
     <section className="content" style={{ display: props.display }}>
@@ -160,7 +167,6 @@ const EventReportAdd = (props) => {
                           </div>
 
                           <div class="card-footer" style={{ padding: "0px " }}>
-                            {/* <button type="button" class="btn btn-default float-right">Clear</button> */}
                             <button type="submit" class="btn btn-info">
                               Add Submission
                             </button>

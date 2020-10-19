@@ -12,5 +12,10 @@ router.post('/updateDesignationMem', DesignationController.update_designation_me
 router.post('/removeDesignationMem', DesignationController.remove_designation_mem);
 router.get('/getAllMembers', DesignationController.get_all_members);
 router.post('/getAffSpecMembers', DesignationController.get_aff_spec_members);
+router.post('/getSpecMember', DesignationController.get_spec_mem);
+router.post('/getNoAffType', DesignationController.get_no_aff_type);
+router.post('/getActiveMemCount', DesignationController.get_active_members_count);
+router.post('/getAllMemCount', DesignationController.get_all_members_count);
+router.post('/getPendingMemCount', DesignationController.get_request_members_count);
 
 module.exports = router;

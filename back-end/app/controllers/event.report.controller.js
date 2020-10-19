@@ -1,5 +1,7 @@
 //import Event Report model
 const EventReport = require("../model/eventreport.model");
+//import Event model
+const Event = require("../model/event.model");
 //import moment library
 const moment = require("moment");
 
@@ -8,7 +10,6 @@ const moment = require("moment");
 //===========================================================================================
 exports.add_report_add = async function (req, res, next) {
   let newDate = new Date();
-
   let PdfFile = null;
   try {
     PdfFile = req.files.pdf;
@@ -24,9 +25,10 @@ exports.add_report_add = async function (req, res, next) {
   });
 
   const today = moment(newDate).format("MMM Do Y Y");
-
   let new_report = EventReport({
+    eventId: req.body.eventId,
     eventName: req.body.eventname,
+    hostingAffiliation:req.body.hostingAffiliation,
     reportname: req.body.reportname,
     submssionState: req.body.submssionState,
     submissionComment: req.body.submissionComment,
@@ -80,6 +82,24 @@ exports.get_spec_report_del = async function (req, res, next) {
   try {
     const log = await EventReport.findOne({
       _id: id,
+    });
+    return res.status(200).send({
+      data: log,
+    });
+  } catch (error) {
+    return res.status(405).send("Something went wrong");
+  }
+};
+
+//===========================================================================================
+//================================== Get Affiliation name for the event =======================
+//===========================================================================================
+exports.get_affiliation_by_event_name = async function (req, res, next) {
+  var id = req.body.id;
+
+  try {
+    const log = await Event.findOne({
+    eventname : id,
     });
     return res.status(200).send({
       data: log,
