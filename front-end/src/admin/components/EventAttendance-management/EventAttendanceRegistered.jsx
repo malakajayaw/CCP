@@ -16,10 +16,28 @@ import useForceUpdate from "use-force-update";
 
  
 function EventAttendanceRegistered(props) {
-  const forceUpdate = useForceUpdate();
-  let { id } = useParams();
-  console.log(id);
+  //getting the parameters
+  var { id } = useParams();
+  
+  //Onsubmit function used by the accept button in the table
+  async function Onsubmit (r)  {
+    let data2 = {
+      eventId:id, 
+      responder:r,
+    }
+    //calling the method in the controller
+    addEventAttendanceConfirmed(data2).then(response =>{
+     if (response.code == 200) {
+      //loading the table again
+      getData(id);
+      loadData();
+      Config.setToast("Confirmation email sent Successfully");
+      Config.setToast("Confirmed Member Added Successfully");
+     }
+    })
+  };
 
+  //setting the responses
   const [responses, setResponses] = useState([]);
   useEffect(() => {//1
     getData(id);
@@ -31,8 +49,9 @@ function EventAttendanceRegistered(props) {
     $("#eventattTable").dataTable();
   }
 
-  const loadData = () => {//2
-    return responses.map((responses, index) => {//responses response
+  //loadData function is used to load the data into the table
+  const loadData = () => {
+    return responses.map((responses, index) => {
         return (
          <tr key={index} >
          <td>{responses.responder}</td>
@@ -81,20 +100,19 @@ function EventAttendanceRegistered(props) {
             <table id="eventattTable" className="table table-bordered table-striped dataTable">
               <thead>
               <tr>
-                <th>Membership Number</th>
+                <th>No : </th>
+                <th>Membership Number/ Email</th>
                 <th>Manage</th>
               </tr>
               </thead>
               <tbody>
-          
-          <tr>
-            <td>{loadData()}</td>
-            <td>{loadData2()}</td>
-          </tr>
-          </tbody>
-          <tfoot>
-          <tr>
-                <th>Membership Number</th>
+                {/* calling the method to get the data in to the table view */}
+                {loadData()}
+              </tbody>
+              <tfoot>
+              <tr>
+                <th>No : </th>
+                <th>Membership Number / Email</th>
                 <th>Manage</th>
               </tr>
             </tfoot>

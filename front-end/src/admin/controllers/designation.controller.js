@@ -159,3 +159,119 @@ export const remove_designation_mem = (data, id) => {
             })
     })
 }
+
+//=============================================================================== get all members
+
+export const get_all_members = () => {
+    return new Promise((resolve, reject) => {
+        return axios.get(`${Config.host}${Config.port}/designations/getAllMembers`)
+            .then(result => {
+                resolve({ code: 200, data: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}
+
+//=============================================================================== get aff spec members
+
+export const get_aff_spec_members = (id) => {
+    var data = {
+        id: id
+    }
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/designations/getAffSpecMembers`, { ...data })
+            .then(result => {
+                resolve({ code: 200, data: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}
+
+//=============================================================================== Get spec member
+
+export const get_spec_member = (id) => {
+    var data = {
+        id: id
+    }
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/designations/getSpecMember`, { ...data })
+            .then(result => {
+                resolve({ code: 200, data: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}
+
+//=============================================================================== Get no aff type
+
+export const get_no_aff_type = (id) => {
+    var data = {
+        id: id
+    }
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/designations/getNoAffType`, { ...data })
+            .then(result => {
+                resolve({ code: 200, data: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}
+
+//=============================================================================== Get active mem count
+
+export const get_active_mem_count = (id) => {
+    var data = {
+        id: id
+    }
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/designations/getActiveMemCount`, { ...data })
+            .then(result => {
+                resolve({ code: 200, data: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}
+
+//=============================================================================== Get all mem count
+
+export const get_all_mem_count = (id) => {
+    var data = {
+        id: id
+    }
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/designations/getAllMemCount`, { ...data })
+            .then(result => {
+                resolve({ code: 200, data: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}
+
+//=============================================================================== Get pending mem count
+
+export const get_pending_mem_count = (id) => {
+    var data = {
+        id: id
+    }
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/designations/getPendingMemCount`, { ...data })
+            .then(result => {
+                resolve({ code: 200, data: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}

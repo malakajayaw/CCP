@@ -19,12 +19,7 @@ exports.add_report_add = async function (req, res, next) {
     if (err) return res.status(400).send("Failed to upload PDF!");
   });
 
-  await PdfFile.mv("./app/public/reports/" + pdfName, (err, result) => {
-    if (err) return res.status(400).send("Failed to upload PDF!");
-  });
-
   const today = moment(newDate).format("MMM Do Y Y");
-
   let new_report = EventReport({
     eventName: req.body.eventname,
     reportname: req.body.reportname,

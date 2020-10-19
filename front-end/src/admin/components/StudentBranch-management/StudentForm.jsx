@@ -5,7 +5,7 @@ import Axios from 'axios';
 
 function StudentForm(props) {
 
-  const [affiliationData,setAffiliationData] = useState({affiliationtype:'',affiliationname:'',affiliationno:'',date:'',status:'' });
+  const [affiliationData,setAffiliationData] = useState({affiID:'',affiliationtype:'',affiliationname:'',affiliationno:'',date:'',status:'' });
 
 
 
@@ -46,14 +46,14 @@ function StudentForm(props) {
   // {  setEventData({...eventData, banner : event.target.files[0] })};
 
   const clear = () => {
-  setAffiliationData({affiliationtype:'',affiliationname:'',affiliationno:'',date:'', status:'' })
+  setAffiliationData({affiID:'',affiliationtype:'',affiliationname:'',affiliationno:'',date:'', status:'' })
   //setVols([]);
   }
 
   const send = async affiliation =>{
     affiliation.preventDefault();
     const data = new FormData();
-    //data.append("affiID",affiliationData.affiID);
+    data.append("affiID",affiliationData.affiID);
     data.append("affiliationtype",affiliationData.affiliationtype);
     data.append("affiliationname",affiliationData.affiliationname);
     data.append("affiliationno",affiliationData.affiliationno);
@@ -93,12 +93,12 @@ function StudentForm(props) {
   <form id="s3tudentForm"  method="post" onSubmit={send}>
     <div className="card-body">
 
-      {/* { <div className="form-group">
+      <div className="form-group">
         <label htmlFor="affiID">Affiliation ID</label>
-        <input type="text" value={affiliationData.affiID } onChange={handleChange}  className="form-control" id="affiID" placeholder="ID" required/>
-      </div> } */}
+        <input type="text" value={affiliationData.affiID} onChange={handleChange}  className="form-control" id="affiID" placeholder="ID" required/>
+      </div>
 
-      { <div className="form-group">
+      <div className="form-group">
           <label>Affiliation Type</label>
               <select className="select" id="affiliationtype" name="affiliationtype" multiple="multiple" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleChange}>
                 <option>Student Branch</option>
@@ -106,10 +106,7 @@ function StudentForm(props) {
                 <option>Young Professionals Affiliation</option>
                 <option>Technical Chapter</option>
               </select>
-      </div> }
-
-
-
+      </div>
 
       <div className="form-group">
         <label htmlFor="affiliationname">Affiliation Name</label>
@@ -129,18 +126,21 @@ function StudentForm(props) {
       
 
 
-      {<div className="form-group">
+      <div className="form-group">
           <label>Status</label>
               <select className="select" id="status" name="status" multiple="multiple" data-placeholder="Select status" style={{ width: "100%" }} onChange={handleChange}>
                 <option>Available</option>
                 <option>Not Available</option>
                 
               </select>
-      </div> }
-
+      </div>
 
      
-   
+      {/* <div className="form-group">
+        <label htmlFor="eventBanner">Event Banner</label>
+            <input type="file" className="form-control" id="banner" name="banner" accept="image/*" onChange={handleBanner} />
+      </div> */}
+
 
     </div>
     {/* <!-- /.card-body --> */}

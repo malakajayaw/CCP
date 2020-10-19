@@ -1,10 +1,67 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-  
-const loadAttendedMembershipNumbers = () => {
+import { useParams } from "react-router-dom";
+import Config from "../../controllers/config.controller";
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/js/bootstrap"
+import 'jquery/dist/jquery.min.js';
+import "jquery/dist/jquery"
+import $ from "jquery";
+import "datatables.net-dt/js/dataTables.dataTables"
+import "datatables.net-dt/css/jquery.dataTables.min.css"
+import useForceUpdate from "use-force-update";
+import { useState ,useEffect} from 'react';
+//importing the controller and the methods
+import {removeEventAttendanceAttended, getAttendedMembersForAnEvent} from "../../controllers/event.attendance.attended.controller";
 
-}; 
+  
 function EventAttendanceAttended(props) {
+  //getting the parameters
+  let { id } = useParams();
+  console.log(id);
+
+  const [responses, setResponses] = useState([]);
+  useEffect(() => {
+    getData(id);
+  }, []);
+
+  //getData function is used to get the attended members from the db
+  async function getData(id) {
+    var res = await getAttendedMembersForAnEvent(id);
+    await setResponses(res.data.data);
+    $("#eventATable").dataTable();
+  }
+
+  //OnRemove function used by the decline button in the table
+  async function OnRemove (r)  {
+    let data2 = {
+      eventId:id, 
+      responder:r,
+    }
+    //calling the method in the controller
+    removeEventAttendanceAttended(data2).then(response =>{
+     if (response.code == 200) {
+      //loading the table again
+      getData(id);
+      loadData();
+      Config.setToast("Attended Member Removed Successfully");
+     }
+    })
+  };
+  
+  //loadData function is used to load the data into the table
+  const loadData = () => {
+    return responses.map((responses, index) => {
+        return (
+         <tr key={index} >
+          <td>{index+1}</td>
+          <td name = {"responderT"+index}>{responses.responder}</td>
+          <td><a className="btn btn-danger btn-sm mr-1" onClick={(r) => OnRemove(responses.responder)}> <i className="fas fa-trash mr-1"/>Remove</a></td>
+        </tr>
+      );
+    }); 
+  };
+
   return ( <section className="content" style={{display : props.display}}>
       <div className="container-fluid">
         <div className="card">
@@ -24,21 +81,20 @@ function EventAttendanceAttended(props) {
             <table id="eventReportTable" className="table table-bordered table-striped dataTable">
               <thead>
               <tr>
-                <th>Membership No</th>
-                <th>Name</th>
+                <th>No :</th>
+                <th>Membership No/ Email</th>
+                <th>Manage</th>
               </tr>
               </thead>
               <tbody>
-          
-          <tr>
-            <td>{loadAttendedMembershipNumbers()}</td>
-            <td></td>
-          </tr>
-          </tbody>
-          <tfoot>
-          <tr>
-                <th>Membership No</th>
-                <th>Name</th>
+                {/* calling the method to load the data to the table */}
+                {loadData()}
+              </tbody>
+              <tfoot>
+              <tr>
+                <th>No :</th>
+                <th>Membership No / Email</th>
+                <th>Manage</th>
               </tr>
             </tfoot>
           

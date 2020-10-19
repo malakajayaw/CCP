@@ -3,13 +3,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import { useState ,useEffect} from 'react';
 import {get_all_affiliations,deleteAffiliation} from "../../controllers/affiliation.controller";
 import Config from "../../controllers/config.controller";
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap/dist/js/bootstrap"
-import 'jquery/dist/jquery.min.js';
-import $ from "jquery"
-//Datatable Modules
-import "datatables.net-dt/js/dataTables.dataTables"
-import "datatables.net-dt/css/jquery.dataTables.min.css"
+import ContentHeader from '../Dashboard/ContentHeader'
 
 function AffiliationTable(props){
 
@@ -28,7 +22,6 @@ function AffiliationTable(props){
     async function getData() {
       var res = await get_all_affiliations();
       await setAffiliations(res.data.data);
-      $("#affiliationTable").dataTable();
     }
 
     const onDelete = async (id) => {
@@ -49,17 +42,16 @@ function AffiliationTable(props){
      
 
           return (
-          <tr key={index} >
-          <td>{index +1}</td>
-          {/* <td>{affiliations.affiID }</td> */}
+           <tr key={index} >
+           <td>{affiliations.affiID}</td>
           <td >{affiliations.affiliationtype}</td>
           <td >{affiliations.affiliationname}</td>
           <td >{affiliations.affiliationno}</td>
           <td>{(new Date(affiliations.date).toDateString())}</td>
           <td ><span className ={affiliations.status == "Available" ? "badge badge-success" : "badge badge-danger"  }>{affiliations.status}</span> </td>      
           <td className="project-actions text-center">       
-              <Link to={"/Admin/ViewMembers/"+affiliations._id}  className="btn btn-primary btn-sm mr-1"><i className="fas fa-folder mr-1"/> View </Link>
-              <Link to={`/Admin/ManageAffiliation/${affiliations._id}`}  className="btn btn-info btn-sm mr-1 editaffiliationbtn"><i className="fas fa-pencil-alt mr-1"/> Edit</Link>
+              <Link to="/Admin/ManageAffiliation"  className="btn btn-info btn-sm mr-1 editaffiliationbtn"><i className="fas fa-pencil-alt mr-1"/> Edit</Link> 
+              
               <a className="btn btn-danger btn-sm mr-1" onClick={()=> onDelete(affiliations._id)}> <i className="fas fa-trash mr-1" />Delete</a>
           </td>
       </tr>
