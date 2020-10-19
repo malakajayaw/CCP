@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { setCurrentUser, SignOut } from "../Redux/Action/authAction";
+
 class NavBar extends Component {
   constructor() {
     super();

@@ -1,135 +1,168 @@
 import React from "react";
+import "admin-lte/dist/css/adminlte.min.css";
+
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 
 export default function Sidebar() {
 
-    return (   <aside className="main-sidebar sidebar-dark-primary elevation-4">
-    {/* <!-- Brand Logo --> */}
-    <a href="index3.html" className="brand-link">
-      <img src="/images/IEEE-logo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3"
-           style={{opacity: ".8"}}/>
-      <span className="brand-text font-weight-light">IEEE Sri Lanka</span>
-    </a>
- 
-    {/* <!-- Sidebar --> */}
-    <div className="sidebar">
-      {/* <!-- Sidebar user panel (optional) --> */}
-      <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div className="image">
-          <img src="/images/user2-160x160.jpg" className="img-circle elevation-2" alt="User"/>
-        </div>
-        <div className="info">
-          <a href="#" className="d-block">Alexander Pierce</a>
-        </div>
-      </div>
-          <nav className="mt-2">
-            <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                   
-            <li className="nav-item pointer_cursor">
-            <Link id="eventNav"  className="nav-link" to="/Admin/EventTable">
-                    <i className="nav-icon far fa-calendar-alt"></i>
-                   Event Management
-                    <span className="badge badge-info right"></span>
-                    </Link>
-            </li>
+return (
 
-            <li class="nav-item has-treeview">
-            <a href="/Admin/MemberRequest" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
-              <p>
+<aside className="main-sidebar sidebar-dark-info elevation-4">
+  {/*
+  <!-- Brand Logo --> */}
+  <Link href="" className="brand-link">
+    <img src="/images/ieee.png" alt="AdminLTE Logo" className="brand-image"
+      style={{opacity: "10"}} />
+    <span className="brand-text font-weight-light">IEEE - Sri Lanka</span>
+  </Link>
+
+  {/*
+  <!-- Sidebar --> */}
+  <div className="sidebar" >
+    {/*
+    <!-- Sidebar user panel (optional) --> */}
+    <div className="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div className="image">
+        <img src="/images/user.jpg" className="img-circle" alt="User" />
+      </div>
+      <div className="info">
+        <a className="d-block">Alexander Pierce <br/><sub style={{color:'Green'}}> Online </sub> </a>
+        
+      </div>
+   
+    </div>
+
+
+    <nav className="mt-2">
+      <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+        <li className="nav-item pointer_cursor">
+          <Link id="eventNav" className="nav-link" to="/Admin/EventTable">
+          <i className="nav-icon far fa-calendar-alt"></i>
+          Event Management
+          <span className="badge badge-info right"></span>
+          </Link>
+        </li>
+
+
+
+        <li class="nav-item has-treeview">
+          <Link href="#" class="nav-link" >
+            <i class="nav-icon fas fa-users"></i>
+            <p data-toggle="collapse" data-target="#member">
               Member Management
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </Link>
+
+          <div id="member" class="collapse">
+            <ul>
+              <li class="nav-item">
+                <Link className="nav-link" to="/Admin/MemberList">
+                  <p>Active Members</p>
+                  </Link>
+              </li>
+
+              <li class="nav-item">
+                <Link className="nav-link" to="/Admin/MemberRequest">
+                  <p>Requests</p>
+                  </Link>
+              </li>
+
+              <li class="nav-item">
+                  <Link className="nav-link" to="/Admin/MemberAdd">
+                  <p>Create Profile</p>
+                  </Link>
             
-            {/* <ul class="nav nav-treeview">
+              </li>
+            </ul>
+          </div>
+        </li>
+
+
+
+        <li className="nav-item pointer_cursor">
+          <Link id="affiliationNav" className="nav-link" to="/Admin/AffiliationTable">
+          <i className="nav-icon fas fa-handshake"></i>
+          Affiliation Management
+          <span className="badge badge-info right"></span>
+
+          </Link>
+        </li>
+
+        <li className="nav-item pointer_cursor">
+          <Link id="affiliationNav" className="nav-link" to="/Admin/Affiliationview">
+          <i className="nav-icon fas fa-user-graduate"></i>
+          Affiliation View
+          <span className="badge badge-info right"></span>
+
+          </Link>
+        </li>
+
+        <li className="nav-item pointer_cursor">
+          <Link id="eventNav" className="nav-link" to="/Admin/DesignationAdmin">
+          <i className="nav-icon fa fa-address-card"></i>
+          Designation Management
+          <span className="badge badge-info right"></span>
+          </Link>
+        </li>
+
+        <li className="nav-item pointer_cursor">
+          <Link id="eventNav" className="nav-link" to="/Admin/ActivityLog">
+          <i className="nav-icon fa fa-briefcase"></i>
+          Activity log
+          <span className="badge badge-info right"></span>
+          </Link>
+        </li>
+
+        <li className="nav-item pointer_cursor">
+          <Link id="eventNav" className="nav-link" to="/Admin/DesignationChair">
+          <i className="nav-icon fa fa-address-card"></i>
+          Designation Management(Chair)
+          <span className="badge badge-info right"></span>
+          </Link>
+        </li>
+
+
+        <li class="nav-item has-treeview">
+          <Link href="#" class="nav-link" >
+            <i class="nav-icon fa fa-key"></i>
+            <p data-toggle="collapse" data-target="#admin">
+              Admin
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </Link>
+
+          <div id="admin" class="collapse">
+            <ul>
 
             <li class="nav-item">
-                <a href="/Admin/MemberList" class="nav-link">
-                     &emsp; &emsp;
-                  <p>Active Members</p>
-                </a>
+              <Link className="nav-link" to="/Admin/AdminList">
+                  <p>Active Admins</p>
+                  </Link>
               </li>
 
               <li class="nav-item">
-                <a href="/Admin/MemberRequest" class="nav-link">
-                  &emsp; &emsp;
-                  <p>Requests</p>
-                </a>
+              <Link className="nav-link" to="/Admin/Admin">
+                  <p>Add Admin</p>
+                  </Link>
               </li>
-              
-              <li class="nav-item">
-                <a href="/Admin/MemberAdd" class="nav-link">
-                &emsp; &emsp;
-                  <p>Create Profile</p>
-                </a>
-              </li>
-            </ul> */}
-          </li>
 
-            
-
-          <li className="nav-item pointer_cursor">
-          <Link id="affiliationNav"  className="nav-link" to="/Admin/AffiliationTable">
-              <i className="nav-icon fas fa-handshake"></i>
-              Affiliation Management
-                <span className="badge badge-info right"></span>
-            
-                    </Link>
-                    </li>
-
-                    
+            </ul>
+          </div>
+        </li>
 
 
 
-                    <li className="nav-item pointer_cursor">
-                   <Link id="affiliationNav"  className="nav-link" to="/Admin/Affiliationview">
-                    <i className="nav-icon fas fa-user-graduate"></i>
-                    Affiliation View
-                    <span className="badge badge-info right"></span>
-            
-                    </Link>
-                    </li>
+      </ul>
 
-                    <li className="nav-item pointer_cursor">
-                        <Link id="eventNav" className="nav-link" to="/Admin/DesignationAdmin">
-                            <i className="nav-icon fa fa-address-card"></i>
-                   Designation Management
-                    <span className="badge badge-info right"></span>
-                        </Link>
-                    </li>
+    </nav>
+    </div>
+    {/*
+    <!-- /.sidebar-menu --> */}
+  {/*
+  <!-- /.sidebar --> */}
 
-                    <li className="nav-item pointer_cursor">
-                        <Link id="eventNav" className="nav-link" to="/Admin/ActivityLog">
-                            <i className="nav-icon fa fa-briefcase"></i>
-                   Activity log
-                    <span className="badge badge-info right"></span>
-                        </Link>
-                    </li>
-
-                    <li className="nav-item pointer_cursor">
-                        <Link id="eventNav" className="nav-link" to="/Admin/DesignationChair">
-                            <i className="nav-icon fa fa-address-card"></i>
-                   Designation Management(Chair)
-                    <span className="badge badge-info right"></span>
-                        </Link>
-                    </li>
-
-                    <li className="nav-item pointer_cursor">
-                        <Link id="eventNav" className="nav-link" to="/Admin/Admin">
-                            <i className="nav-icon fa fa-address-card"></i>
-                            Admin
-                    <span className="badge badge-info right"></span>
-                        </Link>
-                    </li>
-
-                </ul>
-
-            </nav>
-            {/* <!-- /.sidebar-menu --> */}
-        </div>
-        {/* <!-- /.sidebar --> */}
-
-    </aside>);
+</aside>);
 }
