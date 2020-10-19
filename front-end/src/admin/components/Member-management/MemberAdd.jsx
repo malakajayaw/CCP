@@ -94,7 +94,7 @@ const MemberAdd = (props) => {
   const sel = affiliations.map((item) => {
     const container = {};
 
-    container["value"] = item.affiID;
+    container["value"] = item._id;
     container["label"] = item.affiliationname;
     console.log("sel: " + JSON.stringify(container));
     return container;

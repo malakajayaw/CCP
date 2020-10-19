@@ -116,6 +116,12 @@ const CreateDesignationForm = (props) => {
         return container;
     })
 
+    const aff = () => {
+        return (
+            <Select required  defaultValue="" className="select2" id="affiliation" name="affiliationNo" onChange={handleAffChange} options={sel} />
+        )
+    }
+
     return (<section className="content" style={{ display: props.display }}>
         <div className="container-fluid">
             <div className="card">
@@ -145,7 +151,7 @@ const CreateDesignationForm = (props) => {
                                                 
                                                 <div className="form-group">
                                                     <label>Affiliation</label>
-                                                    <Select required value = "" className="select2" id="affiliation" name="affiliationNo" data-placeholder="Select affiliation" style={{ width: "100%" }} onChange={handleAffChange} options={sel} />
+                                                    {aff()}
                                                 </div>
 
                                                 <div className="form-group">

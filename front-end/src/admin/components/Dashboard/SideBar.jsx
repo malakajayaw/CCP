@@ -1,5 +1,4 @@
 import React from "react";
-import "admin-lte/dist/css/adminlte.min.css";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -11,7 +10,7 @@ return (
 <aside className="main-sidebar sidebar-dark-info elevation-4">
   {/*
   <!-- Brand Logo --> */}
-  <Link href="" className="brand-link">
+  <Link className="brand-link">
     <img src="/images/ieee.png" alt="AdminLTE Logo" className="brand-image"
       style={{opacity: "10"}} />
     <span className="brand-text font-weight-light">IEEE - Sri Lanka</span>
@@ -46,11 +45,10 @@ return (
         </li>
 
 
-
         <li class="nav-item has-treeview">
-          <Link href="#" class="nav-link" >
+          <Link class="nav-link" data-toggle="collapse" data-target="#member" >
             <i class="nav-icon fas fa-users"></i>
-            <p data-toggle="collapse" data-target="#member">
+            <p>
               Member Management
               <i class="right fas fa-angle-left"></i>
             </p>
@@ -126,9 +124,9 @@ return (
 
 
         <li class="nav-item has-treeview">
-          <Link href="#" class="nav-link" >
+          <Link class="nav-link" data-toggle="collapse" data-target="#admin" >
             <i class="nav-icon fa fa-key"></i>
-            <p data-toggle="collapse" data-target="#admin">
+            <p>
               Admin
               <i class="right fas fa-angle-left"></i>
             </p>
@@ -138,7 +136,7 @@ return (
             <ul>
 
             <li class="nav-item">
-              <Link className="nav-link" to="/Admin/AdminList">
+              <Link className="nav-link" to="/Admin/AdminList" >
                   <p>Active Admins</p>
                   </Link>
               </li>
