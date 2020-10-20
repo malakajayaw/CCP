@@ -1,12 +1,11 @@
 import React , {useState, useEffect}from 'react';
-import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation, useHistory} from "react-router-dom";
 
 import { useForm } from "react-hook-form";
-
-import { update_member, get_specific_mem} from '../../controllers/memeber.controller'
 import Config from '../../controllers/config.controller'
+import { update_admin, get_specific_admin, admin_delete} from '../../controllers/admin.controller';
 
-const MemberEdit = (props) => {
+const AdminEdit = (props) => {
 
   const id = useParams()
   const { register, handleSubmit } = useForm();
@@ -14,7 +13,7 @@ const MemberEdit = (props) => {
  
   const newId = id.id
   
-  const [member, setMember] = useState({ 
+  const [admin, setAdmin] = useState({ 
 
         fname : "" , 
         lname : ""  ,
@@ -24,34 +23,38 @@ const MemberEdit = (props) => {
         nameAsMemberShip: "",
         ieeeMail: "",
 
-
     
   });
 
   useEffect(() => {
     console.log(newId);
-    onLoadMemebrer(newId);
+    onLoadAdmin(newId);
 }, []); 
 
 
 
-  const onLoadMemebrer = async (newId) => {
-    const result = await get_specific_mem(newId)
+  const onLoadAdmin = async (newId) => {
+    const result = await get_specific_admin(newId)
     console.log(result.data.data);
     // const newD = result.data.data
   
-   await console.log(member);
-   setMember(result.data.data)
+   await console.log(admin);
+   setAdmin(result.data.data)
   }
 
+  const history = useHistory();
+
+  function reload() {
+    history.push("/Admin/AdminList");
+  }
 
 
 
   const onSubmit =  async (e) => {
 
-    // alert(JSON.stringify(member))
+    // alert(JSON.stringify(admin))
     e.preventDefault()
-    const result = await update_member (member, id)
+    const result = await update_admin (admin, id)
     console.log(result);
     if(result.code == 200)
     {
@@ -67,8 +70,22 @@ const MemberEdit = (props) => {
 //  }
 
   const handleChange =  (e) =>  {
-     setMember({...member, [e.target.name]: e.target.value });
+     setAdmin({...admin, [e.target.name]: e.target.value });
   }
+
+  const removeAdmin = async (mem, state) => {
+    var data = {
+      memberShipNo: mem,
+      state: state,
+    };
+
+const res = await admin_delete(data);
+    if (res.code == 200) {
+      Config.setToast(res.message);
+      reload();
+      
+    }
+  };
 
   return (<section className="content" style={{ display: props.display }}>
     <div className="container-fluid">
@@ -76,7 +93,7 @@ const MemberEdit = (props) => {
 
     <div className="card">
           <div className="card-header bg-dark">
-             <h6>Update Member Profile - {member.memberShipNo}</h6>
+             <h6>Update Admin Profile - {admin.memberShipNo}</h6>
           </div>
           <div className="card-body">
             <form onSubmit={onSubmit}>
@@ -90,7 +107,7 @@ const MemberEdit = (props) => {
                     id="fname"
                     name="fname"
                     placeholder="First Name"
-                    value={member.fname}
+                    value={admin.fname}
                     onChange={handleChange}
                   />
                 </div>
@@ -102,7 +119,7 @@ const MemberEdit = (props) => {
                     id="lname"
                     name="lname"
                     placeholder="Last Name"
-                    value={member.lname}
+                    value={admin.lname}
                     onChange={handleChange}
                   />
                 </div>
@@ -116,7 +133,7 @@ const MemberEdit = (props) => {
                   id="pemail"
                   name="pemail"
                   placeholder="Email"
-                  value={member.email}
+                  value={admin.email}
                   onChange={handleChange}
                 />
               </div>
@@ -130,52 +147,13 @@ const MemberEdit = (props) => {
                     id="mnumber"
                     name="mnumber"
                     placeholder="Membership Number"
-                    value={member.memberShipNo}
+                    value={admin.memberShipNo}
                     onChange={handleChange}
                     readOnly
                   />
                 </div>
 
-                <div className="form-group col-md-6">
-                  <label for="affiliation">Affiliation</label>
-                  <input
-                    required
-                    className="select2"
-                    id="affiliation"
-                    name="selectaffiID"
-                    data-placeholder="Select affiliation"
-                    value={member.affname}
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label for="mname">Full Name</label>
-                <input
-                  type="test"
-                  className="form-control"
-                  id="mname"
-                  name="mname"
-                  placeholder="Name as membership card"
-                  onChange={handleChange}
-                  value={member.nameAsMemberShip}
-                />
-              </div>
-
-              <div className="form-group">
-                <label for="oemail">IEEE Email</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="oemail"
-                  name="oemail"
-                  placeholder="IEEE Email"
-                  onChange={handleChange}
-                  value={member.ieeeMail}
-                />
-              </div>
-
-              <div className="form-group">
+              <div className="form-group col-md-6">
                 <label for="phone">Phone</label>
                 <input
                   type="number"
@@ -184,10 +162,10 @@ const MemberEdit = (props) => {
                   name="phone"
                   placeholder="Contact Number"
                   onChange={handleChange}
-                  value={member.contactNo}
+                  value={admin.contactNo}
                 />
               </div>
-
+              </div>
 
               <div className="float-right">
               <div className="form-row">
@@ -202,6 +180,16 @@ const MemberEdit = (props) => {
               </div>
               </div>
             </form>
+
+
+            <Link
+              className="btn btn-secondary btn-sm mr-1 my-2"
+              onClick={() => removeAdmin(admin.memberShipNo, false)}
+            >
+              {" "}
+              <i className="fas fa-trash mr-1" />
+              Remove
+            </Link>
           </div>
         </div>
 
@@ -211,4 +199,4 @@ const MemberEdit = (props) => {
 
 }
 
-export default MemberEdit;
+export default AdminEdit;

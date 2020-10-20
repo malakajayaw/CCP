@@ -1,5 +1,7 @@
 //import User model
 const Admin = require('../model/admin.model');
+const Members = require('../model/member.model');
+const Designation = require('../model/designations.model');
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -37,7 +39,7 @@ exports.addAdmin = function (req, res, next) {
     })
 }
 //======================================================================================================
-//================================== Get all requsest       =============================================
+//================================== Get all admins       =============================================
 //====================================================================================================== 
 exports.get_all_admins = function (req, res, next) {
     console.log("Called");
@@ -83,6 +85,45 @@ exports.update_admin = async function (req, res, next) {
     }
 
 }
+
+//======================================================================================================
+//================================== Delete      =============================================
+//====================================================================================================== 
+exports.deleteAdmin = async function (req, res, next) {
+    console.log(req.body);
+
+    var state = req.body.state
+    var memberShipNo = req.body.memberShipNo
+    if (state == null || state == undefined || state == "") {
+        state = false
+    }
+     if (state === false) {
+        try {
+            console.log(memberShipNo);
+            const search = await Admin.findOne({
+                memberShipNo: memberShipNo
+            })
+            if (!search) {
+                return res.status(402).send("No exsisting member");
+            }
+            const log = await Admin.findOneAndDelete({
+                memberShipNo: memberShipNo
+            })
+
+            return res.status(200).send({
+                message: "Admin Removed Successfully"
+            });
+        } catch (error) {
+            return res.status(403).send("Something went wrong");
+        }
+    }
+
+}
+
+//======================================================================================================
+//================================== Get Specific Admin     =============================================
+//====================================================================================================== 
+
 exports.get_specific_admin = async function (req, res, next) {
 
     console.log(req.body);
@@ -102,10 +143,15 @@ exports.get_specific_admin = async function (req, res, next) {
     }
 
 }
+
+//======================================================================================================
+//================================== Admin Login    =============================================
+//====================================================================================================== 
+
 exports.login = async function (req, res) {
 
     console.log(req.body);
-    const user_details = await Admin.findOne({
+    var user_details = await Members.findOne({
         memberShipNo: req.body.memberShipNo
     });
     if (user_details === null) {
@@ -118,7 +164,7 @@ exports.login = async function (req, res) {
 
         console.log(user_details.password);
         console.log(req.body.uPass);
-     
+
         const isEqual = await user_details.password.localeCompare(req.body.uPass)
         if (isEqual == 1 || isEqual == -1) {
             return res.status(406).send({
@@ -127,12 +173,38 @@ exports.login = async function (req, res) {
                 message: 'Password is incorrect',
             });
         } else {
+            const test_designation = await Designation.findOne({ MemNo: user_details._id, type: "Chair" })
+            console.log("DESIGNATION");
+            console.log(test_designation);
+            if (test_designation != null) {
+
+                const token = jwt.sign({
+                    memberShipNo: user_details.memberShipNo,
+                    email: user_details.email,
+                    nic: user_details.nic,
+                    role: "Chair",
+
+                }, "thisistokenforieee2019", {
+                    expiresIn: '240h'
+                });
+                console.log(user_details);
+                user_details = { ...user_details._doc, role: "Chair" }
+                return res.status(200).send({
+                    data: {
+                        "token": token,
+                        "role": "Chair",
+                        "details": user_details
+                    },
+                    success: true,
+                    message: 'Successfully login',
+                });
+            }
             const token = jwt.sign({
                 memberShipNo: user_details.memberShipNo,
                 email: user_details.email,
                 nic: user_details.nic,
                 role: user_details.role,
-               
+
             }, "thisistokenforieee2019", {
                 expiresIn: '240h'
             });

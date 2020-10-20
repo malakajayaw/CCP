@@ -2,3 +2,9 @@
 .vs/sd03_2020/v16/.suo
 
 .vs/
+
+/node_modules
+
+front-end/node_modules
+
+back-end/node_modules

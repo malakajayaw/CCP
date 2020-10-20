@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
-  get_all_active_members,
-  accept_or_reject,
+  get_all_rewards,
+  member_delete,
 } from "../../controllers/memeber.controller";
 import Config from "../../controllers/config.controller";
 
@@ -37,18 +37,18 @@ const MemberRequest = (props) => {
   }, []);
 
   async function getData() {
-    var res = await get_all_active_members();
-    await Setmembers(res.data.data);
+    var res = await get_all_rewards();
+    await Setmembers(res.data);
     $("#memberTable").dataTable();
   }
 
-  const ace_or_rej = async (mem, state) => {
+  const removeMember = async (mem, state) => {
     var data = {
       memberShipNo: mem,
       state: state,
     };
 
-    const result = await accept_or_reject(data);
+    const result = await member_delete(data);
     if (result.code == 200) {
       Config.setToast(result.message);
       getData();
@@ -56,28 +56,29 @@ const MemberRequest = (props) => {
   };
 
   const readydata = () => {
-    return members.map((member, i) => {
+    return members.map(( row, i) => {
       return (
         <tr key={i}>
           <td>{i + 1}</td>
-          <td>{member.memberShipNo}</td>
+          <td>{row.member.memberShipNo}</td>
           <td>
-            {member.fname}&nbsp;{member.lname}
+            {row.member.fname}&nbsp;{row.member.lname}
           </td>
-          <td>SLIIT Student Branch</td>
-          <td>{member.contactNo}</td>
-          <td>{member.email}</td>
+           <td>{row.member.affname}</td>
+          <td>{row.member.contactNo}</td>
+          <td>{row.member.email}</td>
+          <td>{row.points}</td>
           <td className="project-actions text-center">
-          <Link
+          <span
               className="btn btn-warning btn-sm mr-1 my-2"
               onClick=""
             >
               {" "}
               <i className="fas fa-trash mr-1" />
               view
-            </Link>
+            </span>
             <Link
-              to={`/Admin/MemberEdit/${member._id}`}
+              to={`/Admin/MemberEdit/${row.member._id}`}
               type="button"
               className="btn btn-info btn-sm mr-1 my-2"
             >
@@ -86,7 +87,7 @@ const MemberRequest = (props) => {
             </Link>
             <Link
               className="btn btn-secondary btn-sm mr-1 my-2"
-              onClick={() => ace_or_rej(member.memberShipNo, false)}
+              onClick={() => removeMember(row.member.memberShipNo, false)}
             >
               {" "}
               <i className="fas fa-trash mr-1" />
@@ -121,6 +122,7 @@ const MemberRequest = (props) => {
                   <th>Affiliation</th>
                   <th>Phone</th>
                   <th>Email</th>
+                  <th>Points</th>
                   <th style={{width: "25%"}}>Action</th>
                 </tr>
               </thead>

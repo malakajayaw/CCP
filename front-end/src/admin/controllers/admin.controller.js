@@ -22,7 +22,7 @@ export const add_admin = (data) => {
             })
     })
 }
-export const update_member = (data, id) => {
+export const update_admin = (data, id) => {
     
     data = {
         id: id,
@@ -49,24 +49,24 @@ export const update_member = (data, id) => {
 
 
 
-export const accept_or_reject = (data) => {
+export const admin_delete = (data) => {
 
-   var  datanew = {
-        memberShipNo :data.memberShipNo,
-        state : data.state
-    }
-    console.log(datanew);
-    return new Promise( (resolve,reject) => {
-        return axios.post(`${Config.host}${Config.port}/member/req/action` , { ...datanew })
-            .then( result => {
-                console.log(result.data);
-                    resolve({code : 200 , message : result.data.message })
-            })
-            .catch( err => {
-                reject({ code : 0 , error : err})
-            })
-    })
-}
+    var  datanew = {
+         memberShipNo :data.memberShipNo,
+         state : data.state
+     }
+     console.log(datanew);
+     return new Promise( (resolve,reject) => {
+         return axios.post(`${Config.host}${Config.port}/admin/delete` , { ...datanew })
+             .then( result => {
+                 console.log(result.data);
+                     resolve({code : 200 , message : result.data.message })
+             })
+             .catch( err => {
+                 reject({ code : 0 , error : err})
+             })
+     })
+ }
 
 // 
 export const get_all_admin = () => {
@@ -84,13 +84,13 @@ export const get_all_admin = () => {
 }
 
 
-export const get_specific_mem = (id) => {
+export const get_specific_admin = (id) => {
 
     var data = {
         id:id
     }
     return new Promise( (resolve,reject) => {
-        return axios.post (`${Config.host}${Config.port}/member/specif/member`, {...data})
+        return axios.post (`${Config.host}${Config.port}/admin/specif/admin`, {...data})
             .then( result => {
                 console.log(result.data);
                     resolve({code : 200 , data : result.data })

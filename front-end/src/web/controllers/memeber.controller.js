@@ -159,3 +159,31 @@ export const uploadProfilePic = async (file, membershipnumber) => {
     console.log(resp);
     return resp;
 }
+export const change_password  = (data) => {
+    console.log(data);
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/member/reset`, data )
+            .then(result => {
+                console.log(result.data);
+                resolve({ code: 200, data: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}
+
+
+// 
+export const get_pastdes_member = (id) => {
+
+    return new Promise( (resolve,reject) => {
+        return axios.get(`${Config.host}${Config.port}/member/pastdes/${id}`)
+            .then( result => {
+                resolve({code : 200 , data : result.data })
+            })
+            .catch( err => {
+                reject({ code : 0 , error : err})
+            })
+    })
+}

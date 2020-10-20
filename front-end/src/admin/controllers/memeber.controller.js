@@ -8,6 +8,7 @@ export const sign_controller = (mem, pass) => {
         memberShipNo: mem,
         uPass: pass
     }
+    console.log(data);
     return new Promise((resolve, reject) => {
         return axios.post(`${Config.host}${Config.port}/admin/signin`, { ...data })
             .then(result => {
@@ -55,6 +56,9 @@ export const update_member = (data, id) => {
         memberShipNo : data.memberShipNo,
         email : data.email ,
         contactNo : data.contactNo ,
+        nameAsMemberShip: data.nameAsMemberShip,
+        ieeeMail: data.ieeeMail,
+
         
     }
     return new Promise( (resolve,reject) => {
@@ -92,6 +96,25 @@ export const accept_or_reject = (data) => {
     })
 }
 
+export const member_delete = (data) => {
+
+    var  datanew = {
+         memberShipNo :data.memberShipNo,
+         state : data.state
+     }
+     console.log(datanew);
+     return new Promise( (resolve,reject) => {
+         return axios.post(`${Config.host}${Config.port}/member/delete` , { ...datanew })
+             .then( result => {
+                 console.log(result.data);
+                     resolve({code : 200 , message : result.data.message })
+             })
+             .catch( err => {
+                 reject({ code : 0 , error : err})
+             })
+     })
+ }
+
 // 
 export const get_all_requsests = () => {
 
@@ -121,6 +144,8 @@ export const get_all_active_members = () => {
             })
     })
 }
+
+
 export const get_specific_mem = (id) => {
 
     var data = {
@@ -137,3 +162,20 @@ export const get_specific_mem = (id) => {
             })
     })
 }
+
+export const get_all_rewards = () => {
+
+    return new Promise( (resolve,reject) => {
+        return axios.get (`${Config.host}${Config.port}/member/all/rewards`)
+            .then( result => {
+                    resolve({code : 200 , data : result.data })
+            })
+            .catch( err => {
+                reject({ code : 0 , error : err})
+            })
+    })
+}
+
+
+
+

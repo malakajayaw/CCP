@@ -31,8 +31,9 @@ class AdminLogin extends Component {
     e.preventDefault();
     sign_controller(this.state.memberShipNo, this.state.uPass)
       .then((result) => {
+        console.log(result.data);
         this.props.setCurrentUser(result.data.data.details);
-        this.props.history.push("/UserProfile");
+        this.props.history.push("/Admin");
       })
       .catch((err) => {
         console.log(err.code);
@@ -52,13 +53,14 @@ class AdminLogin extends Component {
             <div className="card-body login-card-body">
               <p className="login-box-msg">IEEE - Sri Lanka Section</p>
 
-              <form action="App.jsx">
+              <form onSubmit={(e) => this.onSubmitForm(e)}>
                 <div className="input-group mb-3">
                   <input
                     type="text"
                     className="form-control"
                     placeholder="Membership Number"
                     name="memberShipNo"
+                    onChange={(e) => this.formValueChange(e)}
                   />
                   <div className="input-group-append">
                     <div className="input-group-text">
@@ -71,6 +73,8 @@ class AdminLogin extends Component {
                     type="password"
                     className="form-control"
                     placeholder="Password"
+                    name="uPass"
+                    onChange={(e) => this.formValueChange(e)}
                   />
                   <div className="input-group-append">
                     <div className="input-group-text">
@@ -87,13 +91,9 @@ class AdminLogin extends Component {
                   </div>
 
                   <div className="col-4">
-                    <Link
-                      to="/Admin"
-                      type="button"
-                      className="btn btn-primary btn-block"
-                    >
+                    <button type="submit" className="btn btn-primary btn-block">
                       Sign In
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </form>

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
-  get_all_active_members,
-  accept_or_reject,
   get_all_admin,
 } from "../../controllers/admin.controller";
 import Config from "../../controllers/config.controller";
@@ -38,7 +36,6 @@ const AdminAdd = (props) => {
     $("#adminTable").dataTable();
   }
 
-
   const readydata = () => {
     return admins.map((admin, i) => {
       return (
@@ -52,16 +49,8 @@ const AdminAdd = (props) => {
           <td>{admin.contactNo}</td>
           <td>{admin.email}</td>
           <td className="project-actions text-center">
-          <Link
-              className="btn btn-warning btn-sm mr-1 my-2"
-              onClick=""
-            >
-              {" "}
-              <i className="fas fa-trash mr-1" />
-              View
-            </Link>
             <Link
-              to={`/Admin/MemberEdit/${admin._id}`}
+              to={`/Admin/AdminEdit/${admin._id}`}
               type="button"
               className="btn btn-info btn-sm mr-1 my-2"
             >
@@ -69,14 +58,6 @@ const AdminAdd = (props) => {
               Update
             </Link>
             
-            <Link
-              className="btn btn-secondary btn-sm mr-1 my-2"
-              onClick=""
-            >
-              {" "}
-              <i className="fas fa-trash mr-1" />
-              Remove
-            </Link>
             
           </td>
         </tr>
@@ -106,7 +87,7 @@ const AdminAdd = (props) => {
                   <th>Name</th>
                   <th>Phone</th>
                   <th>Email</th>
-                  <th style={{width: "25%"}}>Action</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>{readydata()}</tbody>

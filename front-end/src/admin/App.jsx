@@ -25,6 +25,7 @@ import EditDesignation from "./components/Designation-management/EditDesignation
 import EditPastDes from "./components/Designation-management/EditPastDes";
 import EditPastDesForAff from "./components/Designation-management/EditPastDesForAff";
 import ActivityTable from "./components/Activity-log/ActivityTable";
+import AdminEdit from "./components/Member-management/AdminEdit";
 import MemberEdit from "./components/Member-management/MemberEdit";
 import EventReportTable from "./components/EventReport-management/EventReportTable";
 import EventReportForm from "./components/EventReport-management/EventReportForm";
@@ -38,14 +39,19 @@ import AffiliationTable from "./components/StudentBranch-management/AffiliationT
 import AdminAdd from "./components/Member-management/AdminAdd";
 import AdminList from "./components/Member-management/AdminList";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { store, persistor } from "./components/Redux/Store/Store";
 toast.configure();
 
 function App() {
   const [page, setPage] = useState("Event");
 
   return (
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
         <div className="wrapper">
           <NavBar />
           <div className="content-wrapper">
@@ -149,6 +155,10 @@ function App() {
                   {" "}
                   <MemberEdit />{" "}
                 </Route>
+                <Route path="/Admin/AdminEdit/:id">
+                  {" "}
+                  <AdminEdit />{" "}
+                </Route>
                 <Route path="/Admin/EventReportTable">
                   {" "}
                   <EventReportTable />{" "}
@@ -198,6 +208,8 @@ function App() {
           </div>
           <Footer />
         </div>
+      </PersistGate>
+    </Provider>
   );
 }
 
