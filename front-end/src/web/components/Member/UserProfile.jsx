@@ -129,7 +129,7 @@ class UserProfile extends Component {
                     data-toggle="tab"
                     className="nav-link"
                   >
-                    Messages
+                    Activity
                   </a>
                 </li>
                 <li className="nav-item">
@@ -201,11 +201,16 @@ class UserProfile extends Component {
                       </a>
                       <hr />
                     </div>
-                    <div className="col-md-12">
-                      <h5 className="mt-2">
+                   
+                  </div>
+                  {/*/row*/}
+                </div>
+                <div className="tab-pane" id="messages">
+                 
+                <div className="col-md-12">
+                      <div className="mt-2">
                         <span className="fa fa-clock-o ion-clock float-right" />
-                        Activity
-                      </h5>
+                      </div>
                       <table className="table table-sm table-hover table-striped">
                         <tbody>
                           <tr>
@@ -223,65 +228,11 @@ class UserProfile extends Component {
                         </tbody>
                       </table>
                     </div>
-                  </div>
-                  {/*/row*/}
-                </div>
-                <div className="tab-pane" id="messages">
-                  <div className="alert alert-info alert-dismissable">
-                    <a className="panel-close close" data-dismiss="alert">
-                      ×
-                    </a>{" "}
-                    This is an <strong>.alert</strong>. Use this to show
-                    important messages to the user.
-                  </div>
-                  <table className="table table-hover table-striped">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <span className="float-right font-weight-bold">
-                            3 hrs ago
-                          </span>{" "}
-                          Here is your a link to the latest summary report from
-                          the..
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <span className="float-right font-weight-bold">
-                            Yesterday
-                          </span>{" "}
-                          There has been a request on your account since that
-                          was..
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <span className="float-right font-weight-bold">
-                            9/10
-                          </span>{" "}
-                          Porttitor vitae ultrices quis, dapibus id dolor. Morbi
-                          venenatis lacinia rhoncus.
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <span className="float-right font-weight-bold">
-                            9/4
-                          </span>{" "}
-                          Vestibulum tincidunt ullamcorper eros eget luctus.
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <span className="float-right font-weight-bold">
-                            9/4
-                          </span>{" "}
-                          Maxamillion ais the fix for tibulum tincidunt
-                          ullamcorper eros.
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+
+
+
+
+
                 </div>
                 <div className="tab-pane" id="edit">
                   <form role="form">
