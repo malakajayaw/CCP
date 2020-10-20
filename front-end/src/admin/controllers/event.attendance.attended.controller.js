@@ -10,6 +10,7 @@ export const addEventAttendanceAttended = (data) => {
       return axios
         .post(`${Config.host}${Config.port}/eventattendance/attendance/add_attended_mem`, data)
         .then((result) => {
+          console.log(result.data);
           resolve({ code: 200, message: result.data });
         })
         .catch((err) => {
@@ -41,10 +42,12 @@ export const getAttendedMembersForAnEvent = (id) => {
 //====================================================================================================== 
 
  export const removeEventAttendanceAttended = (data) => {
+  console.log(data);
   return new Promise((resolve, reject) => {
     return axios
       .post(`${Config.host}${Config.port}/eventattendance/attendance/delete_attended_mem`, data)
       .then((result) => {
+        console.log(result.data);
         resolve({ code: 200, message: result.data });
       })
       .catch((err) => {

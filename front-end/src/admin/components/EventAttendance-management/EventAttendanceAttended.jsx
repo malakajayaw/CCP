@@ -18,6 +18,7 @@ import {removeEventAttendanceAttended, getAttendedMembersForAnEvent} from "../..
 function EventAttendanceAttended(props) {
   //getting the parameters
   let { id } = useParams();
+  console.log(id);
 
   const [responses, setResponses] = useState([]);
   useEffect(() => {

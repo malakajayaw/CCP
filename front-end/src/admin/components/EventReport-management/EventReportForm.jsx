@@ -24,6 +24,7 @@ const EventReportAdd = (props) => {
     let newDate = new Date();
     const today = moment(newDate).format("MMM Do YY");
     setToday(today);
+    console.log(today);
   };
 
 
@@ -42,7 +43,6 @@ const EventReportAdd = (props) => {
     submissionstate: "Not Submitted",
     date: moment(new Date()).format("MMM Do YY"),
     submissioncomment: "",
-    file: "",
   });
 
   const handleChange = (e) => {
@@ -52,25 +52,13 @@ const EventReportAdd = (props) => {
   //method to event report adding
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    //checking whether the file is selected
-    if(event.file == "")
-    {
-      Config.setToast("Please select a file!!");
-    }
-    
     //calling the method from the controller
-    else{
     const result = await add_event_report(event);
+      console.log(result);
       if (result.code == 200) {
         clear();
         Config.setToast("Report Added Successfully");
       }
-    }
-      //else if(result.code == 403){
-      //  Config.setToast("Already Added the report");
-      //}
-      //Commented part should added if one event only need one report
   };
 
   const clear = () => {
@@ -124,7 +112,6 @@ const EventReportAdd = (props) => {
                             name="inputReportName"
                             type="file"
                             onChange={handleChangeFile}
-                            required=""
                           />
 
                           <label for="inputEName">Event Name : </label>
@@ -176,7 +163,6 @@ const EventReportAdd = (props) => {
                               onChange={handleChange}
                               value={event.submissioncomment}
                               name="submissioncomment"
-                              required
                             />
                           </div>
 

@@ -11,6 +11,7 @@ export const addEventAttendanceConfirmed = (data) => {
      
         .post(`${Config.host}${Config.port}/eventattendance/attendance/add_confirmed_mem`, data)
         .then((result) => {
+          console.log(result.data);
           resolve({ code: 200, message: result.data });
         })
         .catch((err) => {
@@ -31,6 +32,7 @@ export const getConfirmedMembersForAnEvent = (id) => {
     return new Promise( (resolve,reject) => {
         return axios.post (`${Config.host}${Config.port}/eventattendance/attendance/get_confirm_mem`, {...data})
             .then( result => {
+              //  console.log(result.data);
                     resolve({code : 200 , data : result.data })
             })
             .catch( err => {
@@ -44,10 +46,12 @@ export const getConfirmedMembersForAnEvent = (id) => {
 //====================================================================================================== 
 
 export const removeEventAttendanceConfirmed = (data) => {
+    console.log(data);
     return new Promise((resolve, reject) => {
       return axios
         .post(`${Config.host}${Config.port}/eventattendance/attendance/delete_confirmed_mem`, data)
         .then((result) => {
+          console.log(result.data);
           resolve({ code: 200, message: result.data });
         })
         .catch((err) => {
@@ -69,6 +73,7 @@ export const deleteRegisteredMember = (id) => {
      return new Promise( (resolve,reject) => {
          return axios.post(`${Config.host}${Config.port}/eventattendance/attendance/delete_reg_mem` , { ...datanew })
              .then( result => {
+                //  console.log(result.data);
                      resolve({code : 200 , message : result.data.message })
              })
              .catch( err => {
