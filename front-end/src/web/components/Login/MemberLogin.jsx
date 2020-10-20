@@ -61,9 +61,9 @@ class MemberLogin extends Component {
           >
             <div className="login-box">
               <div className="login-logo">
-               <Link to="/MemberLogin" style={{ color: "white" }}>
+                <a href="/MemberLogin" style={{ color: "white" }}>
                   <b>Member Login</b>
-               </Link>
+                </a>
               </div>
 
               <div className="card">
@@ -103,23 +103,26 @@ class MemberLogin extends Component {
                     </div>
                     <br></br>
                     <div className="row">
+                      <div className="col-7">
+                        <div className="icheck-primary">
+                          <input type="checkbox" id="remember" />
+                          <label for="remember">Remember Me</label>
+                        </div>
+                      </div>
 
-                      <div className="col">
-                        <button className= "btn btn-primary btn-block" type="submit"> Sign In</button>
+                      <div className="col-5">
+                        <button type="submit"> Sign In</button>
                       </div>
                     </div>
                   </form>
 
-                  {/* <p className="mb-2">
-                    <br></br>
-                   <Link to="">I forgot my password</Link>
-                  </p> */}
-                     <br></br>
-
                   <p className="mb-2">
-                   <Link to="/Registration">Don't have an Accout? Create New</Link>
+                    <br></br>
+                    <a href="">I forgot my password</a>
                   </p>
-          
+                  <p className="mb-2">
+                    <a href="/Registration">Don't have an Accout? Create New</a>
+                  </p>
                 </div>
               </div>
             </div>
