@@ -68,22 +68,30 @@ const MemberRequest = (props) => {
           <td>{member.contactNo}</td>
           <td>{member.email}</td>
           <td className="project-actions text-center">
+          <Link
+              className="btn btn-warning btn-sm mr-1 my-2"
+              onClick=""
+            >
+              {" "}
+              <i className="fas fa-trash mr-1" />
+              view
+            </Link>
             <Link
               to={`/Admin/MemberEdit/${member._id}`}
               type="button"
-              className="btn btn-success btn-sm mr-1 my-2"
+              className="btn btn-info btn-sm mr-1 my-2"
             >
               <i className="fas fa-pencil-alt mr-1" />
               Update
             </Link>
-            <a
-              className="btn btn-danger btn-sm mr-1 my-2"
+            <Link
+              className="btn btn-secondary btn-sm mr-1 my-2"
               onClick={() => ace_or_rej(member.memberShipNo, false)}
             >
               {" "}
               <i className="fas fa-trash mr-1" />
               Remove
-            </a>
+            </Link>
           </td>
         </tr>
       );
@@ -93,19 +101,11 @@ const MemberRequest = (props) => {
   return (
     <section className="content" style={{ display: props.display }}>
       <div className="container-fluid">
-        <h6>Active Members</h6>
+        
 
         <div className="card">
-          <div className="card-header">
-            {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-
-            <Link
-              to="/Admin/MemberRequest"
-              type="button"
-              className="btn btn-success btn-sm float-right add_btn"
-            >
-              Requests
-            </Link>
+          <div className="card-header bg-dark">
+          <h6>Active Members</h6>
           </div>
           {/* <!-- /.card-header --> */}
           <div className="card-body">
@@ -121,7 +121,7 @@ const MemberRequest = (props) => {
                   <th>Affiliation</th>
                   <th>Phone</th>
                   <th>Email</th>
-                  <th>Action</th>
+                  <th style={{width: "25%"}}>Action</th>
                 </tr>
               </thead>
               <tbody>{readydata()}</tbody>
