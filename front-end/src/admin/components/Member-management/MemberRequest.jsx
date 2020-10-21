@@ -19,6 +19,7 @@ const MemberRequest = (props) => {
     addmname: "",
     addmnumber: "",
     addpemail: "",
+    setAffiID:"",
     addoemail: "",
     addphone: "",
     addpassword: "",
@@ -56,7 +57,7 @@ const MemberRequest = (props) => {
           <td>{i + 1}</td>
           <td>{member.memberShipNo}</td>
           <td>{member.nameAsMemberShip}</td>
-          <td>SLIIT Student Branch</td>
+          <td>{member.affname}</td>
           <td className="project-actions text-center">
             <a
               className="btn btn-info btn-sm mr-1 my-2"

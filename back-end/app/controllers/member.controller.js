@@ -56,16 +56,20 @@ exports.requsetMemberShip = async function (req, res, next) {
 //======================================================================================================
 //================================== Get all requsest       =============================================
 //====================================================================================================== 
-exports.get_all_requsts = function (req, res, next) {
+exports.get_all_requsts = async function (req, res, next) {
     console.log("Called");
     // check userdata
     Member.find({
         newrequest: true,
         newrequest: true
-    }, function (err, docs) {
+    }, async function (err, docs) {
         if (docs.length != 0) {
+            for (let index = 0; index < docs.length; index++) {
 
+                let name = await Affiliation.findOne({ _id: docs[index].affiID })
 
+                docs[index] = { ...docs[index]._doc, affname: name.affiliationname }
+            }
             res.status(200).send({
                 data: docs
             });
@@ -76,6 +80,30 @@ exports.get_all_requsts = function (req, res, next) {
     })
 }
 
+
+//======================================================================================================
+//================================== View Active Members   =============================================
+//====================================================================================================== 
+exports.active_members = async function (req, res, next) {
+    Member.find({
+        state: true
+    }, async function (err, docs) {
+        if (docs.length != 0) {
+            // console.log(docs);
+            for (let index = 0; index < docs.length; index++) {
+
+                let name = await Affiliation.findOne({ _id: docs[index].affiID })
+
+                docs[index] = { ...docs[index]._doc, affname: name.affiliationname }
+            }
+            res.status(200).send({
+                data: docs
+            });
+        } else {
+            res.status(403).send('No data found')
+        }
+    })
+}
 
 
 //======================================================================================================
@@ -174,29 +202,7 @@ exports.deleteMember = async function (req, res, next) {
 
 
 
-//======================================================================================================
-//================================== View Active Members   =============================================
-//====================================================================================================== 
-exports.active_members = async function (req, res, next) {
-    Member.find({
-        state: true
-    }, async function (err, docs) {
-        if (docs.length != 0) {
-            // console.log(docs);
-            for (let index = 0; index < docs.length; index++) {
 
-                let name = await Affl.findOne({ _id: docs[index].affiID })
-
-                docs[index] = { ...docs[index]._doc, affname: name.affiliationname }
-            }
-            res.status(200).send({
-                data: docs
-            });
-        } else {
-            res.status(403).send('No data found')
-        }
-    })
-}
 //======================================================================================================
 //================================== Update member         =============================================
 //====================================================================================================== 
@@ -212,9 +218,10 @@ exports.update_member = async function (req, res, next) {
             fname: req.body.fname,
             lname: req.body.lname,
             contactNo: req.body.contactNo,
-            nameAsMemberShip: req.body.mname,
-            email: req.body.pemail,
-            ieeeMail: req.body.oeail,
+            nameAsMemberShip: req.body.nameAsMemberShip,
+            affiID: req.body.affiID,
+            email: req.body.email,
+            ieeeMail: req.body.ieeeMail,
         }, {
             new: true
         })
@@ -384,7 +391,9 @@ exports.password_reset = async function (req, res, next) {
 
 
 
-//
+//======================================================================================================
+//===================================   Past Designations ==============================================
+//======================================================================================================
 exports.pastdes_by_member_id = async function (req, res, next) {
     
     try {
@@ -418,7 +427,9 @@ exports.pastdes_by_member_id = async function (req, res, next) {
 }
 
 
-//
+//======================================================================================================
+//================================  Rewards with all user details ======================================
+//======================================================================================================
 exports.all_rewads = async function (req, res, next) {
     
     try {
@@ -470,3 +481,4 @@ exports.all_rewads = async function (req, res, next) {
     }
 
 }
+

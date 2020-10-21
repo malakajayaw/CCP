@@ -38,7 +38,7 @@ class UserProfile extends Component {
       picsrc: "",
       pasdes: [],
 
-      // password
+
       c_password: "",
       n_password: "",
       con_password: "",
@@ -59,7 +59,9 @@ class UserProfile extends Component {
       })
       .catch((err) => {
         console.log(err);
-      });
+      }
+      
+     );
   }
   componentWillMount() {
     this.check_auth();
@@ -224,14 +226,16 @@ class UserProfile extends Component {
                         />
                       </p>
                       <h6>Affiliation</h6>
+      
                       <p>
                         <input
                           disabled
                           className="form-control"
-                          value={"SLIIT Student Branch"}
+                          value={user.affiID}
                           type="text"
                         />
                       </p>
+               
                       <h6>Email</h6>
                       <p>
                         <input
@@ -253,9 +257,11 @@ class UserProfile extends Component {
                     </div>
                     <div className="col-md-6">
                       <h6>Reward Points</h6>
-                      <a className="badge badge-dark badge-pill">
-                        {this.calcRewards(this.state.pasdes)}
+                      <h2>
+                      <a className="badge badge-pill green">
+                        {this.calcRewards(this.state.pasdes)} 
                       </a>
+                      </h2>
                       <hr />
                     </div>
                   </div>

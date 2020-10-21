@@ -1,8 +1,8 @@
 import React , {useState, useEffect}from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation} from "react-router-dom";
-
+import { get_all_affiliations } from "../../controllers/affiliation.controller";
 import { useForm } from "react-hook-form";
-
+import Select from "react-select";
 import { update_member, get_specific_mem, change_password_By_admin } from '../../controllers/memeber.controller'
 import Config from '../../controllers/config.controller'
 
@@ -20,6 +20,7 @@ const MemberEdit = (props) => {
         lname : ""  ,
         memberShipNo : "",
         email : "" ,
+        selectaffiID: "",
         contactNo : "" ,
         nameAsMemberShip: "",
         ieeeMail: "",
@@ -72,9 +73,35 @@ const MemberEdit = (props) => {
 
   }
 
-//  const getData = async  (id) =>{
-//       const result = await
-//  }
+  //Affiliation--------------------------------------
+  const handleAffChange = (e) => {
+    setMember({ ...member, selectaffiID: e.value });
+    console.log(e.value);
+  };
+
+  const [affiliations, setAffiliations] = useState([]);
+  useEffect(() => {
+    getAffData();
+  }, []);
+
+  async function getAffData() {
+    var res = await get_all_affiliations();
+    await setAffiliations(res.data.data);
+    console.log("aff: " + affiliations);
+  }
+
+  const sel = affiliations.map((item) => {
+    const container = {};
+
+    container["value"] = item._id;
+    container["label"] = item.affiliationname;
+    console.log("sel: " + JSON.stringify(container));
+    return container;
+  });
+
+  const getcurrentAff = () => {
+    return sel.find(i => i.value == member.selectaffiID)
+  }
 
   const handleChange =  (e) =>  {
      setMember({...member, [e.target.name]: e.target.value });
@@ -123,10 +150,10 @@ const MemberEdit = (props) => {
               <div className="form-group">
                 <label for="pemail">Email</label>
                 <input
-                  type="pemail"
+                  type="email"
                   className="form-control"
                   id="pemail"
-                  name="pemail"
+                  name="email"
                   placeholder="Email"
                   value={member.email}
                   onChange={handleChange}
@@ -137,10 +164,10 @@ const MemberEdit = (props) => {
                 <div className="form-group col-md-6">
                   <label for="mnumber">Membership Number</label>
                   <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     id="mnumber"
-                    name="mnumber"
+                    name="memberShipNo"
                     placeholder="Membership Number"
                     value={member.memberShipNo}
                     onChange={handleChange}
@@ -150,13 +177,15 @@ const MemberEdit = (props) => {
 
                 <div className="form-group col-md-6">
                   <label for="affiliation">Affiliation</label>
-                  <input
-                    
+                  <Select
+        
                     className="select2"
                     id="affiliation"
                     name="selectaffiID"
                     data-placeholder="Select affiliation"
-                    value={member.affname}
+                    onChange={handleAffChange}
+                    options={sel}
+                    value={getcurrentAff()}
                   />
                 </div>
               </div>
@@ -167,7 +196,7 @@ const MemberEdit = (props) => {
                   type="test"
                   className="form-control"
                   id="mname"
-                  name="mname"
+                  name="nameAsMemberShip"
                   placeholder="Name as membership card"
                   onChange={handleChange}
                   value={member.nameAsMemberShip}
@@ -180,7 +209,7 @@ const MemberEdit = (props) => {
                   type="email"
                   className="form-control"
                   id="oemail"
-                  name="oemail"
+                  name="ieeeMail"
                   placeholder="IEEE Email"
                   onChange={handleChange}
                   value={member.ieeeMail}
@@ -193,7 +222,7 @@ const MemberEdit = (props) => {
                   type="number"
                   className="form-control"
            
-                  name="phone"
+                  name="contactNo"
                   placeholder="Contact Number"
                   onChange={handleChange}
                   value={member.contactNo}
