@@ -85,9 +85,9 @@ const MemberAdd = (props) => {
 
 //Affiliation--------------------------------------
   const handleAffChange = (e) => {
-    setMember({...member, "selectaffiID": e.value });
-    console.log(e);
-}
+    setMember({ ...member, selectaffiID: e.value });
+    console.log(e.value);
+  };
 
 const [affiliations, setAffiliations] = useState([]);
 useEffect(() => {
@@ -109,14 +109,63 @@ const sel = affiliations.map(item => {
   return container;
 })
 
+  const getcurrentAff = () => {
+    return sel.find(i => i.value == member.selectaffiID)
+  }
+
+  return (
+    <section className="content" style={{ display: props.display }}>
+      <div className="container-fluid">
+      
+        <div className="card">
+          <div className="card-header bg-dark">
+  <h6>Create Profile</h6>
+          </div>
+          <div className="card-body">
+            <form onSubmit={onSubmit}>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label for="fname">First Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="fname"
+                    name="addfname"
+                    placeholder="First Name"
+                    value={member.addfname}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group col-md-6">
+                  <label for="lname">Last Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="lname"
+                    name="addlname"
+                    placeholder="Last Name"
+                    value={member.addlname}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
 
 
 
-  return (<section className="content" style={{ display: props.display }}>
-    <div className="container-fluid">
-    <h6>Add New Member</h6>
-      <div className="card">
-        <div className="card-header">
+                <div className="form-group col-md-6">
+                  <label for="affiliation">Affiliation</label>
+                  <Select
+                    required
+                    className="select2"
+                    id="affiliation"
+                    name="selectaffiID"
+                    data-placeholder="Select affiliation"
+                    onChange={handleAffChange}
+                    options={sel}
+                    value={getcurrentAff()}
+                  />
+                </div>
+              </div>
 
        
           <Link to="/Admin/MemberRequest" type="button" className="btn btn-success btn-sm float-right add_btn">Requests</Link>

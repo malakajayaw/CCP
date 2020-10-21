@@ -28,6 +28,7 @@ const pastdes = require("./app/routes/pastdes.route");
 // import db
 const dbConfig = require("./app/config/db.config");
 app.use(cors());
+// app.use(fileUpload());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

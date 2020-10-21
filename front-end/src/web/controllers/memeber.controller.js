@@ -130,3 +130,63 @@ export const sign_controller = (mem, pass) => {
             })
     })
 }
+
+
+export const uploadProfilePic = async (file, membershipnumber) => {
+
+    var requestData = new FormData();
+
+    requestData.set("membershipnumber", membershipnumber)
+    requestData.append("photos", file)
+    console.log(requestData.get('photos'));
+    console.log(requestData.get('membershipnumber'));
+    var resp = 500;
+
+    await console.log(requestData.get('photos'));
+    await axios.post(
+        `${Config.host}${Config.port}/member/update`,
+        requestData,
+    ).then((Response) => {
+        resp = Response.status;
+    }).catch((err) => {
+        console.error(err);
+        try {
+            resp = err.response.status;
+        } catch (error) {
+            resp = 600;
+        }
+    });
+    console.log(resp);
+    return resp;
+}
+export const change_password  = (data) => {
+    console.log(data);
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/member/reset`, data )
+            .then(result => {
+                console.log(result.data);
+                resolve({ code: 200, data: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}
+
+
+
+// 
+export const get_pastdes_member = (id) => {
+
+    return new Promise( (resolve,reject) => {
+        return axios.get(`${Config.host}${Config.port}/member/pastdes/${id}`)
+            .then( result => {
+                resolve({code : 200 , data : result.data })
+            })
+            .catch( err => {
+                reject({ code : 0 , error : err})
+            })
+    })
+}
+
+

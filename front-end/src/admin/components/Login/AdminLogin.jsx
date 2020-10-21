@@ -3,27 +3,76 @@ import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 
 
-function AdminLogin(props) {
-  const [page, setPage] = useState("Event");
-  return ( 
-        
+  onSubmitForm = async (e) => {
+    e.preventDefault();
+    sign_controller(this.state.memberShipNo, this.state.uPass)
+      .then((result) => {
+        console.log(result.data);
+        this.props.setCurrentUser(result.data.data.details);
+        this.props.history.push("/Admin");
+      })
+      .catch((err) => {
+        console.log(err.code);
+        this.setErrorToast("Invalid Credentials");
+      });
+  };
+  render() {
+    return (
+      <body className="hold-transition login-page">
+        <div className="login-box">
+          <div className="login-logo">
+            <a>
+              <b>Admin</b>Login
+            </a>
+          </div>
+          <div className="card">
+            <div className="card-body login-card-body">
+              <p className="login-box-msg">IEEE - Sri Lanka Section</p>
 
-<body className="hold-transition login-page">
-<div className="login-box">
-  <div className="login-logo">
-    <a href="../../index2.html"><b>Admin</b>Login</a>
-  </div>
+              <form onSubmit={(e) => this.onSubmitForm(e)}>
+                <div className="input-group mb-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Membership Number"
+                    name="memberShipNo"
+                    onChange={(e) => this.formValueChange(e)}
+                  />
+                  <div className="input-group-append">
+                    <div className="input-group-text">
+                      <span className="fas fa-envelope"></span>
+                    </div>
+                  </div>
+                </div>
+                <div className="input-group mb-3">
+                  <input
+                    type="password"
+                    className="form-control"
+                    placeholder="Password"
+                    name="uPass"
+                    onChange={(e) => this.formValueChange(e)}
+                  />
+                  <div className="input-group-append">
+                    <div className="input-group-text">
+                      <span className="fas fa-lock"></span>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-8">
+                    <div className="icheck-primary">
+                      <input type="checkbox" id="remember" />
+                      <label for="remember">Remember Me</label>
+                    </div>
+                  </div>
 
-  <div className="card">
-    <div className="card-body login-card-body">
-      <p className="login-box-msg">IEEE - Sri Lanka Section</p>
-
-      <form action="App.jsx">
-        <div className="input-group mb-3">
-          <input type="email" className="form-control" placeholder="Email"/>
-          <div className="input-group-append">
-            <div className="input-group-text">
-              <span className="fas fa-envelope"></span>
+                  <div className="col-4">
+                    <button type="submit" className="btn btn-primary btn-block">
+                      Sign In
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
