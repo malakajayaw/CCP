@@ -18,8 +18,7 @@ class NavBar extends Component {
     this.setState({
       loginState: false,
     });
-    window.location.replace("/adminlogin")
-    // this.props.history.push("/adminlogin");
+    this.props.history.push("/AdminLogin");
   };
   render() {
    return (
