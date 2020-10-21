@@ -15,8 +15,6 @@ function IndividualResponses(){
       getData();
     }, []);
   
-    //fetch event data and responses
-    //set the state
     async function getData() {
       var responseResults = await get_responses(eventId);
       var eventResults = await get_event(eventId);
@@ -24,7 +22,6 @@ function IndividualResponses(){
       setEvent(eventResults.data.data);
     }
 
-    //iterate through response data and view
     const loadResponses = (number) => {
       return responses.map((response, index) => {
           return (

@@ -99,6 +99,24 @@ const MemberAdd = (props) => {
     return sel.find(i => i.value == member.selectaffiID)
   }
 
+  const validate = (data) =>{
+    
+    console.log(member.addpassword);
+    if(member.addpassword == null || member.addpassword == ""){
+     return Config.setToast("Plase provide password")
+    }
+    if(member.addcpassword.localeCompare(member.addpassword) != 0){
+      return Config.setToast("Password did not match")
+    }
+    if(member.selectaffiID == null || member.selectaffiID ==""){
+      return Config.setToast("Please select your Affiliation")
+    }
+    if(member.selectaffiID == null || member.selectaffiID ==""){
+      return Config.setToast("Please select your Affiliation")
+    }
+  
+  }
+
   return (
     <section className="content" style={{ display: props.display }}>
       <div className="container-fluid">
@@ -261,7 +279,7 @@ const MemberAdd = (props) => {
                 >
                   Demo
                 </button>
-                <button type="submit" className="btn btn-primary mr-1 my-2">
+                <button type="submit" className="btn btn-primary mr-1 my-2" onClick={(data)=>validate(member.memberShipNo)}>
                   Submit
                 </button>
               </div>

@@ -53,6 +53,7 @@ export const update_member = (data, id) => {
         fname : data.fname  , 
         lname : data.lname  ,
         memberShipNo : data.memberShipNo,
+        affiID: data.selectaffiID,
         email : data.email ,
         contactNo : data.contactNo ,
         nameAsMemberShip: data.nameAsMemberShip,

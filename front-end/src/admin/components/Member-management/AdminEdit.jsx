@@ -188,7 +188,7 @@ const res = await admin_delete(data);
                 />
               </div>
               <div className="form-group col-md-6">
-                <label for="phone">New Password</label>
+                <label for="new_passord">New Password</label>
                 <input
                   type="password"
                   className="form-control"
@@ -200,11 +200,10 @@ const res = await admin_delete(data);
                 />
               </div>
               <div className="form-group col-md-6">
-                <label for="phone">Confirm  Password</label>
+                <label for="cons_password">Confirm Password</label>
                 <input
                   type="password"
                   className="form-control"
-           
                   name="cons_password"
                   placeholder=""
                   onChange={handleChange}

@@ -84,8 +84,9 @@ const Registration = (props) => {
 
 //Affiliation--------------------------------------
 const handleAffChange = (e) => {
-  setMember({ ...member, selectaffiID: e.value });
-  console.log(e);
+    setMember({ ...member, selectaffiID: e.value });
+    console.log(e);
+ 
 };
 
 const [affiliations, setAffiliations] = useState([]);
@@ -109,7 +110,25 @@ const sel = affiliations.map((item) => {
 });
 
 const getcurrentAff = () => {
-  return sel.find(i => i.value == member.selectaffiID)
+    return sel.find(i => i.value == member.selectaffiID)
+}
+
+const validate = (data) =>{
+    
+  console.log(member.addpassword);
+  if(member.addpassword == null || member.addpassword == ""){
+   return Config.setToast("Plase provide password")
+  }
+  if(member.addcpassword.localeCompare(member.addpassword) != 0){
+    return Config.setToast("Password did not match")
+  }
+  if(member.selectaffiID == null || member.selectaffiID ==""){
+    return Config.setToast("Please select your Affiliation")
+  }
+  if(member.selectaffiID == null || member.selectaffiID ==""){
+    return Config.setToast("Please select your Affiliation")
+  }
+
 }
 
   return (
@@ -260,6 +279,7 @@ const getcurrentAff = () => {
                     type="password"
                     className="form-control"
                     id="cpassword"
+                    name="addcpassword"
                     placeholder="Confirm Password"
                     onChange={handleChange}
                     value={member.addcpassword}
@@ -275,7 +295,7 @@ const getcurrentAff = () => {
                 >
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary float-right">
+                <button type="submit" className="btn btn-primary float-right" onClick={(data)=>validate(member.memberShipNo)}>
                   Submit
                 </button>
                 <button

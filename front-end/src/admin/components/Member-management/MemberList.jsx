@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Modal } from "react-bootstrap";
 import {
   get_all_rewards,
   member_delete,
@@ -22,12 +23,7 @@ const MemberRequest = (props) => {
     addphone: "",
     addpassword: "",
     addcpassword: "",
-
-    // editmnumber : '' ,
-    // editfname : '' ,
-    // editlname : '' ,
-    // editpemail : '' ,
-    // editphone : '' ,
+    viewPastDes: false,
   });
 
   const [members, Setmembers] = useState([]);
@@ -69,14 +65,14 @@ const MemberRequest = (props) => {
           <td>{row.member.email}</td>
           <td>{row.points}</td>
           <td className="project-actions text-center">
-          <span
+          <Link
               className="btn btn-warning btn-sm mr-1 my-2"
               onClick=""
             >
               {" "}
               <i className="fas fa-trash mr-1" />
               view
-            </span>
+            </Link>
             <Link
               to={`/Admin/MemberEdit/${row.member._id}`}
               type="button"
@@ -100,10 +96,10 @@ const MemberRequest = (props) => {
   };
 
   return (
+
+
     <section className="content" style={{ display: props.display }}>
       <div className="container-fluid">
-        
-
         <div className="card">
           <div className="card-header bg-dark">
           <h6>Active Members</h6>

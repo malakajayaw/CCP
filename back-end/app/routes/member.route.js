@@ -50,4 +50,5 @@ router.get('/pastdes/:id' ,   MemberController.pastdes_by_member_id)
 router.get('/all/rewards' ,   MemberController.all_rewads)
 router.post('/delete' ,   MemberController.deleteMember)
 
+
 module.exports = router;

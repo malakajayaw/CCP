@@ -227,14 +227,6 @@ class Sidebar extends Component {
                 ""
               )}
 
-               <li className="nav-item pointer_cursor"  onClick={() => this.signoutuser()}>
-                    <Link className="nav-link" >
-                    <i className="nav-icon fa fa-sign-out"></i>
-                    Sign Out
-                    <span className="badge badge-info right"></span>
-                    </Link>
-                </li>
-
             </ul>
           </nav>
         </div>
