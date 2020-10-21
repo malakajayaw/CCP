@@ -77,7 +77,7 @@ const MemberAdd = (props) => {
   //Affiliation--------------------------------------
   const handleAffChange = (e) => {
     setMember({ ...member, selectaffiID: e.value });
-    console.log(e);
+    console.log(e.value);
   };
 
   const [affiliations, setAffiliations] = useState([]);
@@ -100,13 +100,17 @@ const MemberAdd = (props) => {
     return container;
   });
 
+  const getcurrentAff = () => {
+    return sel.find(i => i.value == member.selectaffiID)
+  }
+
   return (
     <section className="content" style={{ display: props.display }}>
       <div className="container-fluid">
       
         <div className="card">
           <div className="card-header bg-dark">
-             <h6>Create Profile</h6>
+  <h6>Create Profile</h6>
           </div>
           <div className="card-body">
             <form onSubmit={onSubmit}>
@@ -174,7 +178,7 @@ const MemberAdd = (props) => {
                     data-placeholder="Select affiliation"
                     onChange={handleAffChange}
                     options={sel}
-                    value=""
+                    value={getcurrentAff()}
                   />
                 </div>
               </div>

@@ -53,7 +53,7 @@ function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <div className="wrapper">
-          <NavBar />
+          {/* <NavBar /> */}
           <div className="content-wrapper">
             <ContentHeader pageName={page} />
             <Router>

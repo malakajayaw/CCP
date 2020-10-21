@@ -424,6 +424,7 @@ exports.all_rewads = async function (req, res, next) {
     try {
       
     const pastdes = await Pastdes.find()
+    const affiliation = await Affiliation.find()
     const members = await Member.find()
 
     let ps = _.groupBy(pastdes , 'MemNo')
@@ -451,10 +452,12 @@ exports.all_rewads = async function (req, res, next) {
 
    const final = members.map( member => {
         const rewards = data.find(i => i._id == member._id)
-        const psdes_records = ps.find(i => i.MemNo == member._id)
+        // const psdes_records = ps.find(i => i.MemNo == member._id)
+        const mem_af = affiliation.find(i => i._id == member.affiID)
         return {
             member : member,
             points : (rewards != undefined) ?  rewards.reward : 0,
+            affiliation : (mem_af && mem_af.affiliationname) ? mem_af.affiliationname : "",
         }
    })
 

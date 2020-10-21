@@ -174,6 +174,7 @@ export const change_password  = (data) => {
 }
 
 
+
 // 
 export const get_pastdes_member = (id) => {
 
@@ -187,3 +188,5 @@ export const get_pastdes_member = (id) => {
             })
     })
 }
+
+

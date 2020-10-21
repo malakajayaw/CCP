@@ -178,4 +178,30 @@ export const get_all_rewards = () => {
 
 
 
-
+export const change_password_By_admin  = (data) => {
+    console.log(data);
+   var daat =  {memberId :data }
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/admin/reset`, {daat} )
+            .then(result => {
+                console.log(result.data);
+                resolve({ code: 200, data: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}
+export const update_password_By_admin  = (memberId, newPasswod) => {
+   var daat =  {memberId :memberId, newPasswod: newPasswod }
+    return new Promise((resolve, reject) => {
+        return axios.post(`${Config.host}${Config.port}/admin/admin/reset`, {daat} )
+            .then(result => {
+                console.log(result.data);
+                resolve({ code: 200, data: result.data })
+            })
+            .catch(err => {
+                reject({ code: 0, error: err })
+            })
+    })
+}

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation} f
 
 import { useForm } from "react-hook-form";
 
-import { update_member, get_specific_mem} from '../../controllers/memeber.controller'
+import { update_member, get_specific_mem, change_password_By_admin } from '../../controllers/memeber.controller'
 import Config from '../../controllers/config.controller'
 
 const MemberEdit = (props) => {
@@ -45,7 +45,17 @@ const MemberEdit = (props) => {
   }
 
 
+  const change_pw_req = async (data) =>{
+    change_password_By_admin(data).then( response=>{
+        if(response.code == 200){
+          Config.setToast("successfully Reset")
+        }else {
+            alert('ssss', data)
+        }
+    })
 
+
+  }
 
   const onSubmit =  async (e) => {
 
@@ -69,6 +79,8 @@ const MemberEdit = (props) => {
   const handleChange =  (e) =>  {
      setMember({...member, [e.target.name]: e.target.value });
   }
+
+
 
   return (<section className="content" style={{ display: props.display }}>
     <div className="container-fluid">
@@ -139,7 +151,7 @@ const MemberEdit = (props) => {
                 <div className="form-group col-md-6">
                   <label for="affiliation">Affiliation</label>
                   <input
-                    required
+                    
                     className="select2"
                     id="affiliation"
                     name="selectaffiID"
@@ -192,7 +204,7 @@ const MemberEdit = (props) => {
               <div className="float-right">
               <div className="form-row">
 
-              <button type="" className="btn btn-danger mr-1 my-2">
+              <button type="button" className="btn btn-danger mr-1 my-2" onClick={ (data) =>change_pw_req(member.memberShipNo)} >
                   Reset Password
               </button>
                

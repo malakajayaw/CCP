@@ -64,7 +64,7 @@ const MemberRequest = (props) => {
           <td>
             {row.member.fname}&nbsp;{row.member.lname}
           </td>
-           <td>{row.member.affname}</td>
+           <td>{row.affiliation}</td>
           <td>{row.member.contactNo}</td>
           <td>{row.member.email}</td>
           <td>{row.points}</td>

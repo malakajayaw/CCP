@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation, u
 
 import { useForm } from "react-hook-form";
 import Config from '../../controllers/config.controller'
-import { update_admin, get_specific_admin, admin_delete} from '../../controllers/admin.controller';
+import { update_admin, get_specific_admin, admin_delete ,} from '../../controllers/admin.controller';
+import { update_password_By_admin} from '../../controllers/memeber.controller';
+import { toast } from "react-toastify";
 
 const AdminEdit = (props) => {
 
@@ -22,6 +24,8 @@ const AdminEdit = (props) => {
         contactNo : "" ,
         nameAsMemberShip: "",
         ieeeMail: "",
+        new_passord:"",
+        cons_password:""
 
     
   });
@@ -87,10 +91,28 @@ const res = await admin_delete(data);
     }
   };
 
+  const reset_pw = (data) =>{
+    
+    console.log(admin.new_passord);
+    if(admin.new_passord == null || admin.new_passord == ""){
+     return Config.setToast("Plase provide password")
+    }
+    if(admin.cons_password.localeCompare(admin.new_passord) != 0){
+      return Config.setToast("Password did not match")
+    }
+
+    update_password_By_admin(admin.memberShipNo,admin.new_passord ).then( response =>{
+        if(response.code == 200){
+          Config.setToast("Password Reset")
+        }else{
+          Config.setToast("Something went wrong")
+        }
+    })
+
+  }
+
   return (<section className="content" style={{ display: props.display }}>
     <div className="container-fluid">
-
-
     <div className="card">
           <div className="card-header bg-dark">
              <h6>Update Admin Profile - {admin.memberShipNo}</h6>
@@ -165,12 +187,36 @@ const res = await admin_delete(data);
                   value={admin.contactNo}
                 />
               </div>
+              <div className="form-group col-md-6">
+                <label for="phone">New Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+           
+                  name="new_passord"
+                  placeholder=""
+                  onChange={handleChange}
+                  value={admin.new_password}
+                />
+              </div>
+              <div className="form-group col-md-6">
+                <label for="phone">Confirm  Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+           
+                  name="cons_password"
+                  placeholder=""
+                  onChange={handleChange}
+                  value={admin.cons_password}
+                />
+              </div>
               </div>
 
               <div className="float-right">
               <div className="form-row">
 
-              <button type="" className="btn btn-danger mr-1 my-2">
+              <button type="button" className="btn btn-danger mr-1 my-2" onClick={(data)=>reset_pw(admin.memberShipNo)} >
                   Reset Password
               </button>
                

@@ -2,7 +2,6 @@
 const Admin = require('../model/admin.model');
 const Members = require('../model/member.model');
 const Designation = require('../model/designations.model');
-
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -97,7 +96,7 @@ exports.deleteAdmin = async function (req, res, next) {
     if (state == null || state == undefined || state == "") {
         state = false
     }
-     if (state === false) {
+    if (state === false) {
         try {
             console.log(memberShipNo);
             const search = await Admin.findOne({
@@ -150,6 +149,37 @@ exports.get_specific_admin = async function (req, res, next) {
 
 exports.login = async function (req, res) {
 
+
+    var userDetails = await Admin.findOne({ memberShipNo: req.body.memberShipNo })
+    if (userDetails != null || userDetails != undefined) {
+        const is_wq = userDetails.password.localeCompare(req.body.uPass);
+        if (is_wq == 0) {
+            const token = jwt.sign({
+                memberShipNo: userDetails.memberShipNo,
+                email: userDetails.email,
+                role: "Admin",
+
+            }, "thisistokenforieee2019", {
+                expiresIn: '240h'
+            });
+            return res.status(200).send({
+                data: {
+                    "token": token,
+                    "role": "Admin",
+                    "details": userDetails
+                },
+                success: true,
+                message: 'Successfully login',
+            });
+        } else {
+            return res.status(406).send({
+                data: null,
+                success: false,
+                message: 'Password is incorrect',
+            });
+        }
+    }
+
     console.log(req.body);
     var user_details = await Members.findOne({
         memberShipNo: req.body.memberShipNo
@@ -164,9 +194,8 @@ exports.login = async function (req, res) {
 
         console.log(user_details.password);
         console.log(req.body.uPass);
-
-        const isEqual = await user_details.password.localeCompare(req.body.uPass)
-        if (isEqual == 1 || isEqual == -1) {
+        const log = await bcrypt.compare(req.body.uPass, user_details.password)
+        if (!log) {
             return res.status(406).send({
                 data: null,
                 success: false,
@@ -221,4 +250,42 @@ exports.login = async function (req, res) {
         }
     }
 
+}
+exports.reset_member_pw_default = async (req, res, next) => {
+    console.log("----------------------------------------------------------------------");
+    var mem_id = req.body.daat.memberId
+    console.log(mem_id);
+    if (mem_id == undefined || mem_id == null) {
+        return res.status(406).send({
+            data: null,
+            success: false,
+            message: 'No data found ',
+        });
+    }
+    const genSalt = await bcrypt.genSalt(10)
+    const hash_pass = await bcrypt.hash(mem_id, genSalt)
+    const set_pw = await Members.findOneAndUpdate({ memberShipNo: mem_id }, { password: hash_pass }, { new: true })
+    return res.status(200).send({
+        data: set_pw,
+        success: true,
+        message: 'Reset ',
+    });
+}
+exports.update_password_admin  = async (req, res, next) => {
+    var mem_id = req.body.daat.memberId
+    var newPasswod = req.body.daat.newPasswod
+    console.log(mem_id);
+    if (mem_id == undefined || mem_id == null) {
+        return res.status(406).send({
+            data: null,
+            success: false,
+            message: 'No data found ',
+        });
+    }
+    const set_pw = await Admin.findOneAndUpdate({ memberShipNo: mem_id }, { password: newPasswod }, { new: true })
+    return res.status(200).send({
+        data: set_pw,
+        success: true,
+        message: 'Reset ',
+    });
 }

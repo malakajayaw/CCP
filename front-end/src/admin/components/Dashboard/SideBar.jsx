@@ -4,20 +4,37 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { setCurrentUser, SignOut } from "../Redux/Action/authAction";
 
+
+
 class Sidebar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    let role  = (props.auth &&  
+      props.auth.user &&  props.auth.user.role == "Chair") ? 1:0
+    console.log(role)
     this.state = {
       loginState: false,
       user: "",
       uemail: "",
-      role: 0,
+      role: role,
     };
+  }
+
+  check_auth = () => {
+    const cheeck_auth = this.props.auth.isAuthenticated;
+    console.log(cheeck_auth);
+    if (!cheeck_auth) {
+    window.location.replace("/AdminLogin")
+    }
+  };
+
+  componentWillMount() {
+    this.check_auth();
   }
 
   componentDidMount = () => {
     console.log(this.props.auth.isAuthenticated);
-    console.log(this.props.auth.user);
+    console.log(this.props.auth);
     this.setState({
       user: this.props.auth.user.fname,
       ulname: this.props.auth.user.lname,
@@ -29,6 +46,18 @@ class Sidebar extends Component {
         });
     }
   };
+  
+  signoutuser = () => {
+    this.props.SignOut && this.props.SignOut();
+
+    this.setState({
+      loginState: false,
+    });
+    window.location.replace("/adminlogin")
+    // this.props.history.push("/adminlogin");
+  };
+
+
 
   render() {
     return (
@@ -161,7 +190,8 @@ class Sidebar extends Component {
                   <span className="badge badge-info right"></span>
                 </Link>
               </li>
-
+              
+            
               <li className="nav-item pointer_cursor">
                 <Link
                   id="eventNav"
@@ -206,6 +236,22 @@ class Sidebar extends Component {
               ) : (
                 ""
               )}
+
+               <li className="nav-item pointer_cursor"  onClick={() => this.signoutuser()}>
+                    <Link className="nav-link" >
+                    <i className="nav-icon fa fa-sign-out"></i>
+                    Sign Out
+                    <span className="badge badge-info right"></span>
+                    </Link>
+                </li>
+               <li className="nav-item pointer_cursor" >
+                    <Link className="nav-link" to="/" >
+                    <i className="nav-icon fa fa-sign-out"></i>
+                   Go Home
+                    <span className="badge badge-info right"></span>
+                    </Link>
+                </li>
+
             </ul>
           </nav>
         </div>
@@ -217,4 +263,9 @@ const mapStateToProps = (state) => ({
   auth: state.auth || {},
 });
 
-export default connect(mapStateToProps, null)(withRouter(Sidebar));
+const mapDispatchToProps = {
+  SignOut,
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Sidebar));
