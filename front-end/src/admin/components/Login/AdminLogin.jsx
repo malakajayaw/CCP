@@ -82,20 +82,13 @@ class AdminLogin extends Component {
                     </div>
                   </div>
                 </div>
+                <br></br>
                 <div className="row">
-                  <div className="col-8">
-                    <div className="icheck-primary">
-                      <input type="checkbox" id="remember" />
-                      <label for="remember">Remember Me</label>
-                    </div>
-                  </div>
-
-                  <div className="col-4">
-                    <button type="submit" className="btn btn-primary btn-block">
-                      Sign In
-                    </button>
-                  </div>
+                 <div className="col">
+                        <button className= "btn btn-primary btn-block" type="submit">Sign In</button>
+                      </div>
                 </div>
+                <br></br>
               </form>
             </div>
           </div>

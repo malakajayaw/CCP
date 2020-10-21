@@ -24,7 +24,7 @@ class Sidebar extends Component {
     const cheeck_auth = this.props.auth.isAuthenticated;
     console.log(cheeck_auth);
     if (!cheeck_auth) {
-    window.location.replace("/AdminLogin")
+      this.props.history.push("/AdminLogin")
     }
   };
 

@@ -18,12 +18,11 @@ class NavBar extends Component {
     this.setState({
       loginState: false,
     });
-    window.location.replace("/adminlogin")
-    // this.props.history.push("/adminlogin");
+    this.props.history.push("/AdminLogin");
   };
   render() {
    return (
-     <nav className="main-header navbar navbar-expand navbar-white navbar-light">
+     <div className="main-header navbar navbar-expand navbar-white navbar-light">
       <ul className="navbar-nav">
         <li className="nav-item">
           <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars"></i></a>
@@ -50,7 +49,7 @@ class NavBar extends Component {
           </div>
         </li>
       </ul>
-    </nav>);
+    </div>);
 }
 }
 
