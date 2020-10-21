@@ -17,18 +17,13 @@ const Registration = (props) => {
     addlname : '' ,
     addmname : '' ,
     addmnumber : '' ,
+    selectaffiID: "",
     addpemail : '' ,
     addoemail : '' ,
     addphone : '' ,
     addpassword : '' ,
     addcpassword : '' ,
 
-    // editmnumber : '' ,
-    // editfname : '' ,
-    // editlname : '' ,
-    // editpemail : '' ,
-    // editphone : '' ,
-    
   });
 
 
@@ -75,12 +70,45 @@ const Registration = (props) => {
       addphone : '' ,
       addpassword : '' ,
       addcpassword : '' ,
+      selectaffiID : '',
     })
   }
 
   const handleChange =  (e) =>  {
      setMember({...member, [e.target.name]: e.target.value });
   }
+
+
+
+//Affiliation--------------------------------------
+const handleAffChange = (e) => {
+  setMember({ ...member, selectaffiID: e.value });
+  console.log(e);
+};
+
+const [affiliations, setAffiliations] = useState([]);
+useEffect(() => {
+  getAffData();
+}, []);
+
+async function getAffData() {
+  var res = await get_all_affiliations();
+  await setAffiliations(res.data.data);
+  console.log("aff: " + affiliations);
+}
+
+const sel = affiliations.map((item) => {
+  const container = {};
+
+  container["value"] = item._id;
+  container["label"] = item.affiliationname;
+  console.log("sel: " + JSON.stringify(container));
+  return container;
+});
+
+const getcurrentAff = () => {
+  return sel.find(i => i.value == member.selectaffiID)
+}
 
   return (
 
@@ -122,13 +150,20 @@ const Registration = (props) => {
                       />
                     </div>
 
-                    <div className="form-group">
-                      <label for="inputLName">Last Name</label>
-                      <input type="text" id="inputLName" className="form-control" required name="addlname"
-                       onChange={handleChange}
-                       
-                       value={member.addlname}/>
-                    </div>
+                <div className="form-group col-md-6">
+                  <label for="affiliation">Affiliation</label>
+                  <Select
+                    required
+                    className="select2"
+                    id="affiliation"
+                    name="selectaffiID"
+                    data-placeholder="Select affiliation"
+                    onChange={handleAffChange}
+                    options={sel}
+                    value={getcurrentAff()}
+                  />
+                </div>
+              </div>
 
                     <div className="form-group">
                       <label for="inputMName">Name as per the Membership Card</label>

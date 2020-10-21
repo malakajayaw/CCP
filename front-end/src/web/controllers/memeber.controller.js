@@ -4,14 +4,15 @@ import Config from "./config.controller";
 export const add_member_requset = (data) => {
 
     data = {
-        fname : data.addfname  , 
-        lname : data.addlname  ,
-        nameAsMemberShip : data.addmname  ,
-        memberShipNo : data.addmnumber ,
-        email : data.addpemail ,
-        ieeeMail : data.addoemail ,
-        contactNo : data.addphone ,
-        password : data.addpassword ,
+        fname: data.addfname,
+        lname: data.addlname,
+        nameAsMemberShip: data.addmname,
+        memberShipNo: data.addmnumber,
+        affiID: data.selectaffiID,
+        email: data.addpemail,
+        ieeeMail: data.addoemail,
+        contactNo: data.addphone,
+        password: data.addpassword,
     }
     return new Promise( (resolve,reject) => {
         return axios.post(`${Config.host}${Config.port}/member/requset` , { ...data })

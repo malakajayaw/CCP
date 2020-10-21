@@ -11,25 +11,6 @@ const MemberAdd = (props) => {
   const { register, handleSubmit } = useForm();
 
 
- 
-  let [member, setMember] = useState({ 
-    addfname : '' , 
-    addlname : '' ,
-    addmname : '' ,
-    addmnumber : '' ,
-    selectaffiID: '',
-    addpemail : '' ,
-    addoemail : '' ,
-    addphone : '' ,
-    addpassword : '' ,
-    addcpassword : '' ,
-
-    // editmnumber : '' ,
-    // editfname : '' ,
-    // editlname : '' ,
-    // editpemail : '' ,
-    // editphone : '' ,
-    
   });
 
 

@@ -24,7 +24,7 @@ class NavBar extends Component {
   };
 
   componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
+    if (this.props.auth.isAuthenticatedweb) {
       this.setState({
         loginState: true,
       });
@@ -54,7 +54,7 @@ class NavBar extends Component {
         >
           <ul className="navbar-nav ml-auto">
             <li className="nav-item dropdown">
-              <a
+              <Link
                 className="nav-link dropdown-toggle"
                 id="navbarDropdownMenuLink-333"
                 data-toggle="dropdown"
@@ -62,36 +62,31 @@ class NavBar extends Component {
                 aria-expanded="false"
               >
                 <i className="fas fa-user"></i>
-              </a>
+              </Link>
               <div
                 className="dropdown-menu dropdown-menu-right dropdown-default"
                 aria-labelledby="navbarDropdownMenuLink-333"
               >
                 {this.state.loginState == true ? (
-                  <a
+                  <Link
                     className="dropdown-item"
                     onClick={() => this.signoutuser()}
                   >
                     Logout
-                  </a>
+                  </Link>
                 ) : (
-                  <a className="dropdown-item" href="/MemberLogin">
+                  <Link className="dropdown-item" to="/MemberLogin">
                     Login
-                  </a>
+                  </Link>
                 )}
                 {this.state.loginState == true ? (
-                  <a className="dropdown-item" href="/UserProfile">
+                  <Link className="dropdown-item" to="/UserProfile">
                     My Account
-                  </a>
+                  </Link>
                 ) : (
-                  ""
-                )}
-                {this.state.loginState == true ? (
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                ) : (
-                  ""
+                  <Link className="dropdown-item" to="/Registration">
+                  Register
+                </Link>
                 )}
               </div>
             </li>
