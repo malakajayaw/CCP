@@ -296,7 +296,7 @@ exports.login = async function (req, res) {
                 data: {
                     "token": token,
                     "role": user_details.role,
-                    "details":user_details
+                    "details": user_details
                 },
                 success: true,
                 message: 'Successfully login',

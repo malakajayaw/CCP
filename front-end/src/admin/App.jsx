@@ -47,50 +47,7 @@ import { store, persistor } from "./components/Redux/Store/Store";
 toast.configure();
 
 function App() {
-    const [page, setPage] = useState("Event");
-              
-   return (
-    <div className="wrapper">
-      <NavBar />
-            <div className="content-wrapper">
-                <ContentHeader pageName={page} />
-                <Router>
-                    <SideBar />
-                   <Switch>
-                       <Route path="/Admin/AdminDash"> <AdminDash /> </Route>
-                        <Route path="/Admin/EventTable"> <EventTable /> </Route>
-                        <Route path="/Admin/MemberRequest"> <MemberRequest /> </Route>
-                        <Route path="/Admin/EventView/:eventId"> <EventView /> </Route>
-                        <Route path="/Admin/RegistrationForm/:eventId"> <RegistrationForm /> </Route>
-                        <Route path="/Admin/EventUpdate/:eventId"> <EventUpdate /> </Route>
-                        <Route path="/Admin/Responses/:eventId"> <ResponsesView /> </Route>
-                        <Route path="/Admin/IndividualResponses/:eventId"> <IndividualResponses /> </Route>
-                        <Route path="/Admin/EventForm"> <EventForm /> </Route>
-                        <Route path="/Admin/DesignationAdmin"> <DesignationTable /> </Route>
-                        <Route path="/Admin/DesignationChair"> <AssignedDesignationsTable /> </Route>
-                       <Route path="/Admin/PastDesignations"> <PastDesignations /> </Route>
-                       <Route path="/Admin/PastSpecDesignations"> <PastSpecDesignations /> </Route>
-                        <Route path="/Admin/ActivityLog"> <ActivityTable /> </Route>
-                        <Route path="/Admin/AddDesignation"> <CreateDesignationForm /> </Route>
-                       <Route path="/Admin/AddPastDesignation"> <CreateRecord /> </Route>
-                       <Route path="/Admin/AddPastDesignationForAff/:aff"> <CreateRecordForAff /> </Route>
-                        <Route path="/Admin/EditDesignation/:desId"> <EditDesignation /> </Route>
-                        <Route path="/Admin/EditAssigned/:AssId"> <EditAssignedMemberForm /> </Route>
-                       <Route path="/Admin/EditPastDes/:Id"> <EditPastDes /> </Route>
-                       <Route path="/Admin/EditPastDesForAff/:Id"> <EditPastDesForAff /> </Route>
-                        <Route path="/Admin/MemberAdd"> <MemberAdd /> </Route>
-                        <Route path="/Admin/MemberList"> <MemberList /> </Route>
-                        <Route path="/Admin/MemberEdit/:id"> <MemberEdit /> </Route>
-                        <Route path="/Admin/EventReportTable"> <EventReportTable/> </Route>
-                        <Route path="/Admin/EventAttendanceAttended/:id"> <EventAttendanceAttended/> </Route>
-                        <Route path="/Admin/EventAttendanceConfirmed/:id"> <EventAttendanceConfirmed/> </Route>
-                        <Route path="/Admin/EventReportForm/:val/:id/:aff"> <EventReportForm/> </Route>
-                        <Route path="/Admin/EventReportView/:id"> <EventReportView/> </Route>
-                        <Route path="/Admin/ManageAffiliation"> <ManageAffiliation /> </Route>
-                        <Route path="/Admin/StudentForm"> <StudentForm /> </Route>
-                        <Route path="/Admin/AffiliationTable"> <AffiliationTable /> </Route>
-                        <Route path="/Admin/EventAttendanceRegistered/:m_id/:id"> <EventAttendanceRegistered/> </Route>
-                        <Route path="/Admin/EventAttendanceRegistered/:id"> <EventAttendanceRegistered/> </Route>
+  const [page, setPage] = useState("Event");
 
   return (
     <Provider store={store}>

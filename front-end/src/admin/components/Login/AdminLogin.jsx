@@ -1,7 +1,31 @@
-import React , {useState, useEffect}from 'react';
-import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { setCurrentUser } from "../Redux/Action/authAction";
+import { connect } from "react-redux";
+import { sign_controller } from "../../controllers/memeber.controller";
+import { toast } from "react-toastify";
+class AdminLogin extends Component {
+  constructor() {
+    super();
+    this.state = {
+      // user login details
+      memberShipNo: "",
+      uPass: "",
+    };
+  }
 
+  setErrorToast(msg) {
+    toast.error(msg, {
+      hideProgressBar: true,
+      closeOnClick: true,
+      draggable: true,
+    });
+  }
 
+  formValueChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
   onSubmitForm = async (e) => {
     e.preventDefault();
@@ -76,49 +100,8 @@ import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
             </div>
           </div>
         </div>
-        <div className="input-group mb-3">
-          <input type="password" className="form-control" placeholder="Password"/>
-          <div className="input-group-append">
-            <div className="input-group-text">
-              <span className="fas fa-lock"></span>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-8">
-            <div className="icheck-primary">
-              <input type="checkbox" id="remember"/>
-              <label for="remember">
-                Remember Me
-              </label>
-            </div>
-          </div>
-
-          <div className="col-4">
-          <Link to='/Admin' type="button" className="btn btn-primary btn-block">Sign In</Link>
-         
-
-          </div>
-
-        </div>
-      </form>
-
-
-      <p className="mb-1">
-        <a href="forgot-password.html">I forgot my password</a>
-      </p>
-      
-    </div>
-  
-  </div>
-</div>
-
-</body>
-
-
-  );
+      </body>
+    );
+  }
 }
-
-export default AdminLogin;
-
-      
+export default connect(null, { setCurrentUser })(withRouter(AdminLogin));

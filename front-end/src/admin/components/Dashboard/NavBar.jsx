@@ -35,8 +35,7 @@ class NavBar extends Component {
 
 
       {/* <!-- Right navbar links --> */}
-      {/* <ul className="navbar-nav ml-auto">
-     
+      <ul className="navbar-nav ml-auto">
      
         <li className="nav-item dropdown">
           <a className="nav-link" data-toggle="dropdown">
@@ -50,7 +49,7 @@ class NavBar extends Component {
   
           </div>
         </li>
-      </ul> */}
+      </ul>
     </nav>);
 }
 }

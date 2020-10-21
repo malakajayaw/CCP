@@ -1,44 +1,38 @@
 import React , {useState, useEffect}from 'react';
 import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import NavBar from '../Common/NavBar';
-import Footer from '../Common/Footer';
-import Background from "../../images/Registration.jpg";
-import Select from "react-select";
-import { get_all_affiliations } from "../../../admin/controllers/affiliation.controller";
+import Select from 'react-select'
 
 import { useForm } from "react-hook-form";
 
-import { add_member_requset} from '../../controllers/memeber.controller'
+import { add_admin} from '../../controllers/admin.controller';
 import Config from '../../controllers/config.controller'
-const Registration = (props) => {
+const AdminAdd = (props) => {
   const { register, handleSubmit } = useForm();
 
+
  
-  let [member, setMember] = useState({ 
-    addfname : '' , 
-    addlname : '' ,
-    addmname : '' ,
+  let [admin, setMember] = useState({ 
+    fname : '' , 
+    lname : '' ,
     addmnumber : '' ,
-    selectaffiID: "",
     addpemail : '' ,
-    addoemail : '' ,
     addphone : '' ,
     addpassword : '' ,
     addcpassword : '' ,
-
+    
   });
 
 
   const onSubmit =  async (e) => {
 
-    // alert(JSON.stringify(member))
+    // alert(JSON.stringify(admin))
     e.preventDefault()
-    const result = await add_member_requset (member)
+    const result = await add_admin (admin)
     console.log(result);
     if(result.code == 200)
     {
       clear()
-      Config.setToast("Request sent successfully")
+      Config.setToast("Admin Created successfully")
     }
 
 
@@ -63,75 +57,32 @@ const Registration = (props) => {
   const clear = () => {
     console.log("Clear call");
     setMember({
-      addfname : '' , 
-      addlname : '' ,
-      addmname : '' ,
-      addmnumber : '' ,
-      addpemail : '' ,
-      addoemail : '' ,
-      addphone : '' ,
-      addpassword : '' ,
-      addcpassword : '' ,
-      selectaffiID : '',
+        fname : '' , 
+        lname : '' ,
+        addmnumber : '' ,
+        addpemail : '' ,
+        addphone : '' ,
+        addpassword : '' ,
+        addcpassword : '' ,
     })
   }
 
   const handleChange =  (e) =>  {
-     setMember({...member, [e.target.name]: e.target.value });
+     setMember({...admin, [e.target.name]: e.target.value });
   }
 
-
-
-//Affiliation--------------------------------------
-const handleAffChange = (e) => {
-  setMember({ ...member, selectaffiID: e.value });
-  console.log(e);
-};
-
-const [affiliations, setAffiliations] = useState([]);
-useEffect(() => {
-  getAffData();
-}, []);
-
-async function getAffData() {
-  var res = await get_all_affiliations();
-  await setAffiliations(res.data.data);
-  console.log("aff: " + affiliations);
-}
-
-const sel = affiliations.map((item) => {
-  const container = {};
-
-  container["value"] = item._id;
-  container["label"] = item.affiliationname;
-  console.log("sel: " + JSON.stringify(container));
-  return container;
-});
-
-const getcurrentAff = () => {
-  return sel.find(i => i.value == member.selectaffiID)
-}
-
-  return (
-
-  <section className="content" style={{ display: props.display }}>
-    <NavBar/>
-    <div >
-    <div className="container-fluid" >
-      
- 
-        <div className="card-header bg-dark">
-
-          <b>Member Registration</b>
-
-        </div>
-        <div className="card">
+  return (<section className="content" style={{ display: props.display }}>
+    <div className="container-fluid">
+   
+      <div className="card">
+      <div className="card-header bg-dark">
+          <h6>Create Admin</h6>
+          </div>
         <div className="card-body">
 
-        <section className="content" style={{ display: props.display }}>
-      <div className="container">
-  
-            <form onSubmit={onSubmit}>
+    
+
+<form onSubmit={onSubmit}>
               <div className="form-row">
                 <div className="form-group col-md-6">
                   <label for="fname">First Name</label>
@@ -141,7 +92,7 @@ const getcurrentAff = () => {
                     id="fname"
                     name="addfname"
                     placeholder="First Name"
-                    value={member.addfname}
+                    value={admin.addfname}
                     onChange={handleChange}
                   />
                 </div>
@@ -153,7 +104,7 @@ const getcurrentAff = () => {
                     id="lname"
                     name="addlname"
                     placeholder="Last Name"
-                    value={member.addlname}
+                    value={admin.addlname}
                     onChange={handleChange}
                   />
                 </div>
@@ -167,7 +118,7 @@ const getcurrentAff = () => {
                   id="pemail"
                   name="addpemail"
                   placeholder="Email"
-                  value={member.addpemail}
+                  value={admin.addpemail}
                   onChange={handleChange}
                 />
               </div>
@@ -181,53 +132,12 @@ const getcurrentAff = () => {
                     id="mnumber"
                     name="addmnumber"
                     placeholder="Membership Number"
-                    value={member.addmnumber}
+                    value={admin.addmnumber}
                     onChange={handleChange}
                   />
                 </div>
 
                 <div className="form-group col-md-6">
-                  <label for="affiliation">Affiliation</label>
-                  <Select
-                    required
-                    className="select2"
-                    id="affiliation"
-                    name="selectaffiID"
-                    data-placeholder="Select affiliation"
-                    onChange={handleAffChange}
-                    options={sel}
-                    value={getcurrentAff()}
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label for="mname">Full Name</label>
-                <input
-                  type="test"
-                  className="form-control"
-                  id="mname"
-                  name="addmname"
-                  placeholder="Name as membership card"
-                  onChange={handleChange}
-                  value={member.addmname}
-                />
-              </div>
-
-              <div className="form-group">
-                <label for="oemail">IEEE Email</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="oemail"
-                  name="addoemail"
-                  placeholder="IEEE Email"
-                  onChange={handleChange}
-                  value={member.addoemail}
-                />
-              </div>
-
-              <div className="form-group">
                 <label for="phone">Phone</label>
                 <input
                   type="number"
@@ -236,9 +146,11 @@ const getcurrentAff = () => {
                   name="addphone"
                   placeholder="Contact Number"
                   onChange={handleChange}
-                  value={member.addphone}
+                  value={admin.addphone}
                 />
+                </div>
               </div>
+
 
               <div className="form-row">
                 <div className="form-group col-md-6">
@@ -250,7 +162,7 @@ const getcurrentAff = () => {
                     name="addpassword"
                     placeholder="Password"
                     onChange={handleChange}
-                    value={member.addpassword}
+                    value={admin.addpassword}
                   />
                 </div>
 
@@ -262,45 +174,43 @@ const getcurrentAff = () => {
                     id="cpassword"
                     placeholder="Confirm Password"
                     onChange={handleChange}
-                    value={member.addcpassword}
+                    value={admin.addcpassword}
                   />
                 </div>
               </div>
 
+              <div className="float-right">
               <div className="form-row">
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn btn-secondary  mr-1 my-2"
                   onClick={clear}
                 >
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary float-right">
-                  Submit
-                </button>
+                
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn btn-secondary  mr-1 my-2"
                   onClick={add}
                 >
                   Demo
                 </button>
+
+                <button type="submit" className="btn btn-primary  mr-1 my-2">
+                  Submit
+                </button>
+              </div>
               </div>
             </form>
-      
-      </div>
-    </section>
 
 
-
-      </div>
+        </div>
       </div>
     </div>
-    </div>
-    <Footer/>
-  </section>
-  );
+  
+  </section>);
 
 }
 
-export default Registration;
+export default AdminAdd;

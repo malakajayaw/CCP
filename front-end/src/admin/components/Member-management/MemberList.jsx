@@ -80,7 +80,7 @@ const MemberRequest = (props) => {
             <Link
               to={`/Admin/MemberEdit/${row.member._id}`}
               type="button"
-              className="btn btn-success btn-sm mr-1 my-2"
+              className="btn btn-info btn-sm mr-1 my-2"
             >
               <i className="fas fa-pencil-alt mr-1" />
               Update
@@ -92,7 +92,7 @@ const MemberRequest = (props) => {
               {" "}
               <i className="fas fa-trash mr-1" />
               Remove
-            </a>
+            </Link>
           </td>
         </tr>
       );
@@ -102,19 +102,11 @@ const MemberRequest = (props) => {
   return (
     <section className="content" style={{ display: props.display }}>
       <div className="container-fluid">
-        <h6>Active Members</h6>
+        
 
         <div className="card">
-          <div className="card-header">
-            {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-
-            <Link
-              to="/Admin/MemberRequest"
-              type="button"
-              className="btn btn-success btn-sm float-right add_btn"
-            >
-              Requests
-            </Link>
+          <div className="card-header bg-dark">
+          <h6>Active Members</h6>
           </div>
           {/* <!-- /.card-header --> */}
           <div className="card-body">

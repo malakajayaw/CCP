@@ -16,7 +16,8 @@ import {
 import { get_pastdes_member } from "../../controllers/memeber.controller";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-
+import img_default from "../../images/img.jpg";
+import Config from "../../controllers/config.controller";
 class UserProfile extends Component {
   constructor() {
     super();
