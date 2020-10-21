@@ -36,7 +36,6 @@ import EventReportView from './components/EventReport-management/EventReportView
 import ManageAffiliation from './components/StudentBranch-management/ManageAffiliation'
 import StudentForm from './components/StudentBranch-management/StudentForm'
 import AffiliationTable from './components/StudentBranch-management/AffiliationTable';
-import AdminDash from './components/Dashboard/AdminDash';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -52,8 +51,7 @@ function App() {
                 <ContentHeader pageName={page} />
                 <Router>
                     <SideBar />
-                   <Switch>
-                       <Route path="/Admin/AdminDash"> <AdminDash /> </Route>
+                    <Switch>
                         <Route path="/Admin/EventTable"> <EventTable /> </Route>
                         <Route path="/Admin/MemberRequest"> <MemberRequest /> </Route>
                         <Route path="/Admin/EventView/:eventId"> <EventView /> </Route>

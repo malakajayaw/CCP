@@ -3,7 +3,6 @@ import Config from "./config.controller";
 
 
 export const add_event_report = (data) => {
-  console.log(data);
   const formData = new FormData();
   formData.append("eventId", data.eventId);
   formData.set("eventname", data.eventname);
@@ -73,7 +72,6 @@ export const get_all_reports = () => {
 };
 
 export const get_affiliation_by_event_name = (id) => {
-  console.log(data);
   var data = {
     id: id,
   };

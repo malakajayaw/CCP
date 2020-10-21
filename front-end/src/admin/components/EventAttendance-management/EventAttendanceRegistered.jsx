@@ -47,6 +47,11 @@ function EventAttendanceRegistered(props) {
   //getData function is used to get the registered members from the db
   async function getData(id) {
     var res = await get_responses(id);
+    if (res == null)
+    {
+      //checking the responses are null
+      Config.setToast("There are no registered members for the event");
+    }
     await setResponses(res.data.data);
     $("#eventattTable").dataTable();
   }

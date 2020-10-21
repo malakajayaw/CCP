@@ -36,20 +36,27 @@ exports.add_report_add = async function (req, res, next) {
     file_path: uploadFileURL,
   });
 
-  try {
-    new_report.save();
-    return res.status(200).send("Added");
-  } catch (error) {
-    throw error;
-  }
-  return res.status(403).send("Already have");
+  //const eventIdSearch = await EventReport.findOne({eventId: req.body.eventId});
+  //if(eventIdSearch == null)
+  //{
+      try {
+        new_report.save();
+        return res.status(200).send("Added");
+      } catch (error) {
+      throw error;
+    }
+  //}
+  //else
+  //{
+  //  return res.status(403).send("Already have");
+  //}
+  //Commented part should added if one event only need one report
 };
 
 //===========================================================================================
 //================================== Get All Event Reports ===================================
 //===========================================================================================
 exports.get_all_reports = async function (req, res, next) {
-  //console.log("Called");
   const result = await EventReport.find();
 
   return res.status(200).send({
