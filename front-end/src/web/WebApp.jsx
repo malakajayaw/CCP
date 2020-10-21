@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
-import NavBar from './components/Common/NavBar';
-import Footer from './components/Common/Footer';
+
 import UpcomingEvents from './components/Events/UpcomingEvents';
 import UpComingAll from './components/Events/UpComingAll';
 import AllEvents from './components/Events/AllEvents';

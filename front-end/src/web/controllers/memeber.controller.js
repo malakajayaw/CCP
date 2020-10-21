@@ -8,6 +8,7 @@ export const add_member_requset = (data) => {
         lname: data.addlname,
         nameAsMemberShip: data.addmname,
         memberShipNo: data.addmnumber,
+        affiID: data.selectaffiID,
         email: data.addpemail,
         ieeeMail: data.addoemail,
         contactNo: data.addphone,

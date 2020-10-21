@@ -30,7 +30,6 @@ export const add_member_requset = (data) => {
         nameAsMemberShip : data.addmname  ,
         memberShipNo : data.addmnumber ,
         affiID: data.selectaffiID,
-        affiliationname: data.selectaffiliationname,
         email : data.addpemail,
         ieeeMail : data.addoemail ,
         contactNo : data.addphone ,

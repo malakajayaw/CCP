@@ -22,11 +22,6 @@ const MemberAdd = (props) => {
     addpassword: "",
     addcpassword: "",
 
-    // editmnumber : '' ,
-    // editfname : '' ,
-    // editlname : '' ,
-    // editpemail : '' ,
-    // editphone : '' ,
   });
 
   const onSubmit = async (e) => {

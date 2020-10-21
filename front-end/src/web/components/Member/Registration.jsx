@@ -19,18 +19,13 @@ const Registration = (props) => {
     addlname : '' ,
     addmname : '' ,
     addmnumber : '' ,
+    selectaffiID: "",
     addpemail : '' ,
     addoemail : '' ,
     addphone : '' ,
     addpassword : '' ,
     addcpassword : '' ,
 
-    // editmnumber : '' ,
-    // editfname : '' ,
-    // editlname : '' ,
-    // editpemail : '' ,
-    // editphone : '' ,
-    
   });
 
 
@@ -77,6 +72,7 @@ const Registration = (props) => {
       addphone : '' ,
       addpassword : '' ,
       addcpassword : '' ,
+      selectaffiID : '',
     })
   }
 
@@ -112,8 +108,9 @@ const sel = affiliations.map((item) => {
   return container;
 });
 
-
-
+const getcurrentAff = () => {
+  return sel.find(i => i.value == member.selectaffiID)
+}
 
   return (
 
@@ -199,7 +196,7 @@ const sel = affiliations.map((item) => {
                     data-placeholder="Select affiliation"
                     onChange={handleAffChange}
                     options={sel}
-                    value=""
+                    value={getcurrentAff()}
                   />
                 </div>
               </div>

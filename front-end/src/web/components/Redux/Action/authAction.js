@@ -1,9 +1,9 @@
-import { SET_CURRENT_USER } from './types'
+import { SET_CURRENT_USER_WEB } from './types'
 
 // user authentication
 export function setCurrentUser(user){
     return {
-        type : SET_CURRENT_USER,
+        type : SET_CURRENT_USER_WEB,
         user
     };
 }

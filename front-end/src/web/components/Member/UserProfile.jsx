@@ -46,7 +46,7 @@ class UserProfile extends Component {
   }
 
   check_auth = () => {
-    const cheeck_auth = this.props.auth.isAuthenticated;
+    const cheeck_auth = this.props.auth.isAuthenticatedweb;
     console.log(cheeck_auth);
     if (!cheeck_auth) this.props.history.push("/MemberLogin");
   };
@@ -253,7 +253,7 @@ class UserProfile extends Component {
                     </div>
                     <div className="col-md-6">
                       <h6>Reward Points</h6>
-                      <a href="#" className="badge badge-dark badge-pill">
+                      <a className="badge badge-dark badge-pill">
                         {this.calcRewards(this.state.pasdes)}
                       </a>
                       <hr />
@@ -264,11 +264,8 @@ class UserProfile extends Component {
                 <div className="tab-pane" id="messages">
                   <div className="col-md-12">
                     <div className="mt-2">
-                      <span className="fa fa-clock-o ion-clock float-right" />
-
                       <div className="col-md-12">
                         <div className="mt-2">
-                          <span className="fa fa-clock-o ion-clock float-right" />
                         </div>
                         <table className="table table-sm table-hover table-striped">
                           <tbody>

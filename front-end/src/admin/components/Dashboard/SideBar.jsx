@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { setCurrentUser, SignOut } from "../Redux/Action/authAction";
+import { setCurrentUser } from "../Redux/Action/authAction";
 
 
 
@@ -47,16 +47,6 @@ class Sidebar extends Component {
     }
   };
   
-  signoutuser = () => {
-    this.props.SignOut && this.props.SignOut();
-
-    this.setState({
-      loginState: false,
-    });
-    window.location.replace("/adminlogin")
-    // this.props.history.push("/adminlogin");
-  };
-
 
 
   render() {
@@ -244,13 +234,6 @@ class Sidebar extends Component {
                     <span className="badge badge-info right"></span>
                     </Link>
                 </li>
-               <li className="nav-item pointer_cursor" >
-                    <Link className="nav-link" to="/" >
-                    <i className="nav-icon fa fa-sign-out"></i>
-                   Go Home
-                    <span className="badge badge-info right"></span>
-                    </Link>
-                </li>
 
             </ul>
           </nav>
@@ -263,9 +246,5 @@ const mapStateToProps = (state) => ({
   auth: state.auth || {},
 });
 
-const mapDispatchToProps = {
-  SignOut,
-};
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Sidebar));
+export default connect(mapStateToProps, null)(withRouter(Sidebar));
