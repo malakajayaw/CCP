@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import NavBar from "./components/Dashboard/NavBar";
 import SideBar from "./components/Dashboard/SideBar";
 import ContentHeader from "./components/Dashboard/ContentHeader";
@@ -39,23 +39,34 @@ import AffiliationTable from "./components/StudentBranch-management/AffiliationT
 import AdminAdd from "./components/Member-management/AdminAdd";
 import AdminList from "./components/Member-management/AdminList";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { store, persistor } from "./components/Redux/Store/Store";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 toast.configure();
 
-function App() {
-  const [page, setPage] = useState("Event");
+class App extends Component {
+  constructor() {
+    super();
+  
+  }
 
+    check_auth = () => {
+      const cheeck_auth = this.props.auth.isAuthenticated;
+      console.log(cheeck_auth);
+      if (!cheeck_auth) this.props.history.push("/AdminLogin");
+    };
+
+    componentWillMount() {
+      this.check_auth();
+    }
+  
+  render() {
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
         <div className="wrapper">
           <NavBar />
           <div className="content-wrapper">
-            <ContentHeader pageName={page} />
+            <ContentHeader/>
             <Router>
               <SideBar />
               <Switch>
@@ -208,9 +219,14 @@ function App() {
           </div>
           <Footer />
         </div>
-      </PersistGate>
-    </Provider>
   );
 }
+}
 
-export default App;
+
+const mapStateToProps = (state) => ({
+  auth: state.auth || {},
+});
+
+
+export default connect(mapStateToProps, null)(withRouter(App));
