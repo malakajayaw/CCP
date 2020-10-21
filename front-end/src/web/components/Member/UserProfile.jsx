@@ -282,31 +282,9 @@ class UserProfile extends Component {
                                 </td>
                               </tr>
                             ))}
-                            {/* <tr>
-                            <td>
-                              <strong>{user.fname}</strong> volunteered in the
-                              event <strong>IEEE Annual Gathering</strong>
-                            </td>
-                          </tr> */}
                           </tbody>
                         </table>
                       </div>
-                      <table className="table table-sm table-hover table-striped">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <strong>{user.fname}</strong> was the President of{" "}
-                              <strong>SLIIT Student Branch</strong>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <strong>{user.fname}</strong> volunteered in the
-                              event <strong>IEEE Annual Gathering</strong>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
                     </div>
                   </div>
                   </div>
