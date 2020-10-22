@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap"
 import 'jquery/dist/jquery.min.js';
 import { Multiselect } from 'multiselect-react-dropdown';
+import { get_all_affiliations } from "../../controllers/affiliation.controller";
 
 function EventForm(props) {
 
@@ -45,6 +46,10 @@ function EventForm(props) {
     setEventData({...eventData, [event.target.id] :event.target.value});
   };
     
+//   async function getAffData() {
+//     var res = await get_all_affiliations();
+//     await setAffiliations(res.data.data);
+// }
   //set the state when a memember is selected from volunteers
   function onSelect(selectedList, selectedMember) {
     vols.push(selectedMember);

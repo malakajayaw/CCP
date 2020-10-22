@@ -49,10 +49,10 @@ function RegistrationForm() {
         formFields.push("<div class='form-group'><label for='MemberIDField'>Member ID</label><br/><input type='text' class='form-control' id='MemberIDField' placeholder='Enter Member ID' required/></div>");
       }else if(eventType == "public"){
 
-        fieldNames.push("Member ID or Name");
+        fieldNames.push("Member ID or Email");
         fieldId = fieldName.replace(/ /g, '');
 
-        formFields.push("<div class='form-group'><label for='PublicField'>Member ID or Name</label><br/><input type='text' class='form-control' id='PublicField' placeholder='Enter Member ID or Name' required/></div>");
+        formFields.push("<div class='form-group'><label for='PublicField'>Member ID (Enter Email if you are not a member)</label><br/><input type='text' class='form-control' id='PublicField' placeholder='Enter Member ID or Email' required/></div>");
       }else{
         return;
       }
