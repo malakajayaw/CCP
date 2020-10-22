@@ -65,10 +65,17 @@ exports.get_all_requsts = async function (req, res, next) {
     }, async function (err, docs) {
         if (docs.length != 0) {
             for (let index = 0; index < docs.length; index++) {
-
+                
                 let name = await Affiliation.findOne({ _id: docs[index].affiID })
 
-                docs[index] = { ...docs[index]._doc, affname: name.affiliationname }
+                if(name== null || name == undefined)
+                {
+                    affname = ''
+                }
+                else{
+                    docs[index] = { ...docs[index]._doc, affname: name.affiliationname }
+                }
+               
             }
             res.status(200).send({
                 data: docs
@@ -93,8 +100,13 @@ exports.active_members = async function (req, res, next) {
             for (let index = 0; index < docs.length; index++) {
 
                 let name = await Affiliation.findOne({ _id: docs[index].affiID })
-
-                docs[index] = { ...docs[index]._doc, affname: name.affiliationname }
+                if(name== null || name == undefined)
+                {
+                    affname = ''
+                }
+                else{
+                    docs[index] = { ...docs[index]._doc, affname: name.affiliationname }
+                }
             }
             res.status(200).send({
                 data: docs
