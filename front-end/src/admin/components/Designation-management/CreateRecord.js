@@ -3,6 +3,7 @@ import Select from 'react-select'
 import moment from 'moment';
 import Config from '../../controllers/config.controller'
 import useForceUpdate from 'use-force-update';
+import { useSelector } from "react-redux";
 
 //controllers
 import { addPastDesignation } from '../../controllers/pastdes.controller'
@@ -11,6 +12,10 @@ import { get_all_members, get_spec_member } from "../../controllers/designation.
 import { add_activity } from '../../controllers/activity.controller'
 
 const CreateRecord = (props) => {
+
+    var memshipid = useSelector(state => state.auth.user.memberShipNo);
+    var memfname = useSelector(state => state.auth.user.fname);
+    var memlname = useSelector(state => state.auth.user.lname);
 
     //for updating components
     const forceUpdate = useForceUpdate();
@@ -45,7 +50,7 @@ const CreateRecord = (props) => {
 
     //variable to store activities
     let [activity] = useState({
-        MemNo: "To be taken from redux",
+        MemNo: memshipid + " - " + memfname + " " + memlname,
         action: "Create Record - Admin",
         table: "Records",
         parameters: "not set",
@@ -107,13 +112,23 @@ const CreateRecord = (props) => {
     //get member name relevent to a given _id
     async function setMemDetails(id) {
         var result = await get_spec_member(id)
-        return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+        if (result.data.data == null) {
+            return ("Member not found")
+        }
+        else {
+            return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+        }
     }
 
     //get affiliation name relevent to a given _id
     async function setAffDetails(id) {
         var result = await get_affiliation(id)
-        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+        if (result.data.data) {
+            return ("Affiliation not found")
+        }
+        else {
+            return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+        }
     }
 
     //runs on submit

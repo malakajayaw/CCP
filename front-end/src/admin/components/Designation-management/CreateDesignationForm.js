@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Select from 'react-select'
 import Config from '../../controllers/config.controller'
 import useForceUpdate from 'use-force-update';
+import { useSelector } from "react-redux";
 
 //controllers
 import { addDesignation } from '../../controllers/designation.controller'
@@ -9,6 +10,10 @@ import { get_all_affiliations, get_affiliation } from "../../controllers/affilia
 import { add_activity } from '../../controllers/activity.controller'
 
 const CreateDesignationForm = (props) => {
+
+    var memshipid = useSelector(state => state.auth.user.memberShipNo);
+    var memfname = useSelector(state => state.auth.user.fname);
+    var memlname = useSelector(state => state.auth.user.lname);
 
     //for updating components
     const forceUpdate = useForceUpdate();
@@ -44,7 +49,7 @@ const CreateDesignationForm = (props) => {
 
     //variable to store activities
     let [activity] = useState({
-        MemNo: "To be taken from redux",
+        MemNo: memshipid + " - " + memfname + " " + memlname,
         action: "New Designation",
         table: "Designations",
         parameters: "not set",
@@ -66,7 +71,12 @@ const CreateDesignationForm = (props) => {
     //get affiliation name relevent to a given _id
     async function setAffDetails(id) {
         var result = await get_affiliation(id)
-        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+        if (result.data.data == null) {
+            return ("Affiliation not found")
+        }
+        else {
+            return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+        }
     }
 
     //runs on submit
