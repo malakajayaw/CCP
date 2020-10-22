@@ -38,7 +38,12 @@ const EditDesignation = (props) => {
     //get affiliation details from database
     async function getAffDet(id) {
         var res = await get_affiliation(id);
-        window.selectedaff = res.data.data.affiliationno + " - " + res.data.data.affiliationname;
+        if (res.data.data == null) {
+            window.selectedaff = "Affiliation has been removed";
+        }
+        else {
+            window.selectedaff = res.data.data.affiliationno + " - " + res.data.data.affiliationname;
+        }
     }
 
     //runs when loading the form
