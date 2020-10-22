@@ -123,7 +123,7 @@ const CreateRecord = (props) => {
     //get affiliation name relevent to a given _id
     async function setAffDetails(id) {
         var result = await get_affiliation(id)
-        if (result.data.data) {
+        if (result.data.data== null) {
             return ("Affiliation not found")
         }
         else {

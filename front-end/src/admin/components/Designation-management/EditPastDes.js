@@ -111,7 +111,7 @@ const EditPastDes = (props) => {
     //get member name relevent to a given _id
     async function setMemDetails(id) {
         var result = await get_spec_member(id)
-        if (result.data.data) {
+        if (result.data.data==null) {
             return ("Member not found")
         }
         else {
