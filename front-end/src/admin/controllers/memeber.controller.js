@@ -175,6 +175,18 @@ export const get_all_rewards = () => {
             })
     })
 }
+export const get_past_designation = (id) => {
+
+    return new Promise( (resolve,reject) => {
+        return axios.get (`${Config.host}${Config.port}/member/pastdes/${id}`)
+            .then( result => {
+                    resolve({code : 200 , data : result.data })
+            })
+            .catch( err => {
+                reject({ code : 0 , error : err})
+            })
+    })
+}
 
 
 

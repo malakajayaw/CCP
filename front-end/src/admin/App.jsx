@@ -56,6 +56,8 @@ class App extends Component {
       const cheeck_auth = this.props.auth.isAuthenticated;
       console.log(cheeck_auth);
       if (!cheeck_auth) this.props.history.push("/AdminLogin");
+      if (cheeck_auth &&  this.props.auth.user.type=="admin") this.props.history.push("/Admin/AdminDash");
+      if (cheeck_auth &&  this.props.auth.user.role=="Chair") this.props.history.push("/Admin/EventTable");
     };
 
     componentWillMount() {
