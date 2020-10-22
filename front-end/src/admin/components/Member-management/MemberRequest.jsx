@@ -65,7 +65,7 @@ const MemberRequest = (props) => {
               onClick={() => ace_or_rej(member.memberShipNo, true)}
             >
               {" "}
-              <i className="fas fa fa-check-circle-o mr-1" />
+              <i className="fa fa-check mr-1" />
               Accept{" "}
             </a>
             <a

@@ -38,19 +38,6 @@ const MemberRequest = (props) => {
     $("#memberTable").dataTable();
   }
 
-  const removeMember = async (mem, state) => {
-    var data = {
-      memberShipNo: mem,
-      state: state,
-    };
-
-    const result = await member_delete(data);
-    if (result.code == 200) {
-      Config.setToast(result.message);
-      getData();
-    }
-  };
-
   const readydata = () => {
     return members.map(( row, i) => {
       return (
@@ -70,24 +57,16 @@ const MemberRequest = (props) => {
               onClick=""
             >
               {" "}
-              <i className="fas fa-trash mr-1" />
-              view
+              <i className="fa fa-info mr-1" />
+              Info
             </Link>
             <Link
               to={`/Admin/MemberEdit/${row.member._id}`}
               type="button"
               className="btn btn-info btn-sm mr-1 my-2"
             >
-              <i className="fas fa-pencil-alt mr-1" />
+              <i className="fa fa-pencil-square-o mr-1" />
               Update
-            </Link>
-            <Link
-              className="btn btn-secondary btn-sm mr-1 my-2"
-              onClick={() => removeMember(row.member.memberShipNo, false)}
-            >
-              {" "}
-              <i className="fas fa-trash mr-1" />
-              Remove
             </Link>
           </td>
         </tr>
@@ -119,7 +98,7 @@ const MemberRequest = (props) => {
                   <th>Phone</th>
                   <th>Email</th>
                   <th>Points</th>
-                  <th style={{width: "25%"}}>Action</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>{readydata()}</tbody>
