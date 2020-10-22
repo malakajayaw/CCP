@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import useForceUpdate from 'use-force-update';
 import 'jquery/dist/jquery.min.js';
 import $ from "jquery"
+import { useSelector } from "react-redux";
 
 //controllers
 import { get_aff_spec_designations, remove_designation_mem, get_all_members, get_spec_member } from "../../controllers/designation.controller";
@@ -16,7 +17,8 @@ import "datatables.net-dt/css/jquery.dataTables.min.css"
 
 const AssignedDesignationsTable = (props) => {
 
-    const aff = "5f8a5863c17b4b17dc919a91";
+    //console.log(JSON.stringify(useSelector(state => state.auth.user.affiID)))
+    const aff = useSelector(state => state.auth.user.affiID);
 
     //place holders for react-select-search
     window.selectedaff = "Select affiliaion";

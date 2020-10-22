@@ -4,6 +4,7 @@ import Select from 'react-select'
 import moment from 'moment';
 import Config from '../../controllers/config.controller'
 import useForceUpdate from 'use-force-update';
+import { useSelector } from "react-redux";
 
 //controllers
 import { addPastDesignation } from '../../controllers/pastdes.controller'
@@ -21,7 +22,7 @@ const CreateRecord = (props) => {
     const aff = id.aff
 
     //affiliation id of logged in user
-    var affil = "5f8a5863c17b4b17dc919a91";
+    var affil = useSelector(state => state.auth.user.affiID);
 
     //for getting date
     const [today, setToday] = useState(

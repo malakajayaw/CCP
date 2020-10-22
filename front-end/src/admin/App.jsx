@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import AdminDash from './components/Dashboard/AdminDash';
 import NavBar from "./components/Dashboard/NavBar";
 import SideBar from "./components/Dashboard/SideBar";
 import ContentHeader from "./components/Dashboard/ContentHeader";
@@ -69,7 +70,11 @@ class App extends Component {
             <ContentHeader/>
             <Router>
               <SideBar />
-              <Switch>
+                  <Switch>
+                      <Route path="/Admin/AdminDash">
+                          {" "}
+                          <AdminDash />
+                      </Route>
                 <Route path="/adminlogin">
                   {" "}
                   <EventTable />{" "}

@@ -3,6 +3,7 @@ import useForceUpdate from 'use-force-update';
 import 'jquery/dist/jquery.min.js';
 import $ from "jquery"
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 //controllers
 import { get_spec_aff_past_designations, remove_past_designation } from "../../controllers/pastdes.controller";
@@ -15,9 +16,10 @@ import Config from '../../controllers/config.controller'
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 
-const aff = "5f8a5863c17b4b17dc919a91";
 
 const PastSpecDesignations = (props) => {
+
+    const aff = useSelector(state => state.auth.user.affiID);
 
     //variable to store past designations
     const [pastdes, SetPastDes] = useState([]);

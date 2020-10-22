@@ -85,13 +85,23 @@ const EditPastDes = (props) => {
     //get affiliation details from database
     async function getAffDet(id) {
         var res = await get_affiliation(id);
-        window.selectedaff = res.data.data.affiliationno + " - " + res.data.data.affiliationname;
+        if (res.data.data == null) {
+            window.selectedaff = "Affiliation has been removed";
+        }
+        else {
+            window.selectedaff = res.data.data.affiliationno + " - " + res.data.data.affiliationname;
+        }
     }
 
     //get members details from database
     async function getMemDet(id) {
         var res = await get_spec_member(id);
-        window.selectedmem = res.data.data.memberShipNo + " - " + res.data.data.fname + " " + res.data.data.lname;
+        if (res.data.data == null) {
+            window.selectedmem = "Member has been removed";
+        }
+        else {
+            window.selectedmem = res.data.data.memberShipNo + " - " + res.data.data.fname + " " + res.data.data.lname;
+        }
     }
 
     //get member name relevent to a given _id
