@@ -51,16 +51,21 @@ const AssignedDesignationsTable = (props) => {
 
     //remove assigned member
     const delete_func = async (Designation, id, name, title) => {
-        addActivity(name, title)
-        const res = await remove_designation_mem(Designation, id)
-        if (res.code == 200) {
-            Config.setToast("Member removed")
-            //refresh page
-            getData();
-        } else {
-            Config.setToast("Something went wrong")
-            //refresh page
-            getData();
+        if (name == "") {
+            Config.setToast("Already empty")
+        }
+        else {
+            addActivity(name, title)
+            const res = await remove_designation_mem(Designation, id)
+            if (res.code == 200) {
+                Config.setToast("Member removed")
+                //refresh page
+                getData();
+            } else {
+                Config.setToast("Something went wrong")
+                //refresh page
+                getData();
+            }
         }
     }
 
@@ -98,13 +103,18 @@ const AssignedDesignationsTable = (props) => {
     };
 
     //get member name relevent to a given _id
-    async function setMemDetails(id){
-        var result = await get_spec_member(id)
-        if (result.data.data) {
-            return ("Member not found")
+    async function setMemDetails(id) {
+        if (id == "") {
+            return ("No member assigned")
         }
         else {
-            return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+            var result = await get_spec_member(id)
+            if (result.data.data == null) {
+                return ("Member not found")
+            }
+            else {
+                return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+            }
         }
     }
 
