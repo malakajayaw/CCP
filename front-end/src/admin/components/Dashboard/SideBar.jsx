@@ -156,7 +156,7 @@ class Sidebar extends Component {
                   <span className="badge badge-info right"></span>
                 </Link>
               </li>
-
+                        {this.state.role != 1 ? (
               <li className="nav-item pointer_cursor">
                 <Link
                   id="eventNav"
@@ -168,19 +168,8 @@ class Sidebar extends Component {
                   <span className="badge badge-info right"></span>
                 </Link>
               </li>
-
-              <li className="nav-item pointer_cursor">
-                <Link
-                  id="eventNav"
-                  className="nav-link"
-                  to="/Admin/ActivityLog"
-                >
-                  <i className="nav-icon fa fa-briefcase"></i>
-                  Activity log
-                  <span className="badge badge-info right"></span>
-                </Link>
-              </li>
-              
+                        ) : (
+                       
             
               <li className="nav-item pointer_cursor">
                 <Link
@@ -189,10 +178,23 @@ class Sidebar extends Component {
                   to="/Admin/DesignationChair"
                 >
                   <i className="nav-icon fa fa-address-card"></i>
-                  Designation Management(Chair)
+                  Designation Management
                   <span className="badge badge-info right"></span>
                 </Link>
-              </li>
+                        </li> )}
+                    {this.state.role != 1 ? (
+                            <li className="nav-item pointer_cursor">
+                                <Link
+                                    id="eventNav"
+                                    className="nav-link"
+                                    to="/Admin/ActivityLog"
+                                >
+                                    <i className="nav-icon fa fa-briefcase"></i>
+                  Activity log
+                  <span className="badge badge-info right"></span>
+                                </Link>
+                            </li>
+                        ) : null}
               {this.state.role != 1 ? (
                 <li class="nav-item has-treeview">
                   <Link

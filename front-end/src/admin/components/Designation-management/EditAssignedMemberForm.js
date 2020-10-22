@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation } from "react-router-dom";
 import Select from 'react-select'
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 
 //controllers
 import { update_designation_mem, get_spec_designations, get_aff_spec_members, get_spec_member } from '../../controllers/designation.controller'
@@ -15,7 +16,7 @@ const EditAssignedMemberForm = (props) => {
     //get passed parameters
     const id = useParams()
     const newId = id.AssId
-    var affil = "5f8a5863c17b4b17dc919a91";
+    var affil = useSelector(state => state.auth.user.affiID);
 
     //variable to store Designations
     const [Designation, setDesignation] = useState({
@@ -64,7 +65,12 @@ const EditAssignedMemberForm = (props) => {
         }
         else {
             var res = await get_spec_member(id);
-            window.selectedmem = res.data.data.memberShipNo + " - " + res.data.data.fname + " " + res.data.data.lname;
+            if (res.data.data == null) {
+                window.selectedmem = "Member has been removed";
+            }
+            else {
+                window.selectedmem = res.data.data.memberShipNo + " - " + res.data.data.fname + " " + res.data.data.lname;
+            }
         }
     }
 
