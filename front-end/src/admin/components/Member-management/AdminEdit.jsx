@@ -49,7 +49,7 @@ const AdminEdit = (props) => {
   const history = useHistory();
 
   function reload() {
-    history.push("/Admin/AdminList");
+    window.location.replace("/Admin/AdminList");
   }
 
 
