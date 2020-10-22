@@ -4,6 +4,7 @@ import { useState,useEffect } from 'react';
 import ContentHeader from '../Dashboard/ContentHeader'
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import {addRegistrationForm} from "../../controllers/event.controller";
+import { add_activity } from '../../controllers/activity.controller'
 import Config from "../../controllers/config.controller";
 import $ from "jquery";
  import "../../../css/adminlte.css"
@@ -11,6 +12,7 @@ import $ from "jquery";
 function RegistrationForm() {
 
     const [formFields, setformFields] = useState([]);
+    const [activity, setActivity] = useState({MemNo: "To be taken from redux", action: "Added an event form",table: "Events",parameters: "not set",  datetime: ""});
     const [fieldName, setFieldName] = useState('');
     const [fieldNames, setFieldNames] = useState([]);
     const [eventType, setEventType] = useState();
@@ -18,22 +20,25 @@ function RegistrationForm() {
     let { eventId } = useParams();
     var fieldId;
 
+    //handle change of the field name field
     const handleChange = event =>
     { 
        setFieldName(event.target.value);
     };
 
+    //handle change of the type field
     const handleTypeChange = event =>
     { 
        setEventType(event.target.value);
     };
 
+    //handle change of the option field
     const handleOptionChange = event =>
     { 
       setOptionName(event.target.value);
     };
 
-
+    //check if the added event is for membersOnly,public or none
     const addEventType = (event) => {
       event.preventDefault();
       if(eventType == "membersOnly"){
@@ -59,10 +64,13 @@ function RegistrationForm() {
       setFieldName('');
     };
 
+    //add form fields based on fieldType
     const addField = (fieldType) =>{
         
+        //remove the spaces from fieldName
         fieldId = fieldName.replace(/ /g, '');
 
+        //reducre the size of the fieldId if it is too long
         if(fieldId.length > 30)
           fieldId = fieldId.substring(0,25);
 
@@ -71,6 +79,7 @@ function RegistrationForm() {
           formFields.push("<div class='form-group'><label for='"+fieldId+"'>"+fieldName+"</label><br/><input type='text' class='form-control' id='"+fieldId+"' placeholder='Enter "+fieldName+"' required/></div>");
         else if(fieldType === "selection"){
 
+          //convert the options string to an array
           var optionsArr = optionName.split(',');
           
           var optionsStr = '';
@@ -100,11 +109,12 @@ function RegistrationForm() {
         setOptionName('');
       }
 
-
+      //append form fields to form preview section
     const loadField = () => {
         $("#previewRegFormBody").append($(formFields[formFields.length-1]))
     };
 
+    //undo button
     const undo = () => {
       formFields.pop();
       setformFields(formFields);
@@ -119,6 +129,12 @@ function RegistrationForm() {
     const createForm =  async (e) => {
    
       const result = await addRegistrationForm (formFields, fieldNames ,eventId)
+
+      const date = new Date();
+      activity.parameters = eventId;
+      activity.datetime = date.toLocaleString();
+      await add_activity(activity)
+
       if(result.code == 200)
         Config.setToast("Registration Form Created Successfully!")
       else

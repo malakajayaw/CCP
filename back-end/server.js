@@ -4,6 +4,8 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/profilepic/" });
 const fileUpload = require('express-fileupload');
 
 
@@ -15,9 +17,9 @@ const eventRoutes = require("./app/routes/event.route");
 const eventReport = require("./app/routes/event.report.route");
 const activity = require("./app/routes/activity.route");
 const designations = require("./app/routes/designations.route");
-const assignments = require("./app/routes/designationsAss.route");
 const affiliation = require("./app/routes/affiliation.route");
 const pastdes = require("./app/routes/pastdes.route");
+const admin = require("./app/routes/admin.route");
 
 
 
@@ -29,10 +31,10 @@ const pastdes = require("./app/routes/pastdes.route");
 const dbConfig = require("./app/config/db.config");
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan("dev"));
-app.use(fileUpload());
+app.use("/uploads", express.static("uploads"));
 mongoose.set("useCreateIndex", true);
 
 //======================================================================================================
@@ -41,13 +43,14 @@ mongoose.set("useCreateIndex", true);
 
 //user routes
 app.use("/member", memberRoutes);
+app.use(fileUpload());
 app.use("/event", eventRoutes);
 app.use("/eventReport", eventReport);
 app.use("/activity", activity);
 app.use("/designations", designations);
-app.use("/assignments", assignments);
-app.use("/affiliation", affiliation)
-app.use("/pastdes", pastdes)
+app.use("/affiliation", affiliation);
+app.use("/pastdes", pastdes);
+app.use("/admin", admin);
 
 //======================================================================================================
 //================================== Handlle Error     ===========================================
@@ -87,7 +90,4 @@ mongoose
         console.log("Could not connect to the database. Exiting now...", err);
         process.exit();
     });
-
-
-
-app.listen(port, () => {console.log('Server started on port '+port);});
+app.listen(port, () => { console.log('Server started on port ' + port); });

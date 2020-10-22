@@ -1,35 +1,41 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let Assignments = new Schema({
+
+let Admin = new Schema({
 
 
-    AssNo: {
+    memberShipNo: {
         type: String,
         required: true,
         unique: true
 
     },
-
-    DesNo: {
+    
+    fname: {
         type: String,
         required: true,
 
     },
-    title: {
+    lname: {
         type: String,
         required: true,
     },
-    MemNo: {
+
+    email: {
         type: String,
         required: true,
+    },
+
+    lastlogin: {
+        type: String,
 
     },
-    forYear: {
+    contactNo: {
         type: String,
         required: true,
     },
-    AssBy: {
+    password: {
         type: String,
         required: true,
     },
@@ -41,11 +47,12 @@ let Assignments = new Schema({
         type: String,
         default: Date.now()
     },
-    state: {
-        type: Boolean,
-        default: true
-    },
+
+    type: {
+        type: String,
+        default: "admin"
+    }
 });
 
 
-module.exports = mongoose.model('assignments', Assignments);
+module.exports = mongoose.model('admin', Admin);

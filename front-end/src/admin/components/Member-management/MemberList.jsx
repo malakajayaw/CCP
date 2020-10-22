@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Modal } from "react-bootstrap";
 import {
-  get_all_active_members,
-  accept_or_reject,
+  get_all_rewards,
+  member_delete,
 } from "../../controllers/memeber.controller";
 import Config from "../../controllers/config.controller";
 
@@ -22,12 +23,7 @@ const MemberRequest = (props) => {
     addphone: "",
     addpassword: "",
     addcpassword: "",
-
-    // editmnumber : '' ,
-    // editfname : '' ,
-    // editlname : '' ,
-    // editpemail : '' ,
-    // editphone : '' ,
+    viewPastDes: false,
   });
 
   const [members, Setmembers] = useState([]);
@@ -37,18 +33,18 @@ const MemberRequest = (props) => {
   }, []);
 
   async function getData() {
-    var res = await get_all_active_members();
-    await Setmembers(res.data.data);
+    var res = await get_all_rewards();
+    await Setmembers(res.data);
     $("#memberTable").dataTable();
   }
 
-  const ace_or_rej = async (mem, state) => {
+  const removeMember = async (mem, state) => {
     var data = {
       memberShipNo: mem,
       state: state,
     };
 
-    const result = await accept_or_reject(data);
+    const result = await member_delete(data);
     if (result.code == 200) {
       Config.setToast(result.message);
       getData();
@@ -56,34 +52,43 @@ const MemberRequest = (props) => {
   };
 
   const readydata = () => {
-    return members.map((member, i) => {
+    return members.map(( row, i) => {
       return (
         <tr key={i}>
           <td>{i + 1}</td>
-          <td>{member.memberShipNo}</td>
+          <td>{row.member.memberShipNo}</td>
           <td>
-            {member.fname}&nbsp;{member.lname}
+            {row.member.fname}&nbsp;{row.member.lname}
           </td>
-          <td>SLIIT Student Branch</td>
-          <td>{member.contactNo}</td>
-          <td>{member.email}</td>
+           <td>{row.affiliation}</td>
+          <td>{row.member.contactNo}</td>
+          <td>{row.member.email}</td>
+          <td>{row.points}</td>
           <td className="project-actions text-center">
+          <Link
+              className="btn btn-warning btn-sm mr-1 my-2"
+              onClick=""
+            >
+              {" "}
+              <i className="fas fa-trash mr-1" />
+              view
+            </Link>
             <Link
-              to={`/Admin/MemberEdit/${member._id}`}
+              to={`/Admin/MemberEdit/${row.member._id}`}
               type="button"
-              className="btn btn-success btn-sm mr-1 my-2"
+              className="btn btn-info btn-sm mr-1 my-2"
             >
               <i className="fas fa-pencil-alt mr-1" />
               Update
             </Link>
-            <a
-              className="btn btn-danger btn-sm mr-1 my-2"
-              onClick={() => ace_or_rej(member.memberShipNo, false)}
+            <Link
+              className="btn btn-secondary btn-sm mr-1 my-2"
+              onClick={() => removeMember(row.member.memberShipNo, false)}
             >
               {" "}
               <i className="fas fa-trash mr-1" />
               Remove
-            </a>
+            </Link>
           </td>
         </tr>
       );
@@ -91,21 +96,13 @@ const MemberRequest = (props) => {
   };
 
   return (
+
+
     <section className="content" style={{ display: props.display }}>
       <div className="container-fluid">
-        <h6>Active Members</h6>
-
         <div className="card">
-          <div className="card-header">
-            {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-
-            <Link
-              to="/Admin/MemberRequest"
-              type="button"
-              className="btn btn-success btn-sm float-right add_btn"
-            >
-              Requests
-            </Link>
+          <div className="card-header bg-dark">
+          <h6>Active Members</h6>
           </div>
           {/* <!-- /.card-header --> */}
           <div className="card-body">
@@ -121,7 +118,8 @@ const MemberRequest = (props) => {
                   <th>Affiliation</th>
                   <th>Phone</th>
                   <th>Email</th>
-                  <th>Action</th>
+                  <th>Points</th>
+                  <th style={{width: "25%"}}>Action</th>
                 </tr>
               </thead>
               <tbody>{readydata()}</tbody>

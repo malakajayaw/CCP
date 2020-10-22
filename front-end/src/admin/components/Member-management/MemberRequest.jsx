@@ -19,6 +19,7 @@ const MemberRequest = (props) => {
     addmname: "",
     addmnumber: "",
     addpemail: "",
+    setAffiID:"",
     addoemail: "",
     addphone: "",
     addpassword: "",
@@ -56,19 +57,19 @@ const MemberRequest = (props) => {
           <td>{i + 1}</td>
           <td>{member.memberShipNo}</td>
           <td>{member.nameAsMemberShip}</td>
-          <td>SLIIT Student Branch</td>
+          <td>{member.affname}</td>
           <td className="project-actions text-center">
             <a
-              className="btn btn-success btn-sm mr-1 my-2"
+              className="btn btn-info btn-sm mr-1 my-2"
               id="addMemberBtn"
               onClick={() => ace_or_rej(member.memberShipNo, true)}
             >
               {" "}
-              <i className="fas fa-pencil-alt mr-1" />
+              <i className="fas fa fa-check-circle-o mr-1" />
               Accept{" "}
             </a>
             <a
-              className="btn btn-danger btn-sm mr-1 my-2"
+              className="btn bg-secondary btn-sm mr-1 my-2"
               onClick={() => ace_or_rej(member.memberShipNo, false)}
             >
               {" "}
@@ -85,27 +86,15 @@ const MemberRequest = (props) => {
   
     <section className="content" style={{ display: props.display }}>
       <div className="container-fluid">
-        <h6>Member Requests</h6>
 
         <div className="card">
-          <div className="card-header">
-            {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-
-            <Link
-              to="/Admin/MemberAdd"
-              type="button"
-              className="btn btn-success btn-sm float-right add_btn mr-2 my-2"
-            >
-              Add New Member
-            </Link>
-            <Link
-              to="/Admin/MemberList"
-              type="button"
-              className="btn btn-info btn-sm float-right add_btn mr-2 my-2"
-            >
-              Active members
-            </Link>
+  
+           
+          <div className="card-header bg-dark">
+             <h6>Requests</h6>
           </div>
+   
+
           {/* <!-- /.card-header --> */}
           <div className="card-body">
             <table
