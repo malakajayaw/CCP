@@ -23,6 +23,9 @@ const CreateRecord = (props) => {
 
     //affiliation id of logged in user
     var affil = useSelector(state => state.auth.user.affiID);
+    var memshipid = useSelector(state => state.auth.user.memberShipNo);
+    var memfname = useSelector(state => state.auth.user.fname);
+    var memlname = useSelector(state => state.auth.user.lname);
 
     //for getting date
     const [today, setToday] = useState(
@@ -45,7 +48,7 @@ const CreateRecord = (props) => {
 
     //variable to store activities
     let [activity] = useState({
-        MemNo: "To be taken from redux",
+        MemNo: memshipid + " - " + memfname + " " + memlname,
         action: "New Record - Chair",
         table: "Records",
         parameters: "not set",
@@ -110,13 +113,23 @@ const CreateRecord = (props) => {
     //get member name relevent to a given _id
     async function setMemDetails(id) {
         var result = await get_spec_member(id)
-        return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+        if (result.data.data == null) {
+            return ("Member not found")
+        }
+        else {
+            return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+        }
     }
 
     //get affiliation name relevent to a given _id
     async function setAffDetails(id) {
         var result = await get_affiliation(id)
-        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+        if (result.data.data == null) {
+            return ("Affiliation not foound")
+        }
+        else {
+            return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+        }
     }
 
     //runs on submit

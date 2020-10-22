@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import useForceUpdate from 'use-force-update';
 import 'jquery/dist/jquery.min.js';
 import $ from "jquery"
+import { useSelector } from "react-redux";
 
 //controllers
 import { get_all_designations, remove_designation } from "../../controllers/designation.controller";
@@ -17,6 +18,10 @@ import "datatables.net-dt/css/jquery.dataTables.min.css"
 
 const DesignationTable = (props) => {
 
+    var memshipid = useSelector(state => state.auth.user.memberShipNo);
+    var memfname = useSelector(state => state.auth.user.fname);
+    var memlname = useSelector(state => state.auth.user.lname);
+
     //variable to store designations
     const [designation, SetDesignation] = useState([]);
 
@@ -26,7 +31,7 @@ const DesignationTable = (props) => {
 
     //variable to store activities
     let [activity] = useState({
-        MemNo: "To be taken from redux",
+        MemNo: memshipid + " - " + memfname + " " + memlname,
         action: "Delete designation",
         table: "Designations",
         parameters: "not set",
@@ -62,7 +67,12 @@ const DesignationTable = (props) => {
     //get affiliation name relevent to a given _id
     async function setAffDetails(id) {
         var result = await get_affiliation(id)
-        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+        if (result.data.data == null) {
+            return ("Affiliation not found")
+        }
+        else {
+            return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+        }
     }
 
     //add activity log about deleted designation
