@@ -75,8 +75,7 @@ class Sidebar extends Component {
             </div>
             <div className="info">
               <a className="d-block">
-                {this.state.user}&nbsp;{this.state.ulname} <br />
-                <sub style={{ color: "Green" }}> Online </sub>{" "}
+                {this.state.user}&nbsp;{this.state.ulname}
               </a>
             </div>
           </div>
