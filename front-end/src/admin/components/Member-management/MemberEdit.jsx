@@ -1,9 +1,9 @@
 import React , {useState, useEffect}from 'react';
-import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useParams} from "react-router-dom";
 import { get_all_affiliations } from "../../controllers/affiliation.controller";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
-import { update_member, get_specific_mem, change_password_By_admin } from '../../controllers/memeber.controller'
+import { update_member, get_specific_mem, change_password_By_admin, member_delete} from '../../controllers/memeber.controller'
 import Config from '../../controllers/config.controller'
 
 const MemberEdit = (props) => {
@@ -34,16 +34,32 @@ const MemberEdit = (props) => {
     onLoadMemebrer(newId);
 }, []); 
 
+function reload() {
+  window.location.replace("/Admin/MemberList");
+}
+
 
 
   const onLoadMemebrer = async (newId) => {
     const result = await get_specific_mem(newId)
     console.log(result.data.data);
-    // const newD = result.data.data
   
    await console.log(member);
    setMember(result.data.data)
   }
+
+  const removeMember = async (mem, state) => {
+    var data = {
+      memberShipNo: mem,
+      state: state,
+    };
+
+  const res = await member_delete(data);
+    if (res.code == 200) {
+      Config.setToast(res.message);
+      reload();
+    }
+  };
 
 
   const change_pw_req = async (data) =>{
@@ -60,7 +76,6 @@ const MemberEdit = (props) => {
 
   const onSubmit =  async (e) => {
 
-    // alert(JSON.stringify(member))
     e.preventDefault()
     const result = await update_member (member, id)
     console.log(result);
@@ -243,6 +258,15 @@ const MemberEdit = (props) => {
               </div>
               </div>
             </form>
+            
+            <Link
+              className="btn btn-secondary btn-sm mr-1 my-2"
+              onClick={() => removeMember(member.memberShipNo, false)}
+            >
+              {" "}
+              <i className="fas fa-trash mr-1" />
+              Remove
+            </Link>
           </div>
         </div>
 

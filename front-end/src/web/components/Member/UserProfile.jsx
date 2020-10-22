@@ -5,7 +5,6 @@ import Footer from "../Common/Footer";
 import { Modal } from "react-bootstrap";
 // Import FilePond styles
 import "filepond/dist/filepond.min.css";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { FilePond, registerPlugin } from "react-filepond";
 import { toast } from "react-toastify";
