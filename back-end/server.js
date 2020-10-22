@@ -42,6 +42,7 @@ mongoose.set("useCreateIndex", true);
 //======================================================================================================
 
 //user routes
+app.use("/assets", express.static("app/public"));
 app.use("/member", memberRoutes);
 app.use(fileUpload());
 app.use("/event", eventRoutes);
