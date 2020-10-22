@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, useParams, useLocation } from "react-router-dom";
 import Select from 'react-select'
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 
 //controllers
 import { update_past_designation, get_spec_past_designations } from '../../controllers/pastdes.controller'
@@ -15,6 +16,9 @@ const EditPastDes = (props) => {
     //get passed parameters
     const id = useParams()
     const newId = id.Id
+    var memshipid = useSelector(state => state.auth.user.memberShipNo);
+    var memfname = useSelector(state => state.auth.user.fname);
+    var memlname = useSelector(state => state.auth.user.lname);
 
     //variable to store past designations
     const [pastdes, setPastDes] = useState({
@@ -26,7 +30,7 @@ const EditPastDes = (props) => {
 
     //variable to store activities
     let [activity, setActivity] = useState({
-        MemNo: "To be taken from redux",
+        MemNo: memshipid + " - " + memfname + " " + memlname,
         action: "Edit record - Admin",
         table: "Records",
         parameters: "not set",
@@ -107,13 +111,23 @@ const EditPastDes = (props) => {
     //get member name relevent to a given _id
     async function setMemDetails(id) {
         var result = await get_spec_member(id)
-        return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+        if (result.data.data) {
+            return ("Member not found")
+        }
+        else {
+            return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+        }
     }
 
     //get affiliation name relevent to a given _id
     async function setAffDetails(id) {
         var result = await get_affiliation(id)
-        return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+        if (result.data.data == null) {
+            return ("Affiliation not found")
+        }
+        else {
+            return (result.data.data.affiliationno + " - " + result.data.data.affiliationname)
+        }
     }
 
     //runs when loading the form

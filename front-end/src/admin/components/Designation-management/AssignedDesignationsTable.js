@@ -17,8 +17,10 @@ import "datatables.net-dt/css/jquery.dataTables.min.css"
 
 const AssignedDesignationsTable = (props) => {
 
-    //console.log(JSON.stringify(useSelector(state => state.auth.user.affiID)))
     const aff = useSelector(state => state.auth.user.affiID);
+    var memshipid = useSelector(state => state.auth.user.memberShipNo);
+    var memfname = useSelector(state => state.auth.user.fname);
+    var memlname = useSelector(state => state.auth.user.lname);
 
     //place holders for react-select-search
     window.selectedaff = "Select affiliaion";
@@ -29,7 +31,7 @@ const AssignedDesignationsTable = (props) => {
 
     //variable to store activities
     let [activity] = useState({
-        MemNo: "To be taken from redux",
+        MemNo: memshipid + " - " + memfname + " " + memlname,
         action: "Remove assignment",
         table: "Designations",
         parameters: "not set",
@@ -98,7 +100,12 @@ const AssignedDesignationsTable = (props) => {
     //get member name relevent to a given _id
     async function setMemDetails(id){
         var result = await get_spec_member(id)
-        return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+        if (result.data.data) {
+            return ("Member not found")
+        }
+        else {
+            return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+        }
     }
 
     //get membership no relevent to a given _id
