@@ -191,7 +191,7 @@ function RegistrationForm() {
                       <option selected>Select Event Type</option>
                       <option value="membersOnly">Members Only</option>
                       <option value="public">Public</option>
-                      <option value="none">none</option>
+                      {/* <option value="none">none</option> */}
                     </select>
                 </div>
 

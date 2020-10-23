@@ -1,11 +1,13 @@
 {
   "name": "back-end",
+  "homepage": "http://dheynoshan.website",
   "version": "1.0.0",
   "description": "This is the backend of IEEE Sri Lanka website.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
+    "build": "build",
     "server": "nodemon server.js"
   },
   "author": "SD03_2020",
