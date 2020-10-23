@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Modal } from "react-bootstrap";
+import { Modal, Button  } from "react-bootstrap";
 import {
   get_all_rewards,
   member_delete,
+  get_past_designation
 } from "../../controllers/memeber.controller";
 import Config from "../../controllers/config.controller";
 
@@ -25,6 +26,7 @@ const MemberRequest = (props) => {
     addcpassword: "",
     viewPastDes: false,
   });
+  const [pastDesg, setpastDesg] = useState([]);
 
   const [members, Setmembers] = useState([]);
 
@@ -37,20 +39,19 @@ const MemberRequest = (props) => {
     await Setmembers(res.data);
     $("#memberTable").dataTable();
   }
+  const [show, setShow] = useState(false);
 
-  const removeMember = async (mem, state) => {
-    var data = {
-      memberShipNo: mem,
-      state: state,
-    };
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-    const result = await member_delete(data);
-    if (result.code == 200) {
-      Config.setToast(result.message);
-      getData();
-    }
-  };
-
+  const load_data = (data) =>{
+         handleShow()
+           get_past_designation(data).then( response =>{
+             setpastDesg(response.data)
+             console.log(pastDesg);
+           })
+         
+  }
   const readydata = () => {
     return members.map(( row, i) => {
       return (
@@ -67,29 +68,33 @@ const MemberRequest = (props) => {
           <td className="project-actions text-center">
           <Link
               className="btn btn-warning btn-sm mr-1 my-2"
-              onClick=""
+              onClick={(ds)=>load_data(row.member.memberShipNo)}
             >
               {" "}
-              <i className="fas fa-trash mr-1" />
-              view
+              <i className="fa fa-info mr-1" />
+              Info
             </Link>
             <Link
               to={`/Admin/MemberEdit/${row.member._id}`}
               type="button"
               className="btn btn-info btn-sm mr-1 my-2"
             >
-              <i className="fas fa-pencil-alt mr-1" />
+              <i className="fa fa-pencil-square-o mr-1" />
               Update
             </Link>
-            <Link
-              className="btn btn-secondary btn-sm mr-1 my-2"
-              onClick={() => removeMember(row.member.memberShipNo, false)}
-            >
-              {" "}
-              <i className="fas fa-trash mr-1" />
-              Remove
-            </Link>
           </td>
+        </tr>
+      );
+    });
+  };
+  
+  const readydata_pastdessg = () => {
+    return pastDesg.reverse().map(( row, i) => {
+      return (
+        <tr key={i}>
+          <td style={{margin:'2px', padding:'5px', fontWeight:'800'}}>{row.Year}</td>
+          <td style={{margin:'2px', padding:'5px'}}>{row.title}</td>
+          <td style={{margin:'2px', padding:'5px'}}>{row.affiliationTitle}</td>
         </tr>
       );
     });
@@ -119,13 +124,31 @@ const MemberRequest = (props) => {
                   <th>Phone</th>
                   <th>Email</th>
                   <th>Points</th>
-                  <th style={{width: "25%"}}>Action</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>{readydata()}</tbody>
             </table>
           </div>
         </div>
+        <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Past Designations</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <table>
+            <tbody>
+            {readydata_pastdessg()}
+            </tbody>
+          </table>
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
         {/* <!-- /.container-fluid --> */}
       </div>
       {console.log("bye")}

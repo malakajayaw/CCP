@@ -65,10 +65,17 @@ exports.get_all_requsts = async function (req, res, next) {
     }, async function (err, docs) {
         if (docs.length != 0) {
             for (let index = 0; index < docs.length; index++) {
-
+                
                 let name = await Affiliation.findOne({ _id: docs[index].affiID })
 
-                docs[index] = { ...docs[index]._doc, affname: name.affiliationname }
+                if(name== null || name == undefined)
+                {
+                    affname = ''
+                }
+                else{
+                    docs[index] = { ...docs[index]._doc, affname: name.affiliationname }
+                }
+               
             }
             res.status(200).send({
                 data: docs
@@ -93,8 +100,13 @@ exports.active_members = async function (req, res, next) {
             for (let index = 0; index < docs.length; index++) {
 
                 let name = await Affiliation.findOne({ _id: docs[index].affiID })
-
-                docs[index] = { ...docs[index]._doc, affname: name.affiliationname }
+                if(name== null || name == undefined)
+                {
+                    affname = ''
+                }
+                else{
+                    docs[index] = { ...docs[index]._doc, affname: name.affiliationname }
+                }
             }
             res.status(200).send({
                 data: docs
@@ -276,10 +288,14 @@ exports.login = async function (req, res) {
             message: 'No user found',
         });
     } else {
-
+        if(!user_details.affiID){
+        let aff = await Affiliation.findOne({ _id: user_details.affiID })
+            user_details.affiID = aff.affiliationname
+        }
+        let aff = await Affiliation.findOne({ _id: user_details.affiID })
+            user_details.affiID = aff.affiliationname
         console.log(user_details.password);
         console.log(req.body.uPass);
-
         const log = await bcrypt.compare(req.body.uPass, user_details.password)
 
         if (!log) {
@@ -304,6 +320,7 @@ exports.login = async function (req, res) {
                     "token": token,
                     "role": user_details.role,
                     "details": user_details
+                  
                 },
                 success: true,
                 message: 'Successfully login',
@@ -409,8 +426,7 @@ exports.pastdes_by_member_id = async function (req, res, next) {
                 return {
                     Year :  row.Year,
                     title :  row.title,
-                    affiliationTitle : (correct_af && correct_af.affiliationname) ? 
-                    correct_af.affiliationname : ''
+                    affiliationTitle : (correct_af && correct_af.affiliationname) ?  correct_af.affiliationname : ''
                 }
             })
                 

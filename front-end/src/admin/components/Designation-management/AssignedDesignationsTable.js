@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import useForceUpdate from 'use-force-update';
 import 'jquery/dist/jquery.min.js';
 import $ from "jquery"
+import { useSelector } from "react-redux";
 
 //controllers
 import { get_aff_spec_designations, remove_designation_mem, get_all_members, get_spec_member } from "../../controllers/designation.controller";
@@ -16,7 +17,10 @@ import "datatables.net-dt/css/jquery.dataTables.min.css"
 
 const AssignedDesignationsTable = (props) => {
 
-    const aff = "5f8a5863c17b4b17dc919a91";
+    const aff = useSelector(state => state.auth.user.affiID);
+    var memshipid = useSelector(state => state.auth.user.memberShipNo);
+    var memfname = useSelector(state => state.auth.user.fname);
+    var memlname = useSelector(state => state.auth.user.lname);
 
     //place holders for react-select-search
     window.selectedaff = "Select affiliaion";
@@ -27,7 +31,7 @@ const AssignedDesignationsTable = (props) => {
 
     //variable to store activities
     let [activity] = useState({
-        MemNo: "To be taken from redux",
+        MemNo: memshipid + " - " + memfname + " " + memlname,
         action: "Remove assignment",
         table: "Designations",
         parameters: "not set",
@@ -47,16 +51,21 @@ const AssignedDesignationsTable = (props) => {
 
     //remove assigned member
     const delete_func = async (Designation, id, name, title) => {
-        addActivity(name, title)
-        const res = await remove_designation_mem(Designation, id)
-        if (res.code == 200) {
-            Config.setToast("Member removed")
-            //refresh page
-            getData();
-        } else {
-            Config.setToast("Something went wrong")
-            //refresh page
-            getData();
+        if (name == "") {
+            Config.setToast("Already empty")
+        }
+        else {
+            addActivity(name, title)
+            const res = await remove_designation_mem(Designation, id)
+            if (res.code == 200) {
+                Config.setToast("Member removed")
+                //refresh page
+                getData();
+            } else {
+                Config.setToast("Something went wrong")
+                //refresh page
+                getData();
+            }
         }
     }
 
@@ -94,9 +103,19 @@ const AssignedDesignationsTable = (props) => {
     };
 
     //get member name relevent to a given _id
-    async function setMemDetails(id){
-        var result = await get_spec_member(id)
-        return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+    async function setMemDetails(id) {
+        if (id == "") {
+            return ("No member assigned")
+        }
+        else {
+            var result = await get_spec_member(id)
+            if (result.data.data == null) {
+                return ("Member not found")
+            }
+            else {
+                return (result.data.data.memberShipNo + " - " + result.data.data.fname + " " + result.data.data.lname)
+            }
+        }
     }
 
     //get membership no relevent to a given _id

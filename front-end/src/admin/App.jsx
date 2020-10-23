@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import AdminDash from './components/Dashboard/AdminDash';
 import NavBar from "./components/Dashboard/NavBar";
 import SideBar from "./components/Dashboard/SideBar";
 import ContentHeader from "./components/Dashboard/ContentHeader";
@@ -56,6 +57,8 @@ class App extends Component {
       const cheeck_auth = this.props.auth.isAuthenticated;
       console.log(cheeck_auth);
       if (!cheeck_auth) this.props.history.push("/AdminLogin");
+      if (cheeck_auth &&  this.props.auth.user.type=="admin") this.props.history.push("/Admin/AdminDash");
+      if (cheeck_auth &&  this.props.auth.user.role=="Chair") this.props.history.push("/Admin/EventTable");
     };
 
     componentWillMount() {
@@ -70,7 +73,11 @@ class App extends Component {
             <ContentHeader/>
             <Router>
               <SideBar />
-              <Switch>
+                  <Switch>
+                      <Route path="/Admin/AdminDash">
+                          {" "}
+                          <AdminDash />
+                      </Route>
                 <Route path="/adminlogin">
                   {" "}
                   <EventTable />{" "}
