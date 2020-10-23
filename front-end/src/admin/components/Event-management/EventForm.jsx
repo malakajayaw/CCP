@@ -1,54 +1,77 @@
 import React,{useState, useEffect} from 'react';
 import Config from '../../controllers/config.controller';
 import { get_all_active_members} from '../../controllers/memeber.controller'
+import { add_activity } from '../../controllers/activity.controller'
 import Axios from 'axios';
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/js/bootstrap"
+import 'jquery/dist/jquery.min.js';
+import { Multiselect } from 'multiselect-react-dropdown';
+import { get_all_affiliations } from "../../controllers/affiliation.controller";
 
 function EventForm(props) {
 
-  const [eventData,setEventData] = useState({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',volunteers:[''],formLink:'',banner:null });
+  const [eventData,setEventData] = useState({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',banner:null });
+  const [activity, setActivity] = useState({MemNo: "To be taken from redux", action: "Added an event",table: "Events",parameters: "not set",  datetime: ""});
   const [vols,setVols] = useState([]);
-
   const [members, Setmembers] = useState([]);
+  const [selectedMembers, setSelectedMembers] = useState();
+  var memberIds = [];
 
     useEffect(() => {
       getData();
   }, []); 
 
 
+  //fetch memebers for the volunteers form field
   async function getData() {
-    var res = await get_all_active_members()
-    await   Setmembers(res.data.data);
+    var memberRes = await get_all_active_members()
+    await   Setmembers( setMemeberIds(memberRes.data.data));
+    
   }
 
+  //setting the member id from the fetched members
+  function setMemeberIds(members){
+    var i = 0;
+    members.forEach(member => {
+        memberIds[i] = member.memberShipNo
+        i++;
+    });
+    return memberIds;
+  }
+
+  //handle change of a form field and set the state
   const handleChange = event =>
   { 
-    setEventData({...eventData, [event.target.id] :event.target.value})
-    // console.log(eventData.eventName+' '+eventData.eventDate+' '+eventData.startTime+' '+eventData.endTime+' '+eventData.venue+' '+eventData.description+' '+eventData.hostingAffiliation+' '+eventData.volunteers+' '+eventData.banner);
+    setEventData({...eventData, [event.target.id] :event.target.value});
   };
     
-  const handleVolunteers = event =>
-  { 
-    if(!vols.includes(event.target.value))
-    {
-      vols.push(event.target.value); 
-      setEventData({...eventData, volunteers : vols}) 
-    }else{
-      if(vols.length === 1 ){
-        vols.splice(0,vols.length)
-      }else{
-        var index = vols.indexOf(event.target.value);
-        vols.splice(index,1);
-      }
-    }
-  };
+//   async function getAffData() {
+//     var res = await get_all_affiliations();
+//     await setAffiliations(res.data.data);
+// }
+  //set the state when a memember is selected from volunteers
+  function onSelect(selectedList, selectedMember) {
+    vols.push(selectedMember);
+    setSelectedMembers(vols);
+  }
 
+    //set the state when a memember is removed from volunteers
+  function onRemove(selectedList, selectedMember) {
+     for( var i = 0; i < selectedMembers.length; i++)
+     { if ( selectedMembers[i] === selectedMember) { selectedMembers.splice(i, 1); }}
+    setSelectedMembers(selectedMembers);
+}
+
+  //handle the change of event banner and set the state
   const handleBanner = event =>
   {  setEventData({...eventData, banner : event.target.files[0] })};
 
+  //clear the state when form is submited
   const clear = () => {
-  setEventData({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',volunteers:[''],formLink:'',banner:null  })
+  setEventData({eventName:'',eventDate:'',startTime:'',endTime:'',venue:'',description:'',hostingAffiliation:'',formLink:'',banner:null  })
   setVols([]);
-  }
+}
 
   const send = async event =>{
     event.preventDefault();
@@ -60,35 +83,32 @@ function EventForm(props) {
     data.append("venue",eventData.venue);
     data.append("description",eventData.description);
     data.append("hostingAffiliation",eventData.hostingAffiliation);
-    data.append("volunteers",eventData.volunteers)
+    data.append("volunteers",selectedMembers);
     data.append("formLink",eventData.formLink);
     data.append("banner",eventData.banner);
     try{
-      const res = await Axios.post('/event/addEvent',data, {
+       const res = await Axios.post('/event/addEvent',data, {
         headers : {
           'Content-Type' : 'multipart/form-data'
         }
       });
 
-      if(res.status === 201)
+      const date = new Date();
+      activity.parameters = eventData.eventName;
+      activity.datetime = date.toLocaleString();
+      await add_activity(activity)
+
+      if(res.status === 200)
       {
         clear()
         Config.setToast("Event added successfully")
       }
     }catch(err){
       if(err.response.status === 500)
-          console.log('There was a problem with then server');
+           Config.setToast('There was a problem with then server');
         else
           console.log(err.response.data);
     }
-  }
-
-  const loadMembers = () => {
-    return   members.map((member, index) => {
-      return(  
-      <option value={member.memberShipNo} key={index}> {member.memberShipNo}</option>
-      )
-    })
   }
 
   return (    <div>
@@ -136,34 +156,16 @@ function EventForm(props) {
         <label htmlFor="hostingAffiliation">Hosting Affiliation</label>
         <input type="text" value={eventData.hostingAffiliation} onChange={handleChange}  className="form-control" id="hostingAffiliation" placeholder="Enter hosting affiliation" required/>
       </div>
-     
-      <div className="form-group">
-          <label>Volunteers</label>
-          <select id="volunteers" className="form-control"  value={vols} onChange={handleVolunteers}  data-placeholder="Select volunteers" style={{width: "100%"}} multiple>      
-            {loadMembers()}
-          </select>
-      </div>
 
       <div className="form-group">
-        <label htmlFor="formLink">Google Form link</label>
-        <input type="text" value={eventData.formLink} onChange={handleChange}  className="form-control" id="formLink" placeholder="Enter Google Form link" />
-      </div>
-  
-      <div className="form-group">
-        <label htmlFor="eventBanner">Event Banner</label>
-        <div className="input-group">
-          <div className="custom-file">
-            <input type="file" className="form-control" id="banner" accept="image/*" onChange={handleBanner} />
-            <label className="custom-file-label" htmlFor="banner">Choose an image</label>
-          </div>
-        </div>
+        <label>Volunteers</label>
+        <Multiselect options={members} isObject={false} onSelect={onSelect} onRemove={onRemove}  displayValue="name"  />
       </div>
 
-      {/* <div className="form-group">
-        <label htmlFor="eventBanner">Event Banner</label>
-            <input type="file" className="form-control" id="banner" name="banner" accept="image/*" onChange={handleBanner} />
-      </div> */}
-
+    <div className="form-group">
+      <label htmlFor="banner">Event Banner</label>
+      <input type="file" className="form-control-file" id="banner" accept="image/*" onChange={handleBanner}/>
+    </div>
 
     </div>
     {/* <!-- /.card-body --> */}

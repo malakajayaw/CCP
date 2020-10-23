@@ -5,6 +5,11 @@ import Config from '../../controllers/config.controller'
 import { Link } from "react-router-dom";
 
 import useForceUpdate from 'use-force-update';
+import 'jquery/dist/jquery.min.js';
+import $ from "jquery"
+//Datatable Modules
+import "datatables.net-dt/js/dataTables.dataTables"
+import "datatables.net-dt/css/jquery.dataTables.min.css"
 
 
 const ActivityTable = (props) => {
@@ -18,13 +23,14 @@ const ActivityTable = (props) => {
     async function getData() {
         var res = await get_all_activities();
         await SetActivities(res.data.data);
+        $("#activityTable").dataTable();
     }
 
     const readydata = () => {
         return activity.map((activity, i) => {
             return (
                 <tr key={i}>
-                    <td>{activity.memberID}</td>
+                    <td>{activity.MemNo}</td>
                     <td>{activity.action}</td>
                     <td>{activity.table}</td>
                     <td>{activity.datetime}</td>
@@ -45,7 +51,7 @@ const ActivityTable = (props) => {
                     {/* <!-- /.card-header --> */}
                     <div className="card-body">
                         <table
-                            id="eventReportTable"
+                            id="activityTable"
                             className="table table-bordered table-striped dataTable"
                         >
                             <thead>
