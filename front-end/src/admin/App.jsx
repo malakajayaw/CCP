@@ -44,7 +44,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import AdminDash from "./components/Dashboard/AdminDash";
 toast.configure();
 
 class App extends Component {
