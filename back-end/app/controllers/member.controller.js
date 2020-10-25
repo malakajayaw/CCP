@@ -288,12 +288,17 @@ exports.login = async function (req, res) {
             message: 'No user found',
         });
     } else {
-        if(!user_details.affiID){
-        let aff = await Affiliation.findOne({ _id: user_details.affiID })
+        if(await Affiliation.findOne({ _id: null }))
+        {
+            user_details.affiID = ''
+        }
+        else if(await Affiliation.findOne({ _id: user_details.affiID }) )
+        {
+            let aff = await Affiliation.findOne({ _id: user_details.affiID })
             user_details.affiID = aff.affiliationname
         }
-        let aff = await Affiliation.findOne({ _id: user_details.affiID })
-            user_details.affiID = aff.affiliationname
+
+            
         console.log(user_details.password);
         console.log(req.body.uPass);
         const log = await bcrypt.compare(req.body.uPass, user_details.password)
