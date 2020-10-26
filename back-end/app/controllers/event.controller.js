@@ -4,21 +4,29 @@ const Event = require('../model/event.model');
 const EventRegistration = require('../model/eventRegistration.model');
 
 //================================== Add event  =============================================
-exports.addEvent = function (req, res, next) {
+exports.addEvent =  async function (req, res, next) {
 
-    var fileName = '';
+    var uploadFileURL = "";
 
     //check if the event banner is added
     if(req.files !== null)
     {
-        const file = req.files.banner;
+        const bannerFile = req.files.banner;
         //genarate a random file name
-        fileName =  Math.random().toString(36).substring(2, 15) + file.name;
-        file.mv(`${__dirname}/../../../front-end/public/images/events/${fileName}`,err => {
-                if(err){
-                    return res.status(500).send(err)
-                }  
+     //   fileName =  Math.random().toString(36).substring(2, 15) + file.name;
+        // file.mv(`${__dirname}/../../../front-end/public/images/events/${fileName}`,err => {
+        //         if(err){
+        //             return res.status(500).send(err)
+        //         }  
+        //     });
+
+         const fileName =  Math.random().toString(36).substring(2, 15) + bannerFile.name;
+         uploadFileURL = "http://localhost:5000/assets/banners/" + fileName;
+
+          await bannerFile.mv("./app/public/banners/" + fileName, (err, result) => {
+              if (err){ return res.status(500).send("Failed to upload Image!");}
             });
+
     }
     
     let new_event = Event({
@@ -30,7 +38,7 @@ exports.addEvent = function (req, res, next) {
         description: req.body.description,
         hostingAffiliation: req.body.hostingAffiliation,
         volunteers: req.body.volunteers,
-        banner: fileName,
+        banner: uploadFileURL ,
         registrationForm : null,
         fieldNames : null
     });
@@ -188,17 +196,18 @@ exports.getResponses = async function (req, res, next) {
  exports.updateEvent = async function (req, res, next) {
 
     var fileName = '';
+    var uploadFileURL = "";
 
     if(req.files !== null)
     {
-        const file = req.files.banner;
+        const bannerFile = req.files.banner;
         //genarate a random file name
-        fileName =  Math.random().toString(36).substring(2, 15) + file.name;
-        file.mv(`${__dirname}/../../../front-end/public/images/events/${fileName}`,err => {
-                if(err){
-                    console.log(res.status(500).send(err));
-                }  
-            });
+        fileName =  Math.random().toString(36).substring(2, 15) + bannerFile.name;
+        uploadFileURL = "http://localhost:5000/assets/banners/" + fileName;
+
+         await bannerFile.mv("./app/public/banners/" + fileName, (err, result) => {
+             if (err){ return res.status(500).send("Failed to upload Image!");}
+           });
     }else{
         fileName = req.body.banner;
     }
@@ -215,7 +224,7 @@ exports.getResponses = async function (req, res, next) {
             description: req.body.description,
             hostingAffiliation: req.body.hostingAffiliation,
             volunteers: req.body.volunteers,
-            banner: fileName
+            banner: uploadFileURL
         }, {
             new: true
         })

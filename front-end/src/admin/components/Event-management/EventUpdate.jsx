@@ -98,7 +98,7 @@ function EventUpdate() {
     data.append("formLink",eventData.formLink);
     data.append("banner",eventData.banner);
     try{
-      const res = await Axios.post('/event/update',data, {
+      const res = await Axios.post('http://localhost:5000/event/update',data, {
         headers : {
           'Content-Type' : 'multipart/form-data'
         }
@@ -176,7 +176,7 @@ function EventUpdate() {
 
     <div class="form-group">
       <label for="banner">Event Banner</label>
-      <img className="mb-4 shadow-lg bg-white rounded"  src={__dirname+"images/Events/"+eventData.banner} style={{ width:"100%", maxHeight:"300px", display :bannerChange && "none"}}/>
+      <img className="mb-4 shadow-lg bg-white rounded"  src={eventData.banner} style={{ width:"100%", maxHeight:"300px", display :bannerChange && "none"}}/>
       <input type="file" class="form-control-file" id="banner" accept="image/*" onChange={handleBanner}/>
     </div>
 
