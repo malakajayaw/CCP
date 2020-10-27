@@ -171,6 +171,34 @@ exports.acceptOrReject = async function (req, res, next) {
                 new: true
             }
             )
+            if(res.status(200)){
+                const mail = await Member.findOne({
+                    memberShipNo: memberShipNo
+                })
+                var transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: "Cpp.sd03.2020@gmail.com",
+                        pass: "cpp@sd032020"
+                    },
+                    tls: { rejectUnauthorized: false }
+                });
+               
+                
+                var mailOptions = {
+                    from: '"IEEE Sri Lanka" <Cpp.sd03.2020@gmail.com>',
+                    to: mail.email,
+                    subject: 'IEEE Sri Lanka',
+                    text: 'Your registration request has been authorized. You can login to your profile now.',
+                    html: `<b>Welcome to IEEE Sri Lanka!</b><br/>
+                    <br/>Congratulations!</br>
+                    <br/>Dear ${mail.fname},</br>
+                    <br/>Your registration request has been authorized. You can login to your profile using your IEEE Membership
+                    number and password.<br/><br/>`,
+                };
+           
+                transporter.sendMail(mailOptions).then(res => console.log(res)).catch(err => console.log(err));
+            }
             return res.status(200).send({
                 message: "Requset Accepted Successfully"
             });

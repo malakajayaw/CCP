@@ -4,9 +4,10 @@ const Members = require('../model/member.model');
 const Designation = require('../model/designations.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const nodemailer = require("nodemailer");
 
 //======================================================================================================
-//================================== Request sent Memeber      =============================================
+//================================== Add Admin             =============================================
 //====================================================================================================== 
 exports.addAdmin = function (req, res, next) {
     let new_admin = Admin({
@@ -249,6 +250,11 @@ exports.login = async function (req, res) {
     }
 
 }
+
+//======================================================================================================
+//================================== Member Password Reset by admin ====================================
+//====================================================================================================== 
+
 exports.reset_member_pw_default = async (req, res, next) => {
 
     var mem_id = req.body.daat.memberId
@@ -263,12 +269,48 @@ exports.reset_member_pw_default = async (req, res, next) => {
     const genSalt = await bcrypt.genSalt(10)
     const hash_pass = await bcrypt.hash(mem_id, genSalt)
     const set_pw = await Members.findOneAndUpdate({ memberShipNo: mem_id }, { password: hash_pass }, { new: true })
+
+    if(res.status(200)){
+        const mail = await Members.findOne({
+            memberShipNo: mem_id
+        })
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: "Cpp.sd03.2020@gmail.com",
+                pass: "cpp@sd032020"
+            },
+            tls: { rejectUnauthorized: false }
+        });
+       
+        
+        var mailOptions = {
+            from: '"IEEE Sri Lanka" <Cpp.sd03.2020@gmail.com>',
+            to: mail.email,
+            subject: 'IEEE Sri Lanka',
+            text: 'Your user profile password is successfully reseted upon your request.',
+            html: `<b>Welcome to IEEE Sri Lanka!</b><br/>
+            <br/>Dear ${mail.fname},</br></br>
+            <br/>Your user profile password is successfully reseted upon your request.<br/>
+            <br/>New Password: ${mail.memberShipNo}</br>
+            <br/>*You can change your passsword from your user profile</br>`,
+        };
+   
+        transporter.sendMail(mailOptions).then(res => console.log(res)).catch(err => console.log(err));
+    }
+
+
     return res.status(200).send({
         data: set_pw,
         success: true,
         message: 'Reset ',
     });
 }
+
+//======================================================================================================
+//==================================  Admin Password Reset    =============================================
+//====================================================================================================== 
+
 exports.update_password_admin  = async (req, res, next) => {
     var mem_id = req.body.daat.memberId
     var newPasswod = req.body.daat.newPasswod
@@ -281,6 +323,38 @@ exports.update_password_admin  = async (req, res, next) => {
         });
     }
     const set_pw = await Admin.findOneAndUpdate({ memberShipNo: mem_id }, { password: newPasswod }, { new: true })
+
+    if(res.status(200)){
+        const mail = await Admin.findOne({
+            memberShipNo: mem_id
+        })
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: "Cpp.sd03.2020@gmail.com",
+                pass: "cpp@sd032020"
+            },
+            tls: { rejectUnauthorized: false }
+        });
+       
+        
+        var mailOptions = {
+            from: '"IEEE Sri Lanka" <Cpp.sd03.2020@gmail.com>',
+            to: mail.email,
+            subject: 'IEEE Sri Lanka',
+            text: 'Your user profile password is successfully reseted upon your request.',
+            html: `<b>Welcome to IEEE Sri Lanka!</b><br/>
+            <br/>Dear ${mail.fname},</br></br><br/>
+            Your admin password is successfully reseted.<br/>
+            <br/>New Password: ${mail.password}</br>
+            <br/>*You can change your passsword from your admin panel</br>`,
+        };
+   
+        transporter.sendMail(mailOptions).then(res => console.log(res)).catch(err => console.log(err));
+    }
+
+
+
     return res.status(200).send({
         data: set_pw,
         success: true,
