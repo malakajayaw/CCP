@@ -11,14 +11,12 @@ exports.addPastDesignation = function (req, res, next) {
         Year: req.body.Year,
         updated_at: req.body.updated_at,
     });
-    console.log(new_past_designation);
 
     //save event  
     new_past_designation.save(function (err) {
         if (err) {
             return next(err);
         }
-        console.log("Past Designation added successfully ");
         res.status(201).send('Past Designation added Successfully');
     })
 
@@ -76,7 +74,6 @@ exports.delete_Past_designation = async function (req, res, next) {
 
 exports.update_Past_designation = async function (req, res, next) {
 
-    console.log(req.body);
     try {
         const update = await PastDesignations.findOneAndUpdate({
             _id: req.body.id
