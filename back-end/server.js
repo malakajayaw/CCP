@@ -19,6 +19,7 @@ const eventReport = require("./app/routes/event.report.route");
 const activity = require("./app/routes/activity.route");
 const designations = require("./app/routes/designations.route");
 const affiliation = require("./app/routes/affiliation.route");
+const affiliationview = require("./app/routes/affiliationview.route");
 const pastdes = require("./app/routes/pastdes.route");
 const admin = require("./app/routes/admin.route");
 
@@ -52,6 +53,7 @@ app.use("/eventattendance", eventAttendanceRoutes);
 app.use("/activity", activity);
 app.use("/designations", designations);
 app.use("/affiliation", affiliation);
+app.use("/affiliationview", affiliationview);
 app.use("/pastdes", pastdes);
 app.use("/admin", admin);
 

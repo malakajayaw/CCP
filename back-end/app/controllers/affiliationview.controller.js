@@ -1,6 +1,6 @@
 //import affiliation model
 const Affiliation = require('../model/affiliation.model');
-
+const Member = require('../model/member.model');
 
 //======================================================================================================
 //================================== Add Affiliation  =============================================
@@ -12,7 +12,7 @@ exports.addAffiliation = function (req, res, next) {
     
     
     let new_affiliation = Affiliation({
-        affiID: req.body.affiID,
+        
         affiliationtype: req.body.affiliationtype,
         affiliationname: req.body.affiliationname,
         affiliationno: req.body.affiliationno,
@@ -33,7 +33,36 @@ exports.addAffiliation = function (req, res, next) {
     
 }
 
+//======================================================================================================
+//================================== View Active Members   =============================================
+//====================================================================================================== 
+exports.view_affiliation = async function (req, res, next) {
+    
+    Member.find({
+        state: true,
+        affiID: req.params.id
+    }, async function (err, docs) {
+        if (docs.length != 0) {
+            // console.log(docs);
+            for (let index = 0; index < docs.length; index++) {
 
+                let name = await Affiliation.findOne({ _id: docs[index].affiID })
+                if(name== null || name == undefined)
+                {
+                    affname = ''
+                }
+                else{
+                    docs[index] = { ...docs[index]._doc, affname: name.affiliationname }
+                }
+            }
+            res.status(200).send({
+                data: docs
+            });
+        } else {
+            res.status(403).send('No data found')
+        }
+    })
+}
 
 //======================================================================================================
 //================================== Get all affiliations       =============================================
@@ -115,19 +144,5 @@ exports.updateAffiliation = async function (req, res, next) {
     } catch (error) {
         return res.status(403).send("Something went wrong");
     }
-    
-}
-
-exports.view_affiliation = async function (req, res, next) {
-
-    Affiliation.find( function (err, docs) {
-        if (docs.length != 0) {
-            res.status(200).send({
-                data: docs
-            });
-        } else {
-            res.status(403).send('No data found')
-        }
-    })
     
 }

@@ -3,16 +3,11 @@ const Schema = mongoose.Schema;
 
 let Affiliation = new Schema({
     
-    affiID: {
-        type: String,
-        required: true,
-        unique: true,
-    },
+
 
     affiliationtype: {
         type: String,
         required: true,
-       
 
     },
     affiliationname: {
