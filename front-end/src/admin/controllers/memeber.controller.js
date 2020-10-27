@@ -81,7 +81,7 @@ export const accept_or_reject = (data) => {
 
    var  datanew = {
         memberShipNo :data.memberShipNo,
-        state : data.state
+        state : data.state,
     }
     console.log(datanew);
     return new Promise( (resolve,reject) => {

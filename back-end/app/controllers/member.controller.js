@@ -5,6 +5,7 @@ const Pastdes = require('../model/pastdes.model');
 var _ = require('lodash');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const nodemailer = require("nodemailer");
 
 
 //======================================================================================================
@@ -47,6 +48,29 @@ exports.requsetMemberShip = async function (req, res, next) {
                 }
                 console.log("Sent requset successfully ");
                 res.status(201).send('Sent Requset Successfully');
+
+
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: "Cpp.sd03.2020@gmail.com",
+                    pass: "cpp@sd032020"
+                },
+                tls: { rejectUnauthorized: false }
+            });
+           
+            
+            var mailOptions = {
+                from: '"IEEE Sri Lanka" <Cpp.sd03.2020@gmail.com>',
+                to: new_member.email,
+                subject: 'IEEE Sri Lanka',
+                text: 'Your registration request has been sent. You will recive a confirmation email after profile is authorized.',
+                html: `<b>Welcome to IEEE Sri Lanka! </b><br/><br/>
+                <br/>Your registration request has been sent. You will recive a confirmation email after profile is authorized.<br/><br/>`,
+            };
+       
+            transporter.sendMail(mailOptions).then(res => console.log(res)).catch(err => console.log(err));
+           
             })
         } else {
             res.status(403).send('Already have')
@@ -127,6 +151,7 @@ exports.acceptOrReject = async function (req, res, next) {
 
     var state = req.body.state
     var memberShipNo = req.body.memberShipNo
+
     if (state == null || state == undefined || state == "") {
         state = false
     }
@@ -147,11 +172,17 @@ exports.acceptOrReject = async function (req, res, next) {
                 newrequest: false
             }, {
                 new: true
-            })
-
+            }
+            )
             return res.status(200).send({
                 message: "Requset Accepted Successfully"
             });
+
+                
+
+
+
+
         } catch (error) {
             return res.status(403).send("Something went wrong");
         }

@@ -45,21 +45,6 @@ const Registration = (props) => {
 
   }
 
-  const add = () => {
-    console.log("Add");
-    setMember({
-      addfname : 'Prabhasha' , 
-      addlname : 'Amarathunga' ,
-      addmname : 'Prabhasha Amarathunga' ,
-      addmnumber : '20204646' ,
-      addpemail : 'prabhasha.amarathunga@gmail.com' ,
-      addoemail : 'prabhasha.amarathunga@ieee.com' ,
-      addphone : '0716401842' ,
-      addpassword : '1234' ,
-      addcpassword : '1234' ,
-    })
-  }
-
   const clear = () => {
     console.log("Clear call");
     setMember({
@@ -67,6 +52,7 @@ const Registration = (props) => {
       addlname : '' ,
       addmname : '' ,
       addmnumber : '' ,
+      selectaffiID: null,
       addpemail : '' ,
       addoemail : '' ,
       addphone : '' ,
@@ -111,24 +97,6 @@ const sel = affiliations.map((item) => {
 
 const getcurrentAff = () => {
     return sel.find(i => i.value == member.selectaffiID)
-}
-
-const validate = (data) =>{
-    
-  console.log(member.addpassword);
-  if(member.addpassword == null || member.addpassword == ""){
-   return Config.setToast("Plase provide password")
-  }
-  if(member.addcpassword.localeCompare(member.addpassword) != 0){
-    return Config.setToast("Password did not match")
-  }
-  if(member.selectaffiID == null || member.selectaffiID ==""){
-    return Config.setToast("Please select your Affiliation")
-  }
-  if(member.selectaffiID == null || member.selectaffiID ==""){
-    return Config.setToast("Please select your Affiliation")
-  }
-
 }
 
   return (
@@ -290,20 +258,13 @@ const validate = (data) =>{
               <div className="form-row">
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn bg btn-secondary"
                   onClick={clear}
                 >
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary float-right" onClick={(data)=>validate(member.memberShipNo)}>
+                <button type="submit" className="btn btn-primary float-right">
                   Submit
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={add}
-                >
-                  Demo
                 </button>
               </div>
             </form>
