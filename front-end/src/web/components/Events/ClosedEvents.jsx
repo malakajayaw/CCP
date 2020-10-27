@@ -35,7 +35,7 @@ function ClosedEvents() {
                <div className="col">
           <div className="card mt-5">
             <div className="view closed-event-img">
-              <img className="card-img-top" src={__dirname+"images/Events/"+events.banner}
+              <img className="card-img-top" src={events.banner}
                 alt="Card image cap" />
             </div>
             <div className="card-body">
@@ -71,7 +71,7 @@ function ClosedEvents() {
 
         <div className="row mt-5">
     <div className="col text-center">
-        <Link to="/closedAll" className="btn btn-outline-primary waves-effect mt-5" >All Closed Events</Link>
+        <Link to="/allEvents" className="btn btn-outline-primary waves-effect mt-5" >All Events</Link>
     </div>
     </div>
         </div>

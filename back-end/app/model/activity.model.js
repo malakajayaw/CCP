@@ -4,15 +4,7 @@ const Schema = mongoose.Schema;
 
 let Activity = new Schema({
 
-
-    EntryNo: {
-        type: String,
-        required: true,
-        unique: true
-
-    },
-
-    memberID: {
+    MemNo: {
         type: String,
         required: true,
 

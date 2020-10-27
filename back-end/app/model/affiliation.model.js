@@ -12,6 +12,7 @@ let Affiliation = new Schema({
     affiliationtype: {
         type: String,
         required: true,
+       
 
     },
     affiliationname: {
@@ -28,7 +29,7 @@ let Affiliation = new Schema({
     },
     status: {
         type: String,
-        default: "Available"
+        required: true,
     },
     updated_at: {
         type: String,

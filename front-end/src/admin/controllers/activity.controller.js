@@ -4,15 +4,15 @@ import Config from "./config.controller";
 export const add_activity = (data) => {
 
     data = {
-        memberID: data.memberID,
+        MemNo: data.MemNo,
         action: data.action,
         table: data.table,
-        parameters: data.parameters
+        parameters: data.parameters,
+        datetime: data.datetime
     }
     return new Promise((resolve, reject) => {
         return axios.post(`${Config.host}${Config.port}/activity/addActivity`, { ...data })
             .then(result => {
-                console.log(result.data);
                 resolve({ code: 200, message: result.data.message })
             })
             .catch(err => {
@@ -26,7 +26,6 @@ export const get_all_activities = () => {
     return new Promise((resolve, reject) => {
         return axios.get(`${Config.host}${Config.port}/activity/getActivities`)
             .then(result => {
-                console.log(result.data);
                 resolve({ code: 200, data: result.data })
             })
             .catch(err => {

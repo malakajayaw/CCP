@@ -1,102 +1,163 @@
-import React,{Component} from 'react';
+import React, { useState, useEffect } from 'react';
+import Config from '../../controllers/config.controller';
+import { get_affiliation } from '../../controllers/affiliation.controller';
+import {useParams } from "react-router-dom";
+import Axios from 'axios';
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/js/bootstrap"
+import 'jquery/dist/jquery.min.js';
+// import { Multiselect } from 'multiselect-react-dropdown';
 
-class ManageAffiliation extends Component {
+function ManageAffiliation() {
 
-
-    render() {
-        return (<section className="content w-100">
-            <div className="container-fluid d-flex justify-content-center">
-                <div className="card card-warning w-50">
-                    <div className="card-header">
-                    <h3 className="card-title">Edit Student Branch</h3>
-                    </div>
-                    {/* name,date,venue,banner,description,volunteers,hosting aff, */}
-                    {/* <!-- /.card-header --> */}
-                    {/* <!-- form start --> */}
-                    <form role="form" id="affiliationform" onSubmit={this.affiliation} method="post">
-                        
-                        <div className="card-body">
-
-                        <div className="form-group">
-                                <label>Affiliation Type</label>
-                                <select className="select2" id="affiliation" name="affiliationtype" multiple="multiple" data-placeholder="Select affiliation Type" style={{ width: "100%" }}>
-                                    <option>Type 1</option>
-                                    <option>Type 2 </option>
-                                    <option>Type 3 </option>
-                                    <option>Type 4 </option>
-                                    <option>Type 5 </option>
-                                    <option>Type 6</option>
-                                    <option>Type 7</option>
-                                </select>
-                            </div>
+  const [affiliationData,setAffiliationData] = useState({affiliationtype:'',affiliationname:'',affiliationno:'',date:'',status:'' });
 
 
+  var id = useParams();
 
 
-                            <div className="form-group">
-                            <label htmlFor="sbranchname">Student Branch Name</label>
-                                <input type="text" className="form-control" id="sbranchname" name="sbranchname" placeholder="Enter student branch name" required />
-                            </div>
+    useEffect(() => {
+        getData(id.affiId);
+  }, []); 
 
 
-                            <div className="form-group">
-                            <label htmlFor="affiliationno">IEEE Affiliation Number</label>
-                                <input type="text" className="form-control" id="affiliationno" name="affiliationno" placeholder="Enter IEEE affiliation number" required />
-                                
-                            </div>
+    const getData = async (id) => {
 
-                            <div className="form-group">
-                                <label htmlFor="sbranchdate">Date of formation</label>
-                                <div className="input-group">
-                                <div className="input-group-prepend">
-                                <span className="input-group-text"><i className="far fa-clock"></i></span>
-                                </div>
-                                <input type="text" className="form-control" id="sbranchdate" name="sbranchdate" placeholder="Enter Date of formation" required />
-                                </div>
-                            </div>
-
-
-                            
-
-                        </div>
-                        {/* <!-- /.card-body --> */}
-
-                        <div className="card-footer">
-                            <button type="submit" className="btn btn-primary">Add Affiliation</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>);
+        var affiliationResult = await get_affiliation(id)
+        console.log("id: " + id);
+     
+        setAffiliationData(affiliationResult.data.data);
+        await console.log("affiliationData: " + JSON.stringify(affiliationData));
+        
     }
 
-    affiliation = e => {
-        e.preventDefault();
-        let myForm = document.getElementById('affiliationform');
-        let formData = new FormData(myForm);
-        var object = {};
-        formData.forEach((value, key) => { object[key] = value });
-        var json = JSON.stringify(object);
-        this.setState({ xvalue: json });
-        console.log(json);
 
-        fetch('http://localhost:5000/addAffiliation', {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(object)
-        }).then(response => {
-            console.log(response)
-        })
-            .catch(error => {
-                console.log(error)
-            })
 
+  const handleChange = affiliation =>
+  { 
+    setAffiliationData({...affiliationData, [affiliation.target.id] :affiliation.target.value});
+  };
+    
+
+
+ 
+
+  const clear = () => {
+  setAffiliationData({affiliationtype:'',affiliationname:'',affiliationno:'',date:'',status:''  })
+  //setVols([]);
+  }
+
+  const send = async affiliation =>{
+    affiliation.preventDefault();
+      const data = new FormData();
+      data.append("affiID", id.affiId);
+    data.append("affiliationtype",affiliationData.affiliationtype);
+    data.append("affiliationname",affiliationData.affiliationname);
+    data.append("affiliationno",affiliationData.affiliationno);
+    data.append("date",affiliationData.date);
+    data.append("status",affiliationData.status);
+    
+    try{
+      const res = await Axios.post('/affiliation/update',data, {
+        headers : {
+          'Content-Type' : 'multipart/form-data'
+        }
+      });
+
+      if(res.status === 200)
+      {
+        clear()
+        Config.setToast("Affiliation Updated Successfully!")
+      }
+    }catch(err){
+      if(err.response.status === 500)
+          Config.setToast('There was a problem with then server');
+        else
+          console.log(err.response.data);
     }
+  }
+
+  return (    <div>
+    {/* <ContentHeader pageName={props.page}/> */}
+     <section className="content w-100" >
+         {console.log(affiliationData)}
+  <div className="container-fluid d-flex justify-content-center">
+  <div className="card card-warning w-50">
+  <div className="card-header">
+    <h3 className="card-title">Affiliation Update Form</h3>
+  </div>
+  <form id="affiliationUpdate"  method="post" onSubmit={send}>
+    <div className="card-body">
+
+
+    <div className="form-group">
+      <label htmlFor="affiliationtype">Affiliation Type</label>
+      <select className="select"  name="affiliationtype"   style={{ width: "100%" }} value={affiliationData.affiliationtype} onChange={handleChange}  className="form-control" id="affiliationtype" placeholder="Enter Affiliation Type" required>
+                <option>Student Branch</option>
+                <option>Women In Enginerring Affiliation</option>
+                <option>Young Professionals Affiliation</option>
+                <option>Technical Chapter</option>
+                
+              </select>
+      </div>
+
+      {/* <div className="form-group">
+        <label htmlFor="affiliationtype">Affiliation Type</label>
+        <input type="text" value={affiliationData.affiliationtype} onChange={handleChange}  className="form-control" id="affiliationtype" placeholder="Enter Affiliation Type" required/>
+      </div> */}
+
+
+      <div className="form-group">
+        <label htmlFor="affiliationname">Affiliation Name</label>
+        <input type="text" value={affiliationData.affiliationname} onChange={handleChange} className="form-control" id="affiliationname" placeholder="Enter Affiliation Name" required/>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="affiliationno">IEEE Affiliation Number</label>
+        <input type="text" value={affiliationData.affiliationno} onChange={handleChange}  className="form-control" id="affiliationno" placeholder="Enter IEEE Affiliation number" required/>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="date">Date</label>
+        <input type="date" id="date" value={affiliationData.date.slice(0,10)} onChange={handleChange} className="form-control" required/>
+      </div>
+
+      
+      {/* <div className="form-group">
+        <label htmlFor="status">Status</label>
+        <input type="text" value={affiliationData.status} onChange={handleChange}  className="form-control" id="status" placeholder="Enter the status" required/>
+      </div> */}
+
+      <div className="form-group">
+      <label htmlFor="status">Status</label>
+      <select className="select"  name="status"   style={{ width: "100%" }} value={affiliationData.status} onChange={handleChange}  className="form-control" id="status" placeholder="Enter the status" required>
+                <option>Available</option>
+                <option>Not Available</option>
+                
+              </select>
+      </div>
+
+      
+
+    </div>
+    {/* <!-- /.card-body --> */}
+
+    <div className="card-footer">
+      <button type="submit" className="btn btn-primary">Update Affiliation</button>
+    </div>
+  </form>
+  <div className="d-none" id="dialog-confirm" title="Empty the recycle bin?">
+  <p><span className="ui-icon ui-icon-alert" style={{float:"left", margin:"12px 12px 20px 0"}}></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+</div>
+</div>
+</div>
+</section>
+</div>);
+
 
 }
 
 export default ManageAffiliation;
+
+
+//https://tempusdominus.github.io/bootstrap-4/Usage/ - date and time picker

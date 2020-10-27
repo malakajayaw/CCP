@@ -7,6 +7,11 @@ import {
 } from "../../controllers/memeber.controller";
 import Config from "../../controllers/config.controller";
 
+import "jquery/dist/jquery"
+import $ from "jquery";
+import "datatables.net-dt/js/dataTables.dataTables"
+import "datatables.net-dt/css/jquery.dataTables.min.css"
+
 const MemberRequest = (props) => {
   const [selectMember, setSelectMember] = useState({
     addfname: "",
@@ -14,6 +19,7 @@ const MemberRequest = (props) => {
     addmname: "",
     addmnumber: "",
     addpemail: "",
+    setAffiID:"",
     addoemail: "",
     addphone: "",
     addpassword: "",
@@ -28,6 +34,7 @@ const MemberRequest = (props) => {
   async function getData() {
     var res = await get_all_requsests();
     await Setmembers(res.data.data);
+    $("#memberTable").dataTable();
   }
 
   const ace_or_rej = async (mem, state) => {
@@ -50,19 +57,19 @@ const MemberRequest = (props) => {
           <td>{i + 1}</td>
           <td>{member.memberShipNo}</td>
           <td>{member.nameAsMemberShip}</td>
-          <td>SLIIT Student Branch</td>
+          <td>{member.affname}</td>
           <td className="project-actions text-center">
             <a
-              className="btn btn-success btn-sm mr-1 my-2"
+              className="btn btn-info btn-sm mr-1 my-2"
               id="addMemberBtn"
               onClick={() => ace_or_rej(member.memberShipNo, true)}
             >
               {" "}
-              <i className="fas fa-pencil-alt mr-1" />
+              <i className="fa fa-check mr-1" />
               Accept{" "}
             </a>
             <a
-              className="btn btn-danger btn-sm mr-1 my-2"
+              className="btn bg-secondary btn-sm mr-1 my-2"
               onClick={() => ace_or_rej(member.memberShipNo, false)}
             >
               {" "}
@@ -79,27 +86,15 @@ const MemberRequest = (props) => {
   
     <section className="content" style={{ display: props.display }}>
       <div className="container-fluid">
-        <h6>Member Requests</h6>
 
         <div className="card">
-          <div className="card-header">
-            {/* <!-- <h3 className="card-title">DataTable with default features</h3> --> */}
-
-            <Link
-              to="/Admin/MemberAdd"
-              type="button"
-              className="btn btn-success btn-sm float-right add_btn mr-2 my-2"
-            >
-              Add New Member
-            </Link>
-            <Link
-              to="/Admin/MemberList"
-              type="button"
-              className="btn btn-info btn-sm float-right add_btn mr-2 my-2"
-            >
-              Active members
-            </Link>
+  
+           
+          <div className="card-header bg-dark">
+             <h6>Requests</h6>
           </div>
+   
+
           {/* <!-- /.card-header --> */}
           <div className="card-body">
             <table

@@ -3,11 +3,18 @@ import {get_event} from "../../../admin/controllers/event.controller";
 import { useState,useEffect } from 'react';
 import {useParams } from "react-router-dom";
 import NavBar from '../Common/NavBar';
+import Footer from '../Common/Footer';
+import $ from "jquery";
+import Axios from 'axios';
+import Config from '../../controllers/config.controller';
 
 function EventView() {
 
     const [event, setEvent] = useState({event:['']});
+    const [formData, setFormData] = useState([]);
     let { eventId } = useParams();
+    var k=0;
+    var responder;
 
     useEffect(() => {
       onLoadEvent(eventId);
@@ -16,6 +23,58 @@ function EventView() {
     const onLoadEvent = async (eventId) => {
       const result = await get_event(eventId);
       await  setEvent(result.data.data);
+    }
+
+    const loadRegForm = () => {
+      if(event.registrationForm == null)  
+        return ( <div className="d-flex justify-content-center"><h3 className="text-primary mt-3 mb-3">No Event Form</h3></div>);
+      else{
+        var RegFormBody = document.getElementById("regFormBody");
+        var count  = RegFormBody.childElementCount;
+        if(count === 1){          
+          $("#regFormBody").append(event.registrationForm); 
+          return(<button type='submit' style={{display : event.registrationForm == null && "none" }} className='btn btn-outline-primary btn-block'>Register</button>);
+        }
+      }
+    };
+
+    const sendData = async e =>{
+      e.preventDefault();
+     
+      const data = new FormData();
+
+      data.append("eventId", eventId);
+
+      while(k < event.registrationForm.length){
+
+        formData.push(e.target[k].value)
+        setFormData(formData)
+  
+        if(e.target[k].id ===  "MemberIDField" || e.target[k].id === "PublicField")
+          responder = e.target[k].value;
+
+        k++;
+      }
+      
+      k = 0;
+
+      data.append("formData", formData);
+      data.append("responder", responder);
+
+      try{
+        const res = await Axios.post('/event/register',data);
+  
+        if(res.status === 201)
+        {
+          $('#regForm').trigger("reset");
+          Config.setToast("Registered Successfully!")
+        }
+      }catch(err){
+        if(err.response.status === 500)
+            console.log('There was a problem with then server');
+          else
+            console.log(err.response.data);
+      }
     }
 
     return (<div>
@@ -32,7 +91,7 @@ function EventView() {
         <div className="card-body">
           <div className="row">
             <div className="col-12 col-md-12 col-lg-8 order-1 order-md-1">
-            <img className="mb-4 shadow-lg bg-white rounded w-100" alt="Event Banner" src={__dirname+"images/Events/"+event.banner} style={{float:"left", maxWidth:"100%", maxHeight:"300px" }} />
+            <img className="mb-4 shadow-lg bg-white rounded w-100" alt="Event Banner" src={event.banner} style={{float:"left", maxWidth:"100%", maxHeight:"300px" }} />
          
               <div className="row">
                 <div className="col-12 col-sm-6">
@@ -79,7 +138,25 @@ function EventView() {
             </div>
     
             <div className="col-12 col-md-12 col-lg-4 order-2 order-md-2">
-             <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScnAo1ZYa9_9U17CtsOtf6XG2A8ONW9eIvdQdjIPhc7IGWIFw/viewform?embedded=true" title="registrationForm" width="100%"  height="100%" frameBorder="0" marginHeight="0" marginWidth="0">Loading…</iframe>
+            
+            <form id="regForm"  method="post" onSubmit={sendData}>
+            
+            <div className="card-body" >
+              
+            <div className="info-box bg-light" style={{display : event.registrationForm == null && "none" }}>
+           
+                <div className="info-box-content" id="regFormBody" >
+                  <div className="d-flex justify-content-center">
+                      <h3 className="text-primary mt-3 mb-3">Event Registration Form </h3>
+                  </div>
+                </div>
+            </div>
+            </div>      
+            <div className="card-footer" id="regFormFooter">
+            { loadRegForm()}
+            </div>    
+            </form>
+
             </div>
           </div>
         </div>
@@ -88,6 +165,7 @@ function EventView() {
       {/* <!-- /.card --> */}
     
     </section>
+    <Footer />
     </div>
     );
  }
