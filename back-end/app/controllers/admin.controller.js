@@ -18,7 +18,7 @@ exports.addAdmin = function (req, res, next) {
         contactNo: req.body.contactNo,
         password: req.body.password,
     });
-    console.log(new_admin);
+  
     // check userdata
     Admin.find({
         memberShipNo: new_admin.memberShipNo
@@ -29,7 +29,7 @@ exports.addAdmin = function (req, res, next) {
                 if (err) {
                     return next(err);
                 }
-                console.log("Sent requset successfully ");
+              
                 res.status(201).send('Sent Requset Successfully');
             })
         } else {
@@ -41,7 +41,7 @@ exports.addAdmin = function (req, res, next) {
 //================================== Get all admins       =============================================
 //====================================================================================================== 
 exports.get_all_admins = function (req, res, next) {
-    console.log("Called");
+   
     // check userdata
     Admin.find({
     }, function (err, docs) {
@@ -65,7 +65,7 @@ exports.get_all_admins = function (req, res, next) {
 
 exports.update_admin = async function (req, res, next) {
 
-    console.log(req.body);
+
     try {
         const update = await Admin.findOneAndUpdate({
             memberShipNo: req.body.memberShipNo
@@ -89,7 +89,7 @@ exports.update_admin = async function (req, res, next) {
 //================================== Delete      =============================================
 //====================================================================================================== 
 exports.deleteAdmin = async function (req, res, next) {
-    console.log(req.body);
+    
 
     var state = req.body.state
     var memberShipNo = req.body.memberShipNo
@@ -98,7 +98,7 @@ exports.deleteAdmin = async function (req, res, next) {
     }
     if (state === false) {
         try {
-            console.log(memberShipNo);
+        
             const search = await Admin.findOne({
                 memberShipNo: memberShipNo
             })
@@ -125,7 +125,7 @@ exports.deleteAdmin = async function (req, res, next) {
 
 exports.get_specific_admin = async function (req, res, next) {
 
-    console.log(req.body);
+
     var id = req.body.id
 
 
@@ -180,7 +180,7 @@ exports.login = async function (req, res) {
         }
     }
 
-    console.log(req.body);
+  
     var user_details = await Members.findOne({
         memberShipNo: req.body.memberShipNo
     });
@@ -192,8 +192,7 @@ exports.login = async function (req, res) {
         });
     } else {
 
-        console.log(user_details.password);
-        console.log(req.body.uPass);
+
         const log = await bcrypt.compare(req.body.uPass, user_details.password)
         if (!log) {
             return res.status(406).send({
@@ -203,8 +202,7 @@ exports.login = async function (req, res) {
             });
         } else {
             const test_designation = await Designation.findOne({ MemNo: user_details._id, type: "Chair" })
-            console.log("DESIGNATION");
-            console.log(test_designation);
+           
             if (test_designation != null) {
 
                 const token = jwt.sign({
@@ -216,7 +214,7 @@ exports.login = async function (req, res) {
                 }, "thisistokenforieee2019", {
                     expiresIn: '240h'
                 });
-                console.log(user_details);
+              
                 user_details = { ...user_details._doc, role: "Chair" }
                 return res.status(200).send({
                     data: {
@@ -237,7 +235,7 @@ exports.login = async function (req, res) {
             }, "thisistokenforieee2019", {
                 expiresIn: '240h'
             });
-            console.log(user_details);
+           
             return res.status(200).send({
                 data: {
                     "token": token,
@@ -252,9 +250,9 @@ exports.login = async function (req, res) {
 
 }
 exports.reset_member_pw_default = async (req, res, next) => {
-    console.log("----------------------------------------------------------------------");
+
     var mem_id = req.body.daat.memberId
-    console.log(mem_id);
+ 
     if (mem_id == undefined || mem_id == null) {
         return res.status(406).send({
             data: null,
@@ -274,7 +272,7 @@ exports.reset_member_pw_default = async (req, res, next) => {
 exports.update_password_admin  = async (req, res, next) => {
     var mem_id = req.body.daat.memberId
     var newPasswod = req.body.daat.newPasswod
-    console.log(mem_id);
+   
     if (mem_id == undefined || mem_id == null) {
         return res.status(406).send({
             data: null,

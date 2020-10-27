@@ -19,8 +19,6 @@ exports.requsetMemberShip = async function (req, res, next) {
     const genSalt = await bcrypt.genSalt(10)
 
     const hash_pass = await bcrypt.hash(req.body.password, genSalt)
-    console.log(req.body.password);
-    console.log(hash_pass);
 
     let new_member = Member({
         memberShipNo: req.body.memberShipNo,
@@ -35,7 +33,6 @@ exports.requsetMemberShip = async function (req, res, next) {
         contactNo: req.body.contactNo,
         password: hash_pass,
     });
-    console.log(new_member);
     // check userdata
     Member.find({
         memberShipNo: new_member.memberShipNo
@@ -46,7 +43,7 @@ exports.requsetMemberShip = async function (req, res, next) {
                 if (err) {
                     return next(err);
                 }
-                console.log("Sent requset successfully ");
+                
                 res.status(201).send('Sent Requset Successfully');
 
 
@@ -81,7 +78,7 @@ exports.requsetMemberShip = async function (req, res, next) {
 //================================== Get all requsest       =============================================
 //====================================================================================================== 
 exports.get_all_requsts = async function (req, res, next) {
-    console.log("Called");
+
     // check userdata
     Member.find({
         newrequest: true,
@@ -120,7 +117,7 @@ exports.active_members = async function (req, res, next) {
         state: true
     }, async function (err, docs) {
         if (docs.length != 0) {
-            // console.log(docs);
+        
             for (let index = 0; index < docs.length; index++) {
 
                 let name = await Affiliation.findOne({ _id: docs[index].affiID })
@@ -147,7 +144,7 @@ exports.active_members = async function (req, res, next) {
 //====================================================================================================== 
 
 exports.acceptOrReject = async function (req, res, next) {
-    console.log(req.body);
+  
 
     var state = req.body.state
     var memberShipNo = req.body.memberShipNo
@@ -158,7 +155,7 @@ exports.acceptOrReject = async function (req, res, next) {
 
     if (state === true) {
         try {
-            console.log(memberShipNo);
+            
             const search = await Member.findOne({
                 memberShipNo: memberShipNo
             })
@@ -188,7 +185,7 @@ exports.acceptOrReject = async function (req, res, next) {
         }
     } else if (state === false) {
         try {
-            console.log(memberShipNo);
+          
             const search = await Member.findOne({
                 memberShipNo: memberShipNo
             })
@@ -213,7 +210,7 @@ exports.acceptOrReject = async function (req, res, next) {
 //================================== Delete      =============================================
 //====================================================================================================== 
 exports.deleteMember = async function (req, res, next) {
-    console.log(req.body);
+    
 
     var state = req.body.state
     var memberShipNo = req.body.memberShipNo
@@ -222,7 +219,7 @@ exports.deleteMember = async function (req, res, next) {
     }
      if (state === false) {
         try {
-            console.log(memberShipNo);
+         
             const search = await Member.findOne({
                 memberShipNo: memberShipNo
             })
@@ -253,7 +250,7 @@ exports.deleteMember = async function (req, res, next) {
 
 exports.update_member = async function (req, res, next) {
 
-    console.log(req.body);
+
     try {
         const update = await Member.findOneAndUpdate({
             memberShipNo: req.body.memberShipNo
@@ -282,7 +279,7 @@ exports.update_member = async function (req, res, next) {
 
 exports.get_specific_user = async function (req, res, next) {
 
-    console.log(req.body);
+
     var id = req.body.id
 
 
@@ -306,7 +303,7 @@ exports.get_specific_user = async function (req, res, next) {
 
 exports.login = async function (req, res) {
 
-    console.log(req.body);
+   
     const genSalt = await bcrypt.genSalt(10)
 
     const user_details = await Member.findOne({
@@ -330,8 +327,6 @@ exports.login = async function (req, res) {
         }
 
             
-        console.log(user_details.password);
-        console.log(req.body.uPass);
         const log = await bcrypt.compare(req.body.uPass, user_details.password)
 
         if (!log) {
@@ -350,7 +345,7 @@ exports.login = async function (req, res) {
             }, "thisistokenforieee2019", {
                 expiresIn: '240h'
             });
-            console.log(user_details);
+
             return res.status(200).send({
                 data: {
                     "token": token,
@@ -372,13 +367,12 @@ exports.login = async function (req, res) {
 
 exports.upload_image = function (req, res, next) {
 
-    console.log(req.body.membershipnumber);
 
     let updateProfilePic = {
         "membershipnumber": req.body.membershipnumber,
         "profilepic": req.file.path
     }
-    console.log(updateProfilePic);
+ 
     Member.find({ memberShipNo: req.body.membershipnumber }).exec().then(user => {
         if (user.length < 1) {
             return res.status(401).json({
@@ -408,7 +402,7 @@ exports.upload_image = function (req, res, next) {
             })
         }
     }).catch(err => {
-        console.log(err);
+     
         res.status(500).json({
             error: err
         });
@@ -472,7 +466,7 @@ exports.pastdes_by_member_id = async function (req, res, next) {
         }
         
     } catch (error) {
-        console.log(error)
+   
         return res.status(403).json({ message : "Something went wrong"});  
     }
 
@@ -528,7 +522,7 @@ exports.all_rewads = async function (req, res, next) {
     return res.status(200).json(final);
        
     } catch (error) {
-        console.log(error)
+       
         return res.status(403).json({ message : "Something went wrong"});  
     }
 

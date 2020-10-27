@@ -28,7 +28,6 @@ const MemberAdd = (props) => {
     // alert(JSON.stringify(member))
     e.preventDefault();
     const result = await add_member_requset(member);
-    console.log(result);
     if (result.code == 200) {
       clear();
       Config.setToast("Request sent successfully");
@@ -36,7 +35,6 @@ const MemberAdd = (props) => {
   };
 
   const clear = () => {
-    console.log("Clear call");
     setMember({
       addfname: "",
       addlname: "",
@@ -58,7 +56,6 @@ const MemberAdd = (props) => {
   //Affiliation--------------------------------------
   const handleAffChange = (e) => {
     setMember({ ...member, selectaffiID: e.value });
-    console.log(e.value);
   };
 
   const [affiliations, setAffiliations] = useState([]);
@@ -69,7 +66,6 @@ const MemberAdd = (props) => {
   async function getAffData() {
     var res = await get_all_affiliations();
     await setAffiliations(res.data.data);
-    console.log("aff: " + affiliations);
   }
 
   const sel = affiliations.map((item) => {
@@ -77,30 +73,11 @@ const MemberAdd = (props) => {
 
     container["value"] = item._id;
     container["label"] = item.affiliationname;
-    console.log("sel: " + JSON.stringify(container));
     return container;
   });
 
   const getcurrentAff = () => {
     return sel.find(i => i.value == member.selectaffiID)
-  }
-
-  const validate = (data) =>{
-    
-    console.log(member.addpassword);
-    if(member.addpassword == null || member.addpassword == ""){
-     return Config.setToast("Plase provide password")
-    }
-    if(member.addcpassword.localeCompare(member.addpassword) != 0){
-      return Config.setToast("Password did not match")
-    }
-    if(member.selectaffiID == null || member.selectaffiID ==""){
-      return Config.setToast("Please select your Affiliation")
-    }
-    if(member.selectaffiID == null || member.selectaffiID ==""){
-      return Config.setToast("Please select your Affiliation")
-    }
-  
   }
 
   return (
@@ -241,6 +218,7 @@ const MemberAdd = (props) => {
                     type="password"
                     className="form-control"
                     id="cpassword"
+                    name="addcpassword"
                     placeholder="Confirm Password"
                     onChange={handleChange}
                     value={member.addcpassword}
@@ -258,7 +236,7 @@ const MemberAdd = (props) => {
                   Cancel
                 </button>
                
-                <button type="submit" className="btn btn-primary mr-1 my-2" onClick={(data)=>validate(member.memberShipNo)}>
+                <button type="submit" className="btn btn-primary mr-1 my-2">
                   Submit
                 </button>
               </div>

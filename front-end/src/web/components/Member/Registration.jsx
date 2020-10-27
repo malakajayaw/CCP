@@ -28,25 +28,20 @@ const Registration = (props) => {
 
   });
 
-
   const onSubmit =  async (e) => {
 
     // alert(JSON.stringify(member))
     e.preventDefault()
     const result = await add_member_requset (member)
-    console.log(result);
     if(result.code == 200)
     {
       clear()
       Config.setToast("Request sent successfully")
     }
 
-
-
   }
 
   const clear = () => {
-    console.log("Clear call");
     setMember({
       addfname : '' , 
       addlname : '' ,
@@ -71,7 +66,6 @@ const Registration = (props) => {
 //Affiliation--------------------------------------
 const handleAffChange = (e) => {
     setMember({ ...member, selectaffiID: e.value });
-    console.log(e);
  
 };
 
@@ -83,7 +77,6 @@ useEffect(() => {
 async function getAffData() {
   var res = await get_all_affiliations();
   await setAffiliations(res.data.data);
-  console.log("aff: " + affiliations);
 }
 
 const sel = affiliations.map((item) => {
@@ -91,7 +84,6 @@ const sel = affiliations.map((item) => {
 
   container["value"] = item._id;
   container["label"] = item.affiliationname;
-  console.log("sel: " + JSON.stringify(container));
   return container;
 });
 
