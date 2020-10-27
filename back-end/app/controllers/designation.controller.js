@@ -13,14 +13,12 @@ exports.addDesignation = function (req, res, next) {
         MemNo: "",
         updated_at: req.body.updated_at,
     });
-    console.log(new_designation);
 
     //save event  
     new_designation.save(function (err) {
         if (err) {
             return next(err);
         }
-        console.log("Designation added successfully ");
         res.status(201).send('Designation added Successfully');
     })
 
@@ -95,7 +93,6 @@ exports.delete_designation = async function (req, res, next) {
 
 exports.update_designation = async function (req, res, next) {
 
-    console.log(req.body);
     try {
         const update = await Designation.findOneAndUpdate({
             _id: req.body.id
@@ -118,7 +115,6 @@ exports.update_designation = async function (req, res, next) {
 
 exports.update_designation_mem = async function (req, res, next) {
 
-    console.log(req.body);
     try {
         const update = await Designation.findOneAndUpdate({
             _id: req.body.id
@@ -139,7 +135,6 @@ exports.update_designation_mem = async function (req, res, next) {
 
 exports.remove_designation_mem = async function (req, res, next) {
 
-    console.log(req.body);
     try {
         const update = await Designation.findOneAndUpdate({
             _id: req.body.id
